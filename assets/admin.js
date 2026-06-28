@@ -16,6 +16,7 @@
   var deviceMode = "desktop"; // desktop | mobile — preview viewport width
   var pendingPick = null;   // fn(url) used by the image picker / upload
   var idleTimer = null, idleDeadline = 0, idleTick = null, prevTimer = null;
+  var lastAvail = -1;       // last preview-stage width the iframe scale was fit to
 
   // ── small DOM helpers ─────────────────────────────────────────────────────
   function el(tag, props, kids) {
@@ -471,6 +472,7 @@
     frame.style.transform = "scale(" + scale + ")";
     frame.style.marginLeft = Math.max(0, (avail - d.w * scale) / 2) + "px";
     stage.style.height = Math.round(d.h * scale) + "px";
+    lastAvail = avail;
   }
   function setDevice(mode) {
     deviceMode = mode;
@@ -594,6 +596,17 @@
     $("prev-refresh").addEventListener("click", setPreviewSrc);
     $("preview").addEventListener("load", function () { postPreview(); applyDevice(); });
     window.addEventListener("resize", applyDevice);
+    // The editor fills the left column after the first paint, which reflows the preview
+    // column to a narrower width *without* a window resize event — recompute the iframe
+    // scale whenever the preview column's width actually changes, so it never overflows.
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function () {
+        var st = $("preview-stage");
+        if (st && Math.abs(st.clientWidth - lastAvail) > 1) applyDevice();
+      });
+      var pw = document.querySelector(".ad-previewwrap");
+      if (pw) ro.observe(pw);
+    }
   }
 
   // ── init ──────────────────────────────────────────────────────────────────
