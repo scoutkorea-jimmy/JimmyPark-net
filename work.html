@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Work · Jimmy Park / 박지민</title>
-<meta name="description" content="Field documentation, purpose-based video, and small web prototypes — Jimmy Park combines photography, video, and digital tools depending on what the project needs.">
+<meta name="description" content="Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs.">
 <link rel="canonical" href="https://jimmypark.net/work">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jimmy Park / 박지민">
@@ -19,7 +19,7 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.2.1">
+<link rel="stylesheet" href="/assets/site.css?v=0.2.2">
 </head>
 <body data-page="work">
 
@@ -152,6 +152,22 @@
     </div>
   </div>
 
+  <!-- LECTURE -->
+  <div data-section="lecture" style="background:#f7f6f3; border-top:1px solid #efebe3; border-bottom:1px solid #efebe3;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(34px,5vw,56px) clamp(22px,5vw,44px);">
+      <span data-bind="lecture.kicker" style="font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#9b3544;">Teach</span>
+      <h2 data-bind="lecture.title" style="margin:6px 0 0; font-size:clamp(23px,3vw,30px); font-weight:800;">Lecture</h2>
+      <div data-bind="lecture.sub" style="font-size:13.5px; color:#8a847c; margin-top:4px;">Talks & workshops from the field · 강의 · 강연</div>
+      <p data-bind="lecture.desc" style="margin:14px 0 0; max-width:58ch; font-size:15px; color:#66615c; line-height:1.75;">I share field experience through lectures and workshops — on Scouting and youth communication, field media and documentation, and AI-assisted prototyping. Each session is shaped around the audience and the purpose.</p>
+      <div class="vid-grid" data-collection="lecture.topics" data-template="videoFormats" style="margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:10px 40px;">
+        <div style="display:grid; grid-template-columns:130px 1fr; gap:14px; padding:13px 0; border-bottom:1px solid #e6e1da;"><div style="font-weight:700; font-size:15px;">Scouting &amp; Youth</div><div style="font-size:13.5px; color:#66615c;">Communication, international exchange, youth movement</div></div>
+        <div style="display:grid; grid-template-columns:130px 1fr; gap:14px; padding:13px 0; border-bottom:1px solid #e6e1da;"><div style="font-weight:700; font-size:15px;">Field Media</div><div style="font-size:13.5px; color:#66615c;">Documentation, event media, content workflows</div></div>
+        <div style="display:grid; grid-template-columns:130px 1fr; gap:14px; padding:13px 0; border-bottom:1px solid #e6e1da;"><div style="font-weight:700; font-size:15px;">Photography for Purpose</div><div style="font-size:13.5px; color:#66615c;">Shooting for press, SNS, and reports</div></div>
+        <div style="display:grid; grid-template-columns:130px 1fr; gap:14px; padding:13px 0; border-bottom:1px solid #e6e1da;"><div style="font-weight:700; font-size:15px;">AI · Vibe Coding</div><div style="font-size:13.5px; color:#66615c;">Turning ideas into working web prototypes</div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- WORK CTA -->
   <div data-section="cta" style="max-width:1180px; margin:0 auto; padding:clamp(12px,2vw,24px) clamp(22px,5vw,44px) clamp(56px,8vw,96px);">
     <div style="background:#f7f6f3; border:1px solid #ece7df; border-radius:28px; padding:clamp(32px,5vw,52px);">
@@ -186,6 +202,6 @@
 </footer>
 
 <div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied · 복사됨</div>
-<script src="/assets/site.js?v=0.2.1" defer></script>
+<script src="/assets/site.js?v=0.2.2" defer></script>
 </body>
 </html>

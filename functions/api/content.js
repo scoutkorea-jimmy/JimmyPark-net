@@ -87,8 +87,8 @@ const DEFAULT = {
     },
 
     work: {
-      meta: { title: "Work · Jimmy Park / 박지민", desc: "Field documentation, purpose-based video, and small web prototypes — Jimmy Park combines photography, video, and digital tools depending on what the project needs." },
-      order: ["intro", "photography", "video", "vibecoding", "cta"],
+      meta: { title: "Work · Jimmy Park / 박지민", desc: "Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs." },
+      order: ["intro", "photography", "video", "vibecoding", "lecture", "cta"],
       hidden: [],
       sections: {
         intro: {
@@ -130,6 +130,16 @@ const DEFAULT = {
             { slug: "jamboree-dcount", title: "Jamboree D-count", desc: "Campaign participation page", status: "Live", accent: "burgundy", image: "" },
             { slug: "card-news", title: "Card News Generator", desc: "Content production tool", status: "Beta", accent: "neutral", image: "" },
             { slug: "bp-media-tools", title: "BP Media Tools", desc: "Media operation support", status: "In Progress", accent: "neutral", image: "" },
+          ],
+        },
+        lecture: {
+          kicker: "Teach", title: "Lecture", sub: "Talks & workshops from the field · 강의 · 강연",
+          desc: "I share field experience through lectures and workshops — on Scouting and youth communication, field media and documentation, and AI-assisted prototyping. Each session is shaped around the audience and the purpose.",
+          topics: [
+            { name: "Scouting & Youth", desc: "Communication, international exchange, youth movement" },
+            { name: "Field Media", desc: "Documentation, event media, content workflows" },
+            { name: "Photography for Purpose", desc: "Shooting for press, SNS, and reports" },
+            { name: "AI · Vibe Coding", desc: "Turning ideas into working web prototypes" },
           ],
         },
         cta: {

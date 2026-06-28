@@ -61,6 +61,7 @@
       { id: "photography", title: "Photography", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption")], images: [["image", "Image"]], collections: [{ k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } }, { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption")], collections: [{ k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "vibecoding", title: "Vibe Coding", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Projects", fields: [F("slug", "Slug (browser bar)"), F("title", "Title"), F("desc", "Description"), F("status", "Status", "select", STATUS), F("accent", "Accent", "select", ACCENT_NG)], images: [["image", "Image"]], tmpl: { slug: "", title: "", desc: "", status: "Prototype", accent: "neutral", image: "" } }] },
+      { id: "lecture", title: "Lecture", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "topics", label: "Topics", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea"), F("bodyKo", "Body (KO)")], links: [["button", "Button"]] },
     ] },
     scouting: { title: "Scouting", kind: "page", page: "scouting", sections: [
@@ -89,7 +90,7 @@
   function authHeader() { return session ? { Authorization: "Bearer " + session.token } : {}; }
 
   function showGate(msg) { stopIdle(); $("dash").style.display = "none"; $("gate").style.display = "flex"; $("gate-msg").textContent = msg || ""; var o = $("otp"); if (o) { o.value = ""; o.focus(); } }
-  function showDash() { $("gate").style.display = "none"; $("dash").style.display = "block"; startIdle(); }
+  function showDash() { $("gate").style.display = "none"; $("dash").style.display = "block"; startIdle(); applyDevice(); }
 
   function login() {
     var code = ($("otp").value || "").replace(/\D/g, "");
@@ -309,8 +310,9 @@
   function applyDevice() {
     var frame = $("preview"), stage = $("preview-stage");
     if (!frame || !stage) return;
+    var avail = stage.clientWidth;
+    if (avail < 2) return; // stage hidden / not laid out yet — recomputed once visible
     var d = DEVICE[deviceMode];
-    var avail = stage.clientWidth || d.w;
     var scale = Math.min(1, avail / d.w);
     frame.style.width = d.w + "px";
     frame.style.height = d.h + "px";
