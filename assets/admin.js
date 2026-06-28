@@ -13,6 +13,7 @@
   var content = null;       // working document (deep copy of server doc)
   var activeTab = "global"; // global | home | work | scouting | contact | media
   var previewPage = "home"; // which page the iframe shows
+  var deviceMode = "desktop"; // desktop | mobile — preview viewport width
   var pendingPick = null;   // fn(url) used by the image picker / upload
   var idleTimer = null, idleDeadline = 0, idleTick = null, prevTimer = null;
 
@@ -302,6 +303,27 @@
   function moveItem(arr, idx, dir, col, data) { var j = idx + dir; if (j < 0 || j >= arr.length) return; var t = arr[idx]; arr[idx] = arr[j]; arr[j] = t; renderEditor(); schedulePreview(); }
 
   // ── preview ───────────────────────────────────────────────────────────────
+  // Render the iframe at a true device width, then scale it to fit the column so
+  // "Desktop" shows the actual desktop layout (not the narrow-column responsive one).
+  var DEVICE = { desktop: { w: 1280, h: 1000 }, mobile: { w: 390, h: 844 } };
+  function applyDevice() {
+    var frame = $("preview"), stage = $("preview-stage");
+    if (!frame || !stage) return;
+    var d = DEVICE[deviceMode];
+    var avail = stage.clientWidth || d.w;
+    var scale = Math.min(1, avail / d.w);
+    frame.style.width = d.w + "px";
+    frame.style.height = d.h + "px";
+    frame.style.transform = "scale(" + scale + ")";
+    frame.style.marginLeft = Math.max(0, (avail - d.w * scale) / 2) + "px";
+    stage.style.height = Math.round(d.h * scale) + "px";
+  }
+  function setDevice(mode) {
+    deviceMode = mode;
+    $("dev-desktop").classList.toggle("active", mode === "desktop");
+    $("dev-mobile").classList.toggle("active", mode === "mobile");
+    applyDevice();
+  }
   function previewPath() { return (previewPage === "home" ? "/" : "/" + previewPage) + "?preview=1"; }
   function setPreviewSrc() { $("preview-page").textContent = previewPage; $("preview").src = previewPath(); }
   function postPreview() { try { var f = $("preview"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "jp-preview", content: content }, location.origin); } catch (_) {} }
@@ -402,10 +424,11 @@
     $("picker-upload").addEventListener("click", function () { fi.click(); });
     $("picker-clear").addEventListener("click", function () { if (pendingPick) pendingPick(""); closePicker(); });
 
-    $("dev-desktop").addEventListener("click", function () { $("preview").style.maxWidth = "100%"; $("dev-desktop").classList.add("active"); $("dev-mobile").classList.remove("active"); });
-    $("dev-mobile").addEventListener("click", function () { $("preview").style.maxWidth = "390px"; $("dev-mobile").classList.add("active"); $("dev-desktop").classList.remove("active"); });
+    $("dev-desktop").addEventListener("click", function () { setDevice("desktop"); });
+    $("dev-mobile").addEventListener("click", function () { setDevice("mobile"); });
     $("prev-refresh").addEventListener("click", setPreviewSrc);
-    $("preview").addEventListener("load", postPreview);
+    $("preview").addEventListener("load", function () { postPreview(); applyDevice(); });
+    window.addEventListener("resize", applyDevice);
   }
 
   // ── init ──────────────────────────────────────────────────────────────────
