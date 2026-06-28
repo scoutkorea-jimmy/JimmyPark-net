@@ -142,10 +142,16 @@
       ps.meta = ps.meta || { title: "", desc: "" };
       ps.sections = ps.sections || {};
       ps.hidden = ps.hidden || [];
-      // normalise order to include every known section id
+      // normalise order to include every known section id, inserting any missing id
+      // right after its schema-order predecessor (not just appended at the end)
       var ids = SCHEMA[p].sections.map(function (s) { return s.id; });
       var ord = (ps.order || []).filter(function (x) { return ids.indexOf(x) >= 0; });
-      ids.forEach(function (id) { if (ord.indexOf(id) < 0) ord.push(id); });
+      ids.forEach(function (id, i) {
+        if (ord.indexOf(id) >= 0) return;
+        var pos = 0;
+        for (var j = i - 1; j >= 0; j--) { var k = ord.indexOf(ids[j]); if (k >= 0) { pos = k + 1; break; } }
+        ord.splice(pos, 0, id);
+      });
       ps.order = ord;
     });
   }

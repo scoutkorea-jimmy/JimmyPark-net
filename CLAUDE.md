@@ -9,8 +9,10 @@ Live at **https://jimmypark.net**. **Vanilla HTML/CSS/JS, no build step, no fram
 Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-gated admin.
 
 ## Golden rules
-1. **No build step, no dependencies.** Don't add npm packages, bundlers, or new web fonts.
-   Everything ships as static files served as-is.
+1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
+   approved set only — **Cafe24ProSlim** (primary, woff2 from jsdelivr, weights 300/400/700),
+   **Pretendard** (fallback), Material Symbols (icons); don't add others. Everything ships as
+   static files served as-is.
 2. **Pages render full static content.** SEO and no-JS users must see the real content.
    `site.js` only *enhances* (nav, copy, modal) and applies admin overrides — never gate
    primary content behind JS.

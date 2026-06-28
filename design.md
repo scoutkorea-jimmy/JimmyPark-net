@@ -53,8 +53,11 @@ introduce a new accent hue — pick the nearest token above.
 
 ## 2. Typography
 
-- **Body font:** Pretendard, loaded from jsDelivr CDN
-  (`pretendard@v1.3.9/dist/web/static/pretendard.min.css`), fallback
+- **Primary font:** **Cafe24ProSlim** (KR/EN), self-`@font-face`'d in `site.css` from
+  jsDelivr (`projectnoonnu/2511-1@1.0`, weights 300/400/700, `font-display:swap`). Weights
+  above 700 (e.g. 800 headings) fall back to 700 — keep that in mind for heavy headings.
+- **Fallback font:** Pretendard, loaded from jsDelivr CDN
+  (`pretendard@v1.3.9/dist/web/static/pretendard.min.css`), then
   `-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`.
 - **Icons:** Material Symbols Outlined (Google Fonts), class `.msym`, axis `opsz 24, wght 300,
   FILL 0, GRAD 0`. Always add `aria-hidden="true"` to decorative icons.
@@ -211,7 +214,8 @@ English-first, Korean as a quieter companion line.
 - Bump the `?v=` query on `site.css` / `site.js` links when they change (match `VERSION`).
 
 **Don't**
-- Don't add a CSS framework, a build step, or new web fonts.
+- Don't add a CSS framework, a build step, or web fonts beyond the approved set
+  (Cafe24ProSlim primary, Pretendard fallback, Material Symbols icons).
 - Don't introduce new accent colors — use the tokens above.
 - Don't rely on JS for primary content (JS only *enhances* and applies admin overrides).
 - Don't use shadows for separation where a border will do.

@@ -274,13 +274,35 @@ function fromV1(doc) {
   return out;
 }
 
+// Merge any section ids that exist in DEFAULT but are missing from a saved order,
+// inserting each right after its DEFAULT predecessor (so a new section lands in its
+// intended slot, e.g. "lecture" before "cta", instead of being appended at the end).
+function mergeOrder(defOrder, saved) {
+  const seen = {};
+  const out = (Array.isArray(saved) ? saved : [])
+    .filter((x) => defOrder.indexOf(x) >= 0 && !seen[x] && (seen[x] = 1));
+  defOrder.forEach((id, i) => {
+    if (out.indexOf(id) >= 0) return;
+    let pos = 0;
+    for (let j = i - 1; j >= 0; j--) { const p = out.indexOf(defOrder[j]); if (p >= 0) { pos = p + 1; break; } }
+    out.splice(pos, 0, id);
+  });
+  return out;
+}
+function normalizeOrders(doc) {
+  for (const p of Object.keys(DEFAULT.pages)) {
+    if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
+  }
+  return doc;
+}
+
 export async function onRequestGet({ env }) {
   let doc = null;
   try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
   if (!doc) return json({ ok: true, content: DEFAULT });
   if (doc.version !== 2) doc = fromV1(doc);
   // Re-sanitize on read so older/partial docs always match the current shape.
-  const clean = sanitize(DEFAULT, doc);
+  const clean = normalizeOrders(sanitize(DEFAULT, doc));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
 }
