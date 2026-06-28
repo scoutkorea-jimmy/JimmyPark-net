@@ -36,6 +36,7 @@
   var ACCENT_BG = [{ v: "burgundy", t: "Burgundy" }, { v: "green", t: "Green" }];
   var ACCENT_NG = [{ v: "neutral", t: "Neutral" }, { v: "green", t: "Green" }];
   var STATUS = [{ v: "Live", t: "Live" }, { v: "Prototype", t: "Prototype" }, { v: "Beta", t: "Beta" }, { v: "In Progress", t: "In Progress" }];
+  var TRACK = [{ v: "Scout", t: "Scout (대원)" }, { v: "Leader", t: "Leader (지도자)" }];
   var F = function (k, label, type, options) { return { k: k, label: label, type: type || "text", options: options }; };
 
   var SCHEMA = {
@@ -71,7 +72,7 @@
       { id: "roles", title: "Key Roles", fields: [F("title", "Title")], collections: [{ k: "items", label: "Roles", fields: [F("title", "Title"), F("org", "Org / sub"), F("period", "Period"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { title: "", org: "", period: "", accent: "neutral" } }] },
       { id: "international", title: "International Experience", fields: [F("title", "Title"), F("body", "Body", "textarea")], collections: [{ k: "tags", label: "Tags", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "mediaprojects", title: "Media Projects", fields: [F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("title", "Title"), F("desc", "Description", "textarea")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Cards", fields: [F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { title: "", desc: "" } }] },
-      { id: "timeline", title: "Timeline", fields: [F("title", "Title"), F("note", "Note")], collections: [{ k: "items", label: "Entries", fields: [F("year", "Year"), F("title", "Title"), F("context", "Context", "textarea"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { year: "", title: "", context: "", accent: "neutral" } }] },
+      { id: "timeline", title: "Scouting History (timeline)", fields: [F("title", "Title"), F("note", "Note", "textarea")], collections: [{ k: "items", label: "Entries", fields: [F("year", "Year"), F("track", "Track", "select", TRACK), F("title", "Title"), F("context", "Context", "textarea"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { year: "", track: "Leader", title: "", context: "", accent: "green" } }] },
       { id: "gallery", title: "Field Gallery", fields: [F("title", "Title")], collections: [{ k: "figs", label: "Images", fields: [F("label", "Label"), F("category", "Category")], images: [["image", "Image"]], tmpl: { label: "", category: "Scouting field", image: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("bodyKo", "Body (KO)")], links: [["button", "Button"]] },
     ] },

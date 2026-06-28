@@ -12,7 +12,7 @@ const MAXARR = 60;     // per collection
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  version: 2,
+  version: 3,
   global: {
     brand: { name: "Jimmy Park", nameKo: "박지민", roleline: "Photographer · Videographer · Scout · Builder" },
     footer: { tagline: "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.", copyright: "© 2026 Jimmy Park / 박지민" },
@@ -153,7 +153,7 @@ const DEFAULT = {
 
     scouting: {
       meta: { title: "Scouting · Jimmy Park / 박지민", desc: "Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media." },
-      order: ["hero", "why", "stats", "roles", "international", "mediaprojects", "timeline", "gallery", "cta"],
+      order: ["hero", "why", "stats", "timeline", "roles", "international", "mediaprojects", "gallery", "cta"],
       hidden: [],
       sections: {
         hero: {
@@ -200,15 +200,18 @@ const DEFAULT = {
           ],
         },
         timeline: {
-          title: "Timeline", note: "Tap an item to expand · 항목을 누르면 펼쳐집니다",
+          title: "Scouting History",
+          note: "From Scout (2003) to Scout Leader (2014) — tap any item to expand · 대원에서 지도자까지, 항목을 누르면 펼쳐집니다",
           items: [
-            { year: "2012", title: "Started Scouting media activities", context: "스카우트 미디어 활동을 시작하며 기록과 커뮤니케이션의 기반을 다졌습니다.", accent: "neutral" },
-            { year: "2016–2017", title: "World Scout Jamboree bid & related projects", context: "세계스카우트잼버리 유치 및 관련 프로젝트에 참여했습니다.", accent: "neutral" },
-            { year: "2022–2024", title: "National Commissioner, Korea Scout Association", context: "한국스카우트연맹 중앙커미셔너로 국내 스카우트 활동과 커뮤니케이션에 참여했습니다.", accent: "green" },
-            { year: "2023", title: "Korea Contingent Media, 25th World Scout Jamboree", context: "제25회 세계스카우트잼버리 대한민국 대표단 미디어부 부국장으로 활동했습니다.", accent: "green" },
-            { year: "2025–2028", title: "APR C&P Sub-Committee, 2nd Vice Chair", context: "아시아·태평양 지역 커뮤니케이션·파트너십 위원회 부의장으로 활동하고 있습니다.", accent: "green" },
-            { year: "2026–", title: "BP Media", context: "스카우트 전문 미디어 플랫폼을 운영합니다.", accent: "green" },
-            { year: "2026–", title: "Scout Tour Assistant · Jamboree D-count experiments", context: "스카우트 기반 웹 프로젝트를 실험하고 있습니다.", accent: "green" },
+            { year: "2003", title: "Joined Scouting as a Scout", context: "2003년, 한 명의 스카우트 대원으로 스카우팅을 시작했습니다. 현장에서 사람과 활동을 직접 경험한 시기입니다.", track: "Scout", accent: "neutral" },
+            { year: "2012", title: "Started Scouting media activities", context: "대원으로 활동하면서 기록과 커뮤니케이션에 관심을 갖고 스카우트 미디어 활동의 기반을 다지기 시작했습니다.", track: "Scout", accent: "neutral" },
+            { year: "2014", title: "Became a Scout Leader", context: "2014년, 스카우트 지도자가 되었습니다. 대원으로서의 경험을 바탕으로 청소년 활동을 이끌고 지원하는 역할로 전환했습니다.", track: "Leader", accent: "green" },
+            { year: "2016–2017", title: "World Scout Jamboree bid & related projects", context: "세계스카우트잼버리 유치 및 관련 프로젝트에 지도자로서 참여했습니다.", track: "Leader", accent: "neutral" },
+            { year: "2022–2024", title: "National Commissioner, Korea Scout Association", context: "한국스카우트연맹 중앙커미셔너로 국내 스카우트 활동과 커뮤니케이션에 참여했습니다.", track: "Leader", accent: "green" },
+            { year: "2023", title: "Korea Contingent Media, 25th World Scout Jamboree", context: "제25회 세계스카우트잼버리 대한민국 대표단 미디어부 부국장으로 활동했습니다.", track: "Leader", accent: "green" },
+            { year: "2025–2028", title: "APR C&P Sub-Committee, 2nd Vice Chair", context: "아시아·태평양 지역 커뮤니케이션·파트너십 위원회 부의장으로 활동하고 있습니다.", track: "Leader", accent: "green" },
+            { year: "2026–", title: "BP Media", context: "스카우트 전문 미디어 플랫폼을 운영합니다.", track: "Leader", accent: "green" },
+            { year: "2026–", title: "Scout Tour Assistant · Jamboree D-count experiments", context: "스카우트 기반 웹 프로젝트를 실험하고 있습니다.", track: "Leader", accent: "green" },
           ],
         },
         gallery: {
@@ -289,6 +292,25 @@ function mergeOrder(defOrder, saved) {
   });
   return out;
 }
+// v2 → v3: scouting timeline reworked into Scout (대원) / Leader (지도자) tracks and moved
+// up in the page order. Re-seed only if the saved timeline is still the old track-less shape
+// (so a fresh save with tracks is never clobbered). Idempotent on every read until re-saved.
+function migrateTo3(doc) {
+  try {
+    const sc = doc.pages && doc.pages.scouting;
+    if (sc && sc.sections) {
+      const tl = sc.sections.timeline;
+      const stale = !tl || !Array.isArray(tl.items) || !tl.items.some((it) => it && it.track);
+      if (stale) {
+        sc.sections.timeline = JSON.parse(JSON.stringify(DEFAULT.pages.scouting.sections.timeline));
+        sc.order = DEFAULT.pages.scouting.order.slice();
+      }
+    }
+  } catch (_) {}
+  doc.version = 3;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -300,7 +322,8 @@ export async function onRequestGet({ env }) {
   let doc = null;
   try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
   if (!doc) return json({ ok: true, content: DEFAULT });
-  if (doc.version !== 2) doc = fromV1(doc);
+  if (doc.version !== 2 && doc.version !== 3) doc = fromV1(doc);
+  if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   // Re-sanitize on read so older/partial docs always match the current shape.
   const clean = normalizeOrders(sanitize(DEFAULT, doc));
   clean.updatedAt = doc.updatedAt || 0;
@@ -312,9 +335,9 @@ export async function onRequestPut({ request, env }) {
   let body = {};
   try { body = await request.json(); } catch (_) {}
   let incoming = body.content || body;
-  if (incoming && incoming.version !== 2) incoming = fromV1(incoming);
+  if (incoming && incoming.version !== 2 && incoming.version !== 3) incoming = fromV1(incoming);
   const doc = sanitize(DEFAULT, incoming);
-  doc.version = 2;
+  doc.version = 3;
   doc.updatedAt = Date.now();
   await env.JP_KV.put(KEY, JSON.stringify(doc));
   return json({ ok: true, content: doc });

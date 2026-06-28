@@ -177,13 +177,17 @@
       return '<div style="border:1px solid #e6e1da;border-radius:20px;padding:22px;"><div style="font-weight:700;font-size:16px;">' + esc(m.title) + '</div><p style="margin:8px 0 0;font-size:13px;color:#66615c;line-height:1.65;">' + esc(m.desc) + '</p></div>';
     },
     timeline: function (t) {
-      var green = t.accent === "green";
-      var dot = green ? "#2f5a45" : "#cdbfb3";
-      var chev = green ? "#9cbcae" : "#b9b1a5";
-      var yc = green ? "#2f5a45" : "#9b3544";
+      var leader = t.track ? t.track === "Leader" : t.accent === "green";
+      var dot = leader ? "#2f5a45" : "#9b3544";
+      var chev = leader ? "#9cbcae" : "#cdbcae";
+      var yc = leader ? "#2f5a45" : "#9b3544";
+      var badge = t.track
+        ? '<span style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:999px;padding:3px 9px;' + (leader ? "color:#2f5a45;background:#e6efe9;" : "color:#7a1e2c;background:#f6edee;") + '">' + esc(t.track) + '</span>'
+        : "";
       return '<details class="tl" style="position:relative;padding:0 0 18px;"><span style="position:absolute;left:-33px;top:6px;width:12px;height:12px;border-radius:50%;background:' + dot + ';"></span>' +
-        '<summary style="display:flex;align-items:center;gap:10px;"><span class="tlchev msym" aria-hidden="true" style="font-size:18px;color:' + chev + ';">chevron_right</span>' +
+        '<summary style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span class="tlchev msym" aria-hidden="true" style="font-size:18px;color:' + chev + ';">chevron_right</span>' +
         '<span style="font-size:13px;font-weight:700;color:' + yc + ';min-width:84px;">' + esc(t.year) + '</span>' +
+        badge +
         '<span style="font-weight:600;font-size:15.5px;">' + esc(t.title) + '</span></summary>' +
         '<div class="tlctx" style="padding-left:28px;font-size:13.5px;color:#66615c;line-height:1.65;">' + esc(t.context) + '</div></details>';
     },
