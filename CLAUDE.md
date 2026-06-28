@@ -18,7 +18,9 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
    primary content behind JS.
 3. **Follow [design.md](design.md) exactly.** Reuse existing header/footer/eyebrow/button/card
    blocks; use the documented color tokens only; style page-specifics inline.
-4. **Bilingual, English-first.** Korean is the quieter companion line (see design.md §7).
+4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
+   `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
+   Korean left in older saved docs on read. See design.md §7.)
 5. **Don't break the four canonical routes:** `/` `/work` `/scouting` `/contact`
    (+ hidden `/admin`). Update `sitemap.xml` if routes change.
 6. **Always ship + keep docs current (standing owner policy).** After ANY change, commit

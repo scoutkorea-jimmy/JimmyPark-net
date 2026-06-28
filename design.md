@@ -1,7 +1,7 @@
 # Design System — JimmyPark.net
 
 > The single source of truth for how the site looks and feels.
-> Visual language: **warm-minimal, English-first with Korean support, soft rounded corners.**
+> Visual language: **warm-minimal, English-only, soft rounded corners.**
 > Identity: *Photographer · Videographer · Scout · Builder.*
 > Tagline: **SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.**
 
@@ -17,7 +17,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 |-------|-----|-----|
 | **Burgundy (primary accent)** | `#7a1e2c` | Logo border, primary buttons, links-on-hover, active nav, CTA panel, `::selection`, focus ring |
 | Burgundy dark (hover) | `#651825` | `.btn-primary:hover` only |
-| Eyebrow red | `#9b3544` | Small uppercase eyebrow labels, Korean sub-labels, decorative numbers context |
+| Eyebrow red | `#9b3544` | Small uppercase eyebrow labels, decorative numbers context |
 | **Scouting green (sub-accent)** | `#2f5a45` | Scouting-related eyebrows, tags, badges |
 | Green muted | `#5e7a6c` | Scouting captions |
 
@@ -27,7 +27,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 | Primary | `#171717` | Headings, body default |
 | Body strong | `#2c2925` | Lead paragraphs, table values |
 | Muted | `#66615c` | Secondary paragraphs, footer nav |
-| Muted light | `#8a847c` | Captions, inline Korean labels, sub-meta |
+| Muted light | `#8a847c` | Captions, sub-meta |
 | Muted alt | `#6b665f`, `#4a463f` | Figcaptions, tag text |
 | Decorative | `#cdbfb3` (numbers, dot separators), `#bdb6ab` (idle arrows) |
 
@@ -132,12 +132,12 @@ breakpoint block rather than writing a new media query.
 Sticky, `z-index:60`, translucent `rgba(255,255,255,.82)` + `backdrop-filter: saturate(150%)
 blur(10px)`, bottom border `#ece8e1`, height `68px`. Left: **JP monogram** (`assets/img/logo.svg`
 — elegant serif "JP" in near-black `#141414` with a short burgundy `#7a1e2c` underline under the
-J) + `Jimmy Park` / `박지민` stack. Right: desktop nav (`Home · Work · Scouting`)
+J) + `Jimmy Park` wordmark. Right: desktop nav (`Home · Work · Scouting`)
 + burgundy **Contact** button; hamburger on mobile.
 
 ### Footer (identical on every page)
 `#f7f6f3` band, JP monogram + name + role line, nav links, then a baseline row with the
-tagline (`SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.`) and `© 2026 Jimmy Park / 박지민`.
+tagline (`SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.`) and `© 2026 Jimmy Park`.
 
 ### Eyebrow + heading pattern
 ```html
@@ -187,13 +187,14 @@ All buttons: `.btn` adds `translateY(-1px)` lift on hover. Pad `14px 26px` (larg
 
 ---
 
-## 7. Bilingual rule
+## 7. Language rule
 
-English-first, Korean as a quieter companion line.
-- Korean sits **below or beside** the English in a muted color (`#8a847c`, `#9b3544`, or
-  `#66615c`) and smaller size.
-- Headings are English; Korean restates intent in one short line.
-- `lang="en"` on `<html>` (content is English-primary).
+**English-only.** The site carries no Korean text — no companion lines, no `*Ko` content
+fields, no `박지민` alongside the name. (The site was bilingual through v0.2.x; v0.3.0
+removed all Korean. The content schema's `dekoreanize` migration strips any residual
+Korean from older saved docs on read.)
+- One voice per element: a heading or lead has a single English line, no muted sub-line.
+- `lang="en"` on `<html>`.
 
 ---
 

@@ -102,7 +102,7 @@
   var TT = {
     snapshotRows: function (r, i, arr) {
       var bb = i === arr.length - 1 ? "" : "border-bottom:1px solid #e6e1da;";
-      return '<div style="padding:15px 0;' + bb + '"><div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#171717;">' + esc(r.label) + '</div><div style="font-size:11px;color:#9b3544;margin-top:2px;">' + esc(r.labelKo) + '</div></div>' +
+      return '<div style="padding:15px 0;' + bb + '"><div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#171717;">' + esc(r.label) + '</div></div>' +
         '<div style="font-size:15.5px;color:#2c2925;padding:15px 0;' + bb + 'display:flex;align-items:center;">' + esc(r.value) + '</div>';
     },
     activities: function (a) {
@@ -117,7 +117,7 @@
       }).join("");
       return '<a href="' + esc(a.href || "#") + '" class="act" style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;padding:clamp(22px,3vw,30px) clamp(8px,1.5vw,14px);border-bottom:1px solid #e6e1da;">' +
         '<div><span style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:' + kc + ';">' + esc(a.kicker) + '</span>' +
-        '<div style="margin-top:6px;"><span style="font-size:clamp(21px,2.8vw,28px);font-weight:700;letter-spacing:-.01em;">' + esc(a.title) + '</span><span style="margin-left:11px;font-size:13.5px;color:#8a847c;">' + esc(a.titleKo) + '</span></div>' +
+        '<div style="margin-top:6px;"><span style="font-size:clamp(21px,2.8vw,28px);font-weight:700;letter-spacing:-.01em;">' + esc(a.title) + '</span></div>' +
         '<p style="margin:8px 0 0;font-size:14.5px;color:#66615c;max-width:60ch;line-height:1.65;">' + esc(a.desc) + '</p>' +
         '<div class="out"><div style="display:flex;flex-wrap:wrap;gap:7px;">' + tags + '</div></div></div>' +
         '<span class="act-arrow msym" aria-hidden="true" style="font-size:20px;color:' + arrow + ';padding-top:4px;">arrow_outward</span></a>';
@@ -125,7 +125,6 @@
     approachSteps: function (s) {
       return '<div><div style="font-size:30px;font-weight:300;color:#cdbfb3;line-height:1;">' + esc(s.num) + '</div>' +
         '<div style="margin-top:12px;font-weight:700;font-size:16px;">' + esc(s.title) + '</div>' +
-        '<div style="font-size:12px;color:#9b3544;margin-top:2px;">' + esc(s.titleKo) + '</div>' +
         '<p style="margin:8px 0 0;font-size:13.5px;color:#66615c;line-height:1.65;">' + esc(s.desc) + '</p></div>';
     },
     projectCards: function (p) {
@@ -135,8 +134,7 @@
       return '<a href="' + esc(p.href || "#") + '" class="soft" style="background:#fff;border:1px solid #e6e1da;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;">' +
         '<div style="position:relative;aspect-ratio:16/11;' + bg + '"><span style="position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.9);color:#3a3631;padding:4px 10px;border-radius:999px;">' + esc(p.tag) + '</span></div>' +
         '<div style="padding:17px 19px;"><h3 style="margin:0;font-size:16.5px;font-weight:700;">' + esc(p.title) + '</h3>' +
-        '<p style="margin:6px 0 0;font-size:13px;color:#66615c;line-height:1.6;">' + esc(p.desc) + '</p>' +
-        '<div class="pmeta" style="font-size:11.5px;color:#8a847c;">' + esc(p.descKo) + '</div></div></a>';
+        '<p style="margin:6px 0 0;font-size:13px;color:#66615c;line-height:1.6;">' + esc(p.desc) + '</p></div></a>';
     },
     photoDeliverables: function (d) {
       return '<li style="font-size:13.5px;color:#3a3631;display:flex;gap:9px;"><span class="msym" aria-hidden="true" style="font-size:17px;color:#9b3544;">check_small</span>' + esc(d.text) + '</li>';

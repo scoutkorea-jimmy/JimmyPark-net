@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin · Jimmy Park</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="/assets/img/favicon.svg?v=0.2.6" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.svg?v=0.3.0" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.2.6">
+<link rel="stylesheet" href="/assets/site.css?v=0.3.0">
 <style>
   /* Admin chrome uses Pretendard (UI legibility) — the public display font
      (Cafe24ProSlim) only renders inside the live-preview iframe. */
@@ -36,8 +36,14 @@
   .ad-ok { color: #2f5a45; }
   .ad-err { color: #7a1e2c; }
   /* shell */
-  .ad-shell { display: grid; grid-template-columns: minmax(400px, 540px) 1fr; gap: 20px; align-items: start; }
+  .ad-shell { display: grid; grid-template-columns: minmax(420px, 600px) 1fr; gap: 20px; align-items: start; }
   @media (max-width: 1080px) { .ad-shell { grid-template-columns: 1fr; } .ad-previewwrap { display: none; } }
+  /* preview-collapsed: editor spans full width, cards flow in readable columns */
+  .ad-noprev .ad-shell { grid-template-columns: 1fr; }
+  .ad-noprev .ad-previewwrap { display: none; }
+  .ad-noprev #editor, .ad-noprev #media-panel { column-width: 460px; column-gap: 16px; }
+  .ad-noprev .ad-sec, .ad-noprev #media-panel .ad-card { break-inside: avoid; }
+  #prev-toggle[aria-pressed="true"] { background: #7a1e2c; color: #fff; border-color: #7a1e2c; }
   /* tabs */
   .ad-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
   .ad-tab { font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid #e6e1da; background: #fff; color: #4a463f; cursor: pointer; }
@@ -53,6 +59,23 @@
   .ad-item { border: 1px solid #ece7df; border-radius: 14px; padding: 14px; margin-bottom: 10px; background: #fdfcfa; }
   .ad-item-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
   .ad-item-bar .grp { display: flex; gap: 5px; }
+  /* collapsible collection item (accordion) */
+  details.ad-acc { padding: 0; margin-bottom: 8px; overflow: hidden; }
+  details.ad-acc > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 9px; padding: 11px 13px; user-select: none; }
+  details.ad-acc > summary::-webkit-details-marker { display: none; }
+  details.ad-acc > summary:hover { background: #f7f4ef; }
+  details.ad-acc[open] > summary { border-bottom: 1px solid #ece7df; background: #f7f4ef; }
+  .ad-acc-no { font-size: 11px; color: #9a948b; font-weight: 700; flex: none; }
+  .ad-acc-sum { flex: 1; min-width: 0; font-size: 13.5px; font-weight: 600; color: #2c2925; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  details.ad-acc > summary .grp { display: flex; gap: 4px; flex: none; }
+  .ad-acc-body { padding: 14px 13px 4px; }
+  details.ad-acc[open] > summary .ad-acc-sum { color: #7a1e2c; }
+  .ad-acc-cb { flex: none; width: 15px; height: 15px; accent-color: #7a1e2c; cursor: pointer; margin: 0; }
+  /* per-collection CSV + bulk toolbar */
+  .ad-coltools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 10px; }
+  .ad-coltools .ad-mini { display: inline-flex; align-items: center; gap: 4px; }
+  .ad-coltools .ad-mini[disabled] { cursor: default; }
+  .ad-coltools .ad-mini.del:not([disabled]):hover { background: #f6edee; color: #7a1e2c; border-color: #e7c9cd; }
   .ad-imgpick { display: flex; align-items: center; gap: 10px; }
   .ad-imgthumb { width: 56px; height: 44px; border-radius: 8px; border: 1px solid #e6e1da; background: #efeae2 center/cover no-repeat; flex: none; }
   .ad-hide { opacity: .5; }
@@ -99,13 +122,14 @@
     <div class="ad-wrap" style="padding-top:0; padding-bottom:0;">
       <div style="height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
         <div style="display:flex; align-items:center; gap:10px;">
-          <img src="/assets/img/logo.svg?v=0.2.6" alt="Jimmy Park" width="33" height="28" style="height:28px; width:auto; display:block;">
+          <img src="/assets/img/logo.svg?v=0.3.0" alt="Jimmy Park" width="33" height="28" style="height:28px; width:auto; display:block;">
           <strong style="font-size:15px;">Admin</strong>
           <span class="pill" style="background:#f2f0ec; color:#66615c;">jimmypark.net</span>
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
           <span id="idle" class="pill" style="background:#f2f0ec; color:#66615c;" title="Auto sign-out timer"></span>
           <span id="save-msg" class="ad-msg"></span>
+          <button id="prev-toggle" class="ad-btn ad-btn-ghost ad-btn-sm" aria-pressed="false" title="Hide preview"><span class="msym" aria-hidden="true" style="font-size:17px;">space_dashboard</span></button>
           <button id="save" class="ad-btn ad-btn-primary ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:17px;">save</span>Save</button>
           <a href="/" target="_blank" class="ad-btn ad-btn-ghost ad-btn-sm">View site</a>
           <button id="logout" class="ad-btn ad-btn-ghost ad-btn-sm">Sign out</button>
@@ -177,6 +201,6 @@
 </div>
 
 <input id="file-input" type="file" accept="image/*" multiple style="display:none;">
-<script src="/assets/admin.js?v=0.2.6" defer></script>
+<script src="/assets/admin.js?v=0.3.0" defer></script>
 </body>
 </html>

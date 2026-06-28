@@ -3,36 +3,36 @@ import { json, isAdmin } from "./_lib.js";
 // Full-site content document (KV key "content"). Public pages render their baked-in
 // static seed first (SEO / no-JS), then site.js overrides from this document. The
 // admin (TOTP) edits and writes it. DEFAULT mirrors the static seed content so an
-// empty site and a fresh admin start identical.
+// empty site and a fresh admin start identical. The site is English-only.
 const KEY = "content";
 const MAXSTR = 4000;   // per string field
 const MAXARR = 60;     // per collection
+const HANGUL = /[가-힣]/;
 
 // ── helpers to keep DEFAULT compact ─────────────────────────────────────────
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  version: 3,
+  version: 4,
   global: {
-    brand: { name: "Jimmy Park", nameKo: "박지민", roleline: "Photographer · Videographer · Scout · Builder" },
-    footer: { tagline: "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.", copyright: "© 2026 Jimmy Park / 박지민" },
-    contact: { email: "scoutkorea@kakao.com", phone: "+82.010.2646.1635", linkedin: "", location: "Korea · Korean / English" },
+    brand: { name: "Jimmy Park", roleline: "Photographer · Videographer · Scout · Builder" },
+    footer: { tagline: "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.", copyright: "© 2026 Jimmy Park" },
+    contact: { email: "scoutkorea@kakao.com", phone: "+82.010.2646.1635", linkedin: "", location: "Korea" },
     seo: {
-      title: "박지민 / Jimmy Park",
+      title: "Jimmy Park",
       desc: "Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes.",
     },
   },
   pages: {
     home: {
-      meta: { title: "박지민 / Jimmy Park", desc: "Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes." },
+      meta: { title: "Jimmy Park", desc: "Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes." },
       order: ["hero", "snapshot", "activities", "approach", "projects", "cta"],
       hidden: [],
       sections: {
         hero: {
           eyebrow: "Photographer · Videographer · Scout · Builder",
-          title: "Jimmy Park", nameKo: "박지민",
+          title: "Jimmy Park",
           lead: "I help turn a clear purpose into the right content, field execution, and working systems.",
-          leadKo: "목적을 이해하고, 방향을 제안하고, 실행까지 연결합니다.",
           ctaPrimary: link("View Work", "/work"),
           ctaGhost: link("Contact", "/contact"),
           image: "", badge: "On location",
@@ -40,65 +40,62 @@ const DEFAULT = {
         },
         snapshot: {
           rows: [
-            { label: "Current Roles", labelKo: "현재 역할", value: "BP Media · Korea Dream Path · APR C&P" },
-            { label: "Main Fields", labelKo: "주요 분야", value: "Photography · Video · Scouting · Vibe Coding" },
-            { label: "Collaboration", labelKo: "협업 가능 영역", value: "Event media · Video production · Scouting projects · Web prototypes" },
-            { label: "Base", labelKo: "활동 기반", value: "Korea · Korean / English" },
+            { label: "Current Roles", value: "BP Media · Korea Dream Path · APR C&P" },
+            { label: "Main Fields", value: "Photography · Video · Scouting · Vibe Coding" },
+            { label: "Collaboration", value: "Event media · Video production · Scouting projects · Web prototypes" },
+            { label: "Base", value: "Korea" },
           ],
         },
         activities: {
           eyebrow: "What I Actually Do",
           title: "Document → Produce → Connect → Build",
           items: [
-            { kicker: "Document", title: "Field Documentation", titleKo: "현장 기록 · 보도용 사진", desc: "I capture events, people, and key moments so they can be used immediately for press, social media, reports, and archives.", tags: ["Press", "SNS", "Report", "Archive"], href: "/work", accent: "burgundy" },
-            { kicker: "Produce", title: "Purpose-based Production", titleKo: "목적 기반 영상", desc: "I design video formats according to the purpose — promotion, event film, interview, campaign, IR/PR, or short-form.", tags: ["Promotion", "Interview", "Event Film", "Short-form"], href: "/work", accent: "burgundy" },
-            { kicker: "Connect", title: "Scouting Communication", titleKo: "스카우팅 커뮤니케이션", desc: "I connect youth movement, international exchange, media, and field experience through Scouting.", tags: ["Youth", "International", "Media"], href: "/scouting", accent: "green" },
-            { kicker: "Build", title: "Working Prototypes", titleKo: "웹 프로토타입 · 콘텐츠 도구", desc: "I use AI and web tools to quickly shape ideas into campaign pages, maps, content tools, and small systems.", tags: ["Campaign Page", "Map", "Content Tool"], href: "/work", accent: "burgundy" },
+            { kicker: "Document", title: "Field Documentation", desc: "I capture events, people, and key moments so they can be used immediately for press, social media, reports, and archives.", tags: ["Press", "SNS", "Report", "Archive"], href: "/work", accent: "burgundy" },
+            { kicker: "Produce", title: "Purpose-based Production", desc: "I design video formats according to the purpose — promotion, event film, interview, campaign, IR/PR, or short-form.", tags: ["Promotion", "Interview", "Event Film", "Short-form"], href: "/work", accent: "burgundy" },
+            { kicker: "Connect", title: "Scouting Communication", desc: "I connect youth movement, international exchange, media, and field experience through Scouting.", tags: ["Youth", "International", "Media"], href: "/scouting", accent: "green" },
+            { kicker: "Build", title: "Working Prototypes", desc: "I use AI and web tools to quickly shape ideas into campaign pages, maps, content tools, and small systems.", tags: ["Campaign Page", "Map", "Content Tool"], href: "/work", accent: "burgundy" },
           ],
         },
         approach: {
           eyebrow: "How I Approach a Project",
           title: "Tell me the purpose. I'll suggest the direction, then execute.",
-          titleKo: "목적을 알려주면, 가장 적절한 방향을 제안하고 실행합니다.",
           steps: [
-            { num: "01", title: "Understand the Purpose", titleKo: "목적 이해", desc: "Clarify why the project exists, who it is for, and where the output will be used." },
-            { num: "02", title: "Suggest the Direction", titleKo: "방향 제안", desc: "Propose the most suitable format, workflow, and communication approach." },
-            { num: "03", title: "Execute in the Field", titleKo: "현장 실행", desc: "Document, film, produce, coordinate, or build according to the project's needs." },
-            { num: "04", title: "Deliver for Use", titleKo: "활용 가능한 결과물", desc: "Prepare outputs ready for press, social media, reports, websites, or campaigns." },
+            { num: "01", title: "Understand the Purpose", desc: "Clarify why the project exists, who it is for, and where the output will be used." },
+            { num: "02", title: "Suggest the Direction", desc: "Propose the most suitable format, workflow, and communication approach." },
+            { num: "03", title: "Execute in the Field", desc: "Document, film, produce, coordinate, or build according to the project's needs." },
+            { num: "04", title: "Deliver for Use", desc: "Prepare outputs ready for press, social media, reports, websites, or campaigns." },
           ],
         },
         projects: {
           eyebrow: "Selected Projects",
           title: "A few things I've built",
-          feature: { badge: "Scouting · Media · Content", sub: "BP Media platform", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement in Korean.", descKo: "스카우트 전문 미디어 플랫폼", href: "/scouting", image: "" },
+          feature: { badge: "Scouting · Media · Content", sub: "BP Media platform", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement.", href: "/scouting", image: "" },
           items: [
-            { tag: "Education · Strategy · Video", title: "Korea Dream Path", desc: "A Life Learning Initiative for education, youth growth, and global collaboration.", descKo: "교육 · 청소년 성장 · 국제 협력", href: "/work", image: "" },
-            { tag: "Scouting · Web Prototype", title: "Scout Tour Assistant", desc: "A map-based prototype for meaningful Scouting places worldwide.", descKo: "스카우트 장소 지도 프로토타입", href: "/scouting", image: "" },
-            { tag: "Campaign · Scouting", title: "Jamboree D-count", desc: "A participation campaign page for the 16th Korea Jamboree countdown.", descKo: "제16회 한국잼버리 캠페인", href: "/scouting", image: "" },
+            { tag: "Education · Strategy · Video", title: "Korea Dream Path", desc: "A Life Learning Initiative for education, youth growth, and global collaboration.", href: "/work", image: "" },
+            { tag: "Scouting · Web Prototype", title: "Scout Tour Assistant", desc: "A map-based prototype for meaningful Scouting places worldwide.", href: "/scouting", image: "" },
+            { tag: "Campaign · Scouting", title: "Jamboree D-count", desc: "A participation campaign page for the 16th Korea Jamboree countdown.", href: "/scouting", image: "" },
           ],
         },
         cta: {
           title: "Let's start with the purpose.",
           body: "For collaboration, documentation, video, Scouting projects, or web prototypes — feel free to reach out.",
-          bodyKo: "협업 제안이든 가벼운 질문이든 괜찮습니다.",
           button: link("Contact", "/contact"),
         },
       },
     },
 
     work: {
-      meta: { title: "Work · Jimmy Park / 박지민", desc: "Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs." },
+      meta: { title: "Work · Jimmy Park", desc: "Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs." },
       order: ["intro", "photography", "video", "vibecoding", "lecture", "cta"],
       hidden: [],
       sections: {
         intro: {
-          eyebrow: "Work", eyebrowKo: "작업",
+          eyebrow: "Work",
           title: "Made for use, based on purpose.",
           lead: "I work across field documentation, purpose-based video, and small digital tools — depending on what the project needs.",
-          leadKo: "프로젝트의 목적에 따라 사진, 영상, 웹 도구를 조합합니다.",
         },
         photography: {
-          kicker: "Document", title: "Photography", sub: "Field documentation for immediate use · 현장 기록",
+          kicker: "Document", title: "Photography", sub: "Field documentation for immediate use",
           desc: "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.",
           deliverables: [
             { text: "Event sketch · speaker & participant photos" },
@@ -110,7 +107,7 @@ const DEFAULT = {
           image: "",
         },
         video: {
-          kicker: "Produce", title: "Video", sub: "Formats shaped by purpose · 목적에 따라 달라지는 영상",
+          kicker: "Produce", title: "Video", sub: "Formats shaped by purpose",
           desc: "Video should change depending on its purpose. I organize the format, rhythm, and message according to the audience and use case.",
           formats: [
             { name: "Promotion", desc: "For institutions, brands, projects" },
@@ -123,7 +120,7 @@ const DEFAULT = {
           caption: "Video type · purpose · availability",
         },
         vibecoding: {
-          kicker: "Build", title: "Vibe Coding", sub: "Small systems that make ideas work · 아이디어를 작동하게",
+          kicker: "Build", title: "Vibe Coding", sub: "Small systems that make ideas work",
           desc: "I'm not presenting myself as a traditional developer. I use AI and web tools to quickly test ideas, build campaign pages, organize content flows, and create small tools that support real projects.",
           items: [
             { slug: "scout-tour-assistant", title: "Scout Tour Assistant", desc: "Map-based Scouting place archive", status: "Prototype", accent: "green", image: "" },
@@ -133,7 +130,7 @@ const DEFAULT = {
           ],
         },
         lecture: {
-          kicker: "Teach", title: "Lecture", sub: "Talks & workshops from the field · 강의 · 강연",
+          kicker: "Teach", title: "Lecture", sub: "Talks & workshops from the field",
           desc: "I share field experience through lectures and workshops — on Scouting and youth communication, field media and documentation, and AI-assisted prototyping. Each session is shaped around the audience and the purpose.",
           topics: [
             { name: "Scouting & Youth", desc: "Communication, international exchange, youth movement" },
@@ -145,28 +142,26 @@ const DEFAULT = {
         cta: {
           title: "Need field documentation, video, or a small web prototype? Tell me the purpose first.",
           body: "If the purpose and use case are clear, we can plan the structure, execution, and delivery together.",
-          bodyKo: "목적을 알려주시면, 필요한 방향과 실행 방식을 함께 정리할 수 있습니다.",
           button: link("Contact", "/contact"),
         },
       },
     },
 
     scouting: {
-      meta: { title: "Scouting · Jimmy Park / 박지민", desc: "Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media." },
+      meta: { title: "Scouting · Jimmy Park", desc: "Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media." },
       order: ["hero", "why", "stats", "timeline", "roles", "international", "mediaprojects", "gallery", "cta"],
       hidden: [],
       sections: {
         hero: {
-          eyebrow: "Scouting", eyebrowKo: "스카우팅",
+          eyebrow: "Scouting",
           title: "Scouting has been my long-term base for communication, field experience, and international connection.",
-          leadKo: "스카우팅은 오래된 커뮤니케이션의 기반입니다.",
+          lead: "From Scout to Scout Leader, it taught me how people gather, move, and build trust across borders.",
           image: "", badge: "International event",
           caption: "Scouting field · international event · youth movement",
         },
         why: {
           eyebrow: "Why Scouting Matters",
           body: "Scouting is where I learned how people gather, move, communicate, and build trust across different backgrounds. It shaped the way I document fields, design messages, and connect projects.",
-          bodyKo: "사람이 모이고 움직이고 신뢰를 만드는 방식을 배운 현장입니다.",
         },
         stats: {
           items: [
@@ -192,7 +187,7 @@ const DEFAULT = {
         },
         mediaprojects: {
           title: "Scouting Media Projects",
-          feature: { badge: "Flagship", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement in Korean.", image: "" },
+          feature: { badge: "Flagship", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement.", image: "" },
           items: [
             { title: "Scout Tour Assistant", desc: "A map-based prototype for meaningful Scouting places, heritage sites, offices, and campsites." },
             { title: "Jamboree D-count", desc: "A participation campaign page for the 16th Korea Jamboree countdown." },
@@ -201,17 +196,17 @@ const DEFAULT = {
         },
         timeline: {
           title: "Scouting History",
-          note: "From Scout (2003) to Scout Leader (2014) — tap any item to expand · 대원에서 지도자까지, 항목을 누르면 펼쳐집니다",
+          note: "From Scout (2003) to Scout Leader (2014) — tap any item to expand.",
           items: [
-            { year: "2003", title: "Joined Scouting as a Scout", context: "2003년, 한 명의 스카우트 대원으로 스카우팅을 시작했습니다. 현장에서 사람과 활동을 직접 경험한 시기입니다.", track: "Scout", accent: "neutral" },
-            { year: "2012", title: "Started Scouting media activities", context: "대원으로 활동하면서 기록과 커뮤니케이션에 관심을 갖고 스카우트 미디어 활동의 기반을 다지기 시작했습니다.", track: "Scout", accent: "neutral" },
-            { year: "2014", title: "Became a Scout Leader", context: "2014년, 스카우트 지도자가 되었습니다. 대원으로서의 경험을 바탕으로 청소년 활동을 이끌고 지원하는 역할로 전환했습니다.", track: "Leader", accent: "green" },
-            { year: "2016–2017", title: "World Scout Jamboree bid & related projects", context: "세계스카우트잼버리 유치 및 관련 프로젝트에 지도자로서 참여했습니다.", track: "Leader", accent: "neutral" },
-            { year: "2022–2024", title: "National Commissioner, Korea Scout Association", context: "한국스카우트연맹 중앙커미셔너로 국내 스카우트 활동과 커뮤니케이션에 참여했습니다.", track: "Leader", accent: "green" },
-            { year: "2023", title: "Korea Contingent Media, 25th World Scout Jamboree", context: "제25회 세계스카우트잼버리 대한민국 대표단 미디어부 부국장으로 활동했습니다.", track: "Leader", accent: "green" },
-            { year: "2025–2028", title: "APR C&P Sub-Committee, 2nd Vice Chair", context: "아시아·태평양 지역 커뮤니케이션·파트너십 위원회 부의장으로 활동하고 있습니다.", track: "Leader", accent: "green" },
-            { year: "2026–", title: "BP Media", context: "스카우트 전문 미디어 플랫폼을 운영합니다.", track: "Leader", accent: "green" },
-            { year: "2026–", title: "Scout Tour Assistant · Jamboree D-count experiments", context: "스카우트 기반 웹 프로젝트를 실험하고 있습니다.", track: "Leader", accent: "green" },
+            { year: "2003", title: "Joined Scouting as a Scout", context: "I started Scouting as a Scout, experiencing people and activities first-hand in the field.", track: "Scout", accent: "neutral" },
+            { year: "2012", title: "Started Scouting media activities", context: "While active as a Scout, I grew interested in documentation and communication, and began building toward Scouting media work.", track: "Scout", accent: "neutral" },
+            { year: "2014", title: "Became a Scout Leader", context: "I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.", track: "Leader", accent: "green" },
+            { year: "2016–2017", title: "World Scout Jamboree bid & related projects", context: "I took part as a leader in the World Scout Jamboree bid and related projects.", track: "Leader", accent: "neutral" },
+            { year: "2022–2024", title: "National Commissioner, Korea Scout Association", context: "I served as National Commissioner of the Korea Scout Association, working on domestic Scouting activity and communication.", track: "Leader", accent: "green" },
+            { year: "2023", title: "Korea Contingent Media, 25th World Scout Jamboree", context: "I served as Deputy Director of the Media Department for the Korean Contingent at the 25th World Scout Jamboree.", track: "Leader", accent: "green" },
+            { year: "2025–2028", title: "APR C&P Sub-Committee, 2nd Vice Chair", context: "I serve as 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.", track: "Leader", accent: "green" },
+            { year: "2026–", title: "BP Media", context: "I run BP Media, a Scouting-specialized media platform.", track: "Leader", accent: "green" },
+            { year: "2026–", title: "Scout Tour Assistant · Jamboree D-count experiments", context: "I'm experimenting with Scouting-based web projects like Scout Tour Assistant and the Jamboree D-count.", track: "Leader", accent: "green" },
           ],
         },
         gallery: {
@@ -226,22 +221,21 @@ const DEFAULT = {
         },
         cta: {
           title: "If the project is related to Scouting, youth, or international collaboration, let's talk.",
-          bodyKo: "스카우트, 청소년, 국제 프로젝트라면 이야기해 주세요.",
+          body: "Reach out and tell me the purpose — I'll suggest where to take it.",
           button: link("Contact", "/contact"),
         },
       },
     },
 
     contact: {
-      meta: { title: "Contact · Jimmy Park / 박지민", desc: "Contact Jimmy Park for collaboration, event documentation, video production, Scouting projects, or small web prototypes. Email, phone, Korean / English." },
+      meta: { title: "Contact · Jimmy Park", desc: "Contact Jimmy Park for collaboration, event documentation, video production, Scouting projects, or small web prototypes. Email and phone." },
       order: ["intro"],
       hidden: [],
       sections: {
         intro: {
-          eyebrow: "Contact", eyebrowKo: "연락",
+          eyebrow: "Contact",
           title: "Let's get in touch.",
           lead: "For collaboration, event documentation, video production, Scouting projects, or small web prototypes, feel free to get in touch.",
-          leadKo: "협업, 촬영, 영상 제작, 스카우트 프로젝트, 웹 프로토타입 문의를 받고 있습니다.",
         },
       },
     },
@@ -268,7 +262,7 @@ function sanitize(def, val) {
   return def;
 }
 
-// Map a v1 doc ({seo, contact, hero}) onto the v2 defaults so old data survives.
+// Map a v1 doc ({seo, contact, hero}) onto the defaults so old data survives.
 function fromV1(doc) {
   const out = JSON.parse(JSON.stringify(DEFAULT));
   if (doc.seo) { out.global.seo = { ...out.global.seo, ...doc.seo }; out.pages.home.meta = { ...out.pages.home.meta, ...doc.seo }; }
@@ -292,9 +286,9 @@ function mergeOrder(defOrder, saved) {
   });
   return out;
 }
-// v2 → v3: scouting timeline reworked into Scout (대원) / Leader (지도자) tracks and moved
-// up in the page order. Re-seed only if the saved timeline is still the old track-less shape
-// (so a fresh save with tracks is never clobbered). Idempotent on every read until re-saved.
+
+// v2 → v3: scouting timeline reworked into Scout / Leader tracks and moved up in the
+// page order. Re-seed only if the saved timeline is still the old track-less shape.
 function migrateTo3(doc) {
   try {
     const sc = doc.pages && doc.pages.scouting;
@@ -311,6 +305,37 @@ function migrateTo3(doc) {
   return doc;
 }
 
+// v3 → v4: the site is now English-only. Removed *Ko fields are dropped automatically by
+// sanitize() (it only keeps keys present in DEFAULT). For any string still containing
+// Hangul, swap in the English DEFAULT value at the same path (arrays matched by index),
+// or strip the Korean if there's no English default. This preserves non-Korean edits
+// (e.g. uploaded images) while guaranteeing no Korean text reaches the live site.
+function dekoreanize(def, val) {
+  if (Array.isArray(def) && Array.isArray(val)) {
+    val.forEach((item, i) => {
+      const d = def[i] != null ? def[i] : def[0];
+      if (item && typeof item === "object" && d && typeof d === "object") dekoreanize(d, item);
+      else if (typeof item === "string" && HANGUL.test(item)) val[i] = typeof d === "string" ? d : item.replace(/[가-힣]/g, "").trim();
+    });
+    return;
+  }
+  if (def && typeof def === "object" && val && typeof val === "object") {
+    for (const k of Object.keys(val)) {
+      const dv = def[k];
+      if (typeof val[k] === "string") {
+        if (HANGUL.test(val[k])) val[k] = typeof dv === "string" ? dv : val[k].replace(/[가-힣]/g, "").replace(/\s*·\s*$/, "").replace(/^\s*·\s*/, "").trim();
+      } else if (val[k] && typeof val[k] === "object" && dv && typeof dv === "object") {
+        dekoreanize(dv, val[k]);
+      }
+    }
+  }
+}
+function migrateTo4(doc) {
+  try { dekoreanize(DEFAULT, doc); } catch (_) {}
+  doc.version = 4;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -322,8 +347,9 @@ export async function onRequestGet({ env }) {
   let doc = null;
   try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
   if (!doc) return json({ ok: true, content: DEFAULT });
-  if (doc.version !== 2 && doc.version !== 3) doc = fromV1(doc);
+  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
+  if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   // Re-sanitize on read so older/partial docs always match the current shape.
   const clean = normalizeOrders(sanitize(DEFAULT, doc));
   clean.updatedAt = doc.updatedAt || 0;
@@ -335,9 +361,10 @@ export async function onRequestPut({ request, env }) {
   let body = {};
   try { body = await request.json(); } catch (_) {}
   let incoming = body.content || body;
-  if (incoming && incoming.version !== 2 && incoming.version !== 3) incoming = fromV1(incoming);
+  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4) incoming = fromV1(incoming);
+  if (incoming && (incoming.version || 0) < 4) migrateTo4(incoming);
   const doc = sanitize(DEFAULT, incoming);
-  doc.version = 3;
+  doc.version = 4;
   doc.updatedAt = Date.now();
   await env.JP_KV.put(KEY, JSON.stringify(doc));
   return json({ ok: true, content: doc });

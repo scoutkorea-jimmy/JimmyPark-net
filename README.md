@@ -1,7 +1,7 @@
-# JimmyPark.net — Jimmy Park / 박지민
+# JimmyPark.net — Jimmy Park
 
 Personal profile site: Photographer · Videographer · Scout · Builder.
-Clean, modern, warm-minimal. English-first with Korean support. Burgundy `#7a1e2c`
+Clean, modern, warm-minimal. English-only. Burgundy `#7a1e2c`
 accent, Scouting green `#2f5a45` sub-accent. **Vanilla HTML/CSS/JS — no build step.**
 
 ## Structure

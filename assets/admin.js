@@ -36,48 +36,48 @@
   var ACCENT_BG = [{ v: "burgundy", t: "Burgundy" }, { v: "green", t: "Green" }];
   var ACCENT_NG = [{ v: "neutral", t: "Neutral" }, { v: "green", t: "Green" }];
   var STATUS = [{ v: "Live", t: "Live" }, { v: "Prototype", t: "Prototype" }, { v: "Beta", t: "Beta" }, { v: "In Progress", t: "In Progress" }];
-  var TRACK = [{ v: "Scout", t: "Scout (대원)" }, { v: "Leader", t: "Leader (지도자)" }];
+  var TRACK = [{ v: "Scout", t: "Scout" }, { v: "Leader", t: "Leader" }];
   var F = function (k, label, type, options) { return { k: k, label: label, type: type || "text", options: options }; };
 
   var SCHEMA = {
     global: {
       title: "Global", kind: "global",
       groups: [
-        { title: "Brand", path: ["global", "brand"], fields: [F("name", "Name"), F("nameKo", "Name (KO)"), F("roleline", "Role line")] },
+        { title: "Brand", path: ["global", "brand"], fields: [F("name", "Name"), F("roleline", "Role line")] },
         { title: "Footer", path: ["global", "footer"], fields: [F("tagline", "Tagline"), F("copyright", "Copyright")] },
         { title: "Contact (site-wide)", path: ["global", "contact"], fields: [F("email", "Email"), F("phone", "Phone"), F("linkedin", "LinkedIn URL (blank = hidden)"), F("location", "Location / language")] },
         { title: "Default SEO", path: ["global", "seo"], fields: [F("title", "Default title"), F("desc", "Default description", "textarea")] },
       ],
     },
     home: { title: "Home", kind: "page", page: "home", sections: [
-      { id: "hero", title: "Hero", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("nameKo", "Name (KO)"), F("lead", "Lead", "textarea"), F("leadKo", "Lead (KO)", "textarea"), F("badge", "Image badge"), F("caption", "Caption"), F("captionRight", "Caption (right)")], links: [["ctaPrimary", "Primary button"], ["ctaGhost", "Secondary button"]], images: [["image", "Hero image"]] },
-      { id: "snapshot", title: "Profile snapshot", collections: [{ k: "rows", label: "Rows", fields: [F("label", "Label"), F("labelKo", "Label (KO)"), F("value", "Value")], tmpl: { label: "", labelKo: "", value: "" } }] },
-      { id: "activities", title: "What I Actually Do", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], collections: [{ k: "items", label: "Activities", fields: [F("kicker", "Kicker"), F("title", "Title"), F("titleKo", "Title (KO)"), F("desc", "Description", "textarea"), F("tags", "Tags (comma-separated)", "taglist"), F("href", "Link"), F("accent", "Accent", "select", ACCENT_BG)], tmpl: { kicker: "", title: "", titleKo: "", desc: "", tags: [], href: "/work", accent: "burgundy" } }] },
-      { id: "approach", title: "How I Approach", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("titleKo", "Title (KO)")], collections: [{ k: "steps", label: "Steps", fields: [F("num", "Number"), F("title", "Title"), F("titleKo", "Title (KO)"), F("desc", "Description", "textarea")], tmpl: { num: "", title: "", titleKo: "", desc: "" } }] },
-      { id: "projects", title: "Selected Projects", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("sub", "Sub-label"), F("title", "Title"), F("desc", "Description", "textarea"), F("descKo", "Description (KO)"), F("href", "Link")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Project cards", fields: [F("tag", "Tag"), F("title", "Title"), F("desc", "Description", "textarea"), F("descKo", "Description (KO)"), F("href", "Link")], images: [["image", "Image"]], tmpl: { tag: "", title: "", desc: "", descKo: "", href: "/work", image: "" } }] },
-      { id: "cta", title: "Contact CTA", fields: [F("title", "Title"), F("body", "Body", "textarea"), F("bodyKo", "Body (KO)")], links: [["button", "Button"]] },
+      { id: "hero", title: "Hero", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea"), F("badge", "Image badge"), F("caption", "Caption"), F("captionRight", "Caption (right)")], links: [["ctaPrimary", "Primary button"], ["ctaGhost", "Secondary button"]], images: [["image", "Hero image"]] },
+      { id: "snapshot", title: "Profile snapshot", collections: [{ k: "rows", label: "Rows", fields: [F("label", "Label"), F("value", "Value")], tmpl: { label: "", value: "" } }] },
+      { id: "activities", title: "What I Actually Do", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], collections: [{ k: "items", label: "Activities", fields: [F("kicker", "Kicker"), F("title", "Title"), F("desc", "Description", "textarea"), F("tags", "Tags (comma-separated)", "taglist"), F("href", "Link"), F("accent", "Accent", "select", ACCENT_BG)], tmpl: { kicker: "", title: "", desc: "", tags: [], href: "/work", accent: "burgundy" } }] },
+      { id: "approach", title: "How I Approach", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], collections: [{ k: "steps", label: "Steps", fields: [F("num", "Number"), F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { num: "", title: "", desc: "" } }] },
+      { id: "projects", title: "Selected Projects", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("sub", "Sub-label"), F("title", "Title"), F("desc", "Description", "textarea"), F("href", "Link")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Project cards", fields: [F("tag", "Tag"), F("title", "Title"), F("desc", "Description", "textarea"), F("href", "Link")], images: [["image", "Image"]], tmpl: { tag: "", title: "", desc: "", href: "/work", image: "" } }] },
+      { id: "cta", title: "Contact CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
     work: { title: "Work", kind: "page", page: "work", sections: [
-      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("eyebrowKo", "Eyebrow (KO)"), F("title", "Title"), F("lead", "Lead", "textarea"), F("leadKo", "Lead (KO)", "textarea")] },
+      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
       { id: "photography", title: "Photography", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption")], images: [["image", "Image"]], collections: [{ k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } }, { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption")], collections: [{ k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "vibecoding", title: "Vibe Coding", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Projects", fields: [F("slug", "Slug (browser bar)"), F("title", "Title"), F("desc", "Description"), F("status", "Status", "select", STATUS), F("accent", "Accent", "select", ACCENT_NG)], images: [["image", "Image"]], tmpl: { slug: "", title: "", desc: "", status: "Prototype", accent: "neutral", image: "" } }] },
       { id: "lecture", title: "Lecture", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "topics", label: "Topics", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
-      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea"), F("bodyKo", "Body (KO)")], links: [["button", "Button"]] },
+      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
     scouting: { title: "Scouting", kind: "page", page: "scouting", sections: [
-      { id: "hero", title: "Hero", fields: [F("eyebrow", "Eyebrow"), F("eyebrowKo", "Eyebrow (KO)"), F("title", "Title"), F("leadKo", "Lead (KO)", "textarea"), F("badge", "Image badge"), F("caption", "Caption")], images: [["image", "Hero image"]] },
-      { id: "why", title: "Why Scouting Matters", fields: [F("eyebrow", "Eyebrow"), F("body", "Body", "textarea"), F("bodyKo", "Body (KO)")] },
+      { id: "hero", title: "Hero", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea"), F("badge", "Image badge"), F("caption", "Caption")], images: [["image", "Hero image"]] },
+      { id: "why", title: "Why Scouting Matters", fields: [F("eyebrow", "Eyebrow"), F("body", "Body", "textarea")] },
       { id: "stats", title: "Stats", collections: [{ k: "items", label: "Stats", fields: [F("value", "Value"), F("label", "Label")], tmpl: { value: "", label: "" } }] },
       { id: "roles", title: "Key Roles", fields: [F("title", "Title")], collections: [{ k: "items", label: "Roles", fields: [F("title", "Title"), F("org", "Org / sub"), F("period", "Period"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { title: "", org: "", period: "", accent: "neutral" } }] },
       { id: "international", title: "International Experience", fields: [F("title", "Title"), F("body", "Body", "textarea")], collections: [{ k: "tags", label: "Tags", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "mediaprojects", title: "Media Projects", fields: [F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("title", "Title"), F("desc", "Description", "textarea")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Cards", fields: [F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { title: "", desc: "" } }] },
       { id: "timeline", title: "Scouting History (timeline)", fields: [F("title", "Title"), F("note", "Note", "textarea")], collections: [{ k: "items", label: "Entries", fields: [F("year", "Year"), F("track", "Track", "select", TRACK), F("title", "Title"), F("context", "Context", "textarea"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { year: "", track: "Leader", title: "", context: "", accent: "green" } }] },
       { id: "gallery", title: "Field Gallery", fields: [F("title", "Title")], collections: [{ k: "figs", label: "Images", fields: [F("label", "Label"), F("category", "Category")], images: [["image", "Image"]], tmpl: { label: "", category: "Scouting field", image: "" } }] },
-      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("bodyKo", "Body (KO)")], links: [["button", "Button"]] },
+      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
     contact: { title: "Contact", kind: "page", page: "contact", sections: [
-      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("eyebrowKo", "Eyebrow (KO)"), F("title", "Title"), F("lead", "Lead", "textarea"), F("leadKo", "Lead (KO)", "textarea")] },
+      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
     ] },
   };
 
@@ -287,28 +287,173 @@
     return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-imgpick" }, [thumb, btn])]);
   }
 
+  // One-line summary for a collapsed collection item — first non-empty of a few
+  // likely "headline" fields, so each row is identifiable without expanding it.
+  function itemSummary(item) {
+    var keys = ["year", "title", "name", "label", "kicker", "value", "text", "slug", "num", "tag", "status"];
+    var parts = [];
+    for (var i = 0; i < keys.length && parts.length < 2; i++) {
+      var v = item[keys[i]];
+      if (typeof v === "string" && v.trim()) parts.push(v.trim());
+    }
+    return parts.join(" · ") || "Untitled";
+  }
+
+  // ── CSV helpers (per-collection bulk import / export / template) ───────────
+  // A collection's CSV columns are its field keys + image keys, in schema order.
+  function csvKeys(col) {
+    return (col.fields || []).map(function (f) { return f.k; }).concat((col.images || []).map(function (im) { return im[0]; }));
+  }
+  function isTagField(col, k) {
+    var f = (col.fields || []).filter(function (x) { return x.k === k; })[0];
+    return !!(f && f.type === "taglist");
+  }
+  function cellOut(col, item, k) {
+    if (isTagField(col, k)) return (item[k] || []).map(function (t) { return typeof t === "string" ? t : (t.text || ""); }).join("; ");
+    var v = item[k];
+    return v == null ? "" : String(v);
+  }
+  function cellIn(col, k, raw) {
+    raw = raw == null ? "" : String(raw).trim();
+    if (isTagField(col, k)) return raw ? raw.split(/[;,]/).map(function (s) { return s.trim(); }).filter(Boolean).map(function (s) { return { text: s }; }) : [];
+    return raw;
+  }
+  function csvCell(s) { s = String(s == null ? "" : s); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+  function toCSV(rows) { return rows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n"); }
+  function parseCSV(text) {
+    var rows = [], row = [], cur = "", q = false, i, c;
+    text = String(text).replace(/\r\n?/g, "\n");
+    for (i = 0; i < text.length; i++) {
+      c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+      else if (c === '"') q = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += c;
+    }
+    row.push(cur); rows.push(row);
+    return rows.filter(function (r) { return r.some(function (x) { return x && x.trim() !== ""; }); });
+  }
+  function downloadText(name, text) {
+    var blob = new Blob(["﻿" + text], { type: "text/csv;charset=utf-8;" });
+    var url = URL.createObjectURL(blob);
+    var a = el("a", { href: url, download: name });
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+  function downloadTemplate(col) {
+    var keys = csvKeys(col);
+    var example = col.tmpl ? keys.map(function (k) { return cellOut(col, col.tmpl, k); }) : keys.map(function () { return ""; });
+    downloadText("jp-" + col.k + "-template.csv", toCSV([keys, example]));
+  }
+  function exportCsv(col, arr) {
+    var keys = csvKeys(col);
+    var rows = [keys].concat(arr.map(function (item) { return keys.map(function (k) { return cellOut(col, item, k); }); }));
+    downloadText("jp-" + col.k + ".csv", toCSV(rows));
+  }
+  // Append rows from a CSV. First row is the header; columns are matched to field keys
+  // case-insensitively, unknown columns are ignored. Each row starts from the template.
+  function importCsv(col, arr, text) {
+    var rows = parseCSV(text);
+    if (rows.length < 2) return 0;
+    var keys = csvKeys(col);
+    var map = rows[0].map(function (h) {
+      var lh = h.trim().toLowerCase();
+      return keys.filter(function (k) { return k.toLowerCase() === lh; })[0] || null;
+    });
+    var added = 0;
+    rows.slice(1).forEach(function (r) {
+      var item = clone(col.tmpl || {});
+      map.forEach(function (k, ci) { if (k) item[k] = cellIn(col, k, r[ci]); });
+      item._open = false; arr.push(item); added++;
+    });
+    return added;
+  }
+  function pickCsv(cb) {
+    var inp = el("input", { type: "file", accept: ".csv,text/csv", style: "display:none;" });
+    inp.addEventListener("change", function () {
+      var f = inp.files && inp.files[0];
+      if (f) { var rd = new FileReader(); rd.onload = function () { cb(String(rd.result || "")); }; rd.readAsText(f); }
+    });
+    document.body.appendChild(inp); inp.click();
+    setTimeout(function () { if (inp.parentNode) inp.parentNode.removeChild(inp); }, 60000);
+  }
+  function flash(msg, ok) {
+    var m = $("save-msg"); if (!m) return;
+    m.textContent = msg; m.className = "ad-msg " + (ok === false ? "ad-err" : "ad-ok");
+    setTimeout(function () { if (m.textContent === msg) m.textContent = ""; }, 2400);
+  }
+
   function collectionEl(data, col) {
     var arr = data[col.k] = data[col.k] || [];
     var wrap = el("div", { style: "margin-top:8px;" });
     wrap.appendChild(el("div", { class: "ad-label", text: col.label + " (" + arr.length + ")" }));
+
+    // CSV + bulk-select toolbar
+    function selCount() { return arr.filter(function (it) { return it._sel; }).length; }
+    var delBtn = el("button", { class: "ad-mini del", onclick: function () {
+      var n = selCount(); if (!n) return;
+      if (!confirm("Delete " + n + " selected " + col.label.toLowerCase() + "? This cannot be undone.")) return;
+      for (var i = arr.length - 1; i >= 0; i--) if (arr[i]._sel) arr.splice(i, 1);
+      renderEditor(); schedulePreview();
+    } });
+    function syncDel() { var n = selCount(); delBtn.textContent = "Delete selected (" + n + ")"; delBtn.disabled = !n; delBtn.style.opacity = n ? "1" : ".45"; }
+    var bar = el("div", { class: "ad-coltools" }, [
+      el("button", { class: "ad-mini", title: "Download a blank CSV template for this list", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">download</span>Template', onclick: function () { downloadTemplate(col); } }),
+      el("button", { class: "ad-mini", title: "Export the current rows to CSV", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">file_save</span>Export', onclick: function () { exportCsv(col, arr); } }),
+      el("button", { class: "ad-mini", title: "Bulk-add rows from a CSV file", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">upload</span>Import CSV', onclick: function () { pickCsv(function (text) { var n = importCsv(col, arr, text); renderEditor(); schedulePreview(); flash(n ? ("Imported " + n + " row" + (n > 1 ? "s" : "") + " — Save to publish") : "No rows found in CSV", !!n); }); } }),
+      el("span", { style: "flex:1;" }),
+      el("button", { class: "ad-mini", title: "Select / clear all", text: "Select all", onclick: function () { var all = arr.length && selCount() === arr.length; arr.forEach(function (it) { it._sel = !all; }); renderEditor(); } }),
+      delBtn,
+    ]);
+    wrap.appendChild(bar);
+
     arr.forEach(function (item, idx) {
-      var box = el("div", { class: "ad-item" });
-      box.appendChild(el("div", { class: "ad-item-bar" }, [
-        el("span", { style: "font-size:11px; color:#9a948b; font-weight:700;", text: "#" + (idx + 1) }),
-        el("div", { class: "grp" }, [
-          el("button", { class: "ad-mini", text: "↑", onclick: function () { moveItem(arr, idx, -1, col, data); } }),
-          el("button", { class: "ad-mini", text: "↓", onclick: function () { moveItem(arr, idx, 1, col, data); } }),
-          el("button", { class: "ad-mini del", text: "Delete", onclick: function () { arr.splice(idx, 1); renderEditor(); schedulePreview(); } }),
+      var det = el("details", { class: "ad-item ad-acc" });
+      if (item._open) det.setAttribute("open", "");
+      det.addEventListener("toggle", function () { item._open = det.open; });
+      var sumText = el("span", { class: "ad-acc-sum", text: itemSummary(item) });
+      var cb = el("input", { type: "checkbox", class: "ad-acc-cb", title: "Select for bulk delete" });
+      cb.checked = !!item._sel;
+      cb.addEventListener("click", function (e) { e.stopPropagation(); });
+      cb.addEventListener("change", function () { item._sel = cb.checked; syncDel(); });
+      var summary = el("summary", { class: "ad-acc-head" }, [
+        cb,
+        el("span", { class: "ad-acc-no", text: "#" + (idx + 1) }),
+        sumText,
+        el("span", { class: "grp", onclick: function (e) { e.preventDefault(); } }, [
+          el("button", { class: "ad-mini", title: "Move to top", text: "⤒", onclick: function (e) { e.preventDefault(); moveItemTo(arr, idx, 0); } }),
+          el("button", { class: "ad-mini", title: "Up", text: "↑", onclick: function (e) { e.preventDefault(); moveItem(arr, idx, -1); } }),
+          el("button", { class: "ad-mini", title: "Down", text: "↓", onclick: function (e) { e.preventDefault(); moveItem(arr, idx, 1); } }),
+          el("button", { class: "ad-mini", title: "Move to bottom", text: "⤓", onclick: function (e) { e.preventDefault(); moveItemTo(arr, idx, arr.length - 1); } }),
+          el("button", { class: "ad-mini", title: "Duplicate", text: "⧉", onclick: function (e) { e.preventDefault(); var c = clone(item); delete c._sel; c._open = true; arr.splice(idx + 1, 0, c); renderEditor(); schedulePreview(); } }),
+          el("button", { class: "ad-mini del", title: "Delete", text: "✕", onclick: function (e) { e.preventDefault(); arr.splice(idx, 1); renderEditor(); schedulePreview(); } }),
         ]),
-      ]));
-      (col.fields || []).forEach(function (f) { box.appendChild(fieldEl(item, f)); });
-      (col.images || []).forEach(function (im) { box.appendChild(imageEl(item, im[0], im[1])); });
-      wrap.appendChild(box);
+      ]);
+      det.appendChild(summary);
+      var body = el("div", { class: "ad-acc-body" });
+      (col.fields || []).forEach(function (f) { body.appendChild(fieldEl(item, f)); });
+      (col.images || []).forEach(function (im) { body.appendChild(imageEl(item, im[0], im[1])); });
+      // keep the collapsed summary in sync as the headline fields are edited
+      body.addEventListener("input", function () { sumText.textContent = itemSummary(item); });
+      det.appendChild(body);
+      wrap.appendChild(det);
     });
-    wrap.appendChild(el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">add</span>Add ' + col.label, onclick: function () { arr.push(clone(col.tmpl)); renderEditor(); schedulePreview(); } }));
+    syncDel();
+    wrap.appendChild(el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">add</span>Add ' + col.label, onclick: function () { var t = clone(col.tmpl); t._open = true; arr.push(t); renderEditor(); schedulePreview(); focusNewItem(); } }));
     return wrap;
   }
-  function moveItem(arr, idx, dir, col, data) { var j = idx + dir; if (j < 0 || j >= arr.length) return; var t = arr[idx]; arr[idx] = arr[j]; arr[j] = t; renderEditor(); schedulePreview(); }
+  function moveItem(arr, idx, dir) { var j = idx + dir; if (j < 0 || j >= arr.length) return; var t = arr[idx]; arr[idx] = arr[j]; arr[j] = t; renderEditor(); schedulePreview(); }
+  function moveItemTo(arr, idx, to) { if (to < 0 || to >= arr.length || to === idx) return; var t = arr.splice(idx, 1)[0]; arr.splice(to, 0, t); renderEditor(); schedulePreview(); }
+  // after Add: open + scroll to the last accordion item and focus its first input
+  function focusNewItem() {
+    var dets = $("editor").querySelectorAll("details.ad-acc[open]");
+    var d = dets[dets.length - 1];
+    if (!d) return;
+    d.scrollIntoView({ behavior: "smooth", block: "center" });
+    var inp = d.querySelector(".ad-acc-body .ad-in, .ad-acc-body .ad-ta");
+    if (inp) inp.focus();
+  }
 
   // ── preview ───────────────────────────────────────────────────────────────
   // Render the iframe at a true device width, then scale it to fit the column so
@@ -433,6 +578,17 @@
     $("picker-upload").addEventListener("click", function () { fi.click(); });
     $("picker-clear").addEventListener("click", function () { if (pendingPick) pendingPick(""); closePicker(); });
 
+    var pt = $("prev-toggle");
+    if (pt) {
+      try { if (localStorage.getItem("jp:noprev") === "1") document.body.classList.add("ad-noprev"); } catch (_) {}
+      var syncPt = function () { var off = document.body.classList.contains("ad-noprev"); pt.setAttribute("aria-pressed", off ? "true" : "false"); pt.title = off ? "Show preview" : "Hide preview"; };
+      syncPt();
+      pt.addEventListener("click", function () {
+        var off = document.body.classList.toggle("ad-noprev");
+        try { localStorage.setItem("jp:noprev", off ? "1" : "0"); } catch (_) {}
+        syncPt(); if (!off) applyDevice();
+      });
+    }
     $("dev-desktop").addEventListener("click", function () { setDevice("desktop"); });
     $("dev-mobile").addEventListener("click", function () { setDevice("mobile"); });
     $("prev-refresh").addEventListener("click", setPreviewSrc);
