@@ -8,42 +8,71 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.1.0">
+<link rel="stylesheet" href="/assets/site.css?v=0.2.0">
 <style>
   body { background: #f7f6f3; }
-  .ad-wrap { max-width: 1060px; margin: 0 auto; padding: clamp(20px,4vw,40px) clamp(18px,4vw,40px) 80px; }
-  .ad-card { background: #fff; border: 1px solid #e6e1da; border-radius: 20px; padding: clamp(20px,3vw,28px); }
-  .ad-h { font-weight: 800; font-size: 16px; margin: 0 0 4px; letter-spacing: -.01em; }
-  .ad-sub { font-size: 12.5px; color: #66615c; margin: 0 0 18px; line-height: 1.55; }
-  .ad-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #66615c; margin-bottom: 6px; }
-  .ad-in, .ad-ta { width: 100%; font-size: 14px; padding: 11px 12px; border: 1px solid #e6e1da; border-radius: 12px; font-family: inherit; color: #171717; background: #fff; }
+  .ad-wrap { max-width: 1480px; margin: 0 auto; padding: clamp(16px,3vw,28px) clamp(16px,3vw,32px) 80px; }
+  .ad-card { background: #fff; border: 1px solid #e6e1da; border-radius: 18px; padding: clamp(16px,2.2vw,22px); }
+  .ad-h { font-weight: 800; font-size: 15.5px; margin: 0 0 4px; letter-spacing: -.01em; }
+  .ad-sub { font-size: 12.5px; color: #66615c; margin: 0 0 16px; line-height: 1.55; }
+  .ad-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #66615c; margin-bottom: 6px; }
+  .ad-in, .ad-ta { width: 100%; font-size: 14px; padding: 10px 12px; border: 1px solid #e6e1da; border-radius: 11px; font-family: inherit; color: #171717; background: #fff; }
   .ad-ta { resize: vertical; line-height: 1.6; }
   .ad-in:focus, .ad-ta:focus { outline: 2px solid #7a1e2c; outline-offset: 1px; border-color: #7a1e2c; }
-  .ad-field { margin-bottom: 16px; }
-  .ad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
-  @media (max-width: 760px) { .ad-grid { grid-template-columns: 1fr; } }
-  .ad-btn { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 12px; border: 1px solid transparent; transition: background .18s ease, border-color .18s ease, transform .12s ease; }
+  .ad-field { margin-bottom: 14px; }
+  .ad-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .ad-row2 { grid-template-columns: 1fr; } }
+  .ad-btn { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 600; padding: 11px 22px; border-radius: 12px; border: 1px solid transparent; transition: background .18s ease, border-color .18s ease, transform .12s ease; }
   .ad-btn:active { transform: translateY(1px); }
   .ad-btn-primary { background: #7a1e2c; color: #fff; }
   .ad-btn-primary:hover { background: #651825; }
   .ad-btn-ghost { background: #fff; border-color: #ddd6cc; color: #4a463f; }
   .ad-btn-ghost:hover { border-color: #171717; }
-  .ad-btn-sm { font-size: 12.5px; padding: 8px 14px; border-radius: 10px; }
+  .ad-btn-sm { font-size: 12.5px; padding: 7px 13px; border-radius: 10px; }
   .ad-msg { font-size: 13px; font-weight: 600; }
   .ad-ok { color: #2f5a45; }
   .ad-err { color: #7a1e2c; }
-  /* media library */
-  .ad-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+  /* shell */
+  .ad-shell { display: grid; grid-template-columns: minmax(400px, 540px) 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 1080px) { .ad-shell { grid-template-columns: 1fr; } .ad-previewwrap { display: none; } }
+  /* tabs */
+  .ad-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .ad-tab { font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid #e6e1da; background: #fff; color: #4a463f; cursor: pointer; }
+  .ad-tab:hover { background: #f4f2ed; }
+  .ad-tab.active { background: #7a1e2c; color: #fff; border-color: #7a1e2c; }
+  .ad-sec { margin-bottom: 16px; }
+  .ad-sec-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; }
+  .ad-sec-title { font-weight: 800; font-size: 14.5px; display: flex; align-items: center; gap: 8px; }
+  .ad-sec-body { margin-top: 14px; }
+  .ad-mini { font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 8px; border: 1px solid #e6e1da; background: #fff; color: #66615c; cursor: pointer; }
+  .ad-mini:hover { background: #f3ece9; color: #7a1e2c; }
+  .ad-mini.del:hover { background: #f6edee; color: #7a1e2c; border-color: #e7c9cd; }
+  .ad-item { border: 1px solid #ece7df; border-radius: 14px; padding: 14px; margin-bottom: 10px; background: #fdfcfa; }
+  .ad-item-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .ad-item-bar .grp { display: flex; gap: 5px; }
+  .ad-imgpick { display: flex; align-items: center; gap: 10px; }
+  .ad-imgthumb { width: 56px; height: 44px; border-radius: 8px; border: 1px solid #e6e1da; background: #efeae2 center/cover no-repeat; flex: none; }
+  .ad-hide { opacity: .5; }
+  /* preview */
+  .ad-previewwrap { position: sticky; top: 16px; }
+  .ad-prevbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .ad-prev-framewrap { background: #fff; border: 1px solid #e6e1da; border-radius: 16px; padding: 10px; }
+  #preview { width: 100%; height: 78vh; border: 0; border-radius: 8px; background: #fff; display: block; margin: 0 auto; transition: max-width .2s ease; }
+  /* media */
+  .ad-media { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
   .ad-mitem { border: 1px solid #e6e1da; border-radius: 14px; overflow: hidden; background: #fdfcfa; position: relative; }
   .ad-mitem img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: #efeae2; }
   .ad-mbar { display: flex; gap: 6px; padding: 7px; }
   .ad-mbar button { flex: 1; font-size: 11px; font-weight: 600; padding: 6px 4px; border-radius: 8px; border: 1px solid #e6e1da; background: #fff; cursor: pointer; color: #4a463f; }
   .ad-mbar button:hover { background: #f3ece9; }
   .ad-mbar button.del:hover { background: #f6edee; color: #7a1e2c; border-color: #e7c9cd; }
-  .ad-drop { border: 1px dashed #d8d1c6; border-radius: 16px; padding: 26px; text-align: center; color: #9a948b; cursor: pointer; transition: border-color .18s ease, background .18s ease; }
+  .ad-drop { border: 1px dashed #d8d1c6; border-radius: 16px; padding: 22px; text-align: center; color: #9a948b; cursor: pointer; transition: border-color .18s ease, background .18s ease; }
   .ad-drop:hover { border-color: #7a1e2c; background: #fdf8f8; }
-  .hero-prev { width: 100%; aspect-ratio: 4/5; border-radius: 14px; border: 1px solid #e6e1da; background: linear-gradient(150deg,#f0ece5,#e9e2d6) center/cover no-repeat; }
   .pill { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+  /* picker modal */
+  .ad-modal { position: fixed; inset: 0; z-index: 80; background: rgba(23,23,23,.55); display: none; align-items: center; justify-content: center; padding: 24px; }
+  .ad-modal.open { display: flex; }
+  .ad-modal-box { background: #fff; border-radius: 18px; max-width: 720px; width: 100%; max-height: 80vh; overflow: auto; padding: 22px; }
 </style>
 </head>
 <body>
@@ -62,16 +91,18 @@
 
 <!-- DASHBOARD -->
 <div id="dash" style="display:none;">
-  <header style="position:sticky; top:0; z-index:40; background:rgba(255,255,255,.9); backdrop-filter:blur(8px); border-bottom:1px solid #ece8e1;">
+  <header style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid #ece8e1;">
     <div class="ad-wrap" style="padding-top:0; padding-bottom:0;">
-      <div style="height:62px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <div style="height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
         <div style="display:flex; align-items:center; gap:10px;">
           <span style="width:32px; height:32px; border:1.5px solid #7a1e2c; color:#7a1e2c; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px;">JP</span>
           <strong style="font-size:15px;">Admin</strong>
           <span class="pill" style="background:#f2f0ec; color:#66615c;">jimmypark.net</span>
         </div>
-        <div style="display:flex; align-items:center; gap:12px;">
+        <div style="display:flex; align-items:center; gap:10px;">
           <span id="idle" class="pill" style="background:#f2f0ec; color:#66615c;" title="Auto sign-out timer"></span>
+          <span id="save-msg" class="ad-msg"></span>
+          <button id="save" class="ad-btn ad-btn-primary ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:17px;">save</span>Save</button>
           <a href="/" target="_blank" class="ad-btn ad-btn-ghost ad-btn-sm">View site</a>
           <button id="logout" class="ad-btn ad-btn-ghost ad-btn-sm">Sign out</button>
         </div>
@@ -80,68 +111,66 @@
   </header>
 
   <div class="ad-wrap">
-    <div style="margin:8px 0 24px;">
-      <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544;">Content Management</div>
-      <h1 style="margin:8px 0 0; font-size:clamp(24px,4vw,34px); font-weight:800;">Dashboard</h1>
-      <p style="margin:8px 0 0; font-size:13.5px; color:#66615c; max-width:64ch; line-height:1.6;">These fields apply live to the public site. Contact &amp; SEO update instantly; the hero image and media library are backed by storage.</p>
-    </div>
+    <!-- TOP TABS (full width) -->
+    <div id="tabs" class="ad-tabs"></div>
+    <div class="ad-shell">
+      <!-- EDITOR (left) -->
+      <div>
+        <div id="editor"></div>
 
-    <div class="ad-grid">
-      <!-- LEFT COLUMN -->
-      <div style="display:flex; flex-direction:column; gap:18px;">
-        <div class="ad-card">
-          <h2 class="ad-h">Contact</h2>
-          <p class="ad-sub">Shown on the Contact page and footer CTA.</p>
-          <div class="ad-field"><label class="ad-label" for="c-email">Email</label><input id="c-email" class="ad-in" type="email" placeholder="scoutkorea@kakao.com"></div>
-          <div class="ad-field"><label class="ad-label" for="c-phone">Phone</label><input id="c-phone" class="ad-in" type="text" placeholder="+82.010.2646.1635"></div>
-          <div class="ad-field"><label class="ad-label" for="c-li">LinkedIn URL <span style="font-weight:500; text-transform:none; letter-spacing:0; color:#9a948b;">(blank = hidden)</span></label><input id="c-li" class="ad-in" type="url" placeholder="https://linkedin.com/in/..."></div>
-          <div class="ad-field" style="margin-bottom:0;"><label class="ad-label" for="c-loc">Location / language</label><input id="c-loc" class="ad-in" type="text" placeholder="Korea · Korean / English"></div>
-        </div>
-
-        <div class="ad-card">
-          <h2 class="ad-h">SEO</h2>
-          <p class="ad-sub">Page title &amp; meta description for search and sharing.</p>
-          <div class="ad-field"><label class="ad-label" for="s-title">Site title</label><input id="s-title" class="ad-in" type="text"></div>
-          <div class="ad-field" style="margin-bottom:0;"><label class="ad-label" for="s-desc">Meta description</label><textarea id="s-desc" class="ad-ta" rows="4"></textarea></div>
+        <!-- MEDIA PANEL (shown on Media tab) -->
+        <div id="media-panel" style="display:none;">
+          <div class="ad-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px;">
+              <h2 class="ad-h" style="margin:0;">Media library</h2>
+              <span id="media-count" class="pill" style="background:#f2f0ec; color:#66615c;">0</span>
+            </div>
+            <p class="ad-sub">Upload images (auto-resized to ≤1600px). Use the "Set image" buttons in each section to attach one.</p>
+            <div id="drop" class="ad-drop">
+              <span class="msym" aria-hidden="true" style="font-size:26px;">add_photo_alternate</span>
+              <div style="font-size:12.5px; margin-top:6px; font-weight:600; color:#66615c;">Click or drop images here</div>
+              <div style="font-size:11px; margin-top:2px;">JPEG / PNG · up to 5 MB each</div>
+            </div>
+            <div id="media" class="ad-media" style="margin-top:14px;"></div>
+          </div>
         </div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div style="display:flex; flex-direction:column; gap:18px;">
-        <div class="ad-card">
-          <h2 class="ad-h">Hero image</h2>
-          <p class="ad-sub">Shows on the Home &amp; Scouting hero. Upload, then it's applied on save.</p>
-          <div id="hero-prev" class="hero-prev"></div>
-          <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
-            <button id="hero-upload" class="ad-btn ad-btn-ghost ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:17px;">cloud_upload</span>Upload</button>
-            <button id="hero-clear" class="ad-btn ad-btn-ghost ad-btn-sm">Clear</button>
+      <!-- PREVIEW -->
+      <div class="ad-previewwrap">
+        <div class="ad-prevbar">
+          <div style="font-size:12.5px; font-weight:600; color:#66615c;">Live preview · <span id="preview-page">home</span></div>
+          <div style="display:flex; gap:6px;">
+            <button id="dev-desktop" class="ad-tab active" style="padding:6px 12px;">Desktop</button>
+            <button id="dev-mobile" class="ad-tab" style="padding:6px 12px;">Mobile</button>
+            <button id="prev-refresh" class="ad-mini" title="Reload preview"><span class="msym" aria-hidden="true" style="font-size:15px; vertical-align:middle;">refresh</span></button>
           </div>
         </div>
-
-        <div class="ad-card">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:4px;">
-            <h2 class="ad-h" style="margin:0;">Media library</h2>
-            <span id="media-count" class="pill" style="background:#f2f0ec; color:#66615c;">0</span>
-          </div>
-          <p class="ad-sub">Upload images (auto-resized). Click "Hero" to use one as the hero image.</p>
-          <div id="drop" class="ad-drop">
-            <span class="msym" aria-hidden="true" style="font-size:26px;">add_photo_alternate</span>
-            <div style="font-size:12.5px; margin-top:6px; font-weight:600; color:#66615c;">Click or drop images here</div>
-            <div style="font-size:11px; margin-top:2px;">JPEG / PNG · up to 5 MB each</div>
-          </div>
-          <div id="media" class="ad-media" style="margin-top:14px;"></div>
+        <div class="ad-prev-framewrap">
+          <iframe id="preview" src="/?preview=1" title="Preview"></iframe>
         </div>
+        <p style="font-size:11.5px; color:#9a948b; margin:10px 2px 0; line-height:1.5;">Changes preview instantly here. Click <strong>Save</strong> to publish them to the live site.</p>
       </div>
-    </div>
-
-    <div style="margin-top:24px; display:flex; align-items:center; gap:16px;">
-      <button id="save" class="ad-btn ad-btn-primary"><span class="msym" aria-hidden="true" style="font-size:18px;">save</span>Save changes</button>
-      <span id="save-msg" class="ad-msg"></span>
     </div>
   </div>
 </div>
 
+<!-- IMAGE PICKER MODAL -->
+<div id="picker" class="ad-modal">
+  <div class="ad-modal-box">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+      <h2 class="ad-h" style="margin:0;">Choose an image</h2>
+      <button id="picker-close" class="ad-mini">Close</button>
+    </div>
+    <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
+      <button id="picker-upload" class="ad-btn ad-btn-ghost ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:16px;">cloud_upload</span>Upload new</button>
+      <button id="picker-clear" class="ad-btn ad-btn-ghost ad-btn-sm">Remove image</button>
+    </div>
+    <div id="picker-grid" class="ad-media"></div>
+  </div>
+</div>
+
 <input id="file-input" type="file" accept="image/*" multiple style="display:none;">
-<script src="/assets/admin.js?v=0.1.0" defer></script>
+<script src="/assets/admin.js?v=0.2.0" defer></script>
 </body>
 </html>

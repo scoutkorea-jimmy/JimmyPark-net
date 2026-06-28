@@ -27,11 +27,13 @@ wrangler.toml   Pages config + KV binding
 ## How it works
 - Public pages render full static content (good for SEO / no-JS). `site.js` enhances
   (nav, mobile menu, copy-to-clipboard, gallery modal) and applies admin overrides
-  fetched from `/api/content` (SEO title/desc, contact email/phone/LinkedIn/location,
-  hero image).
+  fetched from `/api/content` — a **full-site content document** covering every page:
+  per-page SEO, section text, repeatable collections, images, and section order /
+  visibility. The static markup is the seed; `site.js` only overrides it.
 - Admin (`/admin`) logs in with a **6-digit TOTP** code (authenticator app), gets a
-  12h signed session, and edits Contact / SEO / Hero image + a Media Library (uploads
-  auto-resized to ≤1600px JPEG). 30-min idle auto sign-out.
+  12h signed session, and edits the **whole site** through a schema-driven editor
+  (Global + one tab per page) with a live-preview iframe, section reorder/hide, and a
+  Media Library (uploads auto-resized to ≤1600px JPEG). 30-min idle auto sign-out.
 
 ## Deploy (Cloudflare Pages)
 1. Connect this repo to a Pages project (build output dir = repo root, no build cmd).
