@@ -37,6 +37,10 @@
   .ad-err { color: #7a1e2c; }
   /* shell */
   .ad-shell { display: grid; grid-template-columns: minmax(420px, 600px) 1fr; gap: 20px; align-items: start; }
+  /* let both columns shrink below their content's intrinsic width — without this the
+     preview iframe's 1280px width props the 1fr track open and the grid overflows
+     the page to the right on narrower windows. */
+  .ad-shell > * { min-width: 0; }
   @media (max-width: 1080px) { .ad-shell { grid-template-columns: 1fr; } .ad-previewwrap { display: none; } }
   /* preview-collapsed: editor spans full width, cards flow in readable columns */
   .ad-noprev .ad-shell { grid-template-columns: 1fr; }
