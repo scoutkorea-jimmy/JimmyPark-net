@@ -130,8 +130,9 @@ breakpoint block rather than writing a new media query.
 
 ### Header (identical on every page)
 Sticky, `z-index:60`, translucent `rgba(255,255,255,.82)` + `backdrop-filter: saturate(150%)
-blur(10px)`, bottom border `#ece8e1`, height `68px`. Left: **JP monogram** (burgundy-outlined
-rounded square) + `Jimmy Park` / `박지민` stack. Right: desktop nav (`Home · Work · Scouting`)
+blur(10px)`, bottom border `#ece8e1`, height `68px`. Left: **JP monogram** (`assets/img/logo.svg`
+— elegant serif "JP" in near-black `#141414` with a short burgundy `#7a1e2c` underline under the
+J) + `Jimmy Park` / `박지민` stack. Right: desktop nav (`Home · Work · Scouting`)
 + burgundy **Contact** button; hamburger on mobile.
 
 ### Footer (identical on every page)

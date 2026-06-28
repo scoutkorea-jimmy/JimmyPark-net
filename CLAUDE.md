@@ -36,7 +36,7 @@ assets/
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
                 gallery modal, content hydration from /api/content
   admin.js      admin panel logic (TOTP login, content editor, media library)
-  img/          favicon.svg, og.png (1200×630)
+  img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630)
 functions/      Cloudflare Pages Functions (see "Backend" below)
 _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
 robots.txt      allow all except /admin and /api/ ; points to sitemap
