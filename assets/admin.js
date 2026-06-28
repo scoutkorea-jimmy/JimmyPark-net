@@ -11,7 +11,7 @@
 
   var session = null;       // { token, exp }
   var content = null;       // working document (deep copy of server doc)
-  var activeTab = "global"; // global | home | work | scouting | contact | media
+  var activeTab = "home";   // home | work | scouting | contact | global | media
   var previewPage = "home"; // which page the iframe shows
   var deviceMode = "desktop"; // desktop | mobile — preview viewport width
   var pendingPick = null;   // fn(url) used by the image picker / upload
@@ -132,7 +132,7 @@
       content = (j && j.content) ? j.content : {};
       ensureShape();
       buildTabs();
-      selectTab("global");
+      selectTab(activeTab);
       loadMedia();
     }).catch(function () {});
   }
@@ -159,11 +159,21 @@
   }
 
   // ── tabs ──────────────────────────────────────────────────────────────────
+  // Two groups: the site's actual pages (in top-to-bottom nav order) first, then the
+  // site-wide / shared content (Global + Media) separated as its own group.
+  var TAB_GROUPS = [
+    { label: "Pages", tabs: ["home", "work", "scouting", "contact"] },
+    { label: "Site-wide", tabs: ["global", "media"] },
+  ];
   function buildTabs() {
     var bar = $("tabs"); bar.innerHTML = "";
-    ["global", "home", "work", "scouting", "contact", "media"].forEach(function (t) {
-      var label = t === "media" ? "Media" : SCHEMA[t] ? SCHEMA[t].title : t;
-      bar.appendChild(el("button", { class: "ad-tab" + (t === activeTab ? " active" : ""), text: label, "data-tab": t, onclick: function () { selectTab(t); } }));
+    TAB_GROUPS.forEach(function (g, gi) {
+      if (gi) bar.appendChild(el("span", { class: "ad-tab-div", "aria-hidden": "true" }));
+      bar.appendChild(el("span", { class: "ad-tab-grp", text: g.label }));
+      g.tabs.forEach(function (t) {
+        var label = t === "media" ? "Media" : SCHEMA[t] ? SCHEMA[t].title : t;
+        bar.appendChild(el("button", { class: "ad-tab" + (t === activeTab ? " active" : ""), text: label, "data-tab": t, onclick: function () { selectTab(t); } }));
+      });
     });
   }
   function selectTab(t) {
