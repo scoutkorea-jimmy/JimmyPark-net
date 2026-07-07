@@ -48,8 +48,9 @@ assets/
   saju.js       /saju 엔진+UI: 만세력 engine (solar-longitude 절기 calc, no lookup
                 tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천
                 (모리·루아·두리·세라·노아). 입력 페이지는 /saju-result?d=&t=&nt= 로
-                이동, 결과 페이지는 쿼리에서 읽어 렌더. Fully client-side; birth data
-                never leaves the browser (URL 쿼리로만 전달).
+                이동, 결과 페이지는 쿼리에서 읽어 렌더. 마지막 입력은 localStorage
+                (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
+                (서버 미전송). Fully client-side; birth data never leaves the browser.
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
                 saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark)
 functions/      Cloudflare Pages Functions (see "Backend" below)

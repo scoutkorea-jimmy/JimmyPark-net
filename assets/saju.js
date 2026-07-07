@@ -272,6 +272,23 @@
       }
     });
 
+    // ── 마지막 입력 로컬 저장 (localStorage · 7일 후 자동 삭제) ──
+    // 쿠키를 쓰지 않는 이유: 쿠키는 매 요청마다 서버로 전송돼 "생년월일은
+    // 서버로 안 감" 원칙을 깬다. localStorage는 이 브라우저에만 남는다.
+    var LAST_KEY = 'saju:last:v1';
+    var LAST_TTL = 7 * 24 * 60 * 60 * 1000;
+    function loadLast() {
+      try {
+        var o = JSON.parse(localStorage.getItem(LAST_KEY) || 'null');
+        if (!o || !o.d || !o.ts || (Date.now() - o.ts) > LAST_TTL) { clearLast(); return null; }
+        return o;
+      } catch (e) { return null; }
+    }
+    function saveLast(o) {
+      try { o.ts = Date.now(); localStorage.setItem(LAST_KEY, JSON.stringify(o)); } catch (e) {}
+    }
+    function clearLast() { try { localStorage.removeItem(LAST_KEY); } catch (e) {} }
+
     // ── 입력 페이지(saju.html): 값 검증 후 결과 페이지로 이동 ──
     var form = $('saju-form');
     if (form) {
@@ -280,10 +297,33 @@
         for (var m = 0; m < 60; m += 30) tSel.add(new Option(pad2(h) + ':' + pad2(m), h + ':' + m));
       }
       tSel.value = '12:0';
-      $('sj-noTime').addEventListener('change', function () {
-        tSel.disabled = this.checked;
-        tSel.style.opacity = this.checked ? .45 : 1;
+
+      function setNoTime(on) {
+        $('sj-noTime').checked = on;
+        tSel.disabled = on;
+        tSel.style.opacity = on ? .45 : 1;
+      }
+      $('sj-noTime').addEventListener('change', function () { setNoTime(this.checked); });
+
+      // 재방문 시 마지막 입력 자동 채움
+      var last = loadLast();
+      if (last) {
+        $('sj-date').value = last.d;
+        if (last.t) tSel.value = last.t;
+        setNoTime(!!last.nt);
+        var hint = $('sj-restored');
+        if (hint) hint.style.display = '';
+      }
+      var clearBtn = $('sj-clear');
+      if (clearBtn) clearBtn.addEventListener('click', function () {
+        clearLast();
+        $('sj-date').value = '';
+        tSel.value = '12:0';
+        setNoTime(false);
+        var hint = $('sj-restored');
+        if (hint) hint.style.display = 'none';
       });
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var dv = $('sj-date').value;
@@ -291,6 +331,7 @@
         var y = +dv.split('-')[0];
         if (y < 1900 || y > 2100) { alert('1900–2100년 범위만 지원합니다.'); return; }
         var noTime = $('sj-noTime').checked;
+        saveLast({ d: dv, t: tSel.value, nt: noTime ? 1 : 0 });
         var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(tSel.value) + '&nt=' + (noTime ? 1 : 0);
         window.location.href = '/saju-result?' + q;
       });
