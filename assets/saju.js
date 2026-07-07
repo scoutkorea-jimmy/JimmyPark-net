@@ -46,12 +46,18 @@
     { ko: '해', hj: '亥', el: 4, animal: '돼지' }
   ];
   // 오행 (기획서 §3.4 상징 / 색은 /saju 전용 비비드 팔레트 — Open Color 계열)
+  // strong: 그 기운이 풍성할 때의 강점 (유쾌하고 기분 좋게)
   var ELEMENTS = [
-    { ko: '목', hj: '木', color: '#0ca678', light: '#e6fcf5', symbols: '성장 · 확장 · 생명력' },
-    { ko: '화', hj: '火', color: '#fa5252', light: '#fff0f2', symbols: '표현 · 열정 · 빛' },
-    { ko: '토', hj: '土', color: '#f08c00', light: '#fff6e6', symbols: '안정 · 균형 · 기반' },
-    { ko: '금', hj: '金', color: '#7048e8', light: '#f3f0ff', symbols: '판단 · 절제 · 구조' },
-    { ko: '수', hj: '水', color: '#3b5bdb', light: '#edf2ff', symbols: '지혜 · 흐름 · 직관' }
+    { ko: '목', hj: '木', color: '#0ca678', light: '#e6fcf5', symbols: '성장 · 확장 · 생명력',
+      strong: '목(木)이 넉넉한 당신은 늘 새로운 걸 시작하고 쑥쑥 키워내는 사람이에요. 호기심과 추진력이 있어서 주변에도 "우리 한번 해보자!"는 좋은 에너지를 나눠주죠. 가능성을 알아보는 눈이 반짝여서, 아무것도 없던 자리에 뭔가를 자라나게 만드는 재주가 있어요. 봄처럼 생기 넘치는 게 당신의 매력이에요!' },
+    { ko: '화', hj: '火', color: '#fa5252', light: '#fff0f2', symbols: '표현 · 열정 · 빛',
+      strong: '화(火)가 넉넉한 당신은 감정과 매력을 환하게 표현할 줄 아는 사람이에요. 함께 있으면 분위기가 따뜻해지고, 사람들이 자연스레 당신 곁으로 모여들죠. 좋아하는 걸 이야기할 때 눈이 반짝이는 그 열정이 당신의 가장 큰 무기예요. 존재만으로도 주변을 밝히는 타입이랍니다!' },
+    { ko: '토', hj: '土', color: '#f08c00', light: '#fff6e6', symbols: '안정 · 균형 · 기반',
+      strong: '토(土)가 넉넉한 당신은 어디서든 중심을 잡아주는 든든한 사람이에요. 다들 흔들리는 순간에도 침착하게 버텨주고, 곁의 사람에게 "괜찮아, 여기 있어" 하는 안정감을 주죠. 약속을 지키고 꾸준히 해내는 힘이 있어서, 믿고 기댈 수 있는 언덕 같은 존재예요. 당신이 있으면 팀이 든든해져요!' },
+    { ko: '금', hj: '金', color: '#7048e8', light: '#f3f0ff', symbols: '판단 · 절제 · 구조',
+      strong: '금(金)이 넉넉한 당신은 복잡한 상황을 깔끔하게 정리하는 감각이 뛰어난 사람이에요. 핵심을 딱 짚어내고, 필요할 때 단호하게 결정할 줄 알죠. 기준이 분명해서 "이 사람 말은 믿을 만해" 하는 신뢰를 주고요. 어수선한 곳에 질서를 세우는, 똑 부러진 매력의 소유자예요!' },
+    { ko: '수', hj: '水', color: '#3b5bdb', light: '#edf2ff', symbols: '지혜 · 흐름 · 직관',
+      strong: '수(水)가 넉넉한 당신은 깊이 생각하고 흐름을 읽어내는 지혜로운 사람이에요. 서두르지 않고 상황을 통찰하며, 어떤 변화에도 유연하게 대처할 줄 알죠. 조용히 듣고 헤아려주는 다정함이 있어서, 사람들이 속마음을 털어놓게 되고요. 잔잔해 보이지만 속은 단단한 내공의 소유자예요!' }
   ];
 
   var D2R = Math.PI / 180;
@@ -251,51 +257,58 @@
   /* ── 4. content-engine + UI (saju.html에서만 동작) ── */
   if (typeof document === 'undefined') return;
   document.addEventListener('DOMContentLoaded', function () {
-    var form = document.getElementById('saju-form');
-    if (!form) return;
     var $ = function (id) { return document.getElementById(id); };
-
-    // 24시간제 시/분 드롭다운 채우기 (기본 12:00)
-    var hSel = $('sj-hour'), mSel = $('sj-min');
     var pad2 = function (n) { return ('0' + n).slice(-2); };
-    for (var h = 0; h < 24; h++) hSel.add(new Option(pad2(h) + '시', h));
-    for (var mn = 0; mn < 60; mn++) mSel.add(new Option(pad2(mn) + '분', mn));
-    hSel.value = 12; mSel.value = 0;
 
-    $('sj-noTime').addEventListener('change', function () {
-      var off = this.checked;
-      hSel.disabled = mSel.disabled = off;
-      hSel.style.opacity = mSel.style.opacity = off ? .45 : 1;
-    });
-
-    // 아직 구현되지 않은 기능(캐릭터 상세 등)은 "개발중" 안내만 띄운다.
+    // 아직 구현되지 않은 기능(캐릭터 상세 등)은 "개발중" 안내만 띄운다 (두 페이지 공통).
     // (굿즈 구매 CTA는 makeholic 스토어로 실제 이동 — SHOP_URL 참고)
+    function soon() { alert('아직 개발중이에요! 🛠️\n조금만 기다려 주세요.'); }
     document.addEventListener('click', function (e) {
-      var soon = e.target.closest('[data-soon]');
-      if (!soon) return;
-      e.preventDefault();
-      alert('아직 개발중이에요! 🛠️\n조금만 기다려 주세요.');
+      if (e.target.closest && e.target.closest('[data-soon]')) { e.preventDefault(); soon(); }
     });
     document.addEventListener('keydown', function (e) {
       if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('[data-soon]')) {
-        e.preventDefault();
-        alert('아직 개발중이에요! 🛠️\n조금만 기다려 주세요.');
+        e.preventDefault(); soon();
       }
     });
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var dv = $('sj-date').value;
-      if (!dv) { alert('생년월일을 입력해 주세요.'); return; }
-      var p = dv.split('-').map(Number);
-      if (p[0] < 1900 || p[0] > 2100) { alert('1900–2100년 범위만 지원합니다.'); return; }
-      var noTime = $('sj-noTime').checked;
-      var res = compute({ y: p[0], m: p[1], d: p[2], hh: +hSel.value, mm: +mSel.value, timeKnown: !noTime });
-      render(res);
-      var out = $('saju-result');
-      out.style.display = 'block';
-      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    // ── 입력 페이지(saju.html): 값 검증 후 결과 페이지로 이동 ──
+    var form = $('saju-form');
+    if (form) {
+      var tSel = $('sj-birthtime');
+      for (var h = 0; h < 24; h++) {
+        for (var m = 0; m < 60; m += 30) tSel.add(new Option(pad2(h) + ':' + pad2(m), h + ':' + m));
+      }
+      tSel.value = '12:0';
+      $('sj-noTime').addEventListener('change', function () {
+        tSel.disabled = this.checked;
+        tSel.style.opacity = this.checked ? .45 : 1;
+      });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var dv = $('sj-date').value;
+        if (!dv) { alert('생년월일을 입력해 주세요.'); return; }
+        var y = +dv.split('-')[0];
+        if (y < 1900 || y > 2100) { alert('1900–2100년 범위만 지원합니다.'); return; }
+        var noTime = $('sj-noTime').checked;
+        var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(tSel.value) + '&nt=' + (noTime ? 1 : 0);
+        window.location.href = '/saju-result?' + q;
+      });
+      return;
+    }
+
+    // ── 결과 페이지(saju-result.html): 쿼리스트링에서 읽어 계산·렌더 ──
+    if ($('sj-pillars')) {
+      var params = new URLSearchParams(window.location.search);
+      var dv = params.get('d');
+      var mp = dv ? dv.split('-').map(Number) : null;
+      if (!mp || mp.length < 3 || !(mp[0] >= 1900 && mp[0] <= 2100)) {
+        window.location.replace('/saju'); return;   // 잘못된/직접 진입 → 입력 페이지로
+      }
+      var noTime = params.get('nt') === '1';
+      var tp = (params.get('t') || '12:0').split(':');
+      render(compute({ y: mp[0], m: mp[1], d: mp[2], hh: +tp[0], mm: +tp[1], timeKnown: !noTime }));
+    }
 
     function pillarCol(label, pl) {
       if (!pl) {
@@ -353,6 +366,17 @@
           '<span class="sj-el-bar"><span style="width:' + Math.max(w, c ? 6 : 0) + '%; background:' + el.color + ';"></span></span>' +
           '<span class="sj-el-count">' + c + '개</span></div>';
       }).join('');
+
+      // 가장 풍성한 기운 (강점 먼저, 기분 좋게)
+      var strongEl = 0, maxc = -1;
+      r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
+      var sEl = ELEMENTS[strongEl];
+      $('sj-strong').innerHTML =
+        '<div class="sj-strong-card" style="background:' + sEl.light + '; border-color:' + sEl.color + '33;">' +
+        '<div class="sj-strong-badge" style="background:' + sEl.color + ';">' + sEl.hj + '</div>' +
+        '<div><div class="sj-strong-tag" style="color:' + sEl.color + ';">가장 풍성한 기운 · ' +
+          sEl.ko + '(' + sEl.hj + ')</div>' +
+        '<p class="sj-strong-msg">' + sEl.strong + '</p></div></div>';
 
       // 부족 오행 + 캐릭터 추천
       var rec = recommend(r.counts, STEMS[pl.day.stem].el);

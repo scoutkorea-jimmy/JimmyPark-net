@@ -50,10 +50,13 @@ same header, footer, eyebrow, button, and card patterns by design.
 introduce a new accent hue — pick the nearest token above.
 
 ### /saju — standalone app (fully scoped exception)
-The hidden `/saju` route is a **self-contained web app**: it does NOT use `site.css`, `site.js`,
-or the shared header/footer. It has its own modern Gen-Z-leaning look (Pretendard, violet→pink
-gradient `#7c5cff→#c247ff→#ff6aa0`, soft rounded cards, single `--wrap:720px` container so every
-section shares the same left/right width). None of this leaks into the portfolio pages.
+The hidden `/saju` (input) + `/saju-result` (result) routes are a **self-contained two-page
+web app**: they do NOT use `site.css`, `site.js`, or the shared header/footer. Their shared
+look lives in `assets/saju.css` (Pretendard, violet→pink gradient `#7c5cff→#c247ff→#ff6aa0`,
+soft rounded cards, single `--wrap:720px` container so every section shares the same left/right
+width). Flow: `/saju` collects birth date + 24h·30min time → navigates to
+`/saju-result?d=&t=&nt=` which computes and renders (풍성한 기운 → 부족한 기운 → 캐릭터).
+None of this leaks into the portfolio pages.
 Its five 오행 content colors (vibrant, Open-Color-style — allowed only in `saju.html`/`saju.js`):
 목 `#0ca678` · 화 `#fa5252` · 토 `#f08c00` · 금 `#7048e8` · 수 `#3b5bdb`, each with a light tint.
 

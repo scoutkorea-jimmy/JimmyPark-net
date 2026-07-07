@@ -21,12 +21,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
    `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
    Korean left in older saved docs on read. See design.md §7.)
-   **Exception: `/saju`** — hidden Korean-UI entertainment app (오행 캐릭터 추천). Korean is
-   allowed only in `saju.html` + `assets/saju.js`; the shared shell and all other pages stay
-   English-only.
+   **Exception: `/saju` + `/saju-result`** — hidden Korean-UI entertainment app (오행 캐릭터
+   추천). Korean is allowed only in `saju.html`, `saju-result.html`, `assets/saju.js`,
+   `assets/saju.css`; the shared shell and all other pages stay English-only.
 5. **Don't break the four canonical routes:** `/` `/work` `/scouting` `/contact`
-   (+ hidden `/admin`, `/saju`). Update `sitemap.xml` if routes change. Hidden routes stay out
-   of nav, sitemap, and search (noindex meta + robots.txt Disallow).
+   (+ hidden `/admin`, `/saju`, `/saju-result`). Update `sitemap.xml` if routes change. Hidden
+   routes stay out of nav, sitemap, and search (noindex meta + robots.txt Disallow).
 6. **Always ship + keep docs current (standing owner policy).** After ANY change, commit
    directly to `main`, push, and deploy (`wrangler pages deploy …`) without waiting to be
    asked — and keep this file and [design.md](design.md) in sync in the same change. This
@@ -37,15 +37,19 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 index.html      Home (/)            work.html      Work (/work)
 scouting.html   Scouting (/scouting) contact.html   Contact (/contact)
 admin.html      Admin (/admin, noindex) + assets/admin.js
-saju.html       오행 캐릭터 추천 (/saju, noindex, Korean-UI exception) + assets/saju.js
+saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
+saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
                 gallery modal, content hydration from /api/content
   admin.js      admin panel logic (TOTP login, content editor, media library)
-  saju.js       /saju only: 만세력 engine (solar-longitude 절기 calc, no lookup tables,
-                1900–2100) + 오행 분석 → 캐릭터 추천 (모리·루아·두리·세라·노아) UI.
-                Fully client-side; birth data never leaves the browser.
+  saju.css      /saju + /saju-result 공용 스타일 (standalone; NOT site.css)
+  saju.js       /saju 엔진+UI: 만세력 engine (solar-longitude 절기 calc, no lookup
+                tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천
+                (모리·루아·두리·세라·노아). 입력 페이지는 /saju-result?d=&t=&nt= 로
+                이동, 결과 페이지는 쿼리에서 읽어 렌더. Fully client-side; birth data
+                never leaves the browser (URL 쿼리로만 전달).
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
                 saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark)
 functions/      Cloudflare Pages Functions (see "Backend" below)
