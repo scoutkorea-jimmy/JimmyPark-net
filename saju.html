@@ -101,7 +101,11 @@
 
   /* 결과: 부족 오행 + 캐릭터 */
   .sj-lack-title { margin: 12px 0 0; font-size: clamp(19px, 3.4vw, 24px); font-weight: 800; letter-spacing: -.015em; line-height: 1.42; }
-  .sj-lack-desc { margin: 12px 0 0; font-size: 14.5px; color: #40394e; line-height: 1.8; }
+  .sj-lack-desc { margin: 12px 0 0; font-size: 14.5px; color: #40394e; line-height: 1.85; }
+  .sj-vibe { margin-top: 18px; padding: 16px 18px; background: #f6f4ff; border: 1px solid #ecebf4; border-radius: 18px; }
+  .sj-vibe-label { font-size: 12.5px; font-weight: 800; color: var(--brand); margin-bottom: 10px; }
+  .sj-vibe-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sj-vibe-pill { font-size: 13px; font-weight: 600; color: #40394e; background: #fff; border: 1px solid #e6e3f2; border-radius: 999px; padding: 8px 13px; line-height: 1.3; }
   .sj-char { border: 1.5px solid; border-radius: 26px; padding: clamp(20px, 4vw, 30px); margin-top: 20px; }
   .sj-char-head { display: flex; align-items: center; gap: 18px; }
   .sj-char-emoji { font-size: 38px; width: 76px; height: 76px; border-radius: 22px; display: flex; align-items: center; justify-content: center; flex: none; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .38); }
@@ -112,14 +116,15 @@
   .sj-char-quote { margin: 16px 0 0; padding: 12px 16px; border-radius: 14px; background: rgba(255, 255, 255, .6); border-left: 3px solid; font-size: 13.5px; color: #514a60; line-height: 1.7; font-style: italic; }
   .sj-goods-label { font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
   .sj-pill { display: inline-block; font-size: 12.5px; font-weight: 600; color: #40394e; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; margin: 0 7px 7px 0; }
-  .sj-cta { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-size: 14.5px; font-weight: 700; padding: 14px 24px; border-radius: 16px; margin-top: 18px; box-shadow: 0 12px 24px -12px rgba(0, 0, 0, .4); transition: transform .15s; }
+  .sj-cta { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 700; padding: 14px 24px; border: 0; border-radius: 16px; margin-top: 18px; cursor: pointer; box-shadow: 0 12px 24px -12px rgba(0, 0, 0, .4); transition: transform .15s; }
   .sj-cta:hover { transform: translateY(-2px); }
+  .sj-cta:active { transform: translateY(0); }
   .sj-char-note { margin-top: 12px; font-size: 12px; color: var(--faint); }
   .sj-both { margin: 22px 0 0; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.7; }
 
   /* 캐릭터 세계관 */
   .sj-world { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: clamp(10px, 1.8vw, 16px); }
-  .sj-w-card { border: 1px solid var(--line); border-radius: 22px; padding: 20px; background: var(--card); transition: transform .18s, box-shadow .18s; }
+  .sj-w-card { border: 1px solid var(--line); border-radius: 22px; padding: 20px; background: var(--card); cursor: pointer; transition: transform .18s, box-shadow .18s; }
   .sj-w-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
   .sj-w-emoji { font-size: 30px; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; }
   .sj-w-el { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-top: 14px; }
@@ -193,31 +198,31 @@
     <div class="sj-eyebrow">오행 캐릭터 세계관</div>
     <h2 class="sj-h2" style="margin-bottom:clamp(18px,3vw,26px);">다섯 오행, 다섯 친구</h2>
     <div class="sj-world">
-      <div class="sj-w-card">
+      <div class="sj-w-card" data-soon role="button" tabindex="0" aria-label="캐릭터 상세 (개발중)">
         <div class="sj-w-emoji" style="background:#e6fcf5;">🌱</div>
         <div class="sj-w-el" style="color:#0ca678;">목 木 · 성장</div>
         <div class="sj-w-name">모리 <span>새싹 정령</span></div>
         <p class="sj-w-desc">작은 시작과 성장을 도와주는 새싹 정령.</p>
       </div>
-      <div class="sj-w-card">
+      <div class="sj-w-card" data-soon role="button" tabindex="0" aria-label="캐릭터 상세 (개발중)">
         <div class="sj-w-emoji" style="background:#fff0f2;">🔥</div>
         <div class="sj-w-el" style="color:#fa5252;">화 火 · 표현</div>
         <div class="sj-w-name">루아 <span>불꽃 요정</span></div>
         <p class="sj-w-desc">마음속 불씨를 밝혀주는 작은 불꽃 요정.</p>
       </div>
-      <div class="sj-w-card">
+      <div class="sj-w-card" data-soon role="button" tabindex="0" aria-label="캐릭터 상세 (개발중)">
         <div class="sj-w-emoji" style="background:#fff6e6;">🐻</div>
         <div class="sj-w-el" style="color:#f08c00;">토 土 · 안정</div>
         <div class="sj-w-name">두리 <span>둥근 흙곰</span></div>
         <p class="sj-w-desc">흩어진 마음의 중심을 잡아주는 둥근 흙곰.</p>
       </div>
-      <div class="sj-w-card">
+      <div class="sj-w-card" data-soon role="button" tabindex="0" aria-label="캐릭터 상세 (개발중)">
         <div class="sj-w-emoji" style="background:#f3f0ff;">🦊</div>
         <div class="sj-w-el" style="color:#7048e8;">금 金 · 판단</div>
         <div class="sj-w-name">세라 <span>은빛 여우</span></div>
         <p class="sj-w-desc">복잡한 생각을 정리해주는 은빛 여우.</p>
       </div>
-      <div class="sj-w-card">
+      <div class="sj-w-card" data-soon role="button" tabindex="0" aria-label="캐릭터 상세 (개발중)">
         <div class="sj-w-emoji" style="background:#edf2ff;">🐳</div>
         <div class="sj-w-el" style="color:#3b5bdb;">수 水 · 지혜</div>
         <div class="sj-w-name">노아 <span>물방울 고래</span></div>

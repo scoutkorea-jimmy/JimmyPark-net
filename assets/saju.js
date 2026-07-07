@@ -14,6 +14,9 @@
 (function () {
   'use strict';
 
+  // 굿즈 구매 연결 (임시 — 실제 상품별 페이지 준비되면 캐릭터별로 교체)
+  var SHOP_URL = 'https://makeholic.co.kr/';
+
   /* ── 1. saju-engine ───────────────────────────────── */
   // 천간 (el: 0목 1화 2토 3금 4수)
   var STEMS = [
@@ -160,7 +163,8 @@
       short: '작은 시작과 성장을 도와주는 새싹 정령',
       long: '모리는 아직 완성되지 않은 작은 새싹 정령입니다. 크고 화려하지는 않지만, 매일 조금씩 자라나는 힘을 가지고 있습니다. 새로운 시작 앞에서 망설일 때, 아주 작은 첫걸음을 조용히 밀어주는 캐릭터입니다.',
       quote: '모리는 거창한 변화를 말하지 않습니다.\n대신 오늘 할 수 있는 작은 시작을 조용히 밀어줍니다.',
-      lackMsg: '목은 새롭게 시작하고, 자라고, 가능성을 밀어 올리는 에너지입니다.\n재미로 해석하면 지금 당신에게는 방향을 잡고 천천히 성장하게 도와주는 캐릭터가 잘 어울릴 수 있습니다.',
+      lackMsg: '목(木)은 "일단 한번 해보자!" 하고 몸을 일으키는 새싹 같은 기운이에요. 이 기운이 살짝 부족하면, 하고 싶은 건 많은데 유독 첫 발이 무겁게 느껴지곤 해요. 대신 신중하게 재고 또 재는 멋진 타입일 수 있죠. 재미로 보면, 지금 당신에게 필요한 건 거창한 결심이 아니라 "오늘 딱 한 걸음"을 같이 떼줄 친구예요.',
+      whenLow: ['새 취미 장바구니만 가득 🛒', '"다음 주부터 진짜" 무한반복', '시작 전 검색만 세 시간'],
       roleShort: '작은 시작과 성장을 도와주는',
       products: ['새싹 키링', '성장 다이어리', '루틴 체크 스티커', '"오늘의 작은 시작" 카드'],
       cta: '모리와 함께 오늘의 작은 시작을 만들어보세요.'
@@ -170,7 +174,8 @@
       short: '마음속 불씨를 밝혀주는 작은 불꽃 요정',
       long: '루아는 어두운 곳에서도 작게 반짝이는 불꽃 요정입니다. 늘 강하게 타오르지는 않지만, 필요한 순간 마음속 불씨를 다시 밝혀줍니다. 감정과 생각을 조금 더 밖으로 표현할 수 있도록 돕는 캐릭터입니다.',
       quote: '루아는 당신을 억지로 빛나게 만들지 않습니다.\n다만 이미 안에 있던 작은 불씨를 다시 보이게 합니다.',
-      lackMsg: '화는 마음속 에너지를 밖으로 드러내고, 존재감을 밝히는 힘입니다.\n재미로 해석하면 지금 당신에게는 표현력과 활력을 더해주는 캐릭터가 잘 어울릴 수 있습니다.',
+      lackMsg: '화(火)는 마음속 생각을 밖으로 "반짝" 꺼내 보이는 기운이에요. 이게 조금 부족하면, 속엔 할 말과 감정이 가득한데 막상 표현은 아껴두는 편일 수 있어요. 은근한 매력이 있지만 가끔은 스스로도 답답하죠. 재미로 보면, 지금은 당신 안에 이미 있는 불씨를 살짝 키워줄 응원단이 필요한 때예요.',
+      whenLow: ['단톡방에선 조용한 관찰자 👀', '리액션이 늘 "아 네네"', '칭찬받으면 손사래부터'],
       roleShort: '표현과 자신감을 밝혀주는',
       products: ['불꽃 키링', '응원 메시지 카드', '자신감 부스터 스티커', '"오늘의 불씨" 랜덤 카드'],
       cta: '루아와 함께 마음속 불씨를 다시 밝혀보세요.'
@@ -180,7 +185,8 @@
       short: '흩어진 마음의 중심을 잡아주는 둥근 흙곰',
       long: '두리는 느리지만 단단한 흙곰 캐릭터입니다. 급하게 달리기보다는, 흩어진 것들을 모으고 다시 중심을 잡아주는 역할을 합니다. 생각이 많아지거나 생활이 흐트러질 때, 다시 땅을 밟게 해주는 캐릭터입니다.',
       quote: '두리는 빠른 답을 주지 않습니다.\n대신 무너지지 않도록 옆에서 묵직하게 버텨줍니다.',
-      lackMsg: '토는 흩어진 것을 모으고, 중심을 잡고, 현실에 뿌리내리게 하는 에너지입니다.\n재미로 해석하면 지금 당신에게는 균형과 안정감을 더해주는 캐릭터가 잘 어울릴 수 있습니다.',
+      lackMsg: '토(土)는 여기저기 흩어진 걸 "자, 여기 앉자" 하고 모아 중심을 잡아주는 기운이에요. 이 기운이 부족하면, 마음도 일정도 쉽게 우르르 흩어져서 붕 뜬 기분이 들 수 있어요. 열정은 넘치는데 발이 땅에 안 닿는 느낌이랄까요. 재미로 보면, 지금은 묵직하게 옆을 지켜줄 든든한 친구가 딱이에요.',
+      whenLow: ['탭 30개 열어두고 멀티태스킹 🌀', '계획은 화려, 실행은 미궁', '"나 지금 뭐 하고 있지?" 자주'],
       roleShort: '안정과 중심을 잡아주는',
       products: ['흙곰 인형', '안정 루틴 플래너', '"오늘의 중심" 카드', '베이지톤 힐링 스티커'],
       cta: '두리와 함께 오늘의 중심을 잡아보세요.'
@@ -190,7 +196,8 @@
       short: '복잡한 생각을 정리해주는 은빛 여우',
       long: '세라는 조용하고 예리한 은빛 여우 캐릭터입니다. 복잡한 상황 속에서도 필요한 것과 불필요한 것을 구분하는 감각을 가지고 있습니다. 선택을 미루거나 생각이 복잡해졌을 때, 기준을 세우고 정리할 수 있도록 돕는 캐릭터입니다.',
       quote: '세라는 많은 말을 하지 않습니다.\n대신 무엇을 남기고 무엇을 덜어낼지 조용히 알려줍니다.',
-      lackMsg: '금은 복잡한 것을 정리하고, 기준을 세우고, 결단하게 만드는 에너지입니다.\n재미로 해석하면 지금 당신에게는 생각을 정리하고 선택을 도와주는 캐릭터가 잘 어울릴 수 있습니다.',
+      lackMsg: '금(金)은 복잡하게 엉킨 걸 "이건 남기고 이건 버리자" 하고 착 정리해주는 기운이에요. 이게 부족하면, 생각도 물건도 자꾸 쌓이기만 하고 결정 앞에서 오래 서성이게 돼요. 다정한 만큼 딱 잘라 말하는 게 어려운 타입일 수 있죠. 재미로 보면, 지금은 기준을 세워줄 똑 부러진 조력자가 필요한 순간이에요.',
+      whenLow: ['장바구니·위시리스트 무한적립 🗂️', '"아무거나"가 제일 어려움', '정리 유튜브만 정주행'],
       roleShort: '정리와 결단을 도와주는',
       products: ['은빛 여우 키링', '할 일 정리 메모패드', '미니멀 스티커팩', '"오늘의 기준" 체크리스트'],
       cta: '세라와 함께 복잡한 생각을 정리해보세요.'
@@ -200,7 +207,8 @@
       short: '멈춤과 회복을 도와주는 물방울 고래',
       long: '노아는 조용히 흐르는 물방울 고래 캐릭터입니다. 감정을 크게 드러내지는 않지만, 깊은 곳에서 흐름을 읽고 지친 에너지를 회복시켜줍니다. 너무 오래 긴장하거나 생각이 메말랐을 때, 다시 천천히 흐를 수 있도록 도와주는 캐릭터입니다.',
       quote: '노아는 재촉하지 않습니다.\n잠시 멈추고, 숨을 고르고, 다시 흐르게 합니다.',
-      lackMsg: '수는 멈춰서 생각하고, 흐름을 읽고, 지친 에너지를 회복하게 만드는 힘입니다.\n재미로 해석하면 지금 당신에게는 생각을 정리하고 감각을 회복하게 해주는 캐릭터가 잘 어울릴 수 있습니다.',
+      lackMsg: '수(水)는 잠깐 멈춰서 "후—" 숨을 고르고 흐름을 읽는 기운이에요. 이 기운이 부족하면, 쉬는 법을 자꾸 잊고 몸도 마음도 바짝 마른 느낌이 들 수 있어요. 늘 켜져 있는 노트북 같은 상태랄까요. 재미로 보면, 지금은 당신을 다시 촉촉하게 흐르게 해줄 잔잔한 친구가 필요한 때예요.',
+      whenLow: ['쉬는 날에도 뭔가 해야 할 것 같음 💦', '생각이 밤에 더 시끄러움', '"번아웃"이 남 얘기 같지 않음'],
       roleShort: '회복과 흐름을 전해주는',
       products: ['물방울 고래 인형', '회복 다이어리', '감정 기록 스티커', '"오늘의 흐름" 명상 카드'],
       cta: '노아와 함께 잠시 멈추고 다시 흐름을 회복해보세요.'
@@ -252,6 +260,21 @@
       $('sj-time').style.opacity = this.checked ? .45 : 1;
     });
 
+    // 아직 구현되지 않은 기능(캐릭터 상세 등)은 "개발중" 안내만 띄운다.
+    // (굿즈 구매 CTA는 makeholic 스토어로 실제 이동 — SHOP_URL 참고)
+    document.addEventListener('click', function (e) {
+      var soon = e.target.closest('[data-soon]');
+      if (!soon) return;
+      e.preventDefault();
+      alert('아직 개발중이에요! 🛠️\n조금만 기다려 주세요.');
+    });
+    document.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.closest && e.target.closest('[data-soon]')) {
+        e.preventDefault();
+        alert('아직 개발중이에요! 🛠️\n조금만 기다려 주세요.');
+      }
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var dv = $('sj-date').value;
@@ -297,9 +320,9 @@
         '<div class="sj-char-goods"><div class="sj-goods-label">이런 아이템으로 만나요</div>' +
           ch.products.map(function (g) { return '<span class="sj-pill">' + g + '</span>'; }).join('') +
         '</div>' +
-        '<a href="/contact" class="btn btn-primary sj-cta" style="background:' + el.color + ';">' +
-          ch.cta + ' <span class="msym" aria-hidden="true" style="font-size:17px;">arrow_forward</span></a>' +
-        '<div class="sj-char-note">※ 굿즈는 준비 중입니다. 캐릭터 소식이 궁금하다면 연락처로 문의해 주세요.</div>' +
+        '<a href="' + SHOP_URL + '" target="_blank" rel="noopener noreferrer" class="sj-cta" style="background:' + el.color + ';">' +
+          ch.cta + ' <span class="msym" aria-hidden="true" style="font-size:17px;">shopping_bag</span></a>' +
+        '<div class="sj-char-note">※ ' + ch.name + ' 굿즈 스토어로 이동해요. (임시 연결 · 상품 순차 입점 예정)</div>' +
         '</div>';
     }
 
@@ -330,13 +353,18 @@
       var lackNames = rec.lacking.map(function (i) { return '"' + ELEMENTS[i].ko + '"'; }).join(', ');
 
       $('sj-lack-title').innerHTML =
-        '당신의 사주에서 상대적으로 부족하게 나타난 오행은 <strong style="color:' +
-        lackEl.color + ';">' + lackNames + '</strong>입니다.';
+        '지금 당신에게 살짝 부족한 오행은<br><strong style="color:' +
+        lackEl.color + ';">' + lackNames + '</strong> 이에요!';
       $('sj-lack-desc').innerHTML =
-        lackEl.ko + '(' + lackEl.hj + ')은 ' + lackEl.symbols + '을 상징합니다.<br>' +
-        rec.main.lackMsg.replace('\n', '<br>');
+        '<b style="color:' + lackEl.color + ';">' + lackEl.ko + '(' + lackEl.hj + ')</b>은 ' +
+        lackEl.symbols + '의 기운이에요.<br>' + rec.main.lackMsg;
 
-      var html = charCard(rec.main, true);
+      var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">요즘 이런 느낌이라면 🫧</div>' +
+        '<div class="sj-vibe-pills">' +
+        rec.main.whenLow.map(function (w) { return '<span class="sj-vibe-pill">' + w + '</span>'; }).join('') +
+        '</div></div>';
+
+      var html = vibe + charCard(rec.main, true);
       if (rec.sub) {
         html += '<p class="sj-both">당신에게는 ' + rec.main.roleShort + ' ' + rec.main.name +
           '와(과) ' + rec.sub.roleShort + ' ' + rec.sub.name + '이(가) 함께 추천됩니다.</p>' +
