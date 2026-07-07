@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /saju
 
 Sitemap: https://jimmypark.net/sitemap.xml

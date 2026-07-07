@@ -49,6 +49,12 @@ same header, footer, eyebrow, button, and card patterns by design.
 **Rule:** burgundy is the spine of the brand; green appears *only* in Scouting contexts. Never
 introduce a new accent hue — pick the nearest token above.
 
+### /saju element colors (scoped exception)
+The hidden `/saju` app colors the five 오행 as content (not brand accents). These hues are
+allowed **only** inside `saju.html` / `assets/saju.js`:
+목 `#2f5a45` (reuses Scouting green) · 화 `#7a1e2c` (reuses burgundy) · 토 `#a8813e` ·
+금 `#8a847c` (reuses muted) · 수 `#3a5068`, each with a light card tint defined in `saju.js`.
+
 ---
 
 ## 2. Typography
@@ -195,6 +201,9 @@ removed all Korean. The content schema's `dekoreanize` migration strips any resi
 Korean from older saved docs on read.)
 - One voice per element: a heading or lead has a single English line, no muted sub-line.
 - `lang="en"` on `<html>`.
+- **Scoped exception:** the hidden `/saju` entertainment app is Korean-UI by design
+  (`saju.html` has `lang="ko"`). The exception covers only `saju.html` + `assets/saju.js`;
+  its header/footer shell still uses the shared English blocks.
 
 ---
 

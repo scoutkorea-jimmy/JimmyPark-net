@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오행 캐릭터 추천 · Jimmy Park</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="생년월일시로 사주 속 오행 밸런스를 재미로 살펴보고, 부족한 오행을 채워줄 캐릭터를 추천받는 엔터테인먼트 웹앱.">
+<link rel="icon" href="/assets/img/favicon.svg?v=0.4.0" type="image/svg+xml">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=0.4.0">
+<style>
+  /* /saju 전용 스타일 — 한국어 UI는 CLAUDE.md에 명시된 예외 라우트.
+     오행 색(목 #2f5a45 · 화 #7a1e2c · 토 #a8813e · 금 #8a847c · 수 #3a5068)은
+     saju 전용 콘텐츠 컬러로, 사이트 브랜드 악센트에는 쓰지 않는다. */
+  .sj-card { background: #fff; border: 1px solid #e6e1da; border-radius: 22px; padding: clamp(22px,3vw,32px); }
+  .sj-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #66615c; margin-bottom: 7px; }
+  .sj-in { width: 100%; font-size: 15px; padding: 12px 14px; border: 1px solid #e6e1da; border-radius: 13px; font-family: inherit; color: #171717; background: #fff; }
+  .sj-in:focus { outline: 2px solid #7a1e2c; outline-offset: 1px; border-color: #7a1e2c; }
+  .sj-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sj-note { font-size: 12.5px; color: #8a847c; line-height: 1.7; }
+  .sj-pillars { display: grid; grid-template-columns: repeat(4,1fr); gap: clamp(10px,1.5vw,16px); }
+  .sj-col { text-align: center; }
+  .sj-col-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: #66615c; margin-bottom: 8px; }
+  .sj-glyph { color: #fff; border-radius: 16px; padding: 14px 6px 12px; font-size: clamp(30px,4.5vw,40px); font-weight: 700; line-height: 1.05; margin-bottom: 8px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .sj-glyph span { font-size: 11.5px; font-weight: 600; opacity: .85; letter-spacing: .02em; }
+  .sj-unknown { border: 1px dashed #ddd6cc; color: #bdb6ab; border-radius: 16px; padding: 26px 6px; font-size: 13px; font-weight: 600; line-height: 1.5; }
+  .sj-el-row { display: grid; grid-template-columns: 64px 1fr 40px; align-items: center; gap: 12px; padding: 7px 0; }
+  .sj-el-name { font-size: 14px; font-weight: 700; }
+  .sj-el-bar { height: 12px; background: #f1eee8; border-radius: 999px; overflow: hidden; display: block; }
+  .sj-el-bar span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
+  .sj-el-count { font-size: 13px; color: #66615c; text-align: right; }
+  .sj-char { border: 1px solid; border-radius: 22px; padding: clamp(20px,3vw,30px); margin-top: 18px; }
+  .sj-char-head { display: flex; align-items: center; gap: 16px; }
+  .sj-char-emoji { font-size: 44px; line-height: 1; background: #fff; border: 1px solid #e6e1da; border-radius: 18px; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .sj-char-tag { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .sj-char-name { margin-top: 4px; font-size: clamp(22px,3vw,28px); font-weight: 800; letter-spacing: -.01em; }
+  .sj-char-name span { font-size: 14px; font-weight: 600; color: #66615c; margin-left: 6px; }
+  .sj-char-desc { margin: 16px 0 0; font-size: 14.5px; color: #2c2925; line-height: 1.75; }
+  .sj-char-quote { margin: 16px 0 0; padding: 4px 0 4px 16px; border-left: 3px solid; font-size: 14px; color: #4a463f; line-height: 1.7; font-style: italic; }
+  .sj-goods-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #66615c; margin: 18px 0 9px; }
+  .sj-pill { display: inline-block; font-size: 12px; color: #4a463f; background: #fff; border: 1px solid #e6e1da; border-radius: 999px; padding: 5px 12px; margin: 0 6px 6px 0; }
+  .sj-cta { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-size: 14.5px; font-weight: 600; padding: 13px 22px; border-radius: 14px; margin-top: 14px; }
+  .sj-char-note { margin-top: 10px; font-size: 12px; color: #8a847c; }
+  .sj-both { margin: 20px 0 0; font-size: 14.5px; color: #2c2925; line-height: 1.7; font-weight: 600; }
+  .sj-world { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: clamp(12px,2vw,18px); }
+  .sj-w-card { border: 1px solid #e6e1da; border-radius: 22px; padding: 20px; background: #fff; }
+  .sj-w-emoji { font-size: 34px; line-height: 1; }
+  .sj-w-el { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-top: 12px; }
+  .sj-w-name { font-size: 17px; font-weight: 800; margin-top: 3px; }
+  .sj-w-name span { font-size: 12.5px; font-weight: 600; color: #66615c; margin-left: 5px; }
+  .sj-w-desc { margin: 7px 0 0; font-size: 13px; color: #66615c; line-height: 1.6; }
+  .sj-legal { font-size: 12.5px; color: #8a847c; line-height: 1.8; }
+  @media (max-width: 840px) { .sj-form-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .sj-pillars { gap: 7px; } .sj-glyph { border-radius: 12px; } }
+</style>
+</head>
+<body data-page="saju">
+
+<!-- HEADER -->
+<header style="position:sticky; top:0; z-index:60; background:rgba(255,255,255,.82); backdrop-filter:saturate(150%) blur(10px); border-bottom:1px solid #ece8e1;">
+  <div style="max-width:1180px; margin:0 auto; padding:0 clamp(22px,5vw,44px); height:68px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+    <a href="/" style="display:flex; align-items:center; gap:11px;">
+      <img src="/assets/img/logo.svg?v=0.4.0" alt="Jimmy Park" width="40" height="34" style="height:34px; width:auto; display:block;">
+      <span style="display:flex; flex-direction:column; line-height:1.08;">
+        <span style="font-weight:800; font-size:16px; letter-spacing:-.01em;">Jimmy Park</span>
+      </span>
+    </a>
+    <nav class="desktop-nav" style="display:flex; align-items:center; gap:32px;">
+      <a href="/" data-nav="home" class="lnk nav-link" style="font-size:14.5px; font-weight:500;">Home</a>
+      <a href="/work" data-nav="work" class="lnk nav-link" style="font-size:14.5px; font-weight:500;">Work</a>
+      <a href="/scouting" data-nav="scouting" class="lnk nav-link" style="font-size:14.5px; font-weight:500;">Scouting</a>
+      <a href="/contact" data-nav="contact" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:7px; background:#7a1e2c; color:#fff; font-size:14px; font-weight:600; padding:10px 20px; border-radius:13px;">Contact</a>
+    </nav>
+    <button class="nav-toggle btn" aria-label="Menu" aria-expanded="false" style="align-items:center; justify-content:center; width:44px; height:44px; background:#fff; border:1px solid #e6e1da; border-radius:13px; color:#171717;">
+      <span class="msym" aria-hidden="true" style="font-size:24px;">menu</span>
+    </button>
+  </div>
+  <div class="mobile-menu" style="border-top:1px solid #ece8e1; background:#fff;">
+    <div style="max-width:1180px; margin:0 auto; padding:6px clamp(22px,5vw,44px) 16px; display:flex; flex-direction:column;">
+      <a href="/" data-nav="home" class="lnk" style="padding:15px 4px; font-size:18px; font-weight:600; border-bottom:1px solid #f1eee8;">Home</a>
+      <a href="/work" data-nav="work" class="lnk" style="padding:15px 4px; font-size:18px; font-weight:600; border-bottom:1px solid #f1eee8;">Work</a>
+      <a href="/scouting" data-nav="scouting" class="lnk" style="padding:15px 4px; font-size:18px; font-weight:600; border-bottom:1px solid #f1eee8;">Scouting</a>
+      <a href="/contact" data-nav="contact" class="lnk" style="padding:15px 4px; font-size:18px; font-weight:600; color:#7a1e2c;">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section>
+  <div style="max-width:760px; margin:0 auto; padding:clamp(44px,7vw,80px) clamp(22px,5vw,44px) clamp(24px,4vw,40px);">
+    <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544;">五行 · Saju Characters</div>
+    <h1 style="margin:16px 0 0; font-size:clamp(30px,5vw,46px); font-weight:800; letter-spacing:-.025em; line-height:1.15;">내 사주에 부족한<br>오행은 무엇일까?</h1>
+    <p style="margin:20px 0 0; font-size:15.5px; color:#2c2925; line-height:1.8;">생년월일시를 입력하면 전통 명리학의 오행 구조를 바탕으로 당신에게 부족하거나 보완하면 좋을 오행을 찾아드립니다. 그리고 그 오행을 상징하는 캐릭터를 추천해드립니다.</p>
+    <p class="sj-note" style="margin:16px 0 0;">※ 이 서비스는 재미를 위한 엔터테인먼트 콘텐츠입니다.<br>※ 결과는 과학적 진단, 운명 예측, 심리검사, 상담을 대체하지 않습니다.</p>
+  </div>
+</section>
+
+<!-- INPUT -->
+<section>
+  <div style="max-width:760px; margin:0 auto; padding:0 clamp(22px,5vw,44px) clamp(32px,5vw,56px);">
+    <form id="saju-form" class="sj-card" novalidate>
+      <div class="sj-form-grid">
+        <div>
+          <label class="sj-label" for="sj-date">생년월일 (양력)</label>
+          <input class="sj-in" type="date" id="sj-date" min="1900-01-01" max="2100-12-31" required>
+        </div>
+        <div>
+          <label class="sj-label" for="sj-time">태어난 시간</label>
+          <input class="sj-in" type="time" id="sj-time" value="12:00">
+          <label style="display:flex; align-items:center; gap:7px; margin-top:9px; font-size:13px; color:#4a463f; cursor:pointer;">
+            <input type="checkbox" id="sj-noTime" style="accent-color:#7a1e2c; width:15px; height:15px;"> 태어난 시간을 몰라요
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:8px; background:#7a1e2c; color:#fff; font-size:15px; font-weight:600; padding:14px 26px; border-radius:14px; margin-top:20px; border:0; cursor:pointer; font-family:inherit;">내 오행 캐릭터 찾기 <span class="msym" aria-hidden="true" style="font-size:18px;">arrow_forward</span></button>
+      <p class="sj-note" style="margin:16px 0 0;">※ 입력한 생년월일시는 사주팔자 계산과 캐릭터 추천에만 사용되며, 서버로 전송되거나 저장되지 않습니다.<br>※ 결과는 재미용 콘텐츠이며 실제 운명 판단이 아닙니다.</p>
+    </form>
+  </div>
+</section>
+
+<!-- RESULT (JS로 채워짐) -->
+<section id="saju-result" style="display:none; background:#f7f6f3; border-top:1px solid #efebe3; border-bottom:1px solid #efebe3;">
+  <div style="max-width:760px; margin:0 auto; padding:clamp(36px,5vw,60px) clamp(22px,5vw,44px);">
+    <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544;">나의 사주팔자</div>
+    <h2 id="sj-headline" style="margin:10px 0 20px; font-size:clamp(20px,3vw,26px); font-weight:800; letter-spacing:-.015em;"></h2>
+    <div id="sj-pillars" class="sj-pillars"></div>
+    <p id="sj-calc-note" class="sj-note" style="margin:12px 0 0;"></p>
+
+    <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544; margin-top:clamp(30px,4vw,44px);">나의 오행 분포</div>
+    <div id="sj-elements" class="sj-card" style="margin-top:12px;"></div>
+
+    <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544; margin-top:clamp(30px,4vw,44px);">당신에게 필요한 오행 캐릭터</div>
+    <h2 id="sj-lack-title" style="margin:10px 0 0; font-size:clamp(20px,3vw,25px); font-weight:800; letter-spacing:-.015em; line-height:1.4;"></h2>
+    <p id="sj-lack-desc" style="margin:12px 0 0; font-size:14.5px; color:#4a463f; line-height:1.8;"></p>
+    <div id="sj-characters"></div>
+
+    <p class="sj-note" style="margin:22px 0 0;">※ 이 결과는 전통 명리학의 상징 체계를 활용한 캐릭터 추천 콘텐츠입니다.<br>※ 실제 성격, 운명, 건강, 인간관계, 진로, 재물 등을 판단하는 기준으로 사용하지 마세요.</p>
+  </div>
+</section>
+
+<!-- 캐릭터 세계관 -->
+<section>
+  <div style="max-width:1092px; margin:0 auto; padding:clamp(44px,6vw,72px) clamp(22px,5vw,44px);">
+    <div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544;">오행 캐릭터 세계관</div>
+    <h2 style="margin:10px 0 clamp(18px,3vw,28px); font-size:clamp(24px,3.4vw,34px); font-weight:800; letter-spacing:-.015em;">다섯 오행, 다섯 친구</h2>
+    <div class="sj-world">
+      <div class="sj-w-card">
+        <div class="sj-w-emoji">🌱</div>
+        <div class="sj-w-el" style="color:#2f5a45;">목 木 · 성장</div>
+        <div class="sj-w-name">모리 <span>새싹 정령</span></div>
+        <p class="sj-w-desc">작은 시작과 성장을 도와주는 새싹 정령.</p>
+      </div>
+      <div class="sj-w-card">
+        <div class="sj-w-emoji">🔥</div>
+        <div class="sj-w-el" style="color:#7a1e2c;">화 火 · 표현</div>
+        <div class="sj-w-name">루아 <span>불꽃 요정</span></div>
+        <p class="sj-w-desc">마음속 불씨를 밝혀주는 작은 불꽃 요정.</p>
+      </div>
+      <div class="sj-w-card">
+        <div class="sj-w-emoji">🐻</div>
+        <div class="sj-w-el" style="color:#a8813e;">토 土 · 안정</div>
+        <div class="sj-w-name">두리 <span>둥근 흙곰</span></div>
+        <p class="sj-w-desc">흩어진 마음의 중심을 잡아주는 둥근 흙곰.</p>
+      </div>
+      <div class="sj-w-card">
+        <div class="sj-w-emoji">🦊</div>
+        <div class="sj-w-el" style="color:#8a847c;">금 金 · 판단</div>
+        <div class="sj-w-name">세라 <span>은빛 여우</span></div>
+        <p class="sj-w-desc">복잡한 생각을 정리해주는 은빛 여우.</p>
+      </div>
+      <div class="sj-w-card">
+        <div class="sj-w-emoji">🐳</div>
+        <div class="sj-w-el" style="color:#3a5068;">수 水 · 지혜</div>
+        <div class="sj-w-name">노아 <span>물방울 고래</span></div>
+        <p class="sj-w-desc">멈춤과 회복을 도와주는 물방울 고래.</p>
+      </div>
+    </div>
+    <p style="margin:clamp(20px,3vw,28px) 0 0; font-size:14.5px; color:#66615c; line-height:1.8; max-width:60ch;">이 캐릭터들은 운명을 바꾸는 존재가 아니라, 당신의 오늘을 조금 더 재미있게 바라보게 해주는 작은 상징입니다.</p>
+  </div>
+</section>
+
+<!-- 고지 -->
+<section style="background:#f7f6f3; border-top:1px solid #efebe3;">
+  <div style="max-width:1092px; margin:0 auto; padding:clamp(28px,4vw,40px) clamp(22px,5vw,44px);">
+    <p class="sj-legal" style="margin:0;">이 서비스는 전통 명리학의 오행 상징 체계를 활용한 재미용 캐릭터 추천 콘텐츠입니다. 제공되는 결과는 과학적 진단, 심리검사, 상담, 점술, 운명 예측이 아니며, 실제 성격, 건강, 인간관계, 진로, 재물, 삶의 결과를 판단하는 기준으로 사용해서는 안 됩니다. 추천 캐릭터와 상품은 오행 세계관을 바탕으로 만든 엔터테인먼트 콘텐츠 및 굿즈이며, 구매가 실제 운세 개선, 기운 보정, 문제 해결 효과를 보장하지 않습니다. 1948–1951 · 1955–1960 · 1987–1988년 서머타임 기간에 태어난 경우 시계 시각에서 1시간을 빼고 입력해 주세요.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #ece8e1; background:#f7f6f3;">
+  <div style="max-width:1180px; margin:0 auto; padding:clamp(36px,5vw,56px) clamp(22px,5vw,44px);">
+    <div style="display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px;"><img src="/assets/img/logo.svg?v=0.4.0" alt="Jimmy Park" width="33" height="28" style="height:28px; width:auto; display:block;"><span style="font-weight:800; font-size:16px;">Jimmy Park</span></div>
+        <div style="margin-top:10px; font-size:12px; color:#66615c; letter-spacing:.03em;">Photographer · Videographer · Scout · Builder</div>
+      </div>
+      <nav style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="/" class="lnk" style="font-size:14px; color:#4a463f;">Home</a>
+        <a href="/work" class="lnk" style="font-size:14px; color:#4a463f;">Work</a>
+        <a href="/scouting" class="lnk" style="font-size:14px; color:#4a463f;">Scouting</a>
+        <a href="/contact" class="lnk" style="font-size:14px; color:#4a463f;">Contact</a>
+      </nav>
+    </div>
+    <div style="margin-top:clamp(26px,4vw,38px); padding-top:22px; border-top:1px solid #e6e1da; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+      <div data-gbind="footer.tagline" style="font-size:12px; letter-spacing:.16em; font-weight:600; color:#9b3544;">SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.</div>
+      <div data-gbind="footer.copyright" style="font-size:12px; color:#66615c;">© 2026 Jimmy Park</div>
+    </div>
+  </div>
+</footer>
+
+<div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
+<script src="/assets/site.js?v=0.4.0" defer></script>
+<script src="/assets/saju.js?v=0.4.0" defer></script>
+</body>
+</html>

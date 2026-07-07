@@ -21,8 +21,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
    `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
    Korean left in older saved docs on read. See design.md §7.)
+   **Exception: `/saju`** — hidden Korean-UI entertainment app (오행 캐릭터 추천). Korean is
+   allowed only in `saju.html` + `assets/saju.js`; the shared shell and all other pages stay
+   English-only.
 5. **Don't break the four canonical routes:** `/` `/work` `/scouting` `/contact`
-   (+ hidden `/admin`). Update `sitemap.xml` if routes change.
+   (+ hidden `/admin`, `/saju`). Update `sitemap.xml` if routes change. Hidden routes stay out
+   of nav, sitemap, and search (noindex meta + robots.txt Disallow).
 6. **Always ship + keep docs current (standing owner policy).** After ANY change, commit
    directly to `main`, push, and deploy (`wrangler pages deploy …`) without waiting to be
    asked — and keep this file and [design.md](design.md) in sync in the same change. This
@@ -33,15 +37,19 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 index.html      Home (/)            work.html      Work (/work)
 scouting.html   Scouting (/scouting) contact.html   Contact (/contact)
 admin.html      Admin (/admin, noindex) + assets/admin.js
+saju.html       오행 캐릭터 추천 (/saju, noindex, Korean-UI exception) + assets/saju.js
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
                 gallery modal, content hydration from /api/content
   admin.js      admin panel logic (TOTP login, content editor, media library)
+  saju.js       /saju only: 만세력 engine (solar-longitude 절기 calc, no lookup tables,
+                1900–2100) + 오행 분석 → 캐릭터 추천 (모리·루아·두리·세라·노아) UI.
+                Fully client-side; birth data never leaves the browser.
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630)
 functions/      Cloudflare Pages Functions (see "Backend" below)
 _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
-robots.txt      allow all except /admin and /api/ ; points to sitemap
+robots.txt      allow all except /admin, /api/, /saju ; points to sitemap
 sitemap.xml     the 4 public routes
 wrangler.toml   Pages config: pages_build_output_dir=".", JP_KV binding
 VERSION         site version string (currently mirrored in ?v= asset query strings)
