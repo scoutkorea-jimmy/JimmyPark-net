@@ -42,13 +42,13 @@
     { ko: '술', hj: '戌', el: 2, animal: '개' },
     { ko: '해', hj: '亥', el: 4, animal: '돼지' }
   ];
-  // 오행 (기획서 §3.4 상징 / 색은 사이트 팔레트와 조화되는 saju 전용 톤)
+  // 오행 (기획서 §3.4 상징 / 색은 /saju 전용 비비드 팔레트 — Open Color 계열)
   var ELEMENTS = [
-    { ko: '목', hj: '木', color: '#2f5a45', light: '#eef4ef', symbols: '성장 · 확장 · 생명력' },
-    { ko: '화', hj: '火', color: '#7a1e2c', light: '#f8eeec', symbols: '표현 · 열정 · 빛' },
-    { ko: '토', hj: '土', color: '#a8813e', light: '#f6f0e3', symbols: '안정 · 균형 · 기반' },
-    { ko: '금', hj: '金', color: '#8a847c', light: '#f1f0ee', symbols: '판단 · 절제 · 구조' },
-    { ko: '수', hj: '水', color: '#3a5068', light: '#eaeff4', symbols: '지혜 · 흐름 · 직관' }
+    { ko: '목', hj: '木', color: '#0ca678', light: '#e6fcf5', symbols: '성장 · 확장 · 생명력' },
+    { ko: '화', hj: '火', color: '#fa5252', light: '#fff0f2', symbols: '표현 · 열정 · 빛' },
+    { ko: '토', hj: '土', color: '#f08c00', light: '#fff6e6', symbols: '안정 · 균형 · 기반' },
+    { ko: '금', hj: '金', color: '#7048e8', light: '#f3f0ff', symbols: '판단 · 절제 · 구조' },
+    { ko: '수', hj: '水', color: '#3b5bdb', light: '#edf2ff', symbols: '지혜 · 흐름 · 직관' }
   ];
 
   var D2R = Math.PI / 180;
@@ -286,7 +286,7 @@
       var el = ELEMENTS[ch.el];
       return '<div class="sj-char" style="background:' + el.light + '; border-color:' + el.color + '33;">' +
         '<div class="sj-char-head">' +
-          '<div class="sj-char-emoji">' + ch.emoji + '</div>' +
+          '<div class="sj-char-emoji" style="background:' + el.color + ';">' + ch.emoji + '</div>' +
           '<div><div class="sj-char-tag" style="color:' + el.color + ';">' +
             (isMain ? '추천 캐릭터' : '함께 추천') + ' · ' + el.ko + '(' + el.hj + ')의 캐릭터</div>' +
           '<div class="sj-char-name">' + ch.name + ' <span>' + ch.type + '</span></div></div>' +

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="오행 캐릭터 추천">
+  <defs>
+    <linearGradient id="sjg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="0.55" stop-color="#c247ff"/>
+      <stop offset="1" stop-color="#ff6aa0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="32" height="32" rx="8" fill="url(#sjg)"/>
+  <!-- 오행 오각 사이클 -->
+  <g stroke="#ffffff" stroke-width="1.1" stroke-opacity="0.55" fill="none" stroke-linejoin="round">
+    <path d="M16 8 20.7 22.5 8.39 13.5 23.6 13.5 11.3 22.5 Z"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="16" cy="8" r="2.5"/>
+    <circle cx="23.6" cy="13.5" r="2.5"/>
+    <circle cx="20.7" cy="22.5" r="2.5"/>
+    <circle cx="11.3" cy="22.5" r="2.5"/>
+    <circle cx="8.39" cy="13.5" r="2.5"/>
+  </g>
+</svg>

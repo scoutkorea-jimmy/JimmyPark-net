@@ -46,7 +46,8 @@ assets/
   saju.js       /saju only: 만세력 engine (solar-longitude 절기 calc, no lookup tables,
                 1900–2100) + 오행 분석 → 캐릭터 추천 (모리·루아·두리·세라·노아) UI.
                 Fully client-side; birth data never leaves the browser.
-  img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630)
+  img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
+                saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark)
 functions/      Cloudflare Pages Functions (see "Backend" below)
 _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
 robots.txt      allow all except /admin, /api/, /saju ; points to sitemap

@@ -49,11 +49,13 @@ same header, footer, eyebrow, button, and card patterns by design.
 **Rule:** burgundy is the spine of the brand; green appears *only* in Scouting contexts. Never
 introduce a new accent hue — pick the nearest token above.
 
-### /saju element colors (scoped exception)
-The hidden `/saju` app colors the five 오행 as content (not brand accents). These hues are
-allowed **only** inside `saju.html` / `assets/saju.js`:
-목 `#2f5a45` (reuses Scouting green) · 화 `#7a1e2c` (reuses burgundy) · 토 `#a8813e` ·
-금 `#8a847c` (reuses muted) · 수 `#3a5068`, each with a light card tint defined in `saju.js`.
+### /saju — standalone app (fully scoped exception)
+The hidden `/saju` route is a **self-contained web app**: it does NOT use `site.css`, `site.js`,
+or the shared header/footer. It has its own modern Gen-Z-leaning look (Pretendard, violet→pink
+gradient `#7c5cff→#c247ff→#ff6aa0`, soft rounded cards, single `--wrap:720px` container so every
+section shares the same left/right width). None of this leaks into the portfolio pages.
+Its five 오행 content colors (vibrant, Open-Color-style — allowed only in `saju.html`/`saju.js`):
+목 `#0ca678` · 화 `#fa5252` · 토 `#f08c00` · 금 `#7048e8` · 수 `#3b5bdb`, each with a light tint.
 
 ---
 
@@ -202,8 +204,8 @@ Korean from older saved docs on read.)
 - One voice per element: a heading or lead has a single English line, no muted sub-line.
 - `lang="en"` on `<html>`.
 - **Scoped exception:** the hidden `/saju` entertainment app is Korean-UI by design
-  (`saju.html` has `lang="ko"`). The exception covers only `saju.html` + `assets/saju.js`;
-  its header/footer shell still uses the shared English blocks.
+  (`saju.html` has `lang="ko"`). It is a standalone page with its own shell — no shared
+  header/footer, `site.css`, or `site.js`. The exception covers only `saju.html` + `assets/saju.js`.
 
 ---
 
