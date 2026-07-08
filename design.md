@@ -55,8 +55,13 @@ web app**: they do NOT use `site.css`, `site.js`, or the shared header/footer. T
 look lives in `assets/saju.css` (Pretendard, violet→pink gradient `#7c5cff→#c247ff→#ff6aa0`,
 soft rounded cards, single `--wrap:720px` container so every section shares the same left/right
 width). Flow: `/saju` collects birth date + 24h·30min time → navigates to
-`/saju-result?d=&t=&nt=` which computes and renders (풍성한 기운 → 부족한 기운 → 캐릭터).
-None of this leaks into the portfolio pages.
+`/saju-result?d=&t=&nt=` which computes and renders (풍성한 기운 → 부족한 기운 → 캐릭터 →
+캐릭터 세계관). Birth date is typed as three separate 연/월/일 numeric fields (not a native
+date picker — elderly users disliked scrolling); `saju.js` sanitizes to digits, auto-advances
+focus, validates the calendar date, and still emits the `d=YYYY-MM-DD` query param. 풍성한/부족한
+기운 both render inside tinted cards (`.sj-strong-card` / `.sj-lack-card`, element color + light
+tint). The "다섯 오행, 다섯 친구" (캐릭터 세계관) grid lives only on `/saju-result` (bottom),
+not on the input page. None of this leaks into the portfolio pages.
 Its five 오행 content colors (vibrant, Open-Color-style — allowed only in `saju.html`/`saju.js`):
 목 `#0ca678` · 화 `#fa5252` · 토 `#f08c00` · 금 `#7048e8` · 수 `#3b5bdb`, each with a light tint.
 

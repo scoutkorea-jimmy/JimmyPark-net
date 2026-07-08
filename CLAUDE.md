@@ -47,8 +47,12 @@ assets/
   saju.css      /saju + /saju-result 공용 스타일 (standalone; NOT site.css)
   saju.js       /saju 엔진+UI: 만세력 engine (solar-longitude 절기 calc, no lookup
                 tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천
-                (모리·루아·두리·세라·노아). 입력 페이지는 /saju-result?d=&t=&nt= 로
-                이동, 결과 페이지는 쿼리에서 읽어 렌더. 마지막 입력은 localStorage
+                (모리·루아·두리·세라·노아). 생년월일은 연/월/일 숫자 3칸 직접 입력
+                (네이티브 date picker 대신 — 어르신 스크롤 불편 해소; 숫자만·자동 포커스
+                이동·달력 유효성 검사 후 d=YYYY-MM-DD 조합). 입력 페이지는
+                /saju-result?d=&t=&nt= 로 이동, 결과 페이지는 쿼리에서 읽어 렌더
+                (풍성/부족 기운은 각각 카드 안, "다섯 오행, 다섯 친구" 세계관 그리드는
+                결과 페이지 하단에만). 마지막 입력은 localStorage
                 (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
                 (서버 미전송). Fully client-side; birth data never leaves the browser.
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
