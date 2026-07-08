@@ -555,7 +555,7 @@
           eyDetail;
       }
 
-      var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그 🏷️</div>' +
+      var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그</div>' +
         '<div class="sj-vibe-pills">' +
         rec.main.whenLow.map(function (w) { return '<span class="sj-vibe-pill">' + w + '</span>'; }).join('') +
         '</div></div>';
