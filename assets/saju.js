@@ -446,6 +446,19 @@
       r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
       var sEl = ELEMENTS[strongEl];
 
+      // 결과 페이지 배경 그라데이션을 가장 풍성한 기운의 오행 색으로 (화=빨강·목=초록·토=노랑·금=은색·수=깊은색)
+      var glow = document.querySelector('.sj-glow');
+      if (glow) {
+        var gc = sEl.color.replace('#', '');
+        var gr = parseInt(gc.substr(0, 2), 16), gg = parseInt(gc.substr(2, 2), 16), gb = parseInt(gc.substr(4, 2), 16);
+        var lum = (0.299 * gr + 0.587 * gg + 0.114 * gb) / 255;         // 밝기
+        var a1 = lum > 0.72 ? 0.5 : lum < 0.28 ? 0.22 : 0.34;           // 밝은색↑ 어두운색↓ 로 보정
+        var rgb = gr + ',' + gg + ',' + gb;
+        glow.style.background =
+          'radial-gradient(circle at 28% 22%, rgba(' + rgb + ',' + a1 + '), transparent 58%),' +
+          'radial-gradient(circle at 76% 56%, rgba(' + rgb + ',' + (a1 * 0.5).toFixed(3) + '), transparent 62%)';
+      }
+
       // 최상단 엠블럼 — 가장 풍성한 기운의 오행 캐릭터 (이미지 없으면 자동 숨김)
       var emblemEl = $('sj-strong-emblem');
       if (emblemEl) {

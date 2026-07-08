@@ -37,10 +37,10 @@ a { color: inherit; text-decoration: none; }
 .sj-sec { padding-top: clamp(34px, 6vw, 60px); padding-bottom: clamp(34px, 6vw, 60px); }
 
 /* 배경 글로우 */
-.sj-glow { position: fixed; top: -220px; left: 50%; transform: translateX(-50%); width: 760px; height: 760px; max-width: 130vw; pointer-events: none; z-index: -1;
-  background: radial-gradient(circle at 32% 32%, rgba(124, 92, 255, .26), transparent 58%),
-              radial-gradient(circle at 70% 60%, rgba(255, 106, 160, .22), transparent 60%);
-  filter: blur(12px); }
+.sj-glow { position: fixed; top: -280px; left: 50%; transform: translateX(-50%); width: 960px; height: 960px; max-width: 150vw; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle at 30% 26%, rgba(124, 92, 255, .26), transparent 58%),
+              radial-gradient(circle at 72% 58%, rgba(255, 106, 160, .22), transparent 62%);
+  filter: blur(22px); transition: background .6s ease; }
 
 /* HERO */
 .sj-hero { text-align: center; padding-top: clamp(52px, 10vw, 88px); padding-bottom: clamp(20px, 4vw, 32px); }
@@ -92,7 +92,7 @@ a { color: inherit; text-decoration: none; }
 /* 결과: 최상단 엠블럼 (가장 풍성한 기운 캐릭터) */
 .sj-emblem { text-align: center; margin-bottom: clamp(24px, 5vw, 40px); }
 .sj-emblem:empty { display: none; }
-.sj-emblem-img { width: clamp(160px, 42vw, 220px); height: auto; display: inline-block; }
+.sj-emblem-img { width: clamp(160px, 42vw, 220px); height: auto; display: inline-block; filter: drop-shadow(0 16px 30px rgba(0, 0, 0, .16)); }
 
 /* 결과: 사주팔자 */
 .sj-headline { margin: 12px 0 22px; font-size: clamp(24px, 4vw, 32px); font-weight: 800; letter-spacing: -.015em; }
