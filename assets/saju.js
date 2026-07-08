@@ -511,14 +511,14 @@
       // 기본 유형 라벨 (스펙 §7: 개수차 기준 — 6·8글자 공통)
       var eyDiff = Math.abs(yang - eum), eySideC = yang >= eum ? YANG_C : EUM_C;
       var eyType = eyDiff === 0 ? '음양 균형형'
-        : (yang > eum ? '陽' : '陰') + ' 기운이 ' + (eyDiff >= 6 ? '매우 강한' : eyDiff >= 4 ? '강한' : '조금 강한') + ' 구조';
+        : (yang > eum ? '양' : '음') + ' 기운이 ' + (eyDiff >= 6 ? '매우 강한' : eyDiff >= 4 ? '강한' : '조금 강한') + ' 구조';
 
       // 본문 (스펙 §11·§12·§13 — 좋고 나쁨 아님, 방향성으로만)
       var eyMsg;
       if (yp > 0.5) {
-        eyMsg = '<b style="color:' + YANG_C + ';">양(陽)</b>은 발산·표현·행동·확장의 방향이에요. 생각을 안에만 두기보다 밖으로 움직이며 풀어가는 힘이 강한 편으로 볼 수 있어요.';
+        eyMsg = '<b style="color:' + YANG_C + ';">양</b>은 발산·표현·행동·확장의 방향이에요. 생각을 안에만 두기보다 밖으로 움직이며 풀어가는 힘이 강한 편으로 볼 수 있어요.';
       } else if (yp < 0.5) {
-        eyMsg = '<b style="color:' + EUM_C + ';">음(陰)</b>은 수렴·저장·내면·정리의 방향이에요. 빠르게 드러내기보다 안에서 깊이 정리하고 관찰한 뒤 움직이는 편으로 볼 수 있어요.';
+        eyMsg = '<b style="color:' + EUM_C + ';">음</b>은 수렴·저장·내면·정리의 방향이에요. 빠르게 드러내기보다 안에서 깊이 정리하고 관찰한 뒤 움직이는 편으로 볼 수 있어요.';
       } else {
         eyMsg = '양(발산·표현)과 음(수렴·정리)의 개수가 균형을 이뤄요. 상황에 따라 밖으로 움직이는 힘과 안에서 정리하는 힘을 함께 쓰는 결로 볼 수 있어요.';
       }
@@ -535,7 +535,7 @@
           '<div><span>겉으로 드러나는 나</span>' + stemPhrase + '<i>양 ' + stemY + ' · 음 ' + stemE + '</i></div>' +
           '<div><span>속마음 · 생활 리듬</span>' + branchPhrase + '<i>양 ' + branchY + ' · 음 ' + branchE + '</i></div>' +
           '<div><span>나를 나타내는 기운</span>' + (dayYang ? '먼저 나서고 표현하는 쪽' : '차분히 살피고 정리하는 쪽') + '<i>사주에서 나 자신을 뜻하는 글자</i></div>' +
-          '<div><span>태어난 계절</span>' + season + ' · ' + seasonPlain + '<i>' + ((season === '봄' || season === '여름') ? '기운이 밖으로 뻗는 양(陽)의 계절' : '기운이 안으로 모이는 음(陰)의 계절') + '</i></div>' +
+          '<div><span>태어난 계절</span>' + season + ' · ' + seasonPlain + '<i>' + ((season === '봄' || season === '여름') ? '기운이 밖으로 뻗는 양의 계절' : '기운이 안으로 모이는 음의 계절') + '</i></div>' +
         '</div>';
 
       // 캐릭터 추천은 맨 아래 '부족한 기운' 섹션에서 한 번만 — 여기선 캐릭터 언급 없음.
@@ -543,8 +543,8 @@
       if (eyEl) {
         eyEl.innerHTML =
           '<div class="sj-ey-head">' +
-            '<span style="color:' + YANG_C + ';">陽 양 <b>' + yang + '</b></span>' +
-            '<span style="color:' + EUM_C + ';"><b>' + eum + '</b> 음 陰</span>' +
+            '<span style="color:' + YANG_C + ';">양 <b>' + yang + '</b></span>' +
+            '<span style="color:' + EUM_C + ';"><b>' + eum + '</b> 음</span>' +
           '</div>' +
           '<div class="sj-ey-bar">' +
             '<span class="sj-ey-seg" style="width:' + (yp * 100) + '%; background:' + YANG_C + ';"></span>' +
