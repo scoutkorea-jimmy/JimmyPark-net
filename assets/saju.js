@@ -48,15 +48,15 @@
   // 오행 (기획서 §3.4 상징 / 색은 /saju 전용 비비드 팔레트 — Open Color 계열)
   // strong: 그 기운이 풍성할 때의 강점 (유쾌하고 기분 좋게)
   var ELEMENTS = [
-    { ko: '목', hj: '木', color: '#0ca678', light: '#e6fcf5', symbols: '성장 · 확장 · 생명력',
+    { ko: '목', hj: '木', color: '#2f9e44', text: '#2f9e44', ink: '#ffffff', light: '#e9fbef', symbols: '성장 · 확장 · 생명력',
       strong: '목(木)이 넉넉한 당신은 마음속에 늘 초록빛 새싹을 품고, 새로운 시작 앞에서 눈이 반짝이는 사람이에요. 작은 아이디어도 정성껏 물을 주어 근사한 결과로 자라나게 하는 추진력이 있고, 그 생기는 주변까지 은근히 물들이죠. 지금처럼 계속 씨앗을 심어가면 돼요 — 당신의 봄은 아직 한창이니까요!' },
-    { ko: '화', hj: '火', color: '#fa5252', light: '#fff0f2', symbols: '표현 · 열정 · 빛',
+    { ko: '화', hj: '火', color: '#e8352e', text: '#e8352e', ink: '#ffffff', light: '#fff1f0', symbols: '표현 · 열정 · 빛',
       strong: '화(火)가 넉넉한 당신은 감정이 풍부하고 표현이 솔직해서, 함께 있으면 분위기가 금세 환해지는 사람이에요. 좋으면 좋다고 온몸으로 말할 줄 아는 그 밝은 에너지에 사람들이 자연스레 모여들고, 힘들어하는 친구 곁에서 진심으로 함께 웃고 울어줄 줄도 알죠. 그 반짝임을 아끼지 말고 마음껏 빛내면 돼요 — 오늘도 당신은 충분히 눈부셔요!' },
-    { ko: '토', hj: '土', color: '#f08c00', light: '#fff6e6', symbols: '안정 · 균형 · 기반',
+    { ko: '토', hj: '土', color: '#f5b800', text: '#b07d00', ink: '#4a3800', light: '#fff7d6', symbols: '안정 · 균형 · 기반',
       strong: '토(土)가 넉넉한 당신은 어디서든 든든한 땅이 되어주는 사람이에요. 급하게 서두르기보다 차분히 중심을 잡고, 한번 맡은 일은 끝까지 책임지는 성실함으로 사람들의 믿음을 얻죠. 지금처럼 당신만의 속도로 단단히 걸어가면 돼요 — 오늘도 당신은 충분히 단단해요!' },
-    { ko: '금', hj: '金', color: '#7048e8', light: '#f3f0ff', symbols: '판단 · 절제 · 구조',
+    { ko: '금', hj: '金', color: '#c3cad1', text: '#8a929b', ink: '#454b52', light: '#f2f4f6', symbols: '판단 · 절제 · 구조',
       strong: '금(金)이 넉넉한 당신은 복잡한 걸 깔끔하게 정리하고 핵심을 딱 짚어내는 감각이 뛰어난 사람이에요. 기준이 분명해 필요할 땐 단호하게 결단하면서도, 예의와 절제를 잃지 않는 품격이 있죠. 지금처럼 당신만의 기준을 믿고 나아가면 돼요 — 오늘도 당신은 충분히 또렷하게 빛나요!' },
-    { ko: '수', hj: '水', color: '#3b5bdb', light: '#edf2ff', symbols: '지혜 · 흐름 · 직관',
+    { ko: '수', hj: '水', color: '#2b2f36', text: '#2b2f36', ink: '#ffffff', light: '#eef0f2', symbols: '지혜 · 흐름 · 직관',
       strong: '수(水)가 넉넉한 당신은 서두르지 않고 상황의 흐름을 읽어내는 지혜를 가진, 깊고 잔잔한 물 같은 사람이에요. 조용히 곁을 지키며 들어주는 힘이 있어 사람들이 속마음을 털어놓고, 함께 있으면 이상하게 마음이 차분해지죠. 지금처럼 당신만의 리듬으로 흘러가면 돼요 — 오늘도 당신은 충분히 깊고 아름다워요!' }
   ];
 
@@ -387,29 +387,29 @@
       var s = STEMS[pl.stem], b = BRANCHES[pl.branch];
       return '<div class="sj-col">' +
         '<div class="sj-col-label">' + label + '</div>' +
-        '<div class="sj-glyph" style="background:' + ELEMENTS[s.el].color + ';">' + s.hj +
+        '<div class="sj-glyph" style="background:' + ELEMENTS[s.el].color + '; color:' + ELEMENTS[s.el].ink + ';">' + s.hj +
           '<span>' + s.ko + ' · ' + ELEMENTS[s.el].ko + '</span></div>' +
-        '<div class="sj-glyph" style="background:' + ELEMENTS[b.el].color + ';">' + b.hj +
+        '<div class="sj-glyph" style="background:' + ELEMENTS[b.el].color + '; color:' + ELEMENTS[b.el].ink + ';">' + b.hj +
           '<span>' + b.ko + ' · ' + ELEMENTS[b.el].ko + '</span></div>' +
         '</div>';
     }
 
     function charCard(ch, isMain) {
       var el = ELEMENTS[ch.el];
-      return '<div class="sj-char" style="background:' + el.light + '; border-color:' + el.color + '33;">' +
+      return '<div class="sj-char" style="background:' + el.light + '; border-color:' + el.text + '33;">' +
         '<div class="sj-char-head">' +
           '<div class="sj-char-emoji" style="background:' + el.color + ';">' + ch.emoji + '</div>' +
-          '<div><div class="sj-char-tag" style="color:' + el.color + ';">' +
+          '<div><div class="sj-char-tag" style="color:' + el.text + ';">' +
             (isMain ? '추천 캐릭터' : '함께 추천') + ' · ' + el.ko + '(' + el.hj + ')의 캐릭터</div>' +
           '<div class="sj-char-name">' + ch.name + ' <span>' + ch.type + '</span></div></div>' +
         '</div>' +
         '<p class="sj-char-desc">' + ch.long + '</p>' +
-        '<blockquote class="sj-char-quote" style="border-color:' + el.color + ';">' +
+        '<blockquote class="sj-char-quote" style="border-color:' + el.text + ';">' +
           ch.quote.replace('\n', '<br>') + '</blockquote>' +
         '<div class="sj-char-goods"><div class="sj-goods-label">이런 아이템으로 만나요</div>' +
           ch.products.map(function (g) { return '<span class="sj-pill">' + g + '</span>'; }).join('') +
         '</div>' +
-        '<a href="' + SHOP_URL + '" target="_blank" rel="noopener noreferrer" class="sj-cta" style="background:' + el.color + ';">' +
+        '<a href="' + SHOP_URL + '" target="_blank" rel="noopener noreferrer" class="sj-cta" style="background:' + el.color + '; color:' + el.ink + ';">' +
           ch.cta + ' <span class="msym" aria-hidden="true" style="font-size:17px;">shopping_bag</span></a>' +
         '<div class="sj-char-note">※ ' + ch.name + ' 굿즈 스토어로 이동해요. (임시 연결 · 상품 순차 입점 예정)</div>' +
         '</div>';
@@ -431,7 +431,7 @@
       $('sj-elements').innerHTML = ELEMENTS.map(function (el, i) {
         var c = r.counts[i], w = total ? Math.round(c / total * 100) : 0;
         return '<div class="sj-el-row">' +
-          '<span class="sj-el-name" style="color:' + el.color + ';">' + el.ko + ' ' + el.hj + '</span>' +
+          '<span class="sj-el-name" style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + '</span>' +
           '<span class="sj-el-bar"><span style="width:' + Math.max(w, c ? 6 : 0) + '%; background:' + el.color + ';"></span></span>' +
           '<span class="sj-el-count">' + c + '개</span></div>';
       }).join('');
@@ -441,9 +441,9 @@
       r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
       var sEl = ELEMENTS[strongEl];
       $('sj-strong').innerHTML =
-        '<div class="sj-strong-card" style="background:' + sEl.light + '; border-color:' + sEl.color + '33;">' +
-        '<div class="sj-strong-badge" style="background:' + sEl.color + ';">' + sEl.hj + '</div>' +
-        '<div><div class="sj-strong-tag" style="color:' + sEl.color + ';">가장 풍성한 기운 · ' +
+        '<div class="sj-strong-card" style="background:' + sEl.light + '; border-color:' + sEl.text + '33;">' +
+        '<div class="sj-strong-badge" style="background:' + sEl.color + '; color:' + sEl.ink + ';">' + sEl.hj + '</div>' +
+        '<div><div class="sj-strong-tag" style="color:' + sEl.text + ';">가장 풍성한 기운 · ' +
           sEl.ko + '(' + sEl.hj + ')</div>' +
         '<p class="sj-strong-msg">' + sEl.strong.replace(/\n\n/g, '<br><br>') + '</p></div></div>';
 
@@ -454,22 +454,24 @@
 
       $('sj-lack-title').innerHTML =
         '지금 당신에게 살짝 부족한 오행은<br><strong style="color:' +
-        lackEl.color + ';">' + lackNames + '</strong> 이에요!';
+        lackEl.text + ';">' + lackNames + '</strong> 이에요!';
       $('sj-lack-desc').innerHTML =
-        '<b style="color:' + lackEl.color + ';">' + lackEl.ko + '(' + lackEl.hj + ')</b>은 ' +
+        '<b style="color:' + lackEl.text + ';">' + lackEl.ko + '(' + lackEl.hj + ')</b>은 ' +
         lackEl.symbols + '의 기운이에요.<br><br>' + rec.main.lackMsg.replace(/\n\n/g, '<br><br>');
       var lackCard = $('sj-lack-card');
       if (lackCard) {
         lackCard.style.background = lackEl.light;
-        lackCard.style.borderColor = lackEl.color + '33';
+        lackCard.style.borderColor = lackEl.text + '33';
       }
 
       var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그 🏷️</div>' +
         '<div class="sj-vibe-pills">' +
         rec.main.whenLow.map(function (w) { return '<span class="sj-vibe-pill">' + w + '</span>'; }).join('') +
         '</div></div>';
+      var vibeTop = $('sj-vibe-top');
+      if (vibeTop) vibeTop.innerHTML = vibe;
 
-      var html = vibe + charCard(rec.main, true);
+      var html = charCard(rec.main, true);
       if (rec.sub) {
         html += '<p class="sj-both">당신에게는 ' + rec.main.roleShort + ' ' + rec.main.name +
           '와(과) ' + rec.sub.roleShort + ' ' + rec.sub.name + '이(가) 함께 추천됩니다.</p>' +

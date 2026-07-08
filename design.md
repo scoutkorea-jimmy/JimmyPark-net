@@ -62,8 +62,17 @@ focus, validates the calendar date, and still emits the `d=YYYY-MM-DD` query par
 기운 both render inside tinted cards (`.sj-strong-card` / `.sj-lack-card`, element color + light
 tint). The "다섯 오행, 다섯 친구" (캐릭터 세계관) grid lives only on `/saju-result` (bottom),
 not on the input page. None of this leaks into the portfolio pages.
-Its five 오행 content colors (vibrant, Open-Color-style — allowed only in `saju.html`/`saju.js`):
-목 `#0ca678` · 화 `#fa5252` · 토 `#f08c00` · 금 `#7048e8` · 수 `#3b5bdb`, each with a light tint.
+Its five 오행 colors follow **traditional 오방색** (allowed only in `saju.html`/`saju.js`).
+Each element carries **three** tones so white/yellow/black stay legible on the light UI:
+`color` (solid fill: 글리프·뱃지·이모지·CTA·막대), `text` (흰 배경 위 라벨/보더), `ink`
+(solid fill 위 글자색), plus a `light` card tint.
+- 목 청(초록) `color #2f9e44` · text `#2f9e44` · ink `#fff` · light `#e9fbef`
+- 화 적(빨강) `color #e8352e` · text `#e8352e` · ink `#fff` · light `#fff1f0`
+- 토 황(노랑) `color #f5b800` · text `#b07d00` · ink `#4a3800` · light `#fff7d6`
+- 금 백(흰/은) `color #c3cad1` · text `#8a929b` · ink `#454b52` · light `#f2f4f6`
+- 수 흑(검정) `color #2b2f36` · text `#2b2f36` · ink `#fff` · light `#eef0f2`
+순백(금)·순노랑(토)은 흰 배경에서 대비가 안 나와 글자는 은색/골드, 채움 위 글자는 진한
+잉크로 처리 — 정체성은 채움 색(밝은 은/노랑)이 담당한다.
 
 ---
 
