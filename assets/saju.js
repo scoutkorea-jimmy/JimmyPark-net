@@ -453,8 +453,7 @@
         emblemEl.innerHTML =
           '<img class="sj-emblem-img" src="/assets/img/saju-el-' + emKey + '.png" ' +
           'alt="' + sEl.ko + '(' + sEl.hj + ') 기운 캐릭터" ' +
-          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">' +
-          '<div class="sj-emblem-cap">나에게 가장 풍성한 기운 · <b style="color:' + sEl.text + ';">' + sEl.ko + '(' + sEl.hj + ')</b></div>';
+          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">';
       }
 
       $('sj-strong').innerHTML =
