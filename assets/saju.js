@@ -300,6 +300,11 @@
 
       // 연/월/일 직접 입력 필드 — 숫자만, 다 채우면 자동으로 다음 칸으로 이동
       var yIn = $('sj-year'), moIn = $('sj-month'), daIn = $('sj-day');
+      // 샘플(placeholder)은 오늘 날짜 기준으로 표시
+      var todayD = new Date();
+      yIn.placeholder = String(todayD.getFullYear());
+      moIn.placeholder = String(todayD.getMonth() + 1);
+      daIn.placeholder = String(todayD.getDate());
       function wireDigits(inp, next, leadJump) {
         inp.addEventListener('input', function () {
           this.value = this.value.replace(/\D/g, '').slice(0, this.maxLength);
