@@ -445,6 +445,18 @@
       var strongEl = 0, maxc = -1;
       r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
       var sEl = ELEMENTS[strongEl];
+
+      // 최상단 엠블럼 — 가장 풍성한 기운의 오행 캐릭터 (이미지 없으면 자동 숨김)
+      var emblemEl = $('sj-strong-emblem');
+      if (emblemEl) {
+        var emKey = ['wood', 'fire', 'earth', 'metal', 'water'][strongEl];
+        emblemEl.innerHTML =
+          '<img class="sj-emblem-img" src="/assets/img/saju-el-' + emKey + '.png" ' +
+          'alt="' + sEl.ko + '(' + sEl.hj + ') 기운 캐릭터" ' +
+          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">' +
+          '<div class="sj-emblem-cap">나에게 가장 풍성한 기운 · <b style="color:' + sEl.text + ';">' + sEl.ko + '(' + sEl.hj + ')</b></div>';
+      }
+
       $('sj-strong').innerHTML =
         '<div class="sj-strong-card" style="background:' + sEl.light + '; border-color:' + sEl.text + '33;">' +
         '<div class="sj-strong-badge" style="background:' + sEl.color + '; color:' + sEl.ink + ';">' + sEl.hj + '</div>' +
