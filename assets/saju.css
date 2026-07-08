@@ -151,6 +151,7 @@ a { color: inherit; text-decoration: none; }
 .sj-char-tag { font-size: 15px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .sj-char-name { margin-top: 5px; font-size: clamp(26px, 3.9vw, 32px); font-weight: 800; letter-spacing: -.01em; }
 .sj-char-name span { font-size: 16px; font-weight: 700; color: var(--muted); margin-left: 7px; }
+.sj-char-why { margin-top: 18px; padding: 15px 18px; background: rgba(255, 255, 255, .8); border-radius: var(--r-sm); font-size: 17px; color: #40394e; line-height: 1.8; }
 .sj-char-desc { margin: 17px 0 0; font-size: 19px; color: #40394e; line-height: 1.8; }
 .sj-char-quote { margin: 17px 0 0; padding: 14px 18px; border-radius: var(--r-sm); background: rgba(255, 255, 255, .6); border-left: 3px solid; font-size: 17px; color: #514a60; line-height: 1.7; font-style: italic; }
 .sj-goods-label { font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 22px 0 11px; }

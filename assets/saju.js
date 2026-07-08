@@ -399,7 +399,7 @@
         '</div>';
     }
 
-    function charCard(ch, isMain) {
+    function charCard(ch, isMain, whyHtml) {
       var el = ELEMENTS[ch.el];
       return '<div class="sj-char" style="background:' + el.light + '; border-color:' + el.text + '33;">' +
         '<div class="sj-char-head">' +
@@ -408,6 +408,7 @@
             (isMain ? '추천 캐릭터' : '함께 추천') + ' · ' + el.ko + '(' + el.hj + ')의 캐릭터</div>' +
           '<div class="sj-char-name">' + ch.name + ' <span>' + ch.type + '</span></div></div>' +
         '</div>' +
+        (whyHtml ? '<div class="sj-char-why">' + whyHtml + '</div>' : '') +
         '<p class="sj-char-desc">' + ch.long + '</p>' +
         '<blockquote class="sj-char-quote" style="border-color:' + el.text + ';">' +
           ch.quote.replace('\n', '<br>') + '</blockquote>' +
@@ -562,7 +563,23 @@
       var vibeTop = $('sj-vibe-top');
       if (vibeTop) vibeTop.innerHTML = vibe;
 
-      var html = charCard(rec.main, true);
+      // 추천 근거 멘트 — 부족 오행(무엇이 옅은지) + 음양 밸런스(어떤 결로 채울지)를 엮어서
+      var eyState = yang > eum
+        ? '양 기운이 강해 밖으로 뻗는 힘이 큰 편이에요'
+        : yang < eum
+          ? '음 기운이 강해 안으로 모이는 힘이 큰 편이에요'
+          : '음과 양은 고르게 균형을 이루고 있어요';
+      var needTone = yang > eum
+        ? '그 힘이 흩어지지 않게 차분히 모아주는'
+        : yang < eum
+          ? '그 깊이를 밖으로 살짝 이끌어주는'
+          : '그 균형 위에 부족한 기운만 살짝 얹어주는';
+      var whyHtml =
+        '지금 당신의 사주에는 ' + lackEl.symbols + '을 뜻하는 <b style="color:' + lackEl.text + ';">' +
+        lackEl.ko + '(' + lackEl.hj + ')</b> 기운이 살짝 옅고, ' + eyState +
+        '. 그래서 ' + needTone + ', ' + rec.main.roleShort + ' <b>' + rec.main.name + '</b>를 추천해요.';
+
+      var html = charCard(rec.main, true, whyHtml);
       if (rec.sub) {
         html += '<p class="sj-both">당신에게는 ' + rec.main.roleShort + ' ' + rec.main.name +
           '와(과) ' + rec.sub.roleShort + ' ' + rec.sub.name + '이(가) 함께 추천됩니다.</p>' +
