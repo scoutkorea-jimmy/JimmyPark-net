@@ -61,7 +61,12 @@ width). Flow: `/saju` collects birth date + 24h·30min time → navigates to
 음양은 별도 계산 없이 기존 팔자에서 집계 — 천간은 `STEMS[i].yang`, 지지는 배열 인덱스
 짝수(자·인·진·오·신·술)=양. 陽=화 적색 / 陰=수 흑색 2색 막대 + 기본 유형 라벨 + 겉(천간)/
 속(지지) 분리 + 일간 음양 + 월지 계절 보정을 함께 표시(근거: [saju-eumyang.md](saju-eumyang.md),
-단정·우열 판단 금지). 본문 카피는 전반적으로 간결화(≈50%↓), 글씨는 현행 대비 ~1.5배 확대. Birth date is typed as three separate 연/월/일 numeric fields (not a native
+단정·우열 판단 금지). 본문 카피는 전반적으로 간결화(≈50%↓), 글씨는 현행 대비 ~1.5배 확대. 한글은
+`word-break: keep-all`로 어절 단위 줄바꿈. 음양 카드 보조 정보는 한자어(천간/지지/일간)
+대신 쉬운 말("겉으로 드러나는 나/속마음·생활 리듬/나를 나타내는 기운/태어난 계절")로.
+**카드 구분:** 부족-기운 카드는 흰 배경 + 좌측 색 스파인(액센트), 캐릭터 카드는 오행 색
+가득 채운 강조 카드 — 나란히 놓인 두 카드가 헷갈리지 않게. **고지문구:** 반복을 줄여
+입력 페이지는 히어로 한 줄 + 푸터 legal, 결과 페이지는 푸터 legal만(둘 다 유지). Birth date is typed as three separate 연/월/일 numeric fields (not a native
 date picker — elderly users disliked scrolling); `saju.js` sanitizes to digits, auto-advances
 focus, validates the calendar date, and still emits the `d=YYYY-MM-DD` query param. 풍성한/부족한
 기운 both render inside tinted cards (`.sj-strong-card` / `.sj-lack-card`, element color + light

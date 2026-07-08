@@ -465,8 +465,8 @@
         lackEl.symbols + '의 기운이에요.<br><br>' + rec.main.lackMsg.replace(/\n\n/g, '<br><br>');
       var lackCard = $('sj-lack-card');
       if (lackCard) {
-        lackCard.style.background = lackEl.light;
-        lackCard.style.borderColor = lackEl.text + '33';
+        // 흰 카드 + 색 스파인(좌측 액센트) — 아래 채워진 캐릭터 카드와 확실히 구분
+        lackCard.style.borderLeftColor = lackEl.color;
       }
 
       // ── 음양(陰陽) 밸런스 — 기존 팔자에서 집계 (음양 스펙 문서 기준) ──────
@@ -497,16 +497,16 @@
         eyMsg = '양(발산·표현)과 음(수렴·정리)의 개수가 균형을 이뤄요. 상황에 따라 밖으로 움직이는 힘과 안에서 정리하는 힘을 함께 쓰는 결로 볼 수 있어요.';
       }
 
-      // 보정 참고: 일간(나 자신) / 월지 계절 (스펙 §9·§10)
+      // 보정 참고: 나 자신 / 태어난 계절 — 어려운 한자어 없이 쉬운 말로
       var dayYang = STEMS[pl.day.stem].yang;
       var season = (function (bi) { return (bi >= 2 && bi <= 4) ? '봄' : (bi >= 5 && bi <= 7) ? '여름' : (bi >= 8 && bi <= 10) ? '가을' : '겨울'; })(pl.month.branch);
-      var seasonEy = (season === '봄' || season === '여름') ? '양(陽)이 오르는 계절' : '음(陰)이 짙어지는 계절';
+      var seasonPlain = { '봄': '새로 피어나는 때', '여름': '가장 뜨거운 때', '가을': '차분히 거두는 때', '겨울': '깊이 가라앉는 때' }[season];
       var eyDetail =
         '<div class="sj-ey-detail">' +
-          '<div><span>겉 · 천간</span>양 ' + stemY + ' · 음 ' + stemE + '</div>' +
-          '<div><span>속 · 지지</span>양 ' + branchY + ' · 음 ' + branchE + '</div>' +
-          '<div><span>일간 · 나 자신</span>' + (dayYang ? '양간(陽干) · 발산·추진형' : '음간(陰干) · 수렴·조율형') + '</div>' +
-          '<div><span>태어난 계절</span>' + season + ' · ' + seasonEy + '</div>' +
+          '<div><span>겉으로 드러나는 나</span>양 ' + stemY + ' · 음 ' + stemE + '</div>' +
+          '<div><span>속마음 · 생활 리듬</span>양 ' + branchY + ' · 음 ' + branchE + '</div>' +
+          '<div><span>나를 나타내는 기운</span>' + (dayYang ? '먼저 나서고 표현하는 쪽' : '차분히 살피고 정리하는 쪽') + '</div>' +
+          '<div><span>태어난 계절</span>' + season + ' · ' + seasonPlain + '</div>' +
         '</div>';
 
       // 캐릭터 추천은 맨 아래 '부족한 기운' 섹션에서 한 번만 — 여기선 캐릭터 언급 없음.

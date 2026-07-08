@@ -21,6 +21,7 @@ body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  word-break: keep-all; overflow-wrap: break-word;   /* 한글은 어절 단위로 줄바꿈 */
 }
 a { color: inherit; text-decoration: none; }
 ::selection { background: rgba(124, 92, 255, .22); }
@@ -44,9 +45,10 @@ a { color: inherit; text-decoration: none; }
 /* HERO */
 .sj-hero { text-align: center; padding-top: clamp(52px, 10vw, 88px); padding-bottom: clamp(20px, 4vw, 32px); }
 .sj-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 18px; font-weight: 700; letter-spacing: .04em; color: var(--brand); background: rgba(124, 92, 255, .1); border: 1px solid rgba(124, 92, 255, .22); padding: 8px 17px; border-radius: 999px; }
-.sj-h1 { margin: 22px 0 0; font-size: clamp(38px, 7.5vw, 60px); font-weight: 800; letter-spacing: -.035em; line-height: 1.12; }
+.sj-h1 { margin: 22px 0 0; font-size: clamp(38px, 7.5vw, 60px); font-weight: 800; letter-spacing: -.035em; line-height: 1.14; text-wrap: balance; }
+.sj-h1-sub { display: block; font-size: .5em; font-weight: 700; color: #6b6577; letter-spacing: -.02em; line-height: 1.3; margin-bottom: 8px; }
 .sj-grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.sj-lead { margin: 20px auto 0; max-width: 30ch; font-size: clamp(18px, 2.6vw, 21px); color: var(--muted); line-height: 1.75; }
+.sj-lead { margin: 20px auto 0; max-width: 28ch; font-size: clamp(18px, 2.6vw, 21px); color: var(--muted); line-height: 1.75; text-wrap: pretty; }
 .sj-mini { margin-top: 18px; font-size: 16px; color: var(--faint); line-height: 1.7; }
 
 /* 결과 페이지 상단 바 / 다시하기 */
@@ -123,7 +125,7 @@ a { color: inherit; text-decoration: none; }
 .sj-strong-msg { margin: 9px 0 0; font-size: 19px; color: #40394e; line-height: 1.85; }
 
 /* 결과: 부족 오행 + 캐릭터 */
-.sj-lack-card { border: 1.5px solid; border-radius: 22px; padding: clamp(18px, 3.5vw, 26px); margin-top: 14px; }
+.sj-lack-card { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--line); box-shadow: var(--shadow); border-radius: 22px; padding: clamp(18px, 3.5vw, 26px); margin-top: 14px; }
 .sj-lack-title { margin: 0; font-size: clamp(24px, 3.9vw, 30px); font-weight: 800; letter-spacing: -.015em; line-height: 1.42; }
 .sj-lack-desc { margin: 15px 0 0; font-size: 19px; color: #40394e; line-height: 1.85; }
 .sj-vibe { margin-top: 18px; padding: 18px 20px; background: #f6f4ff; border: 1px solid #ecebf4; border-radius: 18px; }
