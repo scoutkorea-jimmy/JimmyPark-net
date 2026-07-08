@@ -446,10 +446,12 @@
       r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
       var sEl = ELEMENTS[strongEl];
 
-      // 결과 페이지 배경 그라데이션을 가장 풍성한 기운의 오행 색으로 (화=빨강·목=초록·토=노랑·금=은색·수=깊은색)
+      // 결과 페이지 배경 그라데이션 — 화=빨강·목=초록·토=노랑·금=골드·수=파랑
+      // (카드/글리프는 전통 오방색 유지, 배경만 보기 좋은 톤으로: 수 흑→파랑, 금 은→골드)
+      var GLOW_COLORS = ['#2f9e44', '#e8352e', '#f5b800', '#e3b341', '#3b82f6'];
       var glow = document.querySelector('.sj-glow');
       if (glow) {
-        var gc = sEl.color.replace('#', '');
+        var gc = GLOW_COLORS[strongEl].replace('#', '');
         var gr = parseInt(gc.substr(0, 2), 16), gg = parseInt(gc.substr(2, 2), 16), gb = parseInt(gc.substr(4, 2), 16);
         var lum = (0.299 * gr + 0.587 * gg + 0.114 * gb) / 255;         // 밝기
         var a1 = lum > 0.72 ? 0.5 : lum < 0.28 ? 0.22 : 0.34;           // 밝은색↑ 어두운색↓ 로 보정
