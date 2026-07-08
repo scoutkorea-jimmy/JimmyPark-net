@@ -72,7 +72,10 @@ width). Flow: `/saju` collects birth date + 24h·30min time → navigates to
 오방색 그대로), 밝기 기반 알파 보정. 카드/글리프의 오방색은 불변.
 **타이포 위계(사주 앱):** eyebrow(13, 큰 제목 위 키커 전용 — 결과 페이지 "나의 사주팔자"만)
 < 잔글씨 13(micro)/15(caption)/16(UI)/17(quote) < 본문 19 < `.sj-sect`(20–24, 결과 페이지
-섹션 제목 — 음양/오행/풍성/부족) < headline·lack-title(24–32) < H1(38–60, sub는 .5em). Birth date is typed as three separate 연/월/일 numeric fields (not a native
+섹션 제목 — 음양/오행/풍성/부족) < headline·lack-title(24–32) < H1(38–60, sub는 .5em).
+**곡률 토큰(사주 앱):** `--r-sm 16`(입력·버튼·CTA·배지·인용구·작은 이모지 타일) /
+`--r-md 20`(글리프·내부 카드: strong/lack/vibe/char-emoji/w-card) / `--r-lg 26`(외곽
+카드: sj-card·sj-char) / pill `999px`. 새 곡률값 하드코딩 금지 — 이 4단만 사용. Birth date is typed as three separate 연/월/일 numeric fields (not a native
 date picker — elderly users disliked scrolling); `saju.js` sanitizes to digits, auto-advances
 focus, validates the calendar date, and still emits the `d=YYYY-MM-DD` query param. 풍성한/부족한
 기운 both render inside tinted cards (`.sj-strong-card` / `.sj-lack-card`, element color + light
