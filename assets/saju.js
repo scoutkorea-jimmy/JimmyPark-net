@@ -464,6 +464,47 @@
         lackCard.style.borderColor = lackEl.text + '33';
       }
 
+      // ── 음양(陰陽) 밸런스 — 기존 팔자에서 집계 (천간 yang / 지지 짝수=양) ──
+      var yang = 0, eum = 0;
+      [pl.year, pl.month, pl.day].concat(pl.hour ? [pl.hour] : []).forEach(function (p) {
+        STEMS[p.stem].yang ? yang++ : eum++;
+        (p.branch % 2 === 0) ? yang++ : eum++;
+      });
+      var eyTotal = yang + eum, yp = yang / eyTotal;
+      var YANG_C = ELEMENTS[1].color, EUM_C = ELEMENTS[4].color; // 화 적 / 수 흑
+      var pre = '사주 ' + eyTotal + '글자 중 ';
+      var eyMsg;
+      if (yp >= 0.55) {
+        eyMsg = pre + '<b style="color:' + YANG_C + ';">양(陽)이 ' + yang + '개</b>로, 음(陰 ' + eum +
+          '개)보다 ' + (yp >= 0.7 ? '강하게' : '살짝') + ' 많아요. 마음이 밖으로 향하는, 활동적이고 표현이 ' +
+          '시원시원한 결이에요. 하고 싶은 게 생기면 일단 움직이고, 감정도 비교적 솔직하게 드러내는 편이죠. ' +
+          '다만 앞으로만 달리다 지칠 땐, 안으로 살피는 음(陰)의 여백도 챙겨주면 훨씬 단단해져요.';
+      } else if (yp <= 0.45) {
+        eyMsg = pre + '<b style="color:' + EUM_C + ';">음(陰)이 ' + eum + '개</b>로, 양(陽 ' + yang +
+          '개)보다 ' + (yp <= 0.3 ? '강하게' : '살짝') + ' 많아요. 안으로 살피고 깊이 생각하는, 섬세하고 ' +
+          '사려 깊은 결이에요. 서두르기보다 먼저 관찰하고, 마음을 조용히 다듬는 편이죠. 다만 생각이 길어져 ' +
+          '멈춰 설 땐, 밖으로 한 발 내딛는 양(陽)의 용기를 살짝 더하면 좋아요.';
+      } else {
+        eyMsg = '<b>양(陽) ' + yang + ' : 음(陰) ' + eum + '</b>으로 음양이 거의 균형을 이뤄요. 나설 때 ' +
+          '나서고 물러설 때 물러설 줄 아는, 유연한 결이에요. 한쪽으로 크게 치우치지 않아 사람과 상황에 ' +
+          '두루 잘 맞춰가죠. 지금의 이 균형감을 믿고, 그때그때 마음이 기우는 쪽을 따라가면 돼요.';
+      }
+      eyMsg += '<br><br>여기에 살짝 부족한 <b style="color:' + lackEl.text + ';">' + lackEl.ko +
+        '(' + lackEl.hj + ')</b> 기운을 <b>' + rec.main.name + '</b>가 채워주면, 음양과 오행이 한결 더 잘 어우러질 거예요.';
+      var eyEl = $('sj-eumyang');
+      if (eyEl) {
+        eyEl.innerHTML =
+          '<div class="sj-ey-head">' +
+            '<span style="color:' + YANG_C + ';">陽 양 <b>' + yang + '</b></span>' +
+            '<span style="color:' + EUM_C + ';"><b>' + eum + '</b> 음 陰</span>' +
+          '</div>' +
+          '<div class="sj-ey-bar">' +
+            '<span class="sj-ey-seg" style="width:' + (yp * 100) + '%; background:' + YANG_C + ';"></span>' +
+            '<span class="sj-ey-seg" style="width:' + ((1 - yp) * 100) + '%; background:' + EUM_C + ';"></span>' +
+          '</div>' +
+          '<p class="sj-ey-msg">' + eyMsg + '</p>';
+      }
+
       var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그 🏷️</div>' +
         '<div class="sj-vibe-pills">' +
         rec.main.whenLow.map(function (w) { return '<span class="sj-vibe-pill">' + w + '</span>'; }).join('') +

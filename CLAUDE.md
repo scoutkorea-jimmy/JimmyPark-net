@@ -51,8 +51,9 @@ assets/
                 (네이티브 date picker 대신 — 어르신 스크롤 불편 해소; 숫자만·자동 포커스
                 이동·달력 유효성 검사 후 d=YYYY-MM-DD 조합). 입력 페이지는
                 /saju-result?d=&t=&nt= 로 이동, 결과 페이지는 쿼리에서 읽어 렌더
-                (풍성/부족 기운은 각각 카드 안, "다섯 오행, 다섯 친구" 세계관 그리드는
-                결과 페이지 하단에만). 마지막 입력은 localStorage
+                (오행 분포 + 음양陰陽 밸런스 카드 — 별도 계산 없이 팔자에서 집계 —
+                풍성/부족 기운은 각각 카드 안, "다섯 오행, 다섯 친구" 세계관 그리드는
+                결과 페이지 하단에만, 해시태그는 최상단). 마지막 입력은 localStorage
                 (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
                 (서버 미전송). Fully client-side; birth data never leaves the browser.
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
