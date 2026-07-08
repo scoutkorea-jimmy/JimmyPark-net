@@ -49,7 +49,7 @@ a { color: inherit; text-decoration: none; }
 .sj-h1-sub { display: block; font-size: .5em; font-weight: 700; color: #6b6577; letter-spacing: -.02em; line-height: 1.3; margin-bottom: 8px; }
 .sj-grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .sj-lead { margin: 20px auto 0; max-width: 28ch; font-size: clamp(18px, 2.6vw, 21px); color: var(--muted); line-height: 1.75; text-wrap: pretty; }
-.sj-mini { margin-top: 18px; font-size: 16px; color: var(--faint); line-height: 1.7; }
+.sj-mini { margin-top: 18px; font-size: 15px; color: var(--faint); line-height: 1.7; }
 
 /* 결과 페이지 상단 바 / 다시하기 */
 .sj-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: clamp(20px, 4vw, 30px); }
@@ -85,8 +85,11 @@ a { color: inherit; text-decoration: none; }
 .sj-restored { display: inline-flex; align-items: center; gap: 5px; margin-top: 14px; font-size: 16px; font-weight: 600; color: var(--brand); }
 .sj-linkbtn { font-family: inherit; font-size: 16px; font-weight: 700; color: var(--brand); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 
-/* 섹션 헤더 */
-.sj-eyebrow { font-size: 14px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+/* 섹션 헤더
+   위계: eyebrow(13, 큰 제목 위 키커 전용) < 본문(19) < sj-sect(20–24, 섹션 제목)
+   < headline/lack-title(24–32) < H1. 잔글씨는 13(micro)/15(caption)/16(UI) 3단만. */
+.sj-eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); }
+.sj-sect { margin: 0; font-size: clamp(20px, 3.4vw, 24px); font-weight: 800; letter-spacing: -.015em; color: var(--ink); }
 .sj-h2 { margin: 10px 0 0; font-size: clamp(27px, 4.5vw, 36px); font-weight: 800; letter-spacing: -.02em; }
 
 /* 결과: 최상단 엠블럼 (가장 풍성한 기운 캐릭터) */
@@ -109,7 +112,7 @@ a { color: inherit; text-decoration: none; }
 .sj-el-name { font-size: 20px; font-weight: 800; }
 .sj-el-bar { height: 16px; background: #f1eff7; border-radius: 999px; overflow: hidden; display: block; }
 .sj-el-bar span { display: block; height: 100%; border-radius: 999px; transition: width .5s cubic-bezier(.4, 0, .2, 1); }
-.sj-el-count { font-size: 17px; font-weight: 700; color: var(--muted); text-align: right; }
+.sj-el-count { font-size: 16px; font-weight: 700; color: var(--muted); text-align: right; }
 
 /* 결과: 음양 밸런스 */
 .sj-ey-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 20px; font-weight: 800; letter-spacing: .02em; }
@@ -138,9 +141,9 @@ a { color: inherit; text-decoration: none; }
 .sj-vibe { margin-top: 18px; padding: 18px 20px; background: #f6f4ff; border: 1px solid #ecebf4; border-radius: 18px; }
 #sj-vibe-top:empty { display: none; }
 #sj-vibe-top .sj-vibe { margin-top: clamp(30px, 5vw, 48px); }
-.sj-vibe-label { font-size: 16px; font-weight: 800; color: var(--brand); margin-bottom: 12px; }
+.sj-vibe-label { font-size: 15px; font-weight: 800; color: var(--brand); margin-bottom: 12px; }
 .sj-vibe-pills { display: flex; flex-wrap: wrap; gap: 9px; }
-.sj-vibe-pill { font-size: 17px; font-weight: 700; color: var(--brand); background: #fff; border: 1px solid #e6e3f2; border-radius: 999px; padding: 9px 15px; line-height: 1.3; }
+.sj-vibe-pill { font-size: 16px; font-weight: 700; color: var(--brand); background: #fff; border: 1px solid #e6e3f2; border-radius: 999px; padding: 9px 15px; line-height: 1.3; }
 .sj-char { border: 1.5px solid; border-radius: 26px; padding: clamp(20px, 4vw, 30px); margin-top: 20px; }
 .sj-char-head { display: flex; align-items: center; gap: 18px; }
 .sj-char-emoji { font-size: 46px; width: 88px; height: 88px; border-radius: 24px; display: flex; align-items: center; justify-content: center; flex: none; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .38); }
@@ -148,7 +151,7 @@ a { color: inherit; text-decoration: none; }
 .sj-char-name { margin-top: 5px; font-size: clamp(26px, 3.9vw, 32px); font-weight: 800; letter-spacing: -.01em; }
 .sj-char-name span { font-size: 16px; font-weight: 700; color: var(--muted); margin-left: 7px; }
 .sj-char-desc { margin: 17px 0 0; font-size: 19px; color: #40394e; line-height: 1.8; }
-.sj-char-quote { margin: 17px 0 0; padding: 14px 18px; border-radius: 14px; background: rgba(255, 255, 255, .6); border-left: 3px solid; font-size: 18px; color: #514a60; line-height: 1.7; font-style: italic; }
+.sj-char-quote { margin: 17px 0 0; padding: 14px 18px; border-radius: 14px; background: rgba(255, 255, 255, .6); border-left: 3px solid; font-size: 17px; color: #514a60; line-height: 1.7; font-style: italic; }
 .sj-goods-label { font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 22px 0 11px; }
 .sj-pill { display: inline-block; font-size: 16px; font-weight: 600; color: #40394e; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; margin: 0 8px 8px 0; }
 .sj-cta { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-family: inherit; font-size: 19px; font-weight: 700; padding: 16px 26px; border: 0; border-radius: 16px; margin-top: 20px; cursor: pointer; box-shadow: 0 12px 24px -12px rgba(0, 0, 0, .4); transition: transform .15s; }
