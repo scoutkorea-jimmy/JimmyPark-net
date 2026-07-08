@@ -504,10 +504,7 @@
           '<div><span>태어난 계절</span>' + season + ' · ' + seasonEy + '</div>' +
         '</div>';
 
-      // 캐릭터 tie-in (스펙 §15.3·§16 — 결핍 단정 금지, 재미·균형 보완 관점)
-      var eyTie = '재미로 보는 균형 보완 관점에서, 살짝 부족한 <b style="color:' + lackEl.text + ';">' +
-        lackEl.ko + '(' + lackEl.hj + ')</b>의 <b>' + rec.main.name + '</b>를 곁에 두면 음양·오행을 가볍게 채워볼 수 있어요.';
-
+      // 캐릭터 추천은 맨 아래 '부족한 기운' 섹션에서 한 번만 — 여기선 캐릭터 언급 없음.
       var eyEl = $('sj-eumyang');
       if (eyEl) {
         eyEl.innerHTML =
@@ -521,8 +518,7 @@
           '</div>' +
           '<div class="sj-ey-typerow"><span class="sj-ey-type" style="color:' + eySideC + '; border-color:' + eySideC + '55;">' + eyType + '</span></div>' +
           '<p class="sj-ey-msg">' + eyMsg + '</p>' +
-          eyDetail +
-          '<p class="sj-ey-tie">' + eyTie + '</p>';
+          eyDetail;
       }
 
       var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그 🏷️</div>' +
