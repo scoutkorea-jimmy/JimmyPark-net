@@ -55,10 +55,13 @@ web app**: they do NOT use `site.css`, `site.js`, or the shared header/footer. T
 look lives in `assets/saju.css` (Pretendard, violet→pink gradient `#7c5cff→#c247ff→#ff6aa0`,
 soft rounded cards, single `--wrap:720px` container so every section shares the same left/right
 width). Flow: `/saju` collects birth date + 24h·30min time → navigates to
-`/saju-result?d=&t=&nt=` which computes and renders (맨 위 해시태그 → 사주팔자 → 오행 분포 →
-음양 밸런스 → 풍성한 기운 → 부족한 기운 + 캐릭터 → 캐릭터 세계관). 음양은 별도 계산 없이
-기존 팔자에서 집계 — 천간은 `STEMS[i].yang`, 지지는 배열 인덱스 짝수(자·인·진·오·신·술)=양.
-陽=화 적색 / 陰=수 흑색 2색 막대 + 성향 3~4문장, 부족 오행 캐릭터로 톤 연결. Birth date is typed as three separate 연/월/일 numeric fields (not a native
+`/saju-result?d=&t=&nt=` which computes and renders in order: **사주팔자 → 해시태그 →
+음양 밸런스 → 오행 분포 → 풍성한 기운 → 부족한 기운 + 캐릭터**. (캐릭터 세계관 그리드는
+현재 결과 페이지에서 **주석 처리(임시 숨김)** — 별도 페이지로 이전 예정.)
+음양은 별도 계산 없이 기존 팔자에서 집계 — 천간은 `STEMS[i].yang`, 지지는 배열 인덱스
+짝수(자·인·진·오·신·술)=양. 陽=화 적색 / 陰=수 흑색 2색 막대 + 기본 유형 라벨 + 겉(천간)/
+속(지지) 분리 + 일간 음양 + 월지 계절 보정을 함께 표시(근거: [saju-eumyang.md](saju-eumyang.md),
+단정·우열 판단 금지). 본문 카피는 전반적으로 간결화(≈50%↓), 글씨는 현행 대비 ~1.5배 확대. Birth date is typed as three separate 연/월/일 numeric fields (not a native
 date picker — elderly users disliked scrolling); `saju.js` sanitizes to digits, auto-advances
 focus, validates the calendar date, and still emits the `d=YYYY-MM-DD` query param. 풍성한/부족한
 기운 both render inside tinted cards (`.sj-strong-card` / `.sj-lack-card`, element color + light
