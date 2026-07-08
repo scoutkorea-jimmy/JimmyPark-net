@@ -512,12 +512,15 @@
       var dayYang = STEMS[pl.day.stem].yang;
       var season = (function (bi) { return (bi >= 2 && bi <= 4) ? '봄' : (bi >= 5 && bi <= 7) ? '여름' : (bi >= 8 && bi <= 10) ? '가을' : '겨울'; })(pl.month.branch);
       var seasonPlain = { '봄': '새로 피어나는 때', '여름': '가장 뜨거운 때', '가을': '차분히 거두는 때', '겨울': '깊이 가라앉는 때' }[season];
+      // 숫자만 두면 뜻을 모르니, 각 항목을 쉬운 문장으로 풀고 개수는 근거로 작게 붙임
+      var stemPhrase = stemY > stemE ? '생각·감정을 밖으로 잘 드러내는 편' : stemY < stemE ? '겉으론 차분하고 신중해 보이는 편' : '상황 따라 유연하게 드러내는 편';
+      var branchPhrase = branchY > branchE ? '평소 생활 리듬도 활동적인 편' : branchY < branchE ? '속으론 차근차근 쌓아가는 편' : '겉과 속의 리듬이 균형 잡힌 편';
       var eyDetail =
         '<div class="sj-ey-detail">' +
-          '<div><span>겉으로 드러나는 나</span>양 ' + stemY + ' · 음 ' + stemE + '</div>' +
-          '<div><span>속마음 · 생활 리듬</span>양 ' + branchY + ' · 음 ' + branchE + '</div>' +
-          '<div><span>나를 나타내는 기운</span>' + (dayYang ? '먼저 나서고 표현하는 쪽' : '차분히 살피고 정리하는 쪽') + '</div>' +
-          '<div><span>태어난 계절</span>' + season + ' · ' + seasonPlain + '</div>' +
+          '<div><span>겉으로 드러나는 나</span>' + stemPhrase + '<i>양 ' + stemY + ' · 음 ' + stemE + '</i></div>' +
+          '<div><span>속마음 · 생활 리듬</span>' + branchPhrase + '<i>양 ' + branchY + ' · 음 ' + branchE + '</i></div>' +
+          '<div><span>나를 나타내는 기운</span>' + (dayYang ? '먼저 나서고 표현하는 쪽' : '차분히 살피고 정리하는 쪽') + '<i>사주에서 나 자신을 뜻하는 글자</i></div>' +
+          '<div><span>태어난 계절</span>' + season + ' · ' + seasonPlain + '<i>' + ((season === '봄' || season === '여름') ? '기운이 밖으로 뻗는 양(陽)의 계절' : '기운이 안으로 모이는 음(陰)의 계절') + '</i></div>' +
         '</div>';
 
       // 캐릭터 추천은 맨 아래 '부족한 기운' 섹션에서 한 번만 — 여기선 캐릭터 언급 없음.
