@@ -121,7 +121,7 @@ a { color: inherit; text-decoration: none; }
 .sj-lack-desc { margin: 14px 0 0; font-size: 14.5px; color: #40394e; line-height: 1.85; }
 .sj-vibe { margin-top: 18px; padding: 16px 18px; background: #f6f4ff; border: 1px solid #ecebf4; border-radius: 18px; }
 #sj-vibe-top:empty { display: none; }
-#sj-vibe-top .sj-vibe { margin-top: 0; margin-bottom: clamp(26px, 5vw, 40px); }
+#sj-vibe-top .sj-vibe { margin-top: clamp(30px, 5vw, 48px); }
 .sj-vibe-label { font-size: 12.5px; font-weight: 800; color: var(--brand); margin-bottom: 10px; }
 .sj-vibe-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .sj-vibe-pill { font-size: 13px; font-weight: 700; color: var(--brand); background: #fff; border: 1px solid #e6e3f2; border-radius: 999px; padding: 8px 13px; line-height: 1.3; }
