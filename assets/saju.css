@@ -176,8 +176,12 @@ a { color: inherit; text-decoration: none; }
 .sjd-summary { margin-top: 18px; }
 .sjd-summary .sj-strong-msg { margin: 0; font-size: clamp(18px, 2.7vw, 20.5px); line-height: 2.02; color: #333d4b; }
 /* 상세: 네 기둥 2열 그리드 + 글자 타일 */
-.sjd-pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+/* 네 기둥: 1단 구성 (사용자 지시 — 2열 그리드 폐기) */
+.sjd-pgrid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-top: 8px; }
 .sjd-pgrid .sjd-el { margin-top: 0; }
+/* 순환 지도 범례 칩 */
+.sjd-cycle-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; margin-top: 16px; }
+.sjd-cycle-legend span { font-size: 13px; font-weight: 700; color: var(--muted); background: var(--panel); padding: 8px 15px; border-radius: 999px; }
 .sjd-mg { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
 .sjd-mg b { width: 56px; height: 56px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 27px; font-weight: 800; box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .35); }
 .sjd-mg i { font-style: normal; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .01em; }
@@ -248,9 +252,6 @@ a { color: inherit; text-decoration: none; }
 .sj-divider { margin-top: clamp(30px, 5vw, 48px); }
 
 /* 모바일: 폼은 1열로. (본문 크기는 이미 크게 잡아 별도 확대 불필요) */
-@media (max-width: 720px) {
-  .sjd-pgrid { grid-template-columns: 1fr; }
-}
 @media (max-width: 560px) {
   .sj-form-grid { grid-template-columns: 1fr; }
   .sjd-stats { grid-template-columns: 1fr; }

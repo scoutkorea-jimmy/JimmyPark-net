@@ -909,7 +909,11 @@
           '<svg viewBox="0 0 340 336" role="img" aria-label="나의 오행 순환 지도">' +
           '<defs><marker id="sjdArr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8" fill="none" stroke="#b3abc6" stroke-width="1.8"/></marker></defs>' +
           svgArrows + svgNodes + '</svg>' +
-          '<p class="sj-ey-note" style="text-align:center;">화살표는 서로를 살리는 순서(상생)예요 — 나무는 불을, 불은 흙을, 흙은 금을, 금은 물을, 물은 다시 나무를 키워요.<br>원이 클수록 내 사주에서 풍성한 기운, 점선 테두리가 나(일간)의 자리예요.</p>';
+          '<div class="sjd-cycle-legend">' +
+          '<span>화살표 = 서로 살리는 순서(상생)</span>' +
+          '<span>큰 원 = 풍성한 기운</span>' +
+          '<span>점선 테두리 = 나(일간)</span></div>' +
+          '<p class="sj-ey-note" style="text-align:center; margin-top:12px;">나무는 불을, 불은 흙을, 흙은 금을, 금은 물을, 물은 다시 나무를 키워요.</p>';
       }
 
       // ③ 십성 — 다섯 가지 힘의 균형
