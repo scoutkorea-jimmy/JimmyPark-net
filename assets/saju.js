@@ -297,11 +297,11 @@
 
   // 상세 분석: 오행별 컬러 팔레트 + 추천 아이템 (부족 기운 채우기용)
   var EL_STYLE = [
-    { colors: [{ c: '#2f9e44', n: '포레스트 그린' }, { c: '#94d82d', n: '라임' }, { c: '#6b8e23', n: '올리브' }], items: '미니 화분(플랜테리어), 그린 톤 폰케이스, 초록 잉크 펜' },
+    { colors: [{ c: '#2f9e44', n: '포레스트 그린' }, { c: '#0ca678', n: '청록' }, { c: '#94d82d', n: '라임' }], items: '미니 화분(플랜테리어), 그린 톤 폰케이스, 초록 잉크 펜' },
     { colors: [{ c: '#e8352e', n: '코럴 레드' }, { c: '#ff8787', n: '살몬 핑크' }, { c: '#ff922b', n: '선셋 오렌지' }], items: '레드 포인트 립·양말, 코럴 키링, 따뜻한 캔들 라이트' },
     { colors: [{ c: '#f5b800', n: '머스터드 옐로우' }, { c: '#e8d8b0', n: '베이지' }, { c: '#d9773f', n: '테라코타' }], items: '베이지 니트, 옐로우 머그, 우드 톤 데스크 소품' },
     { colors: [{ c: '#f1f3f5', n: '화이트' }, { c: '#c3cad1', n: '실버' }, { c: '#868e96', n: '쿨 그레이' }], items: '실버 액세서리, 화이트 데스크 셋업, 메탈 텀블러' },
-    { colors: [{ c: '#1864ab', n: '딥 블루' }, { c: '#243b6b', n: '네이비' }, { c: '#212529', n: '블랙' }], items: '데님·네이비 아이템, 블랙 폰케이스, 늘 곁에 두는 물병' }
+    { colors: [{ c: '#212529', n: '블랙' }, { c: '#343a40', n: '차콜' }, { c: '#1f2a44', n: '먹빛 네이비' }], items: '블랙 시계·폰케이스, 차콜 니트, 먹색 노트, 늘 곁에 두는 물병' }
   ];
 
   // 일간 정식 표기 — 천간+오행 두 글자 (예: 경금(庚金), 계수(癸水))
@@ -1025,71 +1025,133 @@
           (chemiRows.length ? chemiRows.join('') : '<p class="sjd-el-msg" style="margin-top:4px;">합도 충도 없는 담백한 구성이에요. 글자들이 서로 터치하지 않고 각자 할 일 하는, 잡음 제로 구조라는 뜻이죠.</p>');
       }
 
-      // 신살 — 대표 길성 5종 (도화·역마·화개 = 삼합 조견표 / 천을·문창 = 일간 조견표)
-      // 있는 별 = 의미·일상 발현·활용법까지 상세, 없는 별 = 한 줄 소개 (피드백: 설명·내용 보강)
+      // 신살·길성 — 15종 전수 검사 후 중요도(rank) 순 Top 5만 노출 (2026-07-10 사용자 지시)
       var sinsalBox = $('sjd-sinsal');
       if (sinsalBox) {
+        var haveB = {}; posList.forEach(function (pp) { if (!(pp[1] in haveB)) haveB[pp[1]] = pp[0]; });
+        var stemList = [['연간', pl.year.stem], ['월간', pl.month.stem], ['일간', pl.day.stem]];
+        if (pl.hour) stemList.push(['시간', pl.hour.stem]);
+        var haveS = {}; stemList.forEach(function (pp) { if (!(pp[1] in haveS)) haveS[pp[1]] = pp[0]; });
+        var bL = function (bi) { return BRANCHES[bi].ko + '(' + BRANCHES[bi].hj + ')'; };
+        var sL = function (si) { return STEMS[si].ko + '(' + STEMS[si].hj + ')'; };
+        // 성립 검사 헬퍼 — 맞으면 근거 문자열, 아니면 null
+        var triCheck = function (table) { // 연지·일지 삼합 그룹 기준 → 지지
+          var bases = [['연지', pl.year.branch], ['일지', pl.day.branch]];
+          for (var q1 = 0; q1 < bases.length; q1++) {
+            var tgt = table[bases[q1][1] % 4];
+            if (tgt in haveB) return bases[q1][0] + ' ' + bL(bases[q1][1]) + ' 기준 → ' + haveB[tgt] + ' ' + bL(tgt) + '에서 성립';
+          }
+          return null;
+        };
+        var dayToB = function (table) { // 일간 기준 → 지지 1개
+          var tgt = table[pl.day.stem];
+          return (tgt in haveB) ? '일간 ' + stemFull(pl.day.stem) + ' 기준 → ' + haveB[tgt] + ' ' + bL(tgt) + '에서 성립' : null;
+        };
+        var dayToBMulti = function (targets) { // 일간 기준 → 지지 후보 여럿
+          for (var q2 = 0; q2 < targets.length; q2++) {
+            if (targets[q2] in haveB) return '일간 ' + stemFull(pl.day.stem) + ' 기준 → ' + haveB[targets[q2]] + ' ' + bL(targets[q2]) + '에서 성립';
+          }
+          return null;
+        };
+        var mb = pl.month.branch;
+        // 천덕귀인: 월지 → 천간 또는 지지 (자~해 순)
+        var CD = [{ b: 5 }, { s: 6 }, { s: 3 }, { b: 8 }, { s: 8 }, { s: 7 }, { b: 11 }, { s: 0 }, { s: 9 }, { b: 2 }, { s: 2 }, { s: 1 }][mb];
+        var cheondeok = CD.s !== undefined
+          ? ((CD.s in haveS) ? '월지 ' + bL(mb) + ' 기준 → ' + haveS[CD.s] + ' ' + sL(CD.s) + '에서 성립' : null)
+          : ((CD.b in haveB) ? '월지 ' + bL(mb) + ' 기준 → ' + haveB[CD.b] + ' ' + bL(CD.b) + '에서 성립' : null);
+        // 월덕귀인: 월지 삼합 그룹 → 천간
+        var WD = [8, 6, 2, 0][mb % 4];
+        var woldeok = (WD in haveS) ? '월지 ' + bL(mb) + ' 기준 → ' + haveS[WD] + ' ' + sL(WD) + '에서 성립' : null;
+        // 천의성: 월지 바로 앞 글자
+        var ceB = mod(mb - 1, 12);
+        var cheonui = (ceB in haveB) ? '월지 ' + bL(mb) + ' 기준 → ' + haveB[ceB] + ' ' + bL(ceB) + '에서 성립' : null;
+
         var DOHWA = { 0: 9, 1: 6, 2: 3, 3: 0 }, YEOKMA = { 0: 2, 1: 11, 2: 8, 3: 5 }, HWAGAE = { 0: 4, 1: 1, 2: 10, 3: 7 };
+        var JANGSEONG = { 0: 0, 1: 9, 2: 6, 3: 3 }, BANAN = { 0: 1, 1: 10, 2: 7, 3: 4 };
         var CHEONEUL = [[1, 7], [0, 8], [11, 9], [11, 9], [1, 7], [0, 8], [1, 7], [6, 2], [3, 5], [3, 5]];
         var MUNCHANG = [5, 6, 8, 9, 8, 9, 11, 0, 2, 3];
-        var have = {}; posList.forEach(function (pp) { if (!(pp[1] in have)) have[pp[1]] = pp[0]; });
-        var bLabel = function (bi) { return BRANCHES[bi].ko + '(' + BRANCHES[bi].hj + ')'; };
-        // 삼합 기준(연지·일지) 검사 → 근거 문자열 또는 null
-        var checkTri = function (table) {
-          var bases = [['연지', pl.year.branch], ['일지', pl.day.branch]];
-          for (var bi2 = 0; bi2 < bases.length; bi2++) {
-            var tgt = table[bases[bi2][1] % 4];
-            if (tgt in have) return bases[bi2][0] + ' ' + bLabel(bases[bi2][1]) + ' 기준 → ' + have[tgt] + ' ' + bLabel(tgt) + '에서 성립';
-          }
-          return null;
-        };
-        var checkStem = function (targets) {
-          for (var ti = 0; ti < targets.length; ti++) {
-            if (targets[ti] in have) return '일간 ' + stemFull(pl.day.stem) + ' 기준 → ' + have[targets[ti]] + ' ' + bLabel(targets[ti]) + '에서 성립';
-          }
-          return null;
-        };
+        var GEONROK = [2, 3, 5, 6, 5, 6, 8, 9, 11, 0];
+        var GEUMYEO = [4, 5, 7, 8, 7, 8, 10, 11, 1, 2];
+        var AMROK = [11, 10, 8, 7, 8, 7, 5, 4, 2, 1];
+        var HAKDANG = [11, 6, 2, 9, 2, 9, 5, 0, 8, 3];
+        var HONGYEOM = [6, 8, 2, 7, 4, 4, 10, 9, 0, 8];
+
         var SAL = [
-          { name: '도화', hj: '桃花', title: '매력의 별', color: '#e8352e', found: checkTri(DOHWA),
-            what: '복숭아꽃이라는 이름처럼, 사람을 끌어당기는 매력과 인기의 별이에요.',
-            life: '첫인상이 좋고 어디 가든 은근히 기억에 남는 타입이라, 사람을 상대하는 일이나 콘텐츠·무대처럼 "보여지는" 영역에서 강점이 돼요. 옛날엔 구설의 별로도 봤지만, 요즘은 셀프 브랜딩 시대의 핵심 자원으로 읽죠.',
-            tip: '매력이 곧 자원이니 사람 앞에 서는 기회를 피하지 말 것. 다만 호감을 사는 만큼 관계의 선은 또렷하게.',
-            absent: '매력·인기의 별인데 이번 구성엔 안 보여요. 대신 관계가 담백하고 구설이 적은 편이라는 뜻이기도 해요.' },
-          { name: '역마', hj: '驛馬', title: '이동의 별', color: '#1864ab', found: checkTri(YEOKMA),
-            what: '옛날 파발을 나르던 역참의 말처럼, 이동과 변화의 별이에요.',
-            life: '한자리에 오래 묶이면 답답해지고, 움직일 때 오히려 컨디션과 운이 올라오는 타입이에요. 여행·출장·이사·이직, 그리고 해외 인연과 연결이 깊죠. 요즘 식으로는 출장러·노마드 기질.',
-            tip: '정체됐다 싶으면 환경부터 바꿔볼 것. 이 사주는 책상 앞에서 고민하는 것보다 일단 움직여야 풀려요.',
-            absent: '이동·변화의 별인데 이번 구성엔 없어요. 한자리에서 깊게 쌓아 올리는 안정형에 가깝다는 뜻이죠.' },
-          { name: '화개', hj: '華蓋', title: '몰입과 예술의 별', color: '#7c5cff', found: checkTri(HWAGAE),
-            what: '"화려한 덮개"라는 뜻으로, 몰입·예술·정신세계를 상징하는 별이에요.',
-            life: '혼자 깊이 파는 시간이 아깝지 않은 타입이에요. 예술, 연구, 기록, 철학처럼 내면이 깊어지는 영역과 인연이 있고, 유행보다 자기 세계가 뚜렷한 결이죠.',
-            tip: '혼자만의 몰입 시간을 죄책감 없이 확보할 것. 이 별은 고독을 연료로 결과물을 만들어요.',
-            absent: '몰입·예술의 별인데 이번 구성엔 없어요. 한 우물보다 여러 우물을 고루 살피는 제너럴리스트 결이라는 뜻.' },
-          { name: '천을귀인', hj: '天乙貴人', title: '하늘이 돕는 별', color: '#b07d00', found: checkStem(CHEONEUL[pl.day.stem]),
+          { rank: 1, name: '천을귀인', hj: '天乙貴人', title: '하늘이 돕는 별', color: '#b07d00', found: dayToBMulti(CHEONEUL[pl.day.stem]),
             what: '"하늘의 도움"이라는 뜻 그대로, 명리에서 최고로 치는 으뜸 길성이에요.',
             life: '결정적인 순간에 도와주는 사람이 나타나고, 위기가 이상하게 잘 넘어가는 경험이 많은 타입이에요. 흉한 기운을 눌러주는 방패 역할도 한다고 봐요.',
-            tip: '이 별은 관계에서 발동해요. 사람에게 진심으로 잘해 둘 것 — 그 인연이 귀인으로 돌아오거든요.',
-            absent: '하늘이 돕는 별인데 이번 구성엔 없어요. 하지만 귀인은 결국 내가 쌓은 관계에서 오는 법 — 만들어 가면 돼요.' },
-          { name: '문창귀인', hj: '文昌貴人', title: '공부와 글재주의 별', color: '#2f9e44', found: checkStem([MUNCHANG[pl.day.stem]]),
+            tip: '이 별은 관계에서 발동해요. 사람에게 진심으로 잘해 둘 것 — 그 인연이 귀인으로 돌아오거든요.' },
+          { rank: 2, name: '천덕귀인', hj: '天德貴人', title: '하늘의 덕이 지키는 별', color: '#6b4fa0', found: cheondeok,
+            what: '하늘의 덕이 함께한다는 별로, 천을귀인과 나란히 놓는 대표 길성이에요.',
+            life: '큰 화를 작게, 작은 화를 없던 일로 만드는 보호막 같은 기운이에요. 위태로운 순간에도 결과가 순하게 마무리되는 편이죠.',
+            tip: '보호받는 운은 베풀 때 더 단단해져요 — 덕은 쌓는 만큼 돌아오거든요.' },
+          { rank: 3, name: '월덕귀인', hj: '月德貴人', title: '인심을 얻는 별', color: '#2e6fae', found: woldeok,
+            what: '달의 덕을 입는 별로, 천덕과 짝을 이루는 길성이에요.',
+            life: '주변의 인심을 얻는 힘이라 어딜 가든 크게 미움받지 않고, 어려울 때 도움의 손길이 자연스럽게 모여요.',
+            tip: '받은 호의를 기억해 뒀다가 돌려주기 — 이 별의 연료는 평판이에요.' },
+          { rank: 4, name: '도화', hj: '桃花', title: '매력의 별', color: '#e8352e', found: triCheck(DOHWA),
+            what: '복숭아꽃이라는 이름처럼, 사람을 끌어당기는 매력과 인기의 별이에요.',
+            life: '첫인상이 좋고 어디 가든 은근히 기억에 남는 타입이라, 사람을 상대하는 일이나 콘텐츠·무대처럼 "보여지는" 영역에서 강점이 돼요. 요즘은 셀프 브랜딩 시대의 핵심 자원으로 읽죠.',
+            tip: '매력이 곧 자원이니 사람 앞에 서는 기회를 피하지 말 것. 다만 호감을 사는 만큼 관계의 선은 또렷하게.' },
+          { rank: 5, name: '역마', hj: '驛馬', title: '이동의 별', color: '#1864ab', found: triCheck(YEOKMA),
+            what: '옛날 파발을 나르던 역참의 말처럼, 이동과 변화의 별이에요.',
+            life: '한자리에 오래 묶이면 답답해지고, 움직일 때 오히려 컨디션과 운이 올라오는 타입이에요. 여행·출장·이사·이직, 해외 인연과 연결이 깊죠.',
+            tip: '정체됐다 싶으면 환경부터 바꿔볼 것. 이 사주는 일단 움직여야 풀려요.' },
+          { rank: 6, name: '화개', hj: '華蓋', title: '몰입과 예술의 별', color: '#7c5cff', found: triCheck(HWAGAE),
+            what: '"화려한 덮개"라는 뜻으로, 몰입·예술·정신세계를 상징하는 별이에요.',
+            life: '혼자 깊이 파는 시간이 아깝지 않은 타입이에요. 예술, 연구, 기록처럼 내면이 깊어지는 영역과 인연이 있고, 유행보다 자기 세계가 뚜렷한 결이죠.',
+            tip: '혼자만의 몰입 시간을 죄책감 없이 확보할 것. 이 별은 고독을 연료로 결과물을 만들어요.' },
+          { rank: 7, name: '문창귀인', hj: '文昌貴人', title: '공부와 글재주의 별', color: '#2f9e44', found: dayToB(MUNCHANG),
             what: '학문과 글, 총명함을 상징하는 별이에요.',
-            life: '배우는 속도가 빠르고, 복잡한 걸 글이나 말로 깔끔하게 정리하는 재주가 있어요. 시험·자격증·글쓰기·기획 영역에서 강점이 되는 별이죠.',
-            tip: '아는 걸 기록으로 남길 것. 이 별은 쓰고 정리하는 만큼 운이 쌓이는 타입이에요.',
-            absent: '공부·글재주의 별인데 이번 구성엔 없어요. 머리로 외우기보다 몸과 경험으로 배울 때 더 빠른 타입일 수 있죠.' }
+            life: '배우는 속도가 빠르고, 복잡한 걸 글이나 말로 깔끔하게 정리하는 재주가 있어요. 시험·자격증·글쓰기·기획 영역에서 강점이 되죠.',
+            tip: '아는 걸 기록으로 남길 것. 이 별은 쓰고 정리하는 만큼 운이 쌓여요.' },
+          { rank: 8, name: '건록', hj: '建祿', title: '자립의 별', color: '#0f8a8a', found: dayToB(GEONROK),
+            what: '일간이 가장 힘을 받는 자리에 뿌리를 내렸다는, 자립의 별이에요.',
+            life: '스스로 벌어 스스로 일어서는 힘이 강해요. 맨땅에서도 제 몫을 만들어내는, 기본 체력이 좋은 사주죠.',
+            tip: '혼자 서는 게 강점이지만, 가끔은 도움을 받는 것도 실력이에요.' },
+          { rank: 9, name: '장성', hj: '將星', title: '리더십의 별', color: '#c0492f', found: triCheck(JANGSEONG),
+            what: '군대의 깃발을 쥔 장수의 별 — 통솔과 중심의 기운이에요.',
+            life: '무리의 중심에 서는 힘이 있어서, 맡으면 어떻게든 끌고 가요. 책임이 커질수록 오히려 단단해지는 타입이죠.',
+            tip: '리더의 힘은 위임에서 완성돼요 — 다 짊어지지 말고 나눠주기.' },
+          { rank: 10, name: '금여', hj: '金輿', title: '편안한 복의 별', color: '#d9a520', found: dayToB(GEUMYEO),
+            what: '"금 수레"라는 뜻으로, 편안한 복과 좋은 인연을 상징하는 별이에요.',
+            life: '주변의 호의와 안정이 자연스럽게 따라오는 결이에요. 함께 있으면 여유가 느껴진다는 말을 듣는 타입이죠.',
+            tip: '들어온 복은 나눌 때 오래가요 — 작은 호의를 아끼지 말기.' },
+          { rank: 11, name: '암록', hj: '暗祿', title: '숨은 복의 별', color: '#556b2f', found: dayToB(AMROK),
+            what: '"숨은 복록"이라는 뜻 그대로, 보이지 않는 곳에서 나를 돕는 별이에요.',
+            life: '막다른 길인가 싶으면 어디선가 길이 열리고, 티 안 나는 도움이 계속 따라오는 타입이에요.',
+            tip: '그 도움의 출처를 기억해 두기 — 다음엔 내가 누군가의 암록이 될 차례예요.' },
+          { rank: 12, name: '학당귀인', hj: '學堂貴人', title: '총명함의 별', color: '#3b7c5c', found: dayToB(HAKDANG),
+            what: '배움의 전당에 앉는 별 — 총명함과 학문의 기운이에요.',
+            life: '이해가 빠르고 가르치는 데도 재능이 있어요. 배우고, 정리하고, 전하는 자리에서 빛나는 결이죠.',
+            tip: '인풋만큼 아웃풋을 — 배운 걸 남에게 설명할 때 이 별이 제일 강해져요.' },
+          { rank: 13, name: '반안', hj: '攀鞍', title: '승진과 명예의 별', color: '#8a5a2b', found: triCheck(BANAN),
+            what: '"말 안장에 오른다"는 뜻으로, 승진과 명예의 별이에요.',
+            life: '조직에서 차근차근 올라가는 힘이 있고, 윗사람의 신임을 받는 결이에요. 꾸준함이 직책으로 돌아오는 타입이죠.',
+            tip: '올라가는 운은 겸손과 세트일 때 오래가요.' },
+          { rank: 14, name: '천의성', hj: '天醫星', title: '치유의 별', color: '#0094b4', found: cheonui,
+            what: '"하늘의 의사"라는 뜻 — 치유와 돌봄의 별이에요.',
+            life: '아픈 곳, 힘든 사람을 알아보는 감각이 있어요. 의료·상담·케어처럼 사람을 회복시키는 영역과 인연이 깊죠.',
+            tip: '남을 돌보는 재능만큼, 내 컨디션도 진료 대상이라는 걸 잊지 말기.' },
+          { rank: 15, name: '홍염', hj: '紅艶', title: '스며드는 매력의 별', color: '#d6336c', found: dayToB(HONGYEOM),
+            what: '붉은 노을처럼 배어나는 매력의 별이에요. 도화가 한눈에 띄는 매력이라면, 홍염은 은은히 스며드는 매력이죠.',
+            life: '같이 시간을 보낼수록 빠져드는 타입이라, 오래 본 사람일수록 팬이 돼요.',
+            tip: '스며드는 매력만큼, 관계의 선은 부드럽지만 명확하게.' }
         ];
-        // 데이터는 5종 전부 보유하되, 화면에는 성립한 별만 노출 (2026-07-10 사용자 지시)
-        var foundSal = SAL.filter(function (x) { return x.found; });
+        var foundAll = SAL.filter(function (x) { return x.found; }).sort(function (a, b) { return a.rank - b.rank; });
+        var top5 = foundAll.slice(0, 5);
         sinsalBox.innerHTML =
-          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 태어난 해나 날의 글자를 기준으로 정해진 짝 글자가 사주 안에 있으면 성립해요. 대표 길성 다섯 가지(도화·역마·화개·천을귀인·문창귀인)를 확인해서 당신에게 있는 별만 보여드려요' +
-          (foundSal.length ? ' — <b>' + foundSal.length + '개</b>가 발견됐어요.' : '.') + '</p>' +
-          (foundSal.length ?
-            foundSal.map(function (x) {
+          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 대표 신살·길성 <b>15종</b>을 전부 검사해서 당신에게 성립한 별만 중요도 순으로 보여드려요' +
+          (foundAll.length ? ' — <b>' + foundAll.length + '개</b> 발견' + (foundAll.length > 5 ? ' (그중 Top 5)' : '') + '.' : '.') + '</p>' +
+          (top5.length ?
+            top5.map(function (x, xi) {
               return '<div class="sjd-sal on">' +
-                '<div class="sjd-sal-head"><b style="color:' + x.color + ';">' + x.name + '(' + x.hj + ')</b><span>' + x.title + '</span><em class="on">있음</em></div>' +
+                '<div class="sjd-sal-head"><b style="color:' + x.color + ';">' + (xi + 1) + '. ' + x.name + '(' + x.hj + ')</b><span>' + x.title + '</span><em class="on">있음</em></div>' +
                 '<i class="sjd-sal-base">' + x.found + '</i>' +
                 '<p>' + x.what + ' ' + x.life + '</p>' +
                 '<p class="sjd-sal-tip"><b>이렇게 써먹어요</b> — ' + x.tip + '</p></div>';
             }).join('') :
-            '<p class="sjd-el-msg" style="margin-top:4px;">이번 구성에서는 대표 신살 다섯 가지가 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
+            '<p class="sjd-el-msg" style="margin-top:4px;">이번 구성에서는 15종이 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
           '<p class="sj-ey-note">※ 신살은 전통 조견표 기반의 재미 요소예요 — 좋고 나쁨의 판정이 아니라, 내 사주의 개성 포인트로 봐주세요.</p>';
       }
 
