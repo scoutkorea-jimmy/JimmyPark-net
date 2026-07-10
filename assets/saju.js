@@ -442,11 +442,13 @@
     // ── 입력 페이지(saju.html): 값 검증 후 결과 페이지로 이동 ──
     var form = $('saju-form');
     if (form) {
+      // 태어난 시간 = 1시간 구간 선택 (00시~01시 …) — 시진 경계가 홀수 시각이라
+      // 1시간 구간은 항상 한 시주 안에 들어감. 계산값은 구간 중앙(h:30).
       var tSel = $('sj-birthtime');
       for (var h = 0; h < 24; h++) {
-        for (var m = 0; m < 60; m += 30) tSel.add(new Option(pad2(h) + ':' + pad2(m), h + ':' + m));
+        tSel.add(new Option(pad2(h) + '시 ~ ' + pad2(h + 1) + '시', h + ':30'));
       }
-      tSel.value = '12:0';
+      tSel.value = '12:30';
 
       // 연/월/일 직접 입력 필드 — 숫자만, 다 채우면 자동으로 다음 칸으로 이동
       var yIn = $('sj-year'), moIn = $('sj-month'), daIn = $('sj-day');
@@ -493,7 +495,7 @@
       var last = loadLast();
       if (last) {
         setDate(last.d);
-        if (last.t) tSel.value = last.t;
+        if (last.t) { var lh = parseInt(last.t, 10); if (!isNaN(lh) && lh >= 0 && lh <= 23) tSel.value = lh + ':30'; }
         setNoTime(!!last.nt);
         var hint = $('sj-restored');
         if (hint) hint.style.display = '';
@@ -502,7 +504,7 @@
       if (clearBtn) clearBtn.addEventListener('click', function () {
         clearLast();
         setDate('');
-        tSel.value = '12:0';
+        tSel.value = '12:30';
         setNoTime(false);
         yIn.focus();
         var hint = $('sj-restored');
