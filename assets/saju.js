@@ -773,6 +773,20 @@
         r.meta.sajuYear + '년 ' + STEMS[pl.year.stem].ko + yb.ko + '년 · ' + yb.animal + '띠 상세 분석' +
         (r.meta.timeKnown ? '' : ' · 시간 미상(6글자 기준)');
 
+      // 한눈 스탯 타일 3개 — 일간 · 최강 기운 · 보완 포인트
+      var statsEl = $('sjd-stats');
+      if (statsEl) {
+        var tile = function (label, valHtml, sub, col) {
+          return '<div class="sjd-stat"><span class="sjd-stat-l">' + label + '</span>' +
+            '<span class="sjd-stat-v" style="color:' + col + ';">' + valHtml + '</span>' +
+            '<span class="sjd-stat-s">' + sub + '</span></div>';
+        };
+        statsEl.innerHTML =
+          tile('나의 중심 · 일간', STEMS[pl.day.stem].ko, STEM_PROFILE[pl.day.stem].sym, ELEMENTS[dayEl].text) +
+          tile('가장 풍성한 기운', ELEMENTS[t1].ko + ' <em>' + pctOf(t1) + '%</em>', '삶을 밀고 가는 엔진', ELEMENTS[t1].text) +
+          tile('보완 포인트', ELEMENTS[lo].ko + ' <em>' + pctOf(lo) + '%</em>', '채울수록 좋아지는 여백', ELEMENTS[lo].text);
+      }
+
       // 최상단 엠블럼 — 결과 페이지와 동일하게 일간 오행의 캐릭터 (이미지 없으면 자동 숨김)
       var demblem = $('sjd-emblem');
       if (demblem) {
@@ -807,8 +821,8 @@
       var chip = function (isStem, idx) {
         var g = isStem ? STEMS[idx] : BRANCHES[idx];
         var el = ELEMENTS[g.el];
-        return '<span class="sjd-glyph" style="color:' + el.text + '; background:' + el.light + '; border-color:' + el.text + '33;">' +
-          (isStem ? '하늘 기운 ' : '땅 기운 ') + g.ko + ' · ' + el.ko + ' · ' + (g.yang ? '양(+)' : '음(−)') + '</span>';
+        return '<span class="sjd-mg"><b style="background:' + el.color + '; color:' + el.ink + ';">' + g.ko + '</b>' +
+          '<i>' + (isStem ? '하늘' : '땅') + ' · ' + el.ko + ' · ' + (g.yang ? '양' : '음') + '</i></span>';
       };
       var jgLine = function (bi) {
         return '<div class="sjd-jg">숨은 기운(지장간) — 이 땅 글자 안에 함께 들어 있는 기운: ' + JANGGAN[bi].map(function (si) {
@@ -831,6 +845,7 @@
         var g = p ? (STEMS[p.stem].ko + BRANCHES[p.branch].ko) : '미상';
         return '<div class="sjd-flow-step"><i style="background:' + color + ';"></i><b>' + label + '</b><span>' + sub + '</span><em>' + g + '</em></div>';
       };
+      var pcGrid = [];
       var pcHtml =
         '<p class="sjd-lead">명리학은 네 기둥을 한 그루 나무에 비유해요 — 태어난 해는 뿌리, 달은 줄기와 싹, 날은 꽃, 시간은 열매. 각각 인생의 토대, 사회의 무대, 나 자신, 그리고 앞으로의 방향을 맡고 있죠. 기둥마다 하늘 기운과 땅 기운이 한 글자씩 짝을 이루고, 땅 글자 안에는 숨은 기운이 몇 겹 더 들어 있어요.</p>' +
         '<div class="sjd-flow">' +
@@ -839,26 +854,26 @@
         flowStep('일주', '꽃 · 나 자신', pl.day, dEl.color) + '<span class="sjd-flow-arr">→</span>' +
         flowStep('시주', '열매 · 앞날', pl.hour, pl.hour ? ELEMENTS[STEMS[pl.hour.stem].el].color : '#c9c3d6') +
         '</div>';
-      pcHtml += pCard('연주 — 뿌리 자리', '인생의 토대', pl.year,
+      pcGrid.push(pCard('연주 — 뿌리 자리', '인생의 토대', pl.year,
         '태어난 해의 기운으로, 유년의 배경과 물려받은 기질, 인생 전반의 토대를 읽는 자리예요. ' + yb.animal + '띠 해, 하늘 기운은 ' + kn(yS) + ' · 땅 기운은 ' + kn(yB) + '로 출발했어요. ' +
-        ELEMENTS[yB].symbols + '의 무드가 당신 이야기의 바탕색인 셈이죠. 어린 시절 어떤 분위기에서 자기다움이 자랐는지 돌아볼 때 단서가 되는 자리예요.');
-      pcHtml += pCard('월주 — 무대 자리', '사회와 계절', pl.month,
+        ELEMENTS[yB].symbols + '의 무드가 당신 이야기의 바탕색인 셈이죠. 어린 시절 어떤 분위기에서 자기다움이 자랐는지 돌아볼 때 단서가 되는 자리예요.'));
+      pcGrid.push(pCard('월주 — 무대 자리', '사회와 계절', pl.month,
         '성장 환경과 사회 활동의 무대를 읽는 자리로, 특히 달의 땅 기운(월지)은 사주 전체에서 비중이 가장 커요(30%). 당신의 무대는 ' + season + '의 ' + kn(mB) + ' — ' +
-        seasonLine + ' 자리이고, 사회에서 쓰는 겉 에너지는 ' + kn(mS) + '의 결이에요. 진로나 일에서 어떤 분위기의 무대가 편안한지 볼 때 이 자리를 봐요.');
-      pcHtml += pCard('일주 — 꽃 자리', '나 자신', pl.day,
+        seasonLine + ' 자리이고, 사회에서 쓰는 겉 에너지는 ' + kn(mS) + '의 결이에요. 진로나 일에서 어떤 분위기의 무대가 편안한지 볼 때 이 자리를 봐요.'));
+      pcGrid.push(pCard('일주 — 꽃 자리', '나 자신', pl.day,
         '이 사주의 주인공, 나 자신을 읽는 자리예요. 하늘 기운 ' + dStem.ko + '는 ' + dProf.sym + ' — 나의 본체이고, 땅 기운 ' + kn(dB) + '는 마음 깊은 곳의 기본 정서예요. 겉과 속이 ' +
-        (dayEl === dB ? '같은 결이라 안팎이 한결같다는 이야기를 자주 듣는 구조' : '서로 다른 결이라 알아갈수록 새로운 면이 나오는 깊이 있는 구조') + '예요. 가장 가까운 관계의 결도 이 자리에서 함께 읽어요.');
+        (dayEl === dB ? '같은 결이라 안팎이 한결같다는 이야기를 자주 듣는 구조' : '서로 다른 결이라 알아갈수록 새로운 면이 나오는 깊이 있는 구조') + '예요. 가장 가까운 관계의 결도 이 자리에서 함께 읽어요.'));
       if (pl.hour) {
         var hS = STEMS[pl.hour.stem].el, hB = BRANCHES[pl.hour.branch].el;
-        pcHtml += pCard('시주 — 열매 자리', '꿈과 앞날', pl.hour,
+        pcGrid.push(pCard('시주 — 열매 자리', '꿈과 앞날', pl.hour,
           '꿈과 말년, 앞으로 맺을 결실을 읽는 자리예요. ' + kn(hS) + '·' + kn(hB) + '의 조합이라, 인생 후반으로 갈수록 ' + ELEMENTS[hB].symbols +
-          '의 이야기가 힘을 받는 흐름이에요. 마음 깊이 품은 방향이 궁금할 때 들여다보는, 마지막 장이 기대되는 자리죠.');
+          '의 이야기가 힘을 받는 흐름이에요. 마음 깊이 품은 방향이 궁금할 때 들여다보는, 마지막 장이 기대되는 자리죠.'));
       } else {
-        pcHtml += '<div class="sjd-el" style="border-left-color:#c9c3d6;">' +
-          '<div class="sjd-el-head"><span>시주 — 열매 자리</span><span class="sjd-state" style="color:var(--muted); border-color:var(--line); background:#f6f4fb;">시간 미상</span></div>' +
-          '<p class="sjd-el-msg">꿈과 말년을 읽는 자리인데, 태어난 시간을 몰라 이번 분석에서는 비워 두었어요. 시간을 알게 되면 이 자리까지 해석이 열립니다.</p></div>';
+        pcGrid.push('<div class="sjd-el" style="border-left-color:#c9c3d6;">' +
+          '<div class="sjd-el-head"><span>시주 — 열매 자리</span><span class="sjd-state" style="color:var(--muted); background:#f6f4fb;">시간 미상</span></div>' +
+          '<p class="sjd-el-msg">꿈과 말년을 읽는 자리인데, 태어난 시간을 몰라 이번 분석에서는 비워 두었어요. 시간을 알게 되면 이 자리까지 해석이 열립니다.</p></div>');
       }
-      $('sjd-pillar-cards').innerHTML = pcHtml;
+      $('sjd-pillar-cards').innerHTML = pcHtml + '<div class="sjd-pgrid">' + pcGrid.join('') + '</div>';
 
       // ②-b 오행 순환 다이어그램 (SVG) — 원 크기 = 내 사주 비중, 점선 테두리 = 일간
       var cycleEl = $('sjd-cycle');
@@ -906,7 +921,7 @@
           return '<div class="sjd-role">' +
             '<span class="sjd-role-el" style="color:' + el.text + ';">' + el.ko + '</span>' +
             '<span class="sjd-role-body"><b>' + role.name + '</b><i>' + role.desc + '</i>' + st + '</span>' +
-            '<span class="sjd-role-pct">' + p + '%</span></div>';
+            '<span class="sjd-role-pct">' + p + '%<span class="sjd-rb"><i style="width:' + Math.min(p * 2, 100) + '%; background:' + el.color + ';"></i></span></span></div>';
         }).join('') +
         '<p class="sjd-roles-note">지금 가장 옅은 힘은 <b>' + roleOf(lo, dayEl).name + '</b>(' + ELEMENTS[lo].ko + ' ' + pctOf(lo) + '%)이에요. 명리에서는 옅은 기운을 억지로 메우기보다, 생활 속에서 그 기운의 결을 빌려와 자연스럽게 보완하라고 말해요. 방법은 아래 보완 가이드에 정리했어요.</p>';
 

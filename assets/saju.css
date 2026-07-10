@@ -162,6 +162,29 @@ a { color: inherit; text-decoration: none; }
 .sjd-flow-step em { font-style: normal; font-size: 13.5px; font-weight: 800; color: var(--brand); }
 .sjd-flow-arr { align-self: center; font-size: 16px; font-weight: 800; color: #b0b8c1; }
 .sjd-cycle svg { display: block; width: 100%; max-width: 380px; height: auto; margin: 8px auto 0; }
+/* 상세: 번호 킥커 섹션 헤더 */
+.sjd-h { display: flex; align-items: baseline; gap: 12px; }
+.sjd-h em { font-style: normal; font-size: 14px; font-weight: 800; letter-spacing: .1em; color: var(--brand); }
+/* 상세: 한눈 스탯 타일 */
+.sjd-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+.sjd-stat { background: #fff; border-radius: var(--r-md); padding: 18px 18px 16px; box-shadow: var(--sh-1); display: flex; flex-direction: column; gap: 5px; }
+.sjd-stat-l { font-size: 12.5px; font-weight: 800; letter-spacing: .05em; color: var(--faint); }
+.sjd-stat-v { font-size: clamp(23px, 3.6vw, 28px); font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
+.sjd-stat-v em { font-style: normal; font-size: .72em; margin-left: 2px; }
+.sjd-stat-s { font-size: 13px; font-weight: 600; color: var(--muted); }
+/* 상세: 총평 = 박스 없는 에디토리얼 텍스트 */
+.sjd-summary { margin-top: 18px; }
+.sjd-summary .sj-strong-msg { margin: 0; font-size: clamp(18px, 2.7vw, 20.5px); line-height: 2.02; color: #333d4b; }
+/* 상세: 네 기둥 2열 그리드 + 글자 타일 */
+.sjd-pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+.sjd-pgrid .sjd-el { margin-top: 0; }
+.sjd-mg { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
+.sjd-mg b { width: 56px; height: 56px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 27px; font-weight: 800; box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .35); }
+.sjd-mg i { font-style: normal; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .01em; }
+/* 상세: 십성 미니 바 */
+.sjd-role-pct { text-align: right; }
+.sjd-rb { display: block; width: 68px; height: 6px; background: #f2f4f6; border-radius: 999px; margin-top: 7px; overflow: hidden; }
+.sjd-rb i { display: block; height: 100%; border-radius: 999px; }
 /* 상세 페이지는 섹션 간 간격을 더 넓게 */
 #saju-detail .sj-divider { margin-top: clamp(48px, 8vw, 80px); }
 #sjd-summary .sj-strong-msg { line-height: 1.95; }
@@ -225,8 +248,12 @@ a { color: inherit; text-decoration: none; }
 .sj-divider { margin-top: clamp(30px, 5vw, 48px); }
 
 /* 모바일: 폼은 1열로. (본문 크기는 이미 크게 잡아 별도 확대 불필요) */
+@media (max-width: 720px) {
+  .sjd-pgrid { grid-template-columns: 1fr; }
+}
 @media (max-width: 560px) {
   .sj-form-grid { grid-template-columns: 1fr; }
+  .sjd-stats { grid-template-columns: 1fr; }
   .sj-el-row { grid-template-columns: 58px 1fr 46px; gap: 12px; }
   .sj-ey-detail { grid-template-columns: 1fr; gap: 12px; }
 }

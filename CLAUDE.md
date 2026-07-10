@@ -51,7 +51,12 @@ saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구
                  비중, 상생 화살표, 점선 링=일간) ③ 십성 5행+최약 노트 ④-a **나와
                  잘 맞는 것들** #sjd-fit(일간 결 + 최강 기운, EL_FIT + 어울리는
                  컬러) ④-b 보완 가이드(부족 오행별 친구·색·생활 보완법).
-                 robots의 Disallow /saju가 prefix로 커버.
+                 v0.4.40 에디토리얼 개편("AI로 만든 티" 제거): 헤드라인 아래
+                 **한눈 스탯 타일 3개**(#sjd-stats 일간/최강/보완) · 섹션 헤더 번호
+                 킥커(.sjd-h em 01~06) · 총평 = 박스 없는 본문(.sjd-summary) ·
+                 네 기둥 = **2열 그리드**(.sjd-pgrid, ≤720px 1열) + 글자 타일
+                 (.sjd-mg, 결과 글리프 미니판 — pill 칩 폐기) · 십성 %에 미니 바
+                 (.sjd-rb). robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
