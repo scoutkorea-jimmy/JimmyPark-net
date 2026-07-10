@@ -920,7 +920,7 @@
           '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + title + '</span>' +
           '<span class="sjd-state" style="color:' + el.text + '; border-color:' + el.text + '44; background:' + el.light + ';">' + tag + '</span></div>' +
           '<p class="sjd-el-msg">' + intro + ' ' + EL_FIT[i] + '</p>' +
-          '<p class="sjd-el-msg" style="margin-top:12px;"><b>자연스럽게 어울리는 색</b> — 이미 넉넉한 결이라 애쓰지 않아도 잘 받는 컬러예요:</p>' + swRow(EL_STYLE[i]) + '</div>';
+          '<p class="sjd-el-msg" style="margin-top:20px;"><b>자연스럽게 어울리는 색</b> — 이미 넉넉한 결이라 애쓰지 않아도 잘 받는 컬러예요:</p>' + swRow(EL_STYLE[i]) + '</div>';
       };
       var fitHtml = fitCard(dayEl, '나의 결', ELEMENTS[dayEl].ko + ' — 나(일간)의 결과 잘 맞는 것',
         '나의 중심이 ' + ELEMENTS[dayEl].ko + ' 기운이라,');
@@ -936,9 +936,9 @@
           '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + el.ko + ' 기운 보완 (' + pctOf(i) + '%)</span>' +
           '<span class="sjd-state" style="color:' + el.text + '; border-color:' + el.text + '44; background:' + el.light + ';">' + ch.emoji + ' ' + ch.name + '와 함께</span></div>' +
           '<p class="sjd-el-msg"><b>함께할 친구</b> — ' + ch.type + ' <b>' + ch.name + '</b>. ' + ch.short + '. ' + el.ko + '의 결을 곁에서 채워주는 존재라, 책상 위 작은 굿즈 하나로도 이 기운을 가까이 둘 수 있어요.</p>' +
-          '<p class="sjd-el-msg" style="margin-top:12px;"><b>가까이 둘 색</b> — 전통 오방색에서 ' + el.ko + '의 자리를 잇는 컬러들이에요. 옷·소품·공간에 한 가지씩:</p>' +
+          '<p class="sjd-el-msg" style="margin-top:20px;"><b>가까이 둘 색</b> — 전통 오방색에서 ' + el.ko + '의 자리를 잇는 컬러들이에요. 옷·소품·공간에 한 가지씩:</p>' +
           swRow(st) +
-          '<p class="sjd-el-msg" style="margin-top:12px;"><b>생활 속 보완법</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p></div>';
+          '<p class="sjd-el-msg" style="margin-top:20px;"><b>생활 속 보완법</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p></div>';
       }).join('') +
         '<p class="sj-ey-note">※ 재미로 보는 콘텐츠지만, 다섯 기운을 고루 살피는 일은 전통 명리가 말하는 균형의 지혜이기도 해요. 옅은 기운은 결핍이 아니라 앞으로 채워질 여백입니다.</p>';
     }
