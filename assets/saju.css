@@ -145,6 +145,15 @@ a { color: inherit; text-decoration: none; }
 .sjd-roles-note { margin: 16px 0 0; padding: 13px 16px; background: #f6f4ff; border: 1px solid #e6e3f2; border-radius: var(--r-sm); font-size: 15.5px; color: #40394e; line-height: 1.7; }
 .sjd-glyphs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
 .sjd-jg { margin-top: 10px; font-size: 13.5px; font-weight: 700; color: var(--muted); letter-spacing: .01em; }
+.sjd-lead { margin: 14px 0 4px; font-size: 17px; color: #40394e; line-height: 1.8; }
+.sjd-flow { display: flex; align-items: stretch; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 16px 0 6px; }
+.sjd-flow-step { flex: 1 1 96px; max-width: 132px; display: flex; flex-direction: column; align-items: center; gap: 3px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 8px; text-align: center; }
+.sjd-flow-step i { width: 14px; height: 14px; border-radius: 50%; margin-bottom: 3px; }
+.sjd-flow-step b { font-size: 15.5px; letter-spacing: -.01em; }
+.sjd-flow-step span { font-size: 12px; font-weight: 700; color: var(--muted); }
+.sjd-flow-step em { font-style: normal; font-size: 13.5px; font-weight: 800; color: var(--brand); }
+.sjd-flow-arr { align-self: center; font-size: 16px; font-weight: 800; color: #b3abc6; }
+.sjd-cycle svg { display: block; width: 100%; max-width: 380px; height: auto; margin: 0 auto; }
 .sjd-glyph { font-size: 14px; font-weight: 800; border: 1px solid; border-radius: 999px; padding: 6px 13px; }
 .sjd-sw-row { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 9px; }
 .sjd-sw { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 700; color: #40394e; }

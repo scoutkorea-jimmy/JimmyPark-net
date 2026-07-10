@@ -41,16 +41,17 @@ admin.html      Admin (/admin, noindex) + assets/admin.js
 saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
 saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
 saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구성 분석' 카드 아래
-                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 톤 = **차분·격조 +
-                 명리 용어 병기**(v0.4.34 — 직전 MZ 게임 은유판은 "무게가 없다"
-                 피드백으로 폐기; 게임 슬랭 금지). 구성: ① 총평(일간을 오행이
-                 아니라 **10천간 글자 프로필** STEM_PROFILE로 — 갑=거목…계=단비 +
-                 균형/집중/안정형) ② 사주 구조 — 네 기둥(근묘화실 根苗花實 한자
-                 부제, 글자 칩[천간/지지·오행·음양] + **지장간 JANGGAN 표시**,
-                 월지 30% 언급, 시간 미상 시 시주 안내 카드) ③ 십성(十星) 정식
-                 명칭(비겁/식상/재성/관성/인성) 5행 + 최약 십성 노트 ④ 보완
-                 가이드 — 부족 오행별 친구(캐릭터)·색(EL_STYLE 스와치)·생활
-                 보완법(EL_DETAIL). robots의 Disallow /saju가 prefix로 커버.
+                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 톤 = 차분·격조, 게임
+                 슬랭 금지, **본문 한자 표기 금지**(v0.4.35 사용자 지시 — 하늘/땅
+                 기운·숨은 기운 등 한국어 표현; 十星→십성만). 구성: ① 총평(~600자,
+                 10천간 STEM_PROFILE + 균형/집중/안정형 + 계절 무대 + 보완 예고)
+                 ② 사주 구조(도입 문단 + **네 기둥 흐름 스트립** .sjd-flow[뿌리→
+                 무대→꽃→열매, 간지 표기] + 기둥 카드 4: 글자 칩·지장간 JANGGAN·
+                 확장 서술) ②-b **오행 순환 SVG 다이어그램** #sjd-cycle(원 크기=
+                 비중, 상생 화살표, 점선 링=일간) ③ 십성 5행+최약 노트 ④-a **나와
+                 잘 맞는 것들** #sjd-fit(일간 결 + 최강 기운, EL_FIT + 어울리는
+                 컬러) ④-b 보완 가이드(부족 오행별 친구·색·생활 보완법).
+                 robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
