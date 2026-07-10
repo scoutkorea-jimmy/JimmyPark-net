@@ -304,6 +304,12 @@
     { colors: [{ c: '#1864ab', n: '딥 블루' }, { c: '#243b6b', n: '네이비' }, { c: '#212529', n: '블랙' }], items: '데님·네이비 아이템, 블랙 폰케이스, 늘 곁에 두는 물병' }
   ];
 
+  // 일간 정식 표기 — 천간+오행 두 글자 (예: 경금(庚金), 계수(癸水))
+  function stemFull(i) {
+    var g = STEMS[i], el = ELEMENTS[g.el];
+    return g.ko + el.ko + '(' + g.hj + el.hj + ')';
+  }
+
   // 일간 딥다이브 — 10천간 심층 프로필 (kw 키워드 / who 성향 / people 관계 / work 일 / tip 한 끗)
   var STEM_DEEP = [
     { kw: ['개척', '직진', '리더십', '자존심'],
@@ -691,7 +697,7 @@
         ilganBox.innerHTML =
           '<div class="sjd-ig-top">' +
           '<b class="sjd-ig-tile" style="background:' + igEl.color + '; color:' + igEl.ink + ';">' + igStem.hj + '</b>' +
-          '<div><div class="sjd-ig-name">' + igStem.ko + '(' + igStem.hj + ')<span>' + (igStem.yang ? '양(+)' : '음(−)') + '의 ' + igEl.ko + ' · ' + igProf.sym + '</span></div>' +
+          '<div><div class="sjd-ig-name">' + stemFull(pl.day.stem) + '<span>' + (igStem.yang ? '양(+)' : '음(−)') + ' · ' + igProf.sym + '</span></div>' +
           '<div class="sjd-kws">' + igDeep.kw.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div></div></div>' +
           '<p class="sjd-el-msg"><b>이런 사람이에요</b> — ' + igDeep.who + '</p>' +
           '<p class="sjd-el-msg"><b>관계에서는</b> — ' + igDeep.people + '</p>' +
@@ -869,7 +875,7 @@
             '<span class="sjd-stat-s">' + sub + '</span></div>';
         };
         statsEl.innerHTML =
-          tile('나의 중심 · 일간', STEMS[pl.day.stem].ko + '<em style="font-size:.62em;">(' + STEMS[pl.day.stem].hj + ')</em>', STEM_PROFILE[pl.day.stem].sym, ELEMENTS[dayEl].text) +
+          tile('나의 중심 · 일간', STEMS[pl.day.stem].ko + ELEMENTS[dayEl].ko + '<em style="font-size:.6em;">(' + STEMS[pl.day.stem].hj + ELEMENTS[dayEl].hj + ')</em>', STEM_PROFILE[pl.day.stem].sym, ELEMENTS[dayEl].text) +
           tile('가장 풍성한 기운', ELEMENTS[t1].ko + ' <em>' + pctOf(t1) + '%</em>', '기본 장착된 엔진', ELEMENTS[t1].text) +
           tile('보완 포인트', ELEMENTS[lo].ko + ' <em>' + pctOf(lo) + '%</em>', '채우면 확 좋아지는 자리', ELEMENTS[lo].text);
       }
@@ -896,13 +902,13 @@
       else shapeLine = kn(t1) + ' 기운(' + pctOf(t1) + '%)을 중심으로 완만하게 기운 <b>안정형</b>';
       $('sjd-summary').innerHTML =
         '<p class="sj-strong-msg" style="margin:0;">결론부터 말하면, 나의 중심 글자(일간)는 <b style="color:' + dEl.text + ';">' +
-        dStem.ko + '(' + dStem.hj + ')</b> — <b>' + dProf.sym + '</b>이에요. ' + dProf.text +
+        stemFull(pl.day.stem) + '</b> — <b>' + dProf.sym + '</b>이에요. ' + dProf.text +
         ' 여덟 글자 중에 "나 자신"을 가리키는 글자가 바로 이거라, 모든 해석은 여기서 출발해요.' +
         '<br><br>전체 구성은 ' + shapeLine + '이에요. 가장 풍성한 ' + kn(t1) + ' 기운 <b>' + pctOf(t1) +
         '%</b>는 굳이 애쓰지 않아도 나오는 힘이에요. 일이든 관계든 이 결로 갈 때 제일 잘 풀리고요. 게다가 ' +
         season + ' 태생 — ' + seasonLine + ' 무대까지 기본으로 깔려 있어요.' +
         '<br><br>반대로 가장 옅은 ' + kn(lo) + ' 기운 <b>' + pctOf(lo) +
-        '%</b>는요? 모자란 게 아니라 아직 안 쓴 근육에 가까워요. 챙기는 순간 밸런스가 확 좋아지는 진짜 보완 포인트죠. 이제 네 기둥 → 합·충 케미 → 오행 순환 → 다섯 가지 힘 → 신살 → 올해의 흐름 순서로 하나씩 풀어볼게요. 마지막엔 나랑 잘 맞는 것들과 채우는 법까지.</p>';
+        '%</b>는요? 모자란 게 아니라 아직 안 쓴 근육에 가까워요. 챙기는 순간 밸런스가 확 좋아지는 진짜 보완 포인트죠. 이제 네 기둥 → 합·충 케미 → 다섯 가지 힘 → 신살 → 올해의 흐름 순서로 하나씩 풀어볼게요. 마지막엔 나랑 잘 맞는 것들과 채우는 법까지.</p>';
 
       // ② 네 기둥 — 한국어 표현(뿌리·무대·나·열매) + 흐름 스트립 + 숨은 기운
       var chip = function (isStem, idx) {
@@ -956,7 +962,7 @@
         '성장 환경과 사회 활동의 무대를 읽는 자리로, 특히 달의 땅 기운(월지)은 사주 전체에서 비중이 가장 커요(30%). 당신의 무대는 ' + season + '의 ' + kn(mB) + ' — ' +
         seasonLine + ' 자리이고, 사회에서 쓰는 겉 에너지는 ' + kn(mS) + '의 결이에요. 진로나 일에서 어떤 분위기의 무대가 편안한지 볼 때 이 자리를 봐요.'));
       pcGrid.push(pCard('일주 — 꽃 자리', '나 자신', pl.day,
-        '이 사주의 주인공, 나 자신을 읽는 자리예요. 하늘 기운 ' + dStem.ko + '(' + dStem.hj + ')는 ' + dProf.sym + ' — 나의 본체이고, 땅 기운 ' + kn(dB) + '는 마음 깊은 곳의 기본 정서예요. 겉과 속이 ' +
+        '이 사주의 주인공, 나 자신을 읽는 자리예요. 하늘 기운 ' + stemFull(pl.day.stem) + ((dayEl === 0 || dayEl === 3) ? '은 ' : '는 ') + dProf.sym + ' — 나의 본체이고, 땅 기운 ' + kn(dB) + '는 마음 깊은 곳의 기본 정서예요. 겉과 속이 ' +
         (dayEl === dB ? '같은 결이라 안팎이 한결같다는 이야기를 자주 듣는 구조' : '서로 다른 결이라 알아갈수록 새로운 면이 나오는 깊이 있는 구조') + '예요. 가장 가까운 관계의 결도 이 자리에서 함께 읽어요.'));
       if (pl.hour) {
         var hS = STEMS[pl.hour.stem].el, hB = BRANCHES[pl.hour.branch].el;
@@ -969,47 +975,6 @@
           '<p class="sjd-el-msg">꿈과 말년을 읽는 자리인데, 태어난 시간을 몰라 이번 분석에서는 비워 두었어요. 시간을 알게 되면 이 자리까지 해석이 열립니다.</p></div>');
       }
       $('sjd-pillar-cards').innerHTML = pcHtml + '<div class="sjd-pgrid">' + pcGrid.join('') + '</div>';
-
-      // ②-b 오행 순환 다이어그램 (SVG) — 원 크기 = 내 사주 비중, 점선 테두리 = 일간
-      var cycleEl = $('sjd-cycle');
-      if (cycleEl) {
-        var CX = 170, CY = 168, RR = 106, pts = [], rads = [];
-        var maxP = Math.max.apply(null, [0, 1, 2, 3, 4].map(pctOf)) || 1;
-        for (var ci = 0; ci < 5; ci++) {
-          var ang = (-90 + ci * 72) * Math.PI / 180;
-          pts.push([CX + RR * Math.cos(ang), CY + RR * Math.sin(ang)]);
-          rads.push(19 + 19 * (pctOf(ci) / maxP));
-        }
-        var svgArrows = '', svgNodes = '';
-        for (var ci = 0; ci < 5; ci++) {
-          var cj = (ci + 1) % 5;
-          var dx = pts[cj][0] - pts[ci][0], dy = pts[cj][1] - pts[ci][1];
-          var ln = Math.sqrt(dx * dx + dy * dy);
-          svgArrows += '<line x1="' + (pts[ci][0] + dx / ln * (rads[ci] + 5)).toFixed(1) + '" y1="' + (pts[ci][1] + dy / ln * (rads[ci] + 5)).toFixed(1) +
-            '" x2="' + (pts[cj][0] - dx / ln * (rads[cj] + 11)).toFixed(1) + '" y2="' + (pts[cj][1] - dy / ln * (rads[cj] + 11)).toFixed(1) +
-            '" stroke="#c9c3d6" stroke-width="2.5" marker-end="url(#sjdArr)"/>';
-        }
-        for (var ci = 0; ci < 5; ci++) {
-          var el = ELEMENTS[ci], px = pts[ci][0].toFixed(1), py = pts[ci][1].toFixed(1);
-          if (ci === dayEl) {
-            svgNodes += '<circle cx="' + px + '" cy="' + py + '" r="' + (rads[ci] + 8).toFixed(1) + '" fill="none" stroke="' + el.text + '" stroke-width="2" stroke-dasharray="4 4"/>' +
-              '<text x="' + px + '" y="' + (pts[ci][1] - rads[ci] - 14).toFixed(1) + '" text-anchor="middle" font-size="13" font-weight="800" fill="' + el.text + '">나</text>';
-          }
-          svgNodes += '<circle cx="' + px + '" cy="' + py + '" r="' + rads[ci].toFixed(1) + '" fill="' + el.color + '" stroke="#fff" stroke-width="3"/>' +
-            '<text x="' + px + '" y="' + py + '" text-anchor="middle" fill="' + el.ink + '" font-weight="800">' +
-            '<tspan x="' + px + '" dy="-2" font-size="15">' + el.ko + '</tspan>' +
-            '<tspan x="' + px + '" dy="15" font-size="11.5">' + pctOf(ci) + '%</tspan></text>';
-        }
-        cycleEl.innerHTML =
-          '<svg viewBox="0 0 340 336" role="img" aria-label="나의 오행 순환 지도">' +
-          '<defs><marker id="sjdArr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8" fill="none" stroke="#b3abc6" stroke-width="1.8"/></marker></defs>' +
-          svgArrows + svgNodes + '</svg>' +
-          '<div class="sjd-cycle-legend">' +
-          '<span>화살표 = 서로 살리는 순서(상생)</span>' +
-          '<span>큰 원 = 풍성한 기운</span>' +
-          '<span>점선 테두리 = 나(일간)</span></div>' +
-          '<p class="sj-ey-note" style="text-align:center; margin-top:12px;">나무는 불을, 불은 흙을, 흙은 금을, 금은 물을, 물은 다시 나무를 키워요.</p>';
-      }
 
       // ③ 십성 — 다섯 가지 힘의 균형
       $('sjd-roles').innerHTML =
@@ -1080,7 +1045,7 @@
         };
         var checkStem = function (targets) {
           for (var ti = 0; ti < targets.length; ti++) {
-            if (targets[ti] in have) return '일간 ' + dStem.ko + '(' + dStem.hj + ') 기준 → ' + have[targets[ti]] + ' ' + bLabel(targets[ti]) + '에서 성립';
+            if (targets[ti] in have) return '일간 ' + stemFull(pl.day.stem) + ' 기준 → ' + have[targets[ti]] + ' ' + bLabel(targets[ti]) + '에서 성립';
           }
           return null;
         };
@@ -1146,7 +1111,7 @@
         };
         yearBox.innerHTML =
           '<div class="sjd-glyphs" style="margin-top:0;">' + chip(true, ysIdx) + chip(false, ybIdx) + '</div>' +
-          '<p class="sjd-el-msg">올해(' + curY + '년)는 ' + STEMS[ysIdx].ko + BRANCHES[ybIdx].ko + '(' + STEMS[ysIdx].hj + BRANCHES[ybIdx].hj + ')년 — ' + kn(yElNow) + ' 기운이 들어오는 해예요. 나(일간 ' + dStem.ko + ')에게 올해의 기운은 <b>' + yRole.name + '</b> — ' + yRole.desc.split(' — ')[0] + '이에요. ' + YEAR_MSG[yRole.name] + '</p>' +
+          '<p class="sjd-el-msg">올해(' + curY + '년)는 ' + STEMS[ysIdx].ko + BRANCHES[ybIdx].ko + '(' + STEMS[ysIdx].hj + BRANCHES[ybIdx].hj + ')년 — ' + kn(yElNow) + ' 기운이 들어오는 해예요. 나(일간 ' + dStem.ko + ELEMENTS[dayEl].ko + ')에게 올해의 기운은 <b>' + yRole.name + '</b> — ' + yRole.desc.split(' — ')[0] + '이에요. ' + YEAR_MSG[yRole.name] + '</p>' +
           '<p class="sj-ey-note">※ 해의 경계는 1월 1일이 아니라 입춘 기준이에요 · 재미로 보는 흐름 읽기예요.</p>';
       }
 
