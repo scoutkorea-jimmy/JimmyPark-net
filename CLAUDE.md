@@ -121,7 +121,7 @@ Routing: files under `functions/` map to paths; a leading `_` excludes a file fr
   `{id,url}`; `GET ?id=` (public) serve with 1-year immutable cache; `GET ?list=1` (admin)
   index; `DELETE ?id=` (admin). Index key `media:index` (capped 500).
 - `functions/api/saju-visit.js` — /saju 일일 방문자 카운터. `POST` 방문 기록(같은 IP는
-  KST 하루 1회, IP는 SHA-256 해시로만 · 26h TTL), `GET`/`POST` → `{day,today,total}`.
+  KST 하루 1회, IP는 SHA-256 해시로만 · 12h TTL), `GET`/`POST` → `{day,today,total}`.
   KV: `sjv:d:<date>`(영구 보관 — 사용자 지시 2026-07-10) · `sjv:total` · `sjv:ip:<date>:<hash>`.
   사주 입력값 미전송.
 - `functions/api/login.js` — `POST {code}` verifies 6-digit TOTP, returns signed session.

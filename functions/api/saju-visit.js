@@ -1,7 +1,7 @@
 // /api/saju-visit — /saju · /saju-result 일일 방문자 카운터.
 // POST: 방문 1회 기록(같은 IP는 KST 기준 하루 1회만, IP는 SHA-256 해시로만 저장)
 // GET : 집계만 반환. 생년월일 등 사주 입력값은 절대 다루지 않는다.
-// KV: sjv:d:<YYYY-MM-DD>(일별, 영구 보관) · sjv:total(누적) · sjv:ip:<date>:<hash>(중복 방지, 26h TTL)
+// KV: sjv:d:<YYYY-MM-DD>(일별, 영구 보관) · sjv:total(누적) · sjv:ip:<date>:<hash>(중복 방지, 12h TTL)
 import { json } from './_lib.js';
 
 function kstDay() {
@@ -31,7 +31,7 @@ export async function onRequest({ request, env }) {
       today += 1;
       total += 1;
       await Promise.all([
-        kv.put(seenKey, '1', { expirationTtl: 26 * 3600 }),
+        kv.put(seenKey, '1', { expirationTtl: 12 * 3600 }),
         kv.put(dKey, String(today)),
         kv.put(tKey, String(total))
       ]);

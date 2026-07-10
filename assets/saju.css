@@ -147,7 +147,7 @@ a { color: inherit; text-decoration: none; }
 #sj-vibe-top:empty { display: none; }
 #sj-vibe-top .sj-vibe { margin-top: clamp(30px, 5vw, 48px); }
 .sj-vibe-label { font-size: 15px; font-weight: 800; color: var(--brand); margin-bottom: 12px; }
-.sj-vibe-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+.sj-vibe-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; }
 .sj-vibe-pill { font-size: 16px; font-weight: 700; color: var(--brand); background: #fff; border: 1px solid #e6e3f2; border-radius: 999px; padding: 9px 15px; line-height: 1.3; }
 .sj-char { border: 1.5px solid; border-radius: var(--r-lg); padding: clamp(20px, 4vw, 30px); margin-top: 20px; }
 .sj-char-head { display: flex; align-items: center; gap: 18px; }
