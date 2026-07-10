@@ -773,6 +773,17 @@
         r.meta.sajuYear + '년 ' + STEMS[pl.year.stem].ko + yb.ko + '년 · ' + yb.animal + '띠 상세 분석' +
         (r.meta.timeKnown ? '' : ' · 시간 미상(6글자 기준)');
 
+      // 최상단 엠블럼 — 결과 페이지와 동일하게 일간 오행의 캐릭터 (이미지 없으면 자동 숨김)
+      var demblem = $('sjd-emblem');
+      if (demblem) {
+        var demKey = ['wood', 'fire', 'earth', 'metal', 'water'][dayEl];
+        demblem.innerHTML =
+          '<img class="sj-emblem-img" src="/assets/img/saju-el-' + demKey + '.png" ' +
+          'alt="나의 일간 ' + dEl.ko + ' 기운 캐릭터" ' +
+          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">' +
+          '<div class="sj-emblem-cap" style="color:' + dEl.text + ';">나를 나타내는 기운 · ' + dEl.ko + ' <span>일간 기준</span></div>';
+      }
+
       // ① 총평 — 한자 없이, 일간 글자 프로필 + 구성 + 계절 + 보완 예고 (분량 2배)
       var kn = function (i) { return '<b style="color:' + ELEMENTS[i].text + ';">' + ELEMENTS[i].ko + '</b>'; };
       var dStem = STEMS[pl.day.stem], dProf = STEM_PROFILE[pl.day.stem];
