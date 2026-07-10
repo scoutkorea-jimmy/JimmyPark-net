@@ -41,10 +41,15 @@ admin.html      Admin (/admin, noindex) + assets/admin.js
 saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
 saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
 saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구성 분석' 카드 아래
-                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 긍정 톤 고정: 종합 요약 ·
-                 오행별 이야기(비중 5단계 라벨, 옅음=성장 여백) · 일간 중심 다섯 힘
-                 (십성 쉬운말: 나답게/채움/표현/이룸/다듬음) · 부족 오행 채우기 팁
-                 (EL_DETAIL) + 캐릭터 연결. robots의 Disallow /saju가 prefix로 커버.
+                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 긍정 + **MZ 톤**(스탯·
+                 버프·파티·픽 등 게임 은유 — 2026-07-10 사용자 지시 개편). 구성:
+                 ① 전체 요약(코어 일간 + 올라운더/몰빵/안정형 + 최강·성장 스탯)
+                 ② 네 기둥 스토리(근묘화실 순: 연=뿌리·월=무대(월지 30% 언급)·
+                 일=주인공(겉속 일치/반전)·시=다음 화, 글자 칩[천간/지지·오행·음양],
+                 시간 미상 시 시주 안내 카드) ③ 다섯 가지 힘 밸런스(십성 쉬운말
+                 5행 + 가장 여백인 힘 노트) ④ 최종 정리 — 부족 오행별 친구 픽
+                 (캐릭터)·컬러 픽(EL_STYLE 스와치 3색)·아이템/루틴 픽(EL_DETAIL).
+                 robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,

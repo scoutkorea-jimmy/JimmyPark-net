@@ -142,6 +142,12 @@ a { color: inherit; text-decoration: none; }
 .sjd-role-body b { display: block; font-size: 16.5px; }
 .sjd-role-body i { display: block; font-style: normal; font-size: 13.5px; color: var(--muted); margin: 1px 0 2px; }
 .sjd-role-pct { flex: none; font-size: 19px; font-weight: 800; color: var(--ink); }
+.sjd-roles-note { margin: 16px 0 0; padding: 13px 16px; background: #f6f4ff; border: 1px solid #e6e3f2; border-radius: var(--r-sm); font-size: 15.5px; color: #40394e; line-height: 1.7; }
+.sjd-glyphs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
+.sjd-glyph { font-size: 14px; font-weight: 800; border: 1px solid; border-radius: 999px; padding: 6px 13px; }
+.sjd-sw-row { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 9px; }
+.sjd-sw { display: inline-flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 700; color: #40394e; }
+.sjd-sw i { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .12); }
 .sj-ey-detail > div { font-size: 16px; font-weight: 700; color: #40394e; line-height: 1.5; }
 .sj-ey-detail span { display: block; font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--muted); margin-bottom: 3px; }
 .sj-ey-detail i { display: block; margin-top: 3px; font-style: normal; font-size: 13px; font-weight: 600; color: var(--faint); }
