@@ -1141,7 +1141,7 @@
         var foundAll = SAL.filter(function (x) { return x.found; }).sort(function (a, b) { return a.rank - b.rank; });
         var top5 = foundAll.slice(0, 5);
         sinsalBox.innerHTML =
-          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 대표 신살·길성 <b>15종</b>을 전부 검사해서 당신에게 성립한 별만 중요도 순으로 보여드려요' +
+          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 종류가 수십 가지가 넘는데, 그중 많이 보는 <b>대표 길성 위주 15종</b>을 추려서 검사하고, 성립한 별만 중요도 순으로 보여드려요' +
           (foundAll.length ? ' — <b>' + foundAll.length + '개</b> 발견' + (foundAll.length > 5 ? ' (그중 Top 5)' : '') + '.' : '.') + '</p>' +
           (top5.length ?
             top5.map(function (x, xi) {
@@ -1151,7 +1151,7 @@
                 '<p>' + x.what + ' ' + x.life + '</p>' +
                 '<p class="sjd-sal-tip"><b>이렇게 써먹어요</b> — ' + x.tip + '</p></div>';
             }).join('') :
-            '<p class="sjd-el-msg" style="margin-top:4px;">이번 구성에서는 15종이 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
+            '<p class="sjd-el-msg" style="margin-top:4px;">이번에 검사한 15종은 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
           '<p class="sj-ey-note">※ 신살은 전통 조견표 기반의 재미 요소예요 — 좋고 나쁨의 판정이 아니라, 내 사주의 개성 포인트로 봐주세요.</p>';
       }
 
