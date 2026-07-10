@@ -304,6 +304,15 @@
     { colors: [{ c: '#1864ab', n: '딥 블루' }, { c: '#243b6b', n: '네이비' }, { c: '#212529', n: '블랙' }], items: '데님·네이비 아이템, 블랙 폰케이스, 늘 곁에 두는 물병' }
   ];
 
+  // 오행별 전통 배속 — 방위·숫자·계절 (행운 포인트)
+  var EL_LUCK = [
+    { dir: '동쪽', num: '3 · 8', season: '봄' },
+    { dir: '남쪽', num: '2 · 7', season: '여름' },
+    { dir: '중앙', num: '5 · 10', season: '환절기' },
+    { dir: '서쪽', num: '4 · 9', season: '가을' },
+    { dir: '북쪽', num: '1 · 6', season: '겨울' }
+  ];
+
   var Saju = {
     STEMS: STEMS, BRANCHES: BRANCHES, ELEMENTS: ELEMENTS, CHARACTERS: CHARACTERS,
     compute: compute, recommend: recommend,
@@ -815,7 +824,7 @@
         '%</b>는 애쓰지 않아도 자연스럽게 흘러나오는 힘 — 일과 관계에서 이 결을 쓸 때 성과도 만족도도 높아져요. 여기에 당신은 ' +
         season + ' 태생이라, ' + seasonLine + ' 무대 위에 서 있는 셈이에요.' +
         '<br><br>반대로 가장 옅은 ' + kn(lo) + ' 기운 <b>' + pctOf(lo) +
-        '%</b>는 지금은 잘 안 쓰는 근육 같은 자리예요. 부족해서 문제가 아니라, 의식적으로 챙기면 삶의 균형이 눈에 띄게 좋아지는 보완 포인트죠. 아래에서 네 기둥의 구조와 오행의 순환, 다섯 가지 힘의 균형을 차례로 살펴보고, 마지막에 나와 잘 맞는 것들과 보완 방법까지 정리해 드릴게요.</p>';
+        '%</b>는 지금은 잘 안 쓰는 근육 같은 자리예요. 부족해서 문제가 아니라, 의식적으로 챙기면 삶의 균형이 눈에 띄게 좋아지는 보완 포인트죠. 아래에서 네 기둥의 구조, 글자들의 합·충, 오행의 순환과 다섯 가지 힘, 신살과 올해의 흐름까지 차례로 살펴보고, 마지막에 나와 잘 맞는 것들과 보완 방법까지 정리해 드릴게요.</p>';
 
       // ② 네 기둥 — 한국어 표현(뿌리·무대·나·열매) + 흐름 스트립 + 숨은 기운
       var chip = function (isStem, idx) {
@@ -929,6 +938,89 @@
         }).join('') +
         '<p class="sjd-roles-note">지금 가장 옅은 힘은 <b>' + roleOf(lo, dayEl).name + '</b>(' + ELEMENTS[lo].ko + ' ' + pctOf(lo) + '%)이에요. 명리에서는 옅은 기운을 억지로 메우기보다, 생활 속에서 그 기운의 결을 빌려와 자연스럽게 보완하라고 말해요. 방법은 아래 보완 가이드에 정리했어요.</p>';
 
+      // 신강·신약 저울 — 나를 돕는 힘(비겁+인성) vs 흘려보내는 힘(식상+재성+관성)
+      var inSupEl = mod(dayEl + 4, 5);
+      var support = pctOf(dayEl) + pctOf(inSupEl);
+      var ssLabel, ssMsg;
+      if (support >= 50) { ssLabel = '신강에 가까운 구조'; ssMsg = '나를 돕는 힘이 넉넉해 스스로 끌고 가는 힘이 좋아요. 이런 구조는 표현(식상)과 성과(재성) 쪽으로 힘을 흘려보낼 때 가장 빛난다고 봐요.'; }
+      else if (support >= 35) { ssLabel = '중화에 가까운 구조'; ssMsg = '돕는 힘과 흘려보내는 힘이 균형을 이루고 있어요. 상황에 따라 유연하게 힘을 조절할 수 있는, 명리에서 가장 선호하는 그림이에요.'; }
+      else { ssLabel = '신약에 가까운 구조'; ssMsg = '주변의 지원을 받으며 크는 구조예요. 배움(인성)과 동료(비겁)가 큰 힘이 되니, 혼자 다 짊어지기보다 함께 갈 때 운이 커져요.'; }
+      $('sjd-roles').innerHTML +=
+        '<div class="sjd-roles-note" style="margin-top:14px;"><b>기운의 저울 — ' + ssLabel + '</b>' +
+        '<span class="sj-ey-bar" style="margin:12px 0 6px;"><span class="sj-ey-seg" style="width:' + support + '%; background:var(--brand);"></span><span class="sj-ey-seg" style="width:' + (100 - support) + '%; background:#e5e8eb;"></span></span>' +
+        '<span style="display:block; font-size:13px; font-weight:700; color:var(--muted);">나를 돕는 힘(비겁·인성) ' + support + '% · 흘려보내는 힘(식상·재성·관성) ' + (100 - support) + '%</span>' +
+        '<span style="display:block; margin-top:8px;">' + ssMsg + '</span></div>';
+
+      // 글자들의 케미 — 육합·충 (내 지지들끼리)
+      var posList = [['연지', pl.year.branch], ['월지', pl.month.branch], ['일지', pl.day.branch]];
+      if (pl.hour) posList.push(['시지', pl.hour.branch]);
+      var chemiBox = $('sjd-chemi');
+      if (chemiBox) {
+        var YUKHAP = { 0: 1, 1: 0, 2: 11, 11: 2, 3: 10, 10: 3, 4: 9, 9: 4, 5: 8, 8: 5, 6: 7, 7: 6 };
+        var chemiRows = [];
+        for (var qa = 0; qa < posList.length; qa++) {
+          for (var qb = qa + 1; qb < posList.length; qb++) {
+            var A = posList[qa], B = posList[qb];
+            var an = BRANCHES[A[1]].ko, bn = BRANCHES[B[1]].ko;
+            if (YUKHAP[A[1]] === B[1]) {
+              chemiRows.push('<div class="sjd-role"><span class="sjd-role-el" style="color:#2f9e44;">합</span><span class="sjd-role-body"><b>' + A[0] + ' ' + an + ' · ' + B[0] + ' ' + bn + '</b><i>서로 끌어안는 짝 (육합)</i>두 자리의 기운이 손을 잡아 부드럽게 어우러져요 — 이 사이에서는 일이 순하게 풀리는 편이에요.</span></div>');
+            } else if (mod(A[1] + 6, 12) === B[1]) {
+              chemiRows.push('<div class="sjd-role"><span class="sjd-role-el" style="color:#e8352e;">충</span><span class="sjd-role-body"><b>' + A[0] + ' ' + an + ' · ' + B[0] + ' ' + bn + '</b><i>서로를 깨우는 맞은편 글자 (충)</i>부딪힘이 아니라 흔들어 깨우는 관계예요 — 변화와 이동, 새로운 국면을 만들어내는 다이내믹으로 읽어요.</span></div>');
+            }
+          }
+        }
+        chemiBox.innerHTML =
+          '<p class="sjd-roles-lead">같은 사주 안의 땅 글자들끼리도 궁합이 있어요 — 손을 잡는 합, 서로를 깨우는 충. 내 안의 다이내믹을 읽는 요소예요.</p>' +
+          (chemiRows.length ? chemiRows.join('') : '<p class="sjd-el-msg" style="margin-top:4px;">뚜렷한 합도 충도 없는 담백한 구성이에요. 글자들이 서로 간섭하지 않고 각자 제 역할에 집중하는, 잡음 없는 구조라는 뜻이죠.</p>');
+      }
+
+      // 신살 — 대표 길성 4종 (도화·역마·화개·천을귀인, 연지·일지 기준 조견표)
+      var sinsalBox = $('sjd-sinsal');
+      if (sinsalBox) {
+        var DOHWA = { 0: 9, 1: 6, 2: 3, 3: 0 }, YEOKMA = { 0: 2, 1: 11, 2: 8, 3: 5 }, HWAGAE = { 0: 4, 1: 1, 2: 10, 3: 7 };
+        var CHEONEUL = [[1, 7], [0, 8], [11, 9], [11, 9], [1, 7], [0, 8], [1, 7], [6, 2], [3, 5], [3, 5]];
+        var have = {}; posList.forEach(function (pp) { if (!(pp[1] in have)) have[pp[1]] = pp[0]; });
+        var salRows = [];
+        var pushSal = function (name, color, title, base, tgt, desc) {
+          if (salRows.some(function (r) { return r.indexOf('>' + name + '<') > -1; })) return;
+          salRows.push('<div class="sjd-role"><span class="sjd-role-el" style="color:' + color + ';">' + name + '</span><span class="sjd-role-body"><b>' + title + '</b><i>' + have[tgt] + ' ' + BRANCHES[tgt].ko + ' 자리에서 발견 (' + base + ' 기준)</i>' + desc + '</span></div>');
+        };
+        [['연지', pl.year.branch], ['일지', pl.day.branch]].forEach(function (bs) {
+          var g = bs[1] % 4;
+          if (DOHWA[g] in have) pushSal('도화', '#e8352e', '매력의 기운', bs[0], DOHWA[g], '사람을 끌어당기는 인기·호감의 별이에요. 어디서든 눈에 띄고, 관계에서 자연스러운 매력이 흘러나와요.');
+          if (YEOKMA[g] in have) pushSal('역마', '#1864ab', '이동의 기운', bs[0], YEOKMA[g], '움직일수록 운이 트이는 별이에요. 여행·이사·출장·새로운 환경에서 기회를 만나는 타입이죠.');
+          if (HWAGAE[g] in have) pushSal('화개', '#7c5cff', '몰입과 예술의 기운', bs[0], HWAGAE[g], '혼자 깊이 파고드는 시간에서 특별한 결과물이 나오는 별이에요. 예술·연구·정신적인 세계와 인연이 깊어요.');
+        });
+        CHEONEUL[pl.day.stem].forEach(function (tgt) {
+          if (tgt in have) pushSal('귀인', '#b07d00', '천을귀인 — 하늘이 보낸 도움', '일간', tgt, '어려운 순간에 도와주는 사람이 나타난다는, 명리에서 가장 반기는 길성이에요.');
+        });
+        sinsalBox.innerHTML =
+          '<p class="sjd-roles-lead">신살은 사주 속 특별한 별자리 같은 개념이에요. 대표 길성 네 가지 — 도화·역마·화개·천을귀인 — 를 조견표로 살펴봤어요.</p>' +
+          (salRows.length ? salRows.join('') : '<p class="sjd-el-msg" style="margin-top:4px;">대표 신살 4종이 모두 조용한 구성이에요. 특별한 변수 없이 기본기가 담백하고 단단하다는 뜻 — 꾸준함이 곧 무기인 사주죠.</p>') +
+          '<p class="sj-ey-note">※ 신살은 전통 조견표 기반의 재미 요소예요 — 좋고 나쁨의 판정이 아니에요.</p>';
+      }
+
+      // 올해의 흐름 — 세운(입춘 기준 올해 간지)과 일간의 십성 관계
+      var yearBox = $('sjd-year');
+      if (yearBox) {
+        var nowD = new Date();
+        var nowYr = nowD.getFullYear();
+        var curY = nowD.getTime() < ipchunUtcMs(nowYr) ? nowYr - 1 : nowYr;
+        var yidx = mod(curY - 1984, 60), ysIdx = yidx % 10, ybIdx = yidx % 12;
+        var yElNow = STEMS[ysIdx].el, yRole = roleOf(yElNow, dayEl);
+        var YEAR_MSG = {
+          '비겁': '내 편이 늘고 주체성이 강해지는 해예요. 협업도 독립도 힘을 받는 타이밍 — 나답게 밀고 가 보세요.',
+          '인성': '배움과 지원이 들어오는 해예요. 공부·자격·멘토 운이 좋은 타이밍이라, 채우는 데 시간을 쓰면 남는 해예요.',
+          '식상': '표현과 재능이 살아나는 해예요. 만들어 둔 것을 밖으로 보여주기 좋은 타이밍 — 표현할수록 길이 열려요.',
+          '재성': '성과와 실리가 손에 잡히는 해예요. 벌여 둔 일을 결실로 바꾸기 좋은 타이밍이에요.',
+          '관성': '책임과 무대가 커지는 해예요. 부담스러워도 한 단계 올라서는 타이밍 — 다듬어질수록 단단해져요.'
+        };
+        yearBox.innerHTML =
+          '<div class="sjd-glyphs" style="margin-top:0;">' + chip(true, ysIdx) + chip(false, ybIdx) + '</div>' +
+          '<p class="sjd-el-msg">올해(' + curY + '년)는 ' + STEMS[ysIdx].ko + BRANCHES[ybIdx].ko + '년 — ' + kn(yElNow) + ' 기운이 들어오는 해예요. 당신(일간 ' + dStem.ko + ')에게 올해의 기운은 <b>' + yRole.name + '</b>, ' + yRole.desc.split(' — ')[0] + '이에요. ' + YEAR_MSG[yRole.name] + '</p>' +
+          '<p class="sj-ey-note">※ 해의 경계는 1월 1일이 아니라 입춘 기준이에요 · 재미로 보는 흐름 읽기예요.</p>';
+      }
+
       // ④-a 나와 잘 맞는 것들 — 일간의 결 + 가장 풍성한 기운
       var swRow = function (st) {
         return '<div class="sjd-sw-row">' + st.colors.map(function (c) { return '<span class="sjd-sw"><i style="background:' + c.c + ';"></i>' + c.n + '</span>'; }).join('') + '</div>';
@@ -957,7 +1049,8 @@
           '<p class="sjd-el-msg"><b>함께할 친구</b> — ' + ch.type + ' <b>' + ch.name + '</b>. ' + ch.short + '. ' + el.ko + '의 결을 곁에서 채워주는 존재라, 책상 위 작은 굿즈 하나로도 이 기운을 가까이 둘 수 있어요.</p>' +
           '<p class="sjd-el-msg" style="margin-top:20px;"><b>가까이 둘 색</b> — 전통 오방색에서 ' + el.ko + '의 자리를 잇는 컬러들이에요. 옷·소품·공간에 한 가지씩:</p>' +
           swRow(st) +
-          '<p class="sjd-el-msg" style="margin-top:20px;"><b>생활 속 보완법</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p></div>';
+          '<p class="sjd-el-msg" style="margin-top:20px;"><b>생활 속 보완법</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p>' +
+          '<p class="sjd-el-msg" style="margin-top:20px;"><b>행운 포인트</b> — 방위 ' + EL_LUCK[i].dir + ' · 숫자 ' + EL_LUCK[i].num + ' · 계절 ' + EL_LUCK[i].season + ' <span style="font-size:13px; color:var(--faint);">(전통 오행 배속)</span></p></div>';
       }).join('') +
         '<p class="sj-ey-note">※ 재미로 보는 콘텐츠지만, 다섯 기운을 고루 살피는 일은 전통 명리가 말하는 균형의 지혜이기도 해요. 옅은 기운은 결핍이 아니라 앞으로 채워질 여백입니다.</p>';
     }

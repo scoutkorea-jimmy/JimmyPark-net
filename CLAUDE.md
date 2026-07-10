@@ -56,7 +56,15 @@ saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구
                  킥커(.sjd-h em 01~06) · 총평 = 박스 없는 본문(.sjd-summary) ·
                  네 기둥 = **2열 그리드**(.sjd-pgrid, ≤720px 1열) + 글자 타일
                  (.sjd-mg, 결과 글리프 미니판 — pill 칩 폐기) · 십성 %에 미니 바
-                 (.sjd-rb). robots의 Disallow /saju가 prefix로 커버.
+                 (.sjd-rb). v0.4.44 정통 분석 확장(01~09 재구성): 03 **합·충 케미**
+                 (육합 YUKHAP + 충 (a+6)%12, 지지 쌍 전수) · 05 십성에 **신강·신약
+                 저울**(비겁+인성 % — ≥50 신강/≥35 중화/신약, 2색 바) · 06 **신살**
+                 (도화·역마·화개 = 삼합 그룹 branch%4 조견표, 연지·일지 기준 /
+                 천을귀인 = 일간 CHEONEUL표; 없으면 긍정 빈상태) · 07 **올해의
+                 흐름**(new Date + 입춘 경계로 올해 간지 → 일간과 십성 관계별
+                 YEAR_MSG) · 09 보완 카드에 **행운 포인트**(EL_LUCK 방위·숫자·
+                 계절). 대운(성별 필요)·궁합·건강 매핑은 의도적 미구현.
+                 robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
