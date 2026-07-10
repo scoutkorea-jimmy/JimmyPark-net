@@ -267,6 +267,25 @@
     { gift: '쉬어가며 깊어지는 힘', tip: '충분한 잠, 물가 산책, 조용한 독서 10분 — 수(水)의 기운은 잘 쉬는 만큼 깊어져요.' }
   ];
 
+  // 상세 분석: 일간(日干) 10글자 프로필 — 오행이 아니라 글자 단위의 상(象)
+  var STEM_PROFILE = [
+    { sym: '곧게 뻗는 큰 나무', text: '위로 곧게 자라는 거목의 기운이라, 시작과 개척에 강하고 웬만해선 뜻을 굽히지 않는 단단한 심지가 있어요.' },
+    { sym: '바람에 휘어도 꺾이지 않는 화초', text: '유연하게 감아 오르는 덩굴과 화초의 기운이라, 어떤 환경에서도 제 길을 찾아내는 섬세함과 강한 생존력이 있어요.' },
+    { sym: '만물을 비추는 태양', text: '숨김없이 밝게 비추는 태양의 기운이라, 존재만으로 주변을 환하게 만들고 공명정대한 것을 좋아해요.' },
+    { sym: '어둠을 밝히는 등불', text: '조용히 오래 타는 등불의 기운이라, 화려하진 않아도 꺼지지 않는 집중력과 깊은 온기를 지녔어요.' },
+    { sym: '흔들림 없는 큰 산', text: '묵직하게 자리를 지키는 큰 산의 기운이라, 신뢰가 두텁고 품이 넓어 사람들이 자연스럽게 기대게 돼요.' },
+    { sym: '만물을 기르는 옥토', text: '곡식을 길러내는 기름진 땅의 기운이라, 겸손하고 실속 있게 주변을 돌보는 힘이 있어요.' },
+    { sym: '벼려질수록 단단해지는 무쇠', text: '두드릴수록 강해지는 무쇠의 기운이라, 결단력과 의리, 굵직한 추진력이 돋보여요.' },
+    { sym: '세공을 마친 보석', text: '다듬어져 빛나는 보석의 기운이라, 예리한 감각과 정제된 완성도, 또렷한 자존감을 지녔어요.' },
+    { sym: '크고 깊은 바다', text: '넓고 깊게 흐르는 바다의 기운이라, 담대한 포용력과 멀리 내다보는 지략이 있어요.' },
+    { sym: '만물을 적시는 단비', text: '소리 없이 스며드는 빗물의 기운이라, 섬세한 통찰로 조용히 사람과 상황을 읽어내요.' }
+  ];
+  // 지장간(支藏干) — 각 지지에 담긴 천간(여기→정기 순, STEMS 인덱스)
+  var JANGGAN = [
+    [8, 9], [9, 7, 5], [4, 2, 0], [0, 1], [1, 9, 4], [4, 6, 2],
+    [2, 5, 3], [3, 1, 5], [4, 8, 6], [6, 7], [7, 3, 4], [4, 0, 8]
+  ];
+
   // 상세 분석: 오행별 컬러 팔레트 + 추천 아이템 (부족 기운 채우기용)
   var EL_STYLE = [
     { colors: [{ c: '#2f9e44', n: '포레스트 그린' }, { c: '#94d82d', n: '라임' }, { c: '#6b8e23', n: '올리브' }], items: '미니 화분(플랜테리어), 그린 톤 폰케이스, 초록 잉크 펜' },
@@ -702,13 +721,13 @@
     }
 
     /* ── 상세 분석 페이지 렌더 (전반적으로 긍정 톤) ───────── */
-    // 일간 기준 다섯 가지 힘 (십성을 쉬운 말로)
+    // 일간 기준 다섯 가지 힘 — 십성(十星)을 정식 명칭과 함께 쉬운 말로
     function roleOf(el, dayEl) {
-      if (el === dayEl) return { name: '나답게 서는 힘', desc: '주관 · 자기다움 · 내 페이스' };
-      if (mod(el + 1, 5) === dayEl) return { name: '나를 채워주는 힘', desc: '배움 · 지혜 · 든든한 응원' };
-      if (mod(dayEl + 1, 5) === el) return { name: '나를 표현하는 힘', desc: '창의 · 표현 · 재능 발휘' };
-      if (mod(dayEl + 2, 5) === el) return { name: '이뤄내는 힘', desc: '성과 · 현실 감각 · 결실' };
-      return { name: '나를 다듬어주는 힘', desc: '책임감 · 꾸준함 · 절제' };
+      if (el === dayEl) return { name: '비겁(比劫)', desc: '나와 어깨를 나란히 하는 힘 — 주체성 · 자립 · 내 페이스' };
+      if (mod(el + 1, 5) === dayEl) return { name: '인성(印星)', desc: '나를 기르는 힘 — 배움 · 지혜 · 든든한 후원' };
+      if (mod(dayEl + 1, 5) === el) return { name: '식상(食傷)', desc: '내가 낳는 힘 — 표현 · 창의 · 재능' };
+      if (mod(dayEl + 2, 5) === el) return { name: '재성(財星)', desc: '내가 거두는 힘 — 성과 · 실리 · 현실 감각' };
+      return { name: '관성(官星)', desc: '나를 다듬는 힘 — 책임 · 명예 · 절제' };
     }
 
     function renderDetail(r) {
@@ -745,85 +764,93 @@
         r.meta.sajuYear + '년 ' + STEMS[pl.year.stem].ko + yb.ko + '년 · ' + yb.animal + '띠 상세 분석' +
         (r.meta.timeKnown ? '' : ' · 시간 미상(6글자 기준)');
 
-      // ① 전체 요약 (MZ 톤 · 긍정)
-      var shapeName;
-      if (pctOf(t1) - pctOf(lo) <= 15) shapeName = '밸런스 좋은 <b>올라운더형</b>';
-      else if (pctOf(t1) >= 40) shapeName = '원픽이 확실한 <b>몰빵형</b>';
-      else shapeName = '중심이 잡힌 <b>안정형</b>';
+      // ① 총평 — 일간 글자 프로필(10간) 중심, 차분하고 무게 있는 톤
+      var dStem = STEMS[pl.day.stem], dProf = STEM_PROFILE[pl.day.stem];
+      var shapeLine;
+      if (pctOf(t1) - pctOf(lo) <= 15) shapeLine = '다섯 기운이 고르게 어우러진 <b>균형형</b>';
+      else if (pctOf(t1) >= 40) shapeLine = nm(t1) + '로 힘이 뚜렷하게 모인 <b>집중형</b>(' + pctOf(t1) + '%)';
+      else shapeLine = nm(t1) + '(' + pctOf(t1) + '%)를 중심으로 완만하게 기운 <b>안정형</b>';
       $('sjd-summary').innerHTML =
-        '<p class="sj-strong-msg" style="margin:0;">한 줄 요약! 당신은 ' + nm(dayEl) + ' 코어의 ' + shapeName + ' 사주예요. ' +
-        '최강 스탯은 ' + nm(t1) + ' <b>' + pctOf(t1) + '%</b> — 태어날 때부터 장착된 기본 버프라, 이 결로 밀고 갈 때 제일 잘 풀려요. ' +
-        '반대로 ' + nm(lo) + '는 <b>' + pctOf(lo) + '%</b>로 아직 만렙 전 스탯인데, 바꿔 말하면 채울수록 체감이 가장 큰 성장 구간이라는 뜻! ' +
-        '아래에서 네 기둥 스토리 → 다섯 가지 힘 밸런스 → 곁에 두면 좋은 친구·컬러까지 차례로 풀어볼게요.</p>';
+        '<p class="sj-strong-msg" style="margin:0;">당신의 중심 글자(일간)는 <b style="color:' + dEl.text + ';">' +
+        dStem.ko + '(' + dStem.hj + ')</b> — <b>' + dProf.sym + '</b>의 기운이에요. ' + dProf.text +
+        '<br><br>전체 구성은 ' + shapeLine + '이에요. 가장 풍성한 ' + nm(t1) + ' <b>' + pctOf(t1) +
+        '%</b>가 삶을 밀고 가는 엔진이라면, 가장 옅은 ' + nm(lo) + ' <b>' + pctOf(lo) +
+        '%</b>는 앞으로 보완할수록 삶의 균형이 좋아지는 자리예요. 아래에서 네 기둥의 구조, 십성(十星)의 균형, 그리고 보완 방법까지 차근차근 짚어볼게요.</p>';
 
-      // ② 네 기둥 분석 — 근묘화실(뿌리→무대→주인공→다음 화) 순서, 글자 칩 포함
+      // ② 네 기둥(四柱) — 근묘화실(根苗花實) + 글자 칩 + 지장간(숨은 기운)
       var chip = function (isStem, idx) {
         var g = isStem ? STEMS[idx] : BRANCHES[idx];
         var el = ELEMENTS[g.el];
         return '<span class="sjd-glyph" style="color:' + el.text + '; background:' + el.light + '; border-color:' + el.text + '33;">' +
           (isStem ? '천간 ' : '지지 ') + g.ko + ' ' + g.hj + ' · ' + el.ko + ' · ' + (g.yang ? '양(+)' : '음(−)') + '</span>';
       };
-      var pCard = function (title, p, body) {
+      var jgLine = function (bi) {
+        return '<div class="sjd-jg">지장간(支藏干) · 지지 속에 숨은 기운 — ' + JANGGAN[bi].map(function (si) {
+          var g = STEMS[si], el = ELEMENTS[g.el];
+          return '<b style="color:' + el.text + ';">' + g.ko + '(' + el.ko + ')</b>';
+        }).join(' · ') + '</div>';
+      };
+      var pCard = function (title, sub, p, body) {
         var sE = ELEMENTS[STEMS[p.stem].el];
         return '<div class="sjd-el" style="border-left-color:' + sE.color + ';">' +
-          '<div class="sjd-el-head"><span>' + title + '</span></div>' +
+          '<div class="sjd-el-head"><span>' + title + '</span><span class="sjd-state" style="color:var(--muted); border-color:var(--line); background:#faf9fd;">' + sub + '</span></div>' +
           '<div class="sjd-glyphs">' + chip(true, p.stem) + chip(false, p.branch) + '</div>' +
+          jgLine(p.branch) +
           '<p class="sjd-el-msg">' + body + '</p></div>';
       };
       var yS = STEMS[pl.year.stem].el, yB = BRANCHES[pl.year.branch].el;
       var mS = STEMS[pl.month.stem].el, mB = BRANCHES[pl.month.branch].el;
       var dB = BRANCHES[pl.day.branch].el;
       var season = (function (bi) { return (bi >= 2 && bi <= 4) ? '봄' : (bi >= 5 && bi <= 7) ? '여름' : (bi >= 8 && bi <= 10) ? '가을' : '겨울'; })(pl.month.branch);
-      var seasonVibe = { '봄': '새싹 텐션이라 시작·도전에 강하고', '여름': '한여름 페스티벌 텐션이라 표현·확장에 강하고', '가을': '추수 무드라 거두고 정리하는 데 강하고', '겨울': '딥한 겨울 무드라 축적과 깊이에 강하고' }[season];
-      var CORE_LINE = ['자라나는 것에 진심인 성장형', '텐션과 진심으로 분위기를 바꾸는 표현형', '믿고 맡기게 되는 든든한 신뢰형', '판단과 정리가 깔끔한 클린형', '흐름 읽기가 되는 통찰형'];
+      var seasonLine = { '봄': '움트는 계절이라 시작하는 일에 힘이 실리고', '여름': '만개하는 계절이라 표현과 확장에 힘이 실리고', '가을': '거두는 계절이라 결실과 정리에 힘이 실리고', '겨울': '갈무리하는 계절이라 축적과 깊이에 힘이 실리고' }[season];
       var pcHtml = '';
-      pcHtml += pCard('연주 — 뿌리 · 인생 1화', pl.year,
-        '연주는 내 스토리의 배경 설정이자 출발점이에요. ' + yb.animal + '띠 해, 겉 에너지는 ' + nm(yS) + ' · 바탕 리듬은 ' + nm(yB) + ' 조합으로 시작했어요. ' +
-        ELEMENTS[yB].symbols + ' 무드가 인생 초반의 기본 배경으로 깔려 있는 그림이죠.');
-      pcHtml += pCard('월주 — 무대 · 사회생활 자리', pl.month,
-        '월주는 커리어·사회에서 보이는 나예요. 특히 월지는 사주에서 파워가 제일 큰 자리(비중 30%)! 당신의 무대는 ' + season + '(' + nm(mB) + ') — ' +
-        seasonVibe + ', 사회에서 쓰는 겉 에너지는 ' + nm(mS) + ' 결이에요.');
-      pcHtml += pCard('일주 — 주인공 · 나 자신', pl.day,
-        '이 사주의 주인공 자리예요. 일간 ' + nm(dayEl) + ' = 나의 코어. 그래서 당신은 ' + CORE_LINE[dayEl] + '이에요. 일지 ' + nm(dB) + '는 마음 바닥에 깔린 기본 정서인데, 겉과 속이 ' +
-        (dayEl === dB ? '같은 결이라 한결같다는 말을 많이 듣는 타입이죠' : '다른 결이라 알수록 반전 매력이 나오는 타입이죠') + '.');
+      pcHtml += pCard('연주(年柱) — 뿌리', '根 · 인생의 토대', pl.year,
+        '연주는 뿌리(根) — 태어난 해의 기운으로, 유년의 배경과 인생 전반의 토대를 상징해요. ' + yb.animal + '띠 해, 하늘의 기운은 ' + nm(yS) + ' · 땅의 기운은 ' + nm(yB) + '로 출발했어요. ' +
+        ELEMENTS[yB].symbols + '의 무드가 당신 이야기의 바탕색인 셈이죠.');
+      pcHtml += pCard('월주(月柱) — 무대', '苗 · 사회와 계절', pl.month,
+        '월주는 싹(苗) — 성장 환경과 사회 활동의 무대를 상징하고, 특히 월지는 사주 전체에서 비중이 가장 큰 자리(30%)예요. 당신의 월지는 ' + season + '의 ' + nm(mB) + ' — ' +
+        seasonLine + ', 사회에서 쓰는 겉 에너지는 ' + nm(mS) + '의 결이에요. 태어난 계절의 기운이 삶의 무대 분위기를 정하는 거죠.');
+      pcHtml += pCard('일주(日柱) — 주인공', '花 · 나 자신', pl.day,
+        '일주는 꽃(花) — 나 자신을 상징하는, 이 사주의 주인공 자리예요. 일간 ' + dStem.ko + '(' + dStem.hj + ')는 ' + dProf.sym + ' — 나의 본체이고, 일지 ' + nm(dB) + '는 마음 깊은 곳의 기본 정서예요. 겉(일간)과 속(일지)이 ' +
+        (dayEl === dB ? '같은 결이라, 안팎이 한결같다는 이야기를 자주 듣는 구조예요' : '서로 다른 결이라, 알아갈수록 새로운 면이 나오는 깊이 있는 구조예요') + '.');
       if (pl.hour) {
         var hS = STEMS[pl.hour.stem].el, hB = BRANCHES[pl.hour.branch].el;
-        pcHtml += pCard('시주 — 다음 화 · 꿈과 마무리', pl.hour,
-          '시주는 앞으로의 방향, 후반부 스토리의 자리예요. ' + nm(hS) + '·' + nm(hB) + ' 조합이라 뒤로 갈수록 ' + ELEMENTS[hB].symbols +
-          ' 쪽 서사가 힘을 받는 그림 — 다음 화가 기대되는 엔딩 라인이에요.');
+        pcHtml += pCard('시주(時柱) — 열매', '實 · 꿈과 마무리', pl.hour,
+          '시주는 열매(實) — 꿈과 말년, 다음 세대를 상징하는 자리예요. ' + nm(hS) + '·' + nm(hB) + '의 조합이라, 인생 후반으로 갈수록 ' + ELEMENTS[hB].symbols +
+          '의 서사가 힘을 받는 흐름이에요. 마지막 장이 기대되는 구조죠.');
       } else {
         pcHtml += '<div class="sjd-el" style="border-left-color:#c9c3d6;">' +
-          '<div class="sjd-el-head"><span>시주 — 다음 화 · 꿈과 마무리</span><span class="sjd-state" style="color:var(--muted); border-color:var(--line); background:#f6f4fb;">시간 미상</span></div>' +
-          '<p class="sjd-el-msg">태어난 시간을 몰라 이번엔 비워둔 자리예요. 시간을 알게 되면 미래·꿈 파트 해석까지 열리니, 나중에 꼭 다시 해보기!</p></div>';
+          '<div class="sjd-el-head"><span>시주(時柱) — 열매</span><span class="sjd-state" style="color:var(--muted); border-color:var(--line); background:#f6f4fb;">시간 미상</span></div>' +
+          '<p class="sjd-el-msg">시주는 꿈과 말년을 상징하는 자리인데, 태어난 시간을 몰라 이번 분석에서는 비워 두었어요. 시간을 알게 되면 이 자리까지 해석이 열립니다.</p></div>';
       }
       $('sjd-pillar-cards').innerHTML = pcHtml;
 
-      // ③ 다섯 가지 힘 밸런스 + 가장 여백인 힘 짚기
+      // ③ 십성(十星) — 다섯 가지 힘의 균형
       $('sjd-roles').innerHTML =
-        '<p class="sjd-roles-lead">사주는 일간(나)을 중심으로 다섯 기운이 각자 롤을 맡은 5인 파티예요. 지금 어떤 힘이 캐리 중이고, 어떤 힘이 성장 구간인지 볼게요.</p>' +
+        '<p class="sjd-roles-lead">명리학은 일간(나)을 기준으로 나머지 기운을 다섯 가지 힘, 십성(十星)으로 읽어요. 어떤 힘이 구성의 중심이고 어떤 힘이 여백인지 보면 에너지의 쓰임새가 보입니다.</p>' +
         [0, 1, 2, 3, 4].map(function (i) {
           var el = ELEMENTS[i], p = pctOf(i), role = roleOf(i, dayEl);
-          var st = p >= 20 ? '지금 파티를 캐리 중이에요' : p >= 10 ? '알맞게 제 몫을 하고 있어요' : p > 0 ? '아껴 쓰는 히든 카드예요' : '앞으로 찍을 스킬 포인트예요';
+          var st = p >= 20 ? '지금 구성의 중심축이에요' : p >= 10 ? '균형 있게 자리 잡았어요' : p > 0 ? '은은하게 깔려 있어요' : '보완하면 좋은 자리예요';
           return '<div class="sjd-role">' +
             '<span class="sjd-role-el" style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + '</span>' +
             '<span class="sjd-role-body"><b>' + role.name + '</b><i>' + role.desc + '</i>' + st + '</span>' +
             '<span class="sjd-role-pct">' + p + '%</span></div>';
         }).join('') +
-        '<p class="sjd-roles-note">지금 가장 여백인 힘은 <b>' + roleOf(lo, dayEl).name + '</b>(' + ELEMENTS[lo].ko + ' ' + pctOf(lo) + '%) — 없어서 아쉬운 스탯이 아니라, 찍으면 체감이 가장 큰 스킬 포인트예요. 채우는 법은 바로 아래 최종 정리에!</p>';
+        '<p class="sjd-roles-note">지금 가장 옅은 힘은 <b>' + roleOf(lo, dayEl).name + '</b>(' + ELEMENTS[lo].ko + ' ' + pctOf(lo) + '%)이에요. 명리에서는 옅은 기운을 억지로 메우기보다, 생활 속에서 그 기운의 결을 빌려와 자연스럽게 보완하라고 말해요. 방법은 아래 보완 가이드에 정리했어요.</p>';
 
-      // ④ 최종 정리 — 부족 오행별 찐친(캐릭터) + 컬러 + 아이템·루틴
+      // ④ 보완 가이드 — 부족 오행별 친구 · 색 · 생활 보완법
       var rec = recommend(r.counts, dayEl);
       $('sjd-final').innerHTML = rec.lacking.map(function (i) {
         var el = ELEMENTS[i], ch = CHARACTERS[i], st = EL_STYLE[i];
         return '<div class="sjd-el" style="border-left-color:' + el.color + ';">' +
-          '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + ' 기운 채우기 (' + pctOf(i) + '%)</span>' +
+          '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + ' 기운 보완 (' + pctOf(i) + '%)</span>' +
           '<span class="sjd-state" style="color:' + el.text + '; border-color:' + el.text + '44; background:' + el.light + ';">' + ch.emoji + ' ' + ch.name + '와 함께</span></div>' +
-          '<p class="sjd-el-msg"><b>친구 픽</b> — ' + ch.type + ' <b>' + ch.name + '</b>. ' + ch.short + '. ' + ch.roleShort + ' 찐친이라, 곁에 두는 것만으로 ' + el.ko + ' 기운 스타터팩 완성이에요.</p>' +
-          '<p class="sjd-el-msg" style="margin-top:12px;"><b>컬러 픽</b> — 데일리 룩·폰·책상에 이 색들을 한 스푼씩:</p>' +
+          '<p class="sjd-el-msg"><b>함께할 친구</b> — ' + ch.type + ' <b>' + ch.name + '</b>. ' + ch.short + '. ' + el.ko + '(' + el.hj + ')의 결을 곁에서 채워주는 존재라, 책상 위 작은 굿즈 하나로도 이 기운을 가까이 둘 수 있어요.</p>' +
+          '<p class="sjd-el-msg" style="margin-top:12px;"><b>가까이 둘 색</b> — 전통 오방색에서 ' + el.ko + '의 자리를 잇는 컬러들이에요. 옷·소품·공간에 한 가지씩:</p>' +
           '<div class="sjd-sw-row">' + st.colors.map(function (c) { return '<span class="sjd-sw"><i style="background:' + c.c + ';"></i>' + c.n + '</span>'; }).join('') + '</div>' +
-          '<p class="sjd-el-msg" style="margin-top:12px;"><b>아이템 · 루틴 픽</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p></div>';
+          '<p class="sjd-el-msg" style="margin-top:12px;"><b>생활 속 보완법</b> — ' + st.items + '. ' + EL_DETAIL[i].tip + '</p></div>';
       }).join('') +
-        '<p class="sj-ey-note">※ 재미로 보는 가이드예요 — 부족한 기운은 결핍이 아니라 위시리스트! 하나씩 채우는 재미로 봐주세요.</p>';
+        '<p class="sj-ey-note">※ 재미로 보는 콘텐츠지만, 다섯 기운을 고루 살피는 일은 전통 명리가 말하는 균형의 지혜이기도 해요. 옅은 기운은 결핍이 아니라 앞으로 채워질 여백입니다.</p>';
     }
   });
 })();

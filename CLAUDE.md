@@ -41,15 +41,16 @@ admin.html      Admin (/admin, noindex) + assets/admin.js
 saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
 saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
 saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구성 분석' 카드 아래
-                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 긍정 + **MZ 톤**(스탯·
-                 버프·파티·픽 등 게임 은유 — 2026-07-10 사용자 지시 개편). 구성:
-                 ① 전체 요약(코어 일간 + 올라운더/몰빵/안정형 + 최강·성장 스탯)
-                 ② 네 기둥 스토리(근묘화실 순: 연=뿌리·월=무대(월지 30% 언급)·
-                 일=주인공(겉속 일치/반전)·시=다음 화, 글자 칩[천간/지지·오행·음양],
-                 시간 미상 시 시주 안내 카드) ③ 다섯 가지 힘 밸런스(십성 쉬운말
-                 5행 + 가장 여백인 힘 노트) ④ 최종 정리 — 부족 오행별 친구 픽
-                 (캐릭터)·컬러 픽(EL_STYLE 스와치 3색)·아이템/루틴 픽(EL_DETAIL).
-                 robots의 Disallow /saju가 prefix로 커버.
+                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 톤 = **차분·격조 +
+                 명리 용어 병기**(v0.4.34 — 직전 MZ 게임 은유판은 "무게가 없다"
+                 피드백으로 폐기; 게임 슬랭 금지). 구성: ① 총평(일간을 오행이
+                 아니라 **10천간 글자 프로필** STEM_PROFILE로 — 갑=거목…계=단비 +
+                 균형/집중/안정형) ② 사주 구조 — 네 기둥(근묘화실 根苗花實 한자
+                 부제, 글자 칩[천간/지지·오행·음양] + **지장간 JANGGAN 표시**,
+                 월지 30% 언급, 시간 미상 시 시주 안내 카드) ③ 십성(十星) 정식
+                 명칭(비겁/식상/재성/관성/인성) 5행 + 최약 십성 노트 ④ 보완
+                 가이드 — 부족 오행별 친구(캐릭터)·색(EL_STYLE 스와치)·생활
+                 보완법(EL_DETAIL). robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
