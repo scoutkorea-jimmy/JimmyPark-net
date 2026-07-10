@@ -52,15 +52,15 @@
   // strong: 그 기운이 풍성할 때의 강점 (유쾌하고 기분 좋게)
   var ELEMENTS = [
     { ko: '목', hj: '木', color: '#2f9e44', text: '#2f9e44', ink: '#ffffff', light: '#e9fbef', symbols: '성장 · 확장 · 생명력',
-      strong: '목(木)이 넉넉한 당신은 새로운 시작 앞에서 눈이 반짝이고, 작은 아이디어도 근사한 결과로 키워내는 사람이에요. 지금처럼 계속 씨앗을 심어가면 돼요 — 당신의 봄은 아직 한창이니까요!' },
+      strong: '목(木)이 넉넉한 당신은 새로운 시작 앞에서 눈이 반짝이고, 작은 아이디어도 근사한 결과로 키워내는 사람이에요. 어디서든 "일단 해보자!"라는 말로 분위기를 앞으로 끌고 가고, 어제보다 조금 자란 오늘에서 진짜 기쁨을 느끼죠. 곁에 있는 사람들에게는 봄바람 같은 활력을 나눠주는 존재라, 당신이 움직이면 주변도 함께 자라나요. 지금처럼 계속 씨앗을 심어가면 돼요 — 당신의 봄은 아직 한창이니까요!' },
     { ko: '화', hj: '火', color: '#e8352e', text: '#e8352e', ink: '#ffffff', light: '#fff1f0', symbols: '표현 · 열정 · 빛',
-      strong: '화(火)가 넉넉한 당신은 감정이 솔직해서, 함께 있으면 분위기가 금세 환해지는 사람이에요. 그 반짝임을 아끼지 말고 마음껏 빛내면 돼요 — 오늘도 당신은 충분히 눈부셔요!' },
+      strong: '화(火)가 넉넉한 당신은 감정이 솔직해서, 함께 있으면 분위기가 금세 환해지는 사람이에요. 기쁘면 기쁜 대로, 좋으면 좋은 대로 표현할 줄 알아서 사람들은 당신 앞에서 마음이 편해지죠. 한번 열정에 불이 붙으면 놀라운 몰입을 보여주는 타입이라, 일이든 취미든 당신이 진심을 켜는 순간 공기가 달라져요. 그 반짝임을 아끼지 말고 마음껏 빛내면 돼요 — 오늘도 당신은 충분히 눈부셔요!' },
     { ko: '토', hj: '土', color: '#f5b800', text: '#b07d00', ink: '#4a3800', light: '#fff7d6', symbols: '안정 · 균형 · 기반',
-      strong: '토(土)가 넉넉한 당신은 차분히 중심을 잡고 맡은 일은 끝까지 책임지는, 어디서든 든든한 땅 같은 사람이에요. 당신만의 속도로 단단히 걸어가면 돼요 — 오늘도 충분히 단단해요!' },
+      strong: '토(土)가 넉넉한 당신은 차분히 중심을 잡고 맡은 일은 끝까지 책임지는, 어디서든 든든한 땅 같은 사람이에요. 급할수록 오히려 침착해지고, 흔들리는 사람 곁에서 "괜찮아, 천천히 하자" 하고 말해줄 줄 알죠. 화려하게 나서진 않아도 시간이 지날수록 진가가 드러나는, 오래 볼수록 더 좋은 사람이에요. 당신만의 속도로 단단히 걸어가면 돼요 — 오늘도 충분히 단단해요!' },
     { ko: '금', hj: '金', color: '#c3cad1', text: '#8a929b', ink: '#454b52', light: '#f2f4f6', symbols: '판단 · 절제 · 구조',
-      strong: '금(金)이 넉넉한 당신은 복잡한 걸 깔끔히 정리하고 핵심을 짚어내는 감각이 뛰어난 사람이에요. 당신만의 기준을 믿고 나아가면 돼요 — 오늘도 충분히 또렷하게 빛나요!' },
+      strong: '금(金)이 넉넉한 당신은 복잡한 걸 깔끔히 정리하고 핵심을 짚어내는 감각이 뛰어난 사람이에요. 다들 헤맬 때 "그래서 중요한 건 이거지" 하고 길을 내주는, 흐트러진 자리를 반듯하게 만드는 힘이 있죠. 겉은 서늘해 보여도 아끼는 사람에게는 누구보다 의리 있는 타입이에요. 당신만의 기준을 믿고 나아가면 돼요 — 오늘도 충분히 또렷하게 빛나요!' },
     { ko: '수', hj: '水', color: '#2b2f36', text: '#2b2f36', ink: '#ffffff', light: '#eef0f2', symbols: '지혜 · 흐름 · 직관',
-      strong: '수(水)가 넉넉한 당신은 흐름을 읽어내는 지혜를 가진, 깊고 잔잔한 물 같은 사람이에요. 당신만의 리듬으로 흘러가면 돼요 — 오늘도 충분히 깊고 아름다워요!' }
+      strong: '수(水)가 넉넉한 당신은 흐름을 읽어내는 지혜를 가진, 깊고 잔잔한 물 같은 사람이에요. 말수가 많지 않아도 한마디가 오래 남고, 사람 마음의 밑바닥을 알아채는 섬세한 감각이 있죠. 막힌 길 앞에서도 돌아 흐르는 물처럼 유연하게 답을 찾아내는 타입이에요. 당신만의 리듬으로 흘러가면 돼요 — 오늘도 충분히 깊고 아름다워요!' }
   ];
 
   var D2R = Math.PI / 180;
@@ -510,12 +510,47 @@
           dEl.ko + '(' + dEl.hj + ') <span>일간(일주 천간) 기준</span></div>';
       }
 
+      // ① 풍성한 기운 카드 (강점 서사) + ② 별도 문단: 전체 오행 구성 분석
+      //    (분포 형태 · 상위 두 기운의 상생/상극 · 옅은 기운 — 실제 % 기반 동적 생성)
+      var ovOrder = [0, 1, 2, 3, 4].sort(function (a, b) { return r.counts[b] - r.counts[a]; });
+      var pctOf = function (i) { return total ? Math.round(r.counts[i] / total * 100) : 0; };
+      var nm = function (i) { return '<b style="color:' + ELEMENTS[i].text + ';">' + ELEMENTS[i].ko + '(' + ELEMENTS[i].hj + ')</b>'; };
+      var t1 = ovOrder[0], t2 = ovOrder[1], lo = ovOrder[4];
+      var ovShape;
+      if (pctOf(t1) - pctOf(lo) <= 15) {
+        ovShape = '당신의 사주는 다섯 기운이 비교적 고르게 어우러진 <b>균형형</b>이에요. 상황에 따라 여러 결을 유연하게 꺼내 쓰는, 팔색조 같은 구성이죠.';
+      } else if (pctOf(t1) >= 40) {
+        ovShape = '당신의 사주는 ' + nm(t1) + ' 쪽으로 힘이 뚜렷하게 모인 <b>집중형</b>(' + pctOf(t1) + '%)이에요. 좋아하는 것과 잘하는 것이 분명한, 색깔 있는 구성이죠.';
+      } else {
+        ovShape = '당신의 사주는 ' + nm(t1) + '(' + pctOf(t1) + '%)를 중심으로 완만하게 기울어진 구성이에요. 중심 기운이 방향을 잡고 나머지 기운들이 받쳐주는 안정적인 형태죠.';
+      }
+      // 조사 선택 (목·금 = 받침 있음)
+      var BATCHIM = [true, false, false, true, false];
+      var ga = function (i) { return BATCHIM[i] ? '이' : '가'; };
+      var eul = function (i) { return BATCHIM[i] ? '을' : '를'; };
+      var ovRel, dTop = mod(t2 - t1, 5);
+      if (dTop === 1 || dTop === 4) {
+        var giver = dTop === 1 ? t1 : t2, taker = dTop === 1 ? t2 : t1;
+        ovRel = '가장 강한 두 기운 ' + nm(t1) + '·' + nm(t2) + '는 ' + nm(giver) + ga(giver) + ' ' + nm(taker) + eul(taker) + ' 살려주는 <b>상생</b> 관계라, 힘이 한 방향으로 자연스럽게 이어지며 시너지를 내요. ' +
+          ELEMENTS[t1].symbols + '의 힘과 ' + ELEMENTS[t2].symbols + '의 힘이 서로를 밀어주는 그림이죠.';
+      } else {
+        ovRel = '가장 강한 두 기운 ' + nm(t1) + '·' + nm(t2) + '는 서로 견제하는 <b>상극</b> 관계예요. 내 안에 ' +
+          ELEMENTS[t1].symbols + '의 힘과 ' + ELEMENTS[t2].symbols + '의 힘이라는 서로 다른 두 목소리가 공존한다는 뜻이라, 그만큼 입체적이고 반전 매력이 있는 구성이죠.';
+      }
+      var ovLow = '반대로 ' + nm(lo) + ' 기운은 ' + pctOf(lo) + '%로 ' +
+        (r.counts[lo] === 0 ? '거의 비어 있는 자리인데' : '가장 옅은 자리인데') +
+        ', 이 이야기는 아래 “부족한 기운”에서 캐릭터와 함께 이어서 살펴봐요.';
+
       $('sj-strong').innerHTML =
         '<div class="sj-strong-card" style="background:' + sEl.light + '; border-color:' + sEl.text + '33;">' +
         '<div class="sj-strong-badge" style="background:' + sEl.color + '; color:' + sEl.ink + ';">' + sEl.hj + '</div>' +
         '<div><div class="sj-strong-tag" style="color:' + sEl.text + ';">가장 풍성한 기운 · ' +
-          sEl.ko + '(' + sEl.hj + ')</div>' +
-        '<p class="sj-strong-msg">' + sEl.strong.replace(/\n\n/g, '<br><br>') + '</p></div></div>';
+          sEl.ko + '(' + sEl.hj + ') · ' + pctOf(strongEl) + '%</div>' +
+        '<p class="sj-strong-msg">' + sEl.strong.replace(/\n\n/g, '<br><br>') + '</p></div></div>' +
+        '<div class="sj-strong-card" style="background:#fff; border-color:var(--line);">' +
+        '<div class="sj-strong-badge" style="background:#f2f0f7; color:var(--muted); font-size:26px;">五行</div>' +
+        '<div><div class="sj-strong-tag" style="color:var(--muted);">나의 오행 구성 분석</div>' +
+        '<p class="sj-strong-msg">' + ovShape + ' ' + ovRel + '<br><br>' + ovLow + '</p></div></div>';
 
       // 부족 오행 + 캐릭터 추천
       var rec = recommend(r.counts, STEMS[pl.day.stem].el);
