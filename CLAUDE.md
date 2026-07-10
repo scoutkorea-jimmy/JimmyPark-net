@@ -57,7 +57,13 @@ assets/
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,
                 gallery modal, content hydration from /api/content
   admin.js      admin panel logic (TOTP login, content editor, media library)
-  saju.css      /saju + /saju-result 공용 스타일 (standalone; NOT site.css)
+  saju.css      /saju·/saju-result·/saju-detail 공용 스타일 (standalone; NOT site.css).
+                **v0.4.38 디자인 시스템(사용자 지시)**: 1px 보더 구획 금지 — 구획은
+                미세 배경 대비(--bg #f8fafc vs 카드 #fff, 카드 속 패널 --panel) +
+                부드러운 그림자(--sh-1: 0 1px 3px rgba(0,0,0,.05), 호버 --sh-2)로.
+                입력 필드 = filled 스타일(#f2f4f6, 포커스 링), 리스트 행(.sj-el-row/
+                .sjd-role) = 넉넉한 높이 + 호버 배경, 뉴트럴 그레이(#191f28/#4e5968/
+                #8b95a1). 보라 브랜드·오방색·글로우는 유지. 새 보더 추가 금지.
   saju.js       /saju 엔진+UI: 만세력 engine (solar-longitude 절기 calc, no lookup
                 tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천.
                 오행 집계는 **자리별 가중 점수표**(지지: 년10·월30·일15·시15 /
