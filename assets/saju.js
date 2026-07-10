@@ -108,6 +108,53 @@
     return 540;
   }
 
+  /* ── 음력 → 양력 변환 (1900–2099) ─────────────────
+     연도별 월 대소·윤달 비트팩 조견표(클래식 음력 테이블) 기반.
+     anchor: 1900-01-31 = 음력 1900년 1월 1일.
+     설날·추석·윤달 12케이스 교차검증(2026-02-17 설, 2025 윤6월 등).
+     한국천문연구원 관측치와 극히 드문 경계일에서 다를 수 있어 입력 페이지에 각주. */
+  var LUNAR_INFO = [
+    19416, 19168, 42352, 21717, 53856, 55632, 91476, 22176, 39632, 21970, 19168, 42422,
+    42192, 53840, 119381, 46400, 54944, 44450, 38320, 84343, 18800, 42160, 46261, 27216,
+    27968, 109396, 11104, 38256, 21234, 18800, 25958, 54432, 59984, 28309, 23248, 11104,
+    100067, 37600, 116951, 51536, 54432, 120998, 46416, 22176, 107956, 9680, 37584, 53938,
+    43344, 46423, 27808, 46416, 86869, 19872, 42416, 83315, 21168, 43432, 59728, 27296,
+    44710, 43856, 19296, 43748, 42352, 21088, 62051, 55632, 23383, 22176, 38608, 19925,
+    19152, 42192, 54484, 53840, 54616, 46400, 46752, 103846, 38320, 18864, 43380, 42160,
+    45690, 27216, 27968, 44870, 43872, 38256, 19189, 18800, 25776, 29859, 59984, 27480,
+    23232, 43872, 38613, 37600, 51552, 55636, 54432, 55888, 30034, 22176, 43959, 9680,
+    37584, 51893, 43344, 46240, 47780, 44368, 21977, 19360, 42416, 86390, 21168, 43312,
+    31060, 27296, 44368, 23378, 19296, 42726, 42208, 53856, 60005, 54576, 23200, 30371,
+    38608, 19195, 19152, 42192, 118966, 53840, 54560, 56645, 46496, 22224, 21938, 18864,
+    42359, 42160, 43600, 111189, 27936, 44448, 84835, 37744, 18936, 18800, 25776, 92326,
+    59984, 27424, 108228, 43744, 37600, 53987, 51552, 54615, 54432, 55888, 23893, 22176,
+    42704, 21972, 21200, 43448, 43344, 46240, 46758, 44368, 21920, 43940, 42416, 21168,
+    45683, 26928, 29495, 27296, 44368, 84821, 19296, 42352, 21732, 53600, 59752, 54560,
+    55968, 92838, 22224, 19168, 43476, 42192, 53584, 62034, 54560
+  ];
+  function lunarLeapMonth(y) { return LUNAR_INFO[y - 1900] & 0xf; }
+  function lunarLeapDays(y) { return lunarLeapMonth(y) ? ((LUNAR_INFO[y - 1900] & 0x10000) ? 30 : 29) : 0; }
+  function lunarMonthDays(y, m) { return (LUNAR_INFO[y - 1900] & (0x10000 >> m)) ? 30 : 29; }
+  function lunarYearDays(y) {
+    var sum = 348;
+    for (var i = 0x8000; i > 0x8; i >>= 1) sum += (LUNAR_INFO[y - 1900] & i) ? 1 : 0;
+    return sum + lunarLeapDays(y);
+  }
+  function lunarToSolar(ly, lm, ld, isLeap) {
+    if (ly < 1900 || ly > 2099 || lm < 1 || lm > 12) return null;
+    var lp = lunarLeapMonth(ly);
+    if (isLeap && lp !== lm) return null;
+    var maxd = isLeap ? lunarLeapDays(ly) : lunarMonthDays(ly, lm);
+    if (ld < 1 || ld > maxd) return null;
+    var off = 0, y2, m2;
+    for (y2 = 1900; y2 < ly; y2++) off += lunarYearDays(y2);
+    for (m2 = 1; m2 < lm; m2++) { off += lunarMonthDays(ly, m2); if (m2 === lp) off += lunarLeapDays(ly); }
+    if (isLeap) off += lunarMonthDays(ly, lm);
+    off += ld - 1;
+    var dt = new Date(Date.UTC(1900, 0, 31) + off * 86400000);
+    return { y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate() };
+  }
+
   // 일주: 1949-10-01 = 갑자일(0) 기준 60일 순환 (1900-01-01 = 갑술일과 교차 검증)
   var DAY_ANCHOR = Date.UTC(1949, 9, 1);
   function dayGanji(y, m, d) {
@@ -384,6 +431,8 @@
     STEMS: STEMS, BRANCHES: BRANCHES, ELEMENTS: ELEMENTS, CHARACTERS: CHARACTERS,
     compute: compute, recommend: recommend,
     solarLongitude: solarLongitude, ipchunUtcMs: ipchunUtcMs,
+    lunarToSolar: lunarToSolar, lunarLeapMonth: lunarLeapMonth,
+    lunarMonthDays: lunarMonthDays, lunarLeapDays: lunarLeapDays,
     dayGanji: dayGanji, kstOffsetMin: kstOffsetMin
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = Saju;
@@ -442,6 +491,22 @@
     // ── 입력 페이지(saju.html): 값 검증 후 결과 페이지로 이동 ──
     var form = $('saju-form');
     if (form) {
+      // 달력 종류: 양력/음력 토글 + 윤달 체크 (음력은 제출 시 양력으로 변환)
+      var calMode = 'solar';
+      var calSeg = $('sj-calseg'), leapWrap = $('sj-leap-wrap'), leapChk = $('sj-leap');
+      function setCal(mode) {
+        calMode = mode;
+        if (calSeg) Array.prototype.forEach.call(calSeg.querySelectorAll('button'), function (b) {
+          b.classList.toggle('on', b.getAttribute('data-cal') === mode);
+        });
+        if (leapWrap) leapWrap.style.display = mode === 'lunar' ? '' : 'none';
+        if (mode !== 'lunar' && leapChk) leapChk.checked = false;
+      }
+      if (calSeg) calSeg.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-cal]');
+        if (b) setCal(b.getAttribute('data-cal'));
+      });
+
       // 태어난 시간 = 1시간 구간 선택 (00시~01시 …) — 시진 경계가 홀수 시각이라
       // 1시간 구간은 항상 한 시주 안에 들어감. 계산값은 구간 중앙(h:30).
       var tSel = $('sj-birthtime');
@@ -495,6 +560,7 @@
       var last = loadLast();
       if (last) {
         setDate(last.d);
+        if (last.cal === 'lunar') { setCal('lunar'); if (leapChk) leapChk.checked = !!last.lp; }
         if (last.t) { var lh = parseInt(last.t, 10); if (!isNaN(lh) && lh >= 0 && lh <= 23) tSel.value = lh + ':30'; }
         setNoTime(!!last.nt);
         var hint = $('sj-restored');
@@ -504,6 +570,7 @@
       if (clearBtn) clearBtn.addEventListener('click', function () {
         clearLast();
         setDate('');
+        setCal('solar');
         tSel.value = '12:30';
         setNoTime(false);
         yIn.focus();
@@ -513,11 +580,31 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var dv = getDate();
-        if (!dv) { alert('생년월일을 정확히 입력해 주세요.\n(연 1900–2100 · 월 1–12 · 일 1–31)'); return; }
+        var dv, lunQ = '';
+        if (calMode === 'lunar') {
+          var ly = +yIn.value, lmo = +moIn.value, lda = +daIn.value;
+          if (!ly || !lmo || !lda || ly < 1900 || ly > 2099 || lmo < 1 || lmo > 12 || lda < 1 || lda > 30) {
+            alert('음력 생년월일을 정확히 입력해 주세요.\n(연 1900–2099 · 월 1–12 · 일 1–30)'); return;
+          }
+          var wantLeap = !!(leapChk && leapChk.checked);
+          if (wantLeap && lunarLeapMonth(ly) !== lmo) {
+            var lp2 = lunarLeapMonth(ly);
+            alert(ly + '년에는 윤' + lmo + '월이 없어요.\n(그해 윤달: ' + (lp2 ? '윤' + lp2 + '월' : '없음') + ')'); return;
+          }
+          var maxd = wantLeap ? lunarLeapDays(ly) : lunarMonthDays(ly, lmo);
+          if (lda > maxd) { alert('음력 ' + ly + '년 ' + (wantLeap ? '윤' : '') + lmo + '월은 ' + maxd + '일까지 있어요.'); return; }
+          var sv = lunarToSolar(ly, lmo, lda, wantLeap);
+          if (!sv) { alert('음력 날짜를 다시 확인해 주세요.'); return; }
+          dv = sv.y + '-' + pad2(sv.m) + '-' + pad2(sv.d);
+          lunQ = '&lun=' + encodeURIComponent(ly + '.' + (wantLeap ? '윤' : '') + lmo + '.' + lda);
+          saveLast({ d: ly + '-' + pad2(lmo) + '-' + pad2(lda), cal: 'lunar', lp: wantLeap ? 1 : 0, t: tSel.value, nt: $('sj-noTime').checked ? 1 : 0 });
+        } else {
+          dv = getDate();
+          if (!dv) { alert('생년월일을 정확히 입력해 주세요.\n(연 1900–2100 · 월 1–12 · 일 1–31)'); return; }
+          saveLast({ d: dv, cal: 'solar', t: tSel.value, nt: $('sj-noTime').checked ? 1 : 0 });
+        }
         var noTime = $('sj-noTime').checked;
-        saveLast({ d: dv, t: tSel.value, nt: noTime ? 1 : 0 });
-        var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(tSel.value) + '&nt=' + (noTime ? 1 : 0);
+        var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(tSel.value) + '&nt=' + (noTime ? 1 : 0) + lunQ;
         window.location.href = '/saju-result?' + q;
       });
       return;
@@ -819,6 +906,8 @@
       $('sj-characters').innerHTML = html;
 
       var notes = [];
+      var lunP = (typeof params !== 'undefined' && params) ? params.get('lun') : null;
+      if (lunP) notes.push('음력 ' + lunP + ' 입력 → 양력 변환');
       if (r.meta.offsetMin === 510) notes.push('출생 당시 한국 표준시(UTC+8:30) 반영');
       notes.push('양력 기준 · 절기(입춘) 경계 천문 계산');
       $('sj-calc-note').textContent = notes.join(' · ');
@@ -1143,7 +1232,7 @@
         var foundAll = SAL.filter(function (x) { return x.found; }).sort(function (a, b) { return a.rank - b.rank; });
         var top5 = foundAll.slice(0, 5);
         sinsalBox.innerHTML =
-          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 종류가 수십 가지가 넘는데, 그중 많이 보는 <b>대표 길성 위주 15종</b>을 추려서 검사하고, 성립한 별만 중요도 순으로 보여드려요' +
+          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 종류가 수십 가지가 넘는데, 그중 많이 보는 <b>대표 길성</b> 위주로 추려서 검사하고, 성립한 별만 중요도 순으로 보여드려요' +
           (foundAll.length ? ' — <b>' + foundAll.length + '개</b> 발견' + (foundAll.length > 5 ? ' (그중 Top 5)' : '') + '.' : '.') + '</p>' +
           (top5.length ?
             top5.map(function (x, xi) {
@@ -1153,7 +1242,7 @@
                 '<p>' + x.what + ' ' + x.life + '</p>' +
                 '<p class="sjd-sal-tip"><b>이렇게 써먹어요</b> — ' + x.tip + '</p></div>';
             }).join('') :
-            '<p class="sjd-el-msg" style="margin-top:4px;">이번에 검사한 15종은 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
+            '<p class="sjd-el-msg" style="margin-top:4px;">이번에 검사한 대표 길성들은 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
           '<p class="sj-ey-note">※ 신살은 전통 조견표 기반의 재미 요소예요 — 좋고 나쁨의 판정이 아니라, 내 사주의 개성 포인트로 봐주세요.</p>';
       }
 
