@@ -151,14 +151,20 @@
     }
 
     /* ── 2. element-analyzer: 오행 분포 ─────────────── */
-    // 월지(월령)는 계절의 힘을 쥔 자리라 실전 명리처럼 비중을 높여 ×2로 집계
-    // (나머지 글자는 1점씩 — 2026-07-10 사용자 지시). 풍성/부족 판정·캐릭터
+    // 자리별 가중 점수표 (2026-07-10 사용자 지시): 지지 — 년 10 · 월 30 · 일 15 ·
+    // 시 15 / 천간 — 연·월·일·시간 각 10. (표 합계는 110이라 표기는 %로 환산;
+    // 시간 모름이면 시주 25점 제외 후 85점을 100%로.) 풍성/부족 판정·캐릭터
     // 추천이 모두 이 가중 점수를 쓴다. 음양 카드는 글자 개수 그대로(비가중).
-    var MONTH_BRANCH_WEIGHT = 2;
+    var WEIGHTS = {
+      stem: { year: 10, month: 10, day: 10, hour: 10 },
+      branch: { year: 10, month: 30, day: 15, hour: 15 }
+    };
     var counts = [0, 0, 0, 0, 0];
-    [yearP, monthP, dayP].concat(hourP ? [hourP] : []).forEach(function (p) {
-      counts[STEMS[p.stem].el]++;
-      counts[BRANCHES[p.branch].el] += (p === monthP ? MONTH_BRANCH_WEIGHT : 1);
+    var wPillars = [['year', yearP], ['month', monthP], ['day', dayP]];
+    if (hourP) wPillars.push(['hour', hourP]);
+    wPillars.forEach(function (kv) {
+      counts[STEMS[kv[1].stem].el] += WEIGHTS.stem[kv[0]];
+      counts[BRANCHES[kv[1].branch].el] += WEIGHTS.branch[kv[0]];
     });
 
     return {
@@ -454,16 +460,18 @@
         pillarCol('시주', pl.hour) + pillarCol('일주', pl.day) +
         pillarCol('월주', pl.month) + pillarCol('연주', pl.year);
 
-      // 오행 분포 그래프 (월지 ×2 가중 점수 — '개'가 아니라 '점'으로 표기)
+      // 오행 분포 그래프 — 자리별 가중 점수를 100% 기준 %로 표기
       var total = r.counts.reduce(function (a, b) { return a + b; }, 0);
       $('sj-elements').innerHTML = ELEMENTS.map(function (el, i) {
         var c = r.counts[i], w = total ? Math.round(c / total * 100) : 0;
         return '<div class="sj-el-row">' +
           '<span class="sj-el-name" style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + '</span>' +
           '<span class="sj-el-bar"><span style="width:' + Math.max(w, c ? 6 : 0) + '%; background:' + el.color + ';"></span></span>' +
-          '<span class="sj-el-count">' + c + '점</span></div>';
+          '<span class="sj-el-count">' + w + '%</span></div>';
       }).join('') +
-        '<p class="sj-ey-note">※ 월지(태어난 달의 지지)는 계절의 힘을 쥔 자리라 실전 명리처럼 2점으로, 나머지 글자는 1점씩 집계했어요. 풍성한 기운·부족한 기운 판정에도 이 비중이 그대로 반영돼요.</p>';
+        '<p class="sj-ey-note">※ 자리마다 힘이 달라 비중을 달리해 집계했어요 — 월지 30 · 일지 15 · 시지 15 · 년지 10 · 천간(연간·월간·일간·시간) 각 10. 전체 합을 100%로 환산해 표기하며' +
+        (r.meta.timeKnown ? '' : ' (시간을 몰라 시주는 제외)') +
+        ', 풍성한 기운·부족한 기운 판정에도 같은 비중이 반영돼요.</p>';
 
       // 가장 풍성한 기운 (강점 먼저, 기분 좋게)
       var strongEl = 0, maxc = -1;
