@@ -272,6 +272,21 @@
       }
     });
 
+    // ── 일일 방문자 카운트 (두 페이지 공통 · IP 해시로 하루 1회) ──
+    // 사주 입력값과 무관한 방문 신호만 보낸다. 표시 요소(#sj-visits)는 입력 페이지에만 있음.
+    try {
+      fetch('/api/saju-visit', { method: 'POST' })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (j) {
+          var box = $('sj-visits');
+          if (!j || !box) return;
+          box.innerHTML = '지금까지 <b>' + (j.total || 0).toLocaleString('ko-KR') + '명</b>이 확인했어요 · 오늘 <b>' +
+            (j.today || 0).toLocaleString('ko-KR') + '명</b>';
+          box.style.display = '';
+        })
+        .catch(function () {});
+    } catch (e) {}
+
     // ── 마지막 입력 로컬 저장 (localStorage · 7일 후 자동 삭제) ──
     // 쿠키를 쓰지 않는 이유: 쿠키는 매 요청마다 서버로 전송돼 "생년월일은
     // 서버로 안 감" 원칙을 깬다. localStorage는 이 브라우저에만 남는다.
@@ -447,12 +462,17 @@
       r.counts.forEach(function (c, i) { if (c > maxc) { maxc = c; strongEl = i; } });
       var sEl = ELEMENTS[strongEl];
 
+      // 나를 나타내는 기운 = 일간(일주 천간)의 오행 — 최상단 캐릭터·배경의 기준
+      // (개수가 가장 많은 오행이 아니라, 명리학에서 '나 자신'을 뜻하는 일간 기준)
+      var dayEl = STEMS[pl.day.stem].el;
+      var dEl = ELEMENTS[dayEl];
+
       // 결과 페이지 배경 그라데이션 — 화=빨강·목=초록·토=노랑·금=골드·수=파랑
       // (카드/글리프는 전통 오방색 유지, 배경만 보기 좋은 톤으로: 수 흑→파랑, 금 은→골드)
       var GLOW_COLORS = ['#2f9e44', '#e8352e', '#f5b800', '#e3b341', '#3b82f6'];
       var glow = document.querySelector('.sj-glow');
       if (glow) {
-        var gc = GLOW_COLORS[strongEl].replace('#', '');
+        var gc = GLOW_COLORS[dayEl].replace('#', '');
         var gr = parseInt(gc.substr(0, 2), 16), gg = parseInt(gc.substr(2, 2), 16), gb = parseInt(gc.substr(4, 2), 16);
         var lum = (0.299 * gr + 0.587 * gg + 0.114 * gb) / 255;         // 밝기
         var a1 = lum > 0.72 ? 0.5 : lum < 0.28 ? 0.22 : 0.34;           // 밝은색↑ 어두운색↓ 로 보정
@@ -462,14 +482,16 @@
           'radial-gradient(circle at 76% 56%, rgba(' + rgb + ',' + (a1 * 0.5).toFixed(3) + '), transparent 62%)';
       }
 
-      // 최상단 엠블럼 — 가장 풍성한 기운의 오행 캐릭터 (이미지 없으면 자동 숨김)
+      // 최상단 엠블럼 — 일간(일주 천간) 오행의 캐릭터 (이미지 없으면 자동 숨김)
       var emblemEl = $('sj-strong-emblem');
       if (emblemEl) {
-        var emKey = ['wood', 'fire', 'earth', 'metal', 'water'][strongEl];
+        var emKey = ['wood', 'fire', 'earth', 'metal', 'water'][dayEl];
         emblemEl.innerHTML =
           '<img class="sj-emblem-img" src="/assets/img/saju-el-' + emKey + '.png" ' +
-          'alt="' + sEl.ko + '(' + sEl.hj + ') 기운 캐릭터" ' +
-          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">';
+          'alt="나의 일간 ' + dEl.ko + '(' + dEl.hj + ') 기운 캐릭터" ' +
+          'onerror="var e=this.closest(\'.sj-emblem\'); if(e) e.style.display=\'none\';">' +
+          '<div class="sj-emblem-cap" style="color:' + dEl.text + ';">나를 나타내는 기운 · ' +
+          dEl.ko + '(' + dEl.hj + ') <span>일간(일주 천간) 기준</span></div>';
       }
 
       $('sj-strong').innerHTML =

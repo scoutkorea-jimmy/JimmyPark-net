@@ -46,7 +46,12 @@ assets/
   admin.js      admin panel logic (TOTP login, content editor, media library)
   saju.css      /saju + /saju-result 공용 스타일 (standalone; NOT site.css)
   saju.js       /saju 엔진+UI: 만세력 engine (solar-longitude 절기 calc, no lookup
-                tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천
+                tables, 1900–2100) + 오행 분석 → 풍성/부족 기운 → 캐릭터 추천.
+                결과 최상단 엠블럼 캐릭터·배경 글로우는 **일간(일주 천간)의 오행**
+                기준(최다 오행 아님 — 사용자 지시 2026-07-10; '가장 풍성한 기운'
+                텍스트 카드만 최다 오행 유지). 두 페이지 공통으로 부팅 시
+                POST /api/saju-visit 방문 핑 → 입력 페이지 #sj-visits 에
+                "지금까지 N명 · 오늘 N명" 표시(집계 시작 2026-07-10).
                 (모리·루아·두리·세라·노아). 생년월일은 연/월/일 숫자 3칸 직접 입력
                 (네이티브 date picker 대신 — 어르신 스크롤 불편 해소; 숫자만·자동 포커스
                 이동·달력 유효성 검사 후 d=YYYY-MM-DD 조합). 입력 페이지는
@@ -115,6 +120,9 @@ Routing: files under `functions/` map to paths; a leading `_` excludes a file fr
 - `functions/api/image.js` — media library in KV: `POST` (admin, ≤5 MB) store bytes →
   `{id,url}`; `GET ?id=` (public) serve with 1-year immutable cache; `GET ?list=1` (admin)
   index; `DELETE ?id=` (admin). Index key `media:index` (capped 500).
+- `functions/api/saju-visit.js` — /saju 일일 방문자 카운터. `POST` 방문 기록(같은 IP는
+  KST 하루 1회, IP는 SHA-256 해시로만 · 26h TTL), `GET`/`POST` → `{day,today,total}`.
+  KV: `sjv:d:<date>`(40일 보관) · `sjv:total` · `sjv:ip:<date>:<hash>`. 사주 입력값 미전송.
 - `functions/api/login.js` — `POST {code}` verifies 6-digit TOTP, returns signed session.
   Rate-limited: **10 failures / IP / 10 min** (KV `rl:login:<ip>`).
 - `functions/api/me.js` — `GET` → 200 if a valid admin session is presented.
