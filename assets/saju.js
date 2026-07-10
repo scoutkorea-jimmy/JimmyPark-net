@@ -31,19 +31,22 @@
     { ko: '임', hj: '壬', el: 4, yang: true },
     { ko: '계', hj: '癸', el: 4, yang: false }
   ];
+  // yang = 용(用·실전) 기준 음양 — 지장간 정기(십성 관행)로 판정.
+  // 체용전도: 자·오는 체(體)로는 양이지만 정기가 계수·정화라 음으로,
+  // 사·해는 체로는 음이지만 정기가 병화·임수라 양으로 쓴다. (2026-07-10 채택)
   var BRANCHES = [
-    { ko: '자', hj: '子', el: 4, animal: '쥐' },
-    { ko: '축', hj: '丑', el: 2, animal: '소' },
-    { ko: '인', hj: '寅', el: 0, animal: '호랑이' },
-    { ko: '묘', hj: '卯', el: 0, animal: '토끼' },
-    { ko: '진', hj: '辰', el: 2, animal: '용' },
-    { ko: '사', hj: '巳', el: 1, animal: '뱀' },
-    { ko: '오', hj: '午', el: 1, animal: '말' },
-    { ko: '미', hj: '未', el: 2, animal: '양' },
-    { ko: '신', hj: '申', el: 3, animal: '원숭이' },
-    { ko: '유', hj: '酉', el: 3, animal: '닭' },
-    { ko: '술', hj: '戌', el: 2, animal: '개' },
-    { ko: '해', hj: '亥', el: 4, animal: '돼지' }
+    { ko: '자', hj: '子', el: 4, animal: '쥐', yang: false },
+    { ko: '축', hj: '丑', el: 2, animal: '소', yang: false },
+    { ko: '인', hj: '寅', el: 0, animal: '호랑이', yang: true },
+    { ko: '묘', hj: '卯', el: 0, animal: '토끼', yang: false },
+    { ko: '진', hj: '辰', el: 2, animal: '용', yang: true },
+    { ko: '사', hj: '巳', el: 1, animal: '뱀', yang: true },
+    { ko: '오', hj: '午', el: 1, animal: '말', yang: false },
+    { ko: '미', hj: '未', el: 2, animal: '양', yang: false },
+    { ko: '신', hj: '申', el: 3, animal: '원숭이', yang: true },
+    { ko: '유', hj: '酉', el: 3, animal: '닭', yang: false },
+    { ko: '술', hj: '戌', el: 2, animal: '개', yang: true },
+    { ko: '해', hj: '亥', el: 4, animal: '돼지', yang: true }
   ];
   // 오행 (기획서 §3.4 상징 / 색은 /saju 전용 비비드 팔레트 — Open Color 계열)
   // strong: 그 기운이 풍성할 때의 강점 (유쾌하고 기분 좋게)
@@ -519,12 +522,13 @@
       }
 
       // ── 음양(陰陽) 밸런스 — 기존 팔자에서 집계 (음양 스펙 문서 기준) ──────
-      //   천간: STEMS[i].yang (겉으로 드러나는 기질) · 지지: 인덱스 짝수(자·인·진·오·신·술)=양 (속·생활 리듬)
+      //   천간: STEMS[i].yang (겉으로 드러나는 기질) · 지지: BRANCHES[i].yang = 용(실전·체용전도) 기준
+      //   (자·오=음, 사·해=양 — 2026-07-10 체 기준에서 교체). 카드 하단에 기준 각주 표기.
       //   보정 참고로 일간(나 자신) 음양 + 월지 계절 음양감을 함께 표시. 단정·우열 판단은 피한다.
       var stemY = 0, branchY = 0, eyN = 0;
       [pl.year, pl.month, pl.day].concat(pl.hour ? [pl.hour] : []).forEach(function (p) {
         if (STEMS[p.stem].yang) stemY++;
-        if (p.branch % 2 === 0) branchY++;
+        if (BRANCHES[p.branch].yang) branchY++;
         eyN++;
       });
       var stemE = eyN - stemY, branchE = eyN - branchY;
@@ -575,7 +579,8 @@
           '</div>' +
           '<div class="sj-ey-typerow"><span class="sj-ey-type" style="color:' + eySideC + '; border-color:' + eySideC + '55;">' + eyType + '</span></div>' +
           '<p class="sj-ey-msg">' + eyMsg + '</p>' +
-          eyDetail;
+          eyDetail +
+          '<p class="sj-ey-note">※ 지지의 음양은 실전 명리 관행(체용전도)대로 자(子)·오(午)=음, 사(巳)·해(亥)=양으로 집계했어요. 학파에 따라 체(體) 기준(자·오=양, 사·해=음)으로 보기도 해요.</p>';
       }
 
       var vibe = '<div class="sj-vibe"><div class="sj-vibe-label">나를 위한 해시태그</div>' +

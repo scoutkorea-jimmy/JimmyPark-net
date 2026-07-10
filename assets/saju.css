@@ -128,6 +128,7 @@ a { color: inherit; text-decoration: none; }
 .sj-ey-type { display: inline-block; font-size: 15px; font-weight: 800; letter-spacing: .02em; padding: 7px 16px; border: 1.5px solid; border-radius: 999px; }
 .sj-ey-msg { margin: 16px 0 0; font-size: 19px; color: #40394e; line-height: 1.85; }
 .sj-ey-detail { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+.sj-ey-note { margin: 16px 0 0; font-size: 13px; color: var(--faint); line-height: 1.7; }
 .sj-ey-detail > div { font-size: 16px; font-weight: 700; color: #40394e; line-height: 1.5; }
 .sj-ey-detail span { display: block; font-size: 13px; font-weight: 800; letter-spacing: .04em; color: var(--muted); margin-bottom: 3px; }
 .sj-ey-detail i { display: block; margin-top: 3px; font-style: normal; font-size: 13px; font-weight: 600; color: var(--faint); }
