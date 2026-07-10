@@ -21,11 +21,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
    `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
    Korean left in older saved docs on read. See design.md §7.)
-   **Exception: `/saju` + `/saju-result`** — hidden Korean-UI entertainment app (오행 캐릭터
-   추천). Korean is allowed only in `saju.html`, `saju-result.html`, `assets/saju.js`,
-   `assets/saju.css`; the shared shell and all other pages stay English-only.
+   **Exception: `/saju` + `/saju-result` + `/saju-detail`** — hidden Korean-UI entertainment
+   app (오행 캐릭터 추천). Korean is allowed only in `saju.html`, `saju-result.html`,
+   `saju-detail.html`, `assets/saju.js`, `assets/saju.css`; the shared shell and all other
+   pages stay English-only.
 5. **Don't break the four canonical routes:** `/` `/work` `/scouting` `/contact`
-   (+ hidden `/admin`, `/saju`, `/saju-result`). Update `sitemap.xml` if routes change. Hidden
+   (+ hidden `/admin`, `/saju`, `/saju-result`, `/saju-detail`). Update `sitemap.xml` if routes change. Hidden
    routes stay out of nav, sitemap, and search (noindex meta + robots.txt Disallow).
 6. **Always ship + keep docs current (standing owner policy).** After ANY change, commit
    directly to `main`, push, and deploy (`wrangler pages deploy …`) without waiting to be
@@ -39,6 +40,11 @@ scouting.html   Scouting (/scouting) contact.html   Contact (/contact)
 admin.html      Admin (/admin, noindex) + assets/admin.js
 saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
 saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
+saju-detail.html 상세 분석 (/saju-detail, noindex) — 결과의 '오행 구성 분석' 카드 아래
+                 '좀 더 자세히 분석 보기'로 진입(같은 쿼리). 긍정 톤 고정: 종합 요약 ·
+                 오행별 이야기(비중 5단계 라벨, 옅음=성장 여백) · 일간 중심 다섯 힘
+                 (십성 쉬운말: 나답게/채움/표현/이룸/다듬음) · 부족 오행 채우기 팁
+                 (EL_DETAIL) + 캐릭터 연결. robots의 Disallow /saju가 prefix로 커버.
 assets/
   site.css      shared design system + responsive rules (the ONLY shared stylesheet)
   site.js       public behavior: active nav, mobile menu, copy-to-clipboard,

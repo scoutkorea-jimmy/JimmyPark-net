@@ -258,6 +258,15 @@
     };
   }
 
+  // 상세 분석 페이지용 오행별 생활 언어: gift(이 기운이 주는 힘) · tip(기분 좋게 채우는 법)
+  var EL_DETAIL = [
+    { gift: '새로 시작하고 키워내는 힘', tip: '초록이 보이는 산책, 화분 하나 들이기, 아주 작은 새 도전 — 목(木)의 기운은 "작은 시작"에서 자라나요.' },
+    { gift: '표현하고 빛나게 하는 힘', tip: '좋아하는 사람들과의 수다, 몸이 데워지는 운동, 솔직한 감정 표현 한 번 — 화(火)의 기운은 표현할수록 밝아져요.' },
+    { gift: '중심을 잡고 지켜내는 힘', tip: '나만의 루틴 하나, 책상 정리, 흙과 자연을 밟는 시간 — 토(土)의 기운은 반복되는 작은 약속에서 단단해져요.' },
+    { gift: '정리하고 매듭짓는 힘', tip: '오늘 할 일 세 가지만 고르기, 안 쓰는 물건 비우기, 깔끔한 마무리 한 번 — 금(金)의 기운은 덜어낼수록 또렷해져요.' },
+    { gift: '쉬어가며 깊어지는 힘', tip: '충분한 잠, 물가 산책, 조용한 독서 10분 — 수(水)의 기운은 잘 쉬는 만큼 깊어져요.' }
+  ];
+
   var Saju = {
     STEMS: STEMS, BRANCHES: BRANCHES, ELEMENTS: ELEMENTS, CHARACTERS: CHARACTERS,
     compute: compute, recommend: recommend,
@@ -412,6 +421,19 @@
       render(compute({ y: mp[0], m: mp[1], d: mp[2], hh: +tp[0], mm: +tp[1], timeKnown: !noTime }));
     }
 
+    // ── 상세 분석 페이지(saju-detail.html): 쿼리스트링에서 읽어 계산·렌더 ──
+    if ($('sjd-summary')) {
+      var dq = new URLSearchParams(window.location.search);
+      var ddv = dq.get('d');
+      var dmp = ddv ? ddv.split('-').map(Number) : null;
+      if (!dmp || dmp.length < 3 || !(dmp[0] >= 1900 && dmp[0] <= 2100)) {
+        window.location.replace('/saju'); return;
+      }
+      var dNoTime = dq.get('nt') === '1';
+      var dtp = (dq.get('t') || '12:0').split(':');
+      renderDetail(compute({ y: dmp[0], m: dmp[1], d: dmp[2], hh: +dtp[0], mm: +dtp[1], timeKnown: !dNoTime }));
+    }
+
     function pillarCol(label, pl) {
       if (!pl) {
         return '<div class="sj-col"><div class="sj-col-label">' + label + '</div>' +
@@ -550,7 +572,9 @@
         '<div class="sj-strong-card" style="background:#fff; border-color:var(--line);">' +
         '<div class="sj-strong-badge" style="background:#f2f0f7; color:var(--muted); font-size:26px;">五行</div>' +
         '<div><div class="sj-strong-tag" style="color:var(--muted);">나의 오행 구성 분석</div>' +
-        '<p class="sj-strong-msg">' + ovShape + ' ' + ovRel + '<br><br>' + ovLow + '</p></div></div>';
+        '<p class="sj-strong-msg">' + ovShape + ' ' + ovRel + '<br><br>' + ovLow + '</p></div></div>' +
+        '<a class="sj-retry" style="margin-top:12px;" href="/saju-detail' + window.location.search + '">' +
+        '<span class="msym" aria-hidden="true" style="font-size:19px;">search_insights</span> 좀 더 자세히 분석 보기</a>';
 
       // 부족 오행 + 캐릭터 추천
       var rec = recommend(r.counts, STEMS[pl.day.stem].el);
@@ -666,6 +690,106 @@
       if (r.meta.offsetMin === 510) notes.push('출생 당시 한국 표준시(UTC+8:30) 반영');
       notes.push('양력 기준 · 절기(입춘) 경계 천문 계산');
       $('sj-calc-note').textContent = notes.join(' · ');
+    }
+
+    /* ── 상세 분석 페이지 렌더 (전반적으로 긍정 톤) ───────── */
+    // 비중 단계 (모두 긍정 프레임 — 옅음/여백도 '성장 여백'으로)
+    function elLevel(pct) {
+      if (pct >= 35) return { label: '아주 풍성', msg: '당신 사주의 가장 큰 기둥이에요. {gift}이 넉넉해서, 이 결이 곧 당신의 매력이자 엔진이 돼요.' };
+      if (pct >= 20) return { label: '든든함', msg: '충분히 든든한 비중이에요. 필요할 때 언제든 꺼내 쓸 수 있는 믿음직한 힘으로 자리 잡고 있어요.' };
+      if (pct >= 10) return { label: '은은함', msg: '은은하게 깔려 있는 기운이에요. 화려하게 드러나진 않아도 결정적인 순간에 조용히 힘을 보태줘요.' };
+      if (pct > 0) return { label: '성장 여백', msg: '지금은 살짝 옅지만, 그만큼 채워질 여백이 크다는 뜻이에요. 조금만 의식해도 금방 자라나는 자리예요.' };
+      return { label: '설레는 여백', msg: '지금은 비어 있는 자리지만 결핍이 아니라 앞으로 채워갈 성장 여백이에요. 변화가 가장 크게 느껴질, 그래서 더 설레는 자리죠.' };
+    }
+    // 일간 기준 다섯 가지 힘 (십성을 쉬운 말로)
+    function roleOf(el, dayEl) {
+      if (el === dayEl) return { name: '나답게 서는 힘', desc: '주관 · 자기다움 · 내 페이스' };
+      if (mod(el + 1, 5) === dayEl) return { name: '나를 채워주는 힘', desc: '배움 · 지혜 · 든든한 응원' };
+      if (mod(dayEl + 1, 5) === el) return { name: '나를 표현하는 힘', desc: '창의 · 표현 · 재능 발휘' };
+      if (mod(dayEl + 2, 5) === el) return { name: '이뤄내는 힘', desc: '성과 · 현실 감각 · 결실' };
+      return { name: '나를 다듬어주는 힘', desc: '책임감 · 꾸준함 · 절제' };
+    }
+
+    function renderDetail(r) {
+      var pl = r.pillars;
+      var total = r.counts.reduce(function (a, b) { return a + b; }, 0);
+      var pctOf = function (i) { return total ? Math.round(r.counts[i] / total * 100) : 0; };
+      var nm = function (i) { return '<b style="color:' + ELEMENTS[i].text + ';">' + ELEMENTS[i].ko + '(' + ELEMENTS[i].hj + ')</b>'; };
+      var order = [0, 1, 2, 3, 4].sort(function (a, b) { return r.counts[b] - r.counts[a]; });
+      var t1 = order[0], lo = order[4];
+      var dayEl = STEMS[pl.day.stem].el, dEl = ELEMENTS[dayEl];
+
+      // 배경 글로우 = 일간 오행 (결과 페이지와 동일)
+      var GLOW_COLORS = ['#2f9e44', '#e8352e', '#f5b800', '#e3b341', '#3b82f6'];
+      var glow = document.querySelector('.sj-glow');
+      if (glow) {
+        var gc = GLOW_COLORS[dayEl].replace('#', '');
+        var gr = parseInt(gc.substr(0, 2), 16), gg = parseInt(gc.substr(2, 2), 16), gb = parseInt(gc.substr(4, 2), 16);
+        var lum = (0.299 * gr + 0.587 * gg + 0.114 * gb) / 255;
+        var a1 = lum > 0.72 ? 0.5 : lum < 0.28 ? 0.22 : 0.34;
+        var rgb = gr + ',' + gg + ',' + gb;
+        glow.style.background =
+          'radial-gradient(circle at 28% 22%, rgba(' + rgb + ',' + a1 + '), transparent 58%),' +
+          'radial-gradient(circle at 76% 56%, rgba(' + rgb + ',' + (a1 * 0.5).toFixed(3) + '), transparent 62%)';
+      }
+
+      // 돌아가기 링크 = 같은 입력의 결과 페이지
+      var backHref = '/saju-result' + window.location.search;
+      var backEl = $('sjd-back'), toResEl = $('sjd-to-result');
+      if (backEl) backEl.href = backHref;
+      if (toResEl) toResEl.href = backHref;
+
+      var yb = BRANCHES[pl.year.branch];
+      $('sjd-headline').textContent =
+        r.meta.sajuYear + '년 ' + STEMS[pl.year.stem].ko + yb.ko + '년 · ' + yb.animal + '띠 상세 분석' +
+        (r.meta.timeKnown ? '' : ' · 시간 미상(6글자 기준)');
+      $('sjd-pillars').innerHTML =
+        pillarCol('시주', pl.hour) + pillarCol('일주', pl.day) +
+        pillarCol('월주', pl.month) + pillarCol('연주', pl.year);
+
+      // 종합 요약 (긍정 톤)
+      var shape;
+      if (pctOf(t1) - pctOf(lo) <= 15) shape = '다섯 기운이 고르게 어우러진 <b>균형형</b>이라, 상황에 맞게 여러 결을 유연하게 꺼내 쓸 수 있는 구성이에요';
+      else if (pctOf(t1) >= 40) shape = nm(t1) + ' 쪽으로 힘이 시원하게 모인 <b>집중형</b>(' + pctOf(t1) + '%)이라, 좋아하는 것과 잘하는 것이 분명한 구성이에요';
+      else shape = nm(t1) + '(' + pctOf(t1) + '%)를 중심으로 완만하게 기운 구성이라, 중심이 방향을 잡고 나머지가 받쳐주는 안정적인 형태예요';
+      $('sjd-summary').innerHTML =
+        '<p class="sj-strong-msg" style="margin:0;">당신을 나타내는 기운(일간)은 ' + nm(dayEl) + ' — ' + dEl.symbols +
+        '의 결을 지닌 사람이에요. 전체 구성은 ' + shape + '. 가장 풍성한 ' + nm(t1) + '(' + pctOf(t1) +
+        '%)이 든든한 엔진이 되어 주고, ' + nm(lo) + '(' + pctOf(lo) + '%)의 자리는 앞으로 채워갈 성장 여백이에요. ' +
+        '넉넉한 조각도, 채워갈 조각도 모두 당신만의 무늬 — 지금 그대로 충분히 매력적인 구성이에요!</p>';
+
+      // 오행별 자세한 이야기 (비중 내림차순, 상태 라벨 + 긍정 서술)
+      $('sjd-elements').innerHTML = order.map(function (i) {
+        var el = ELEMENTS[i], p = pctOf(i), lv = elLevel(p);
+        return '<div class="sjd-el" style="border-left-color:' + el.color + ';">' +
+          '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + el.ko + ' ' + el.hj +
+          ' · ' + p + '%</span><span class="sjd-state" style="color:' + el.text + '; border-color:' + el.text + '44; background:' + el.light + ';">' + lv.label + '</span></div>' +
+          '<p class="sjd-el-msg"><b>' + EL_DETAIL[i].gift + '</b> — ' + el.symbols + '의 기운이에요. ' +
+          lv.msg.replace('{gift}', EL_DETAIL[i].gift) + '</p></div>';
+      }).join('');
+
+      // 일간 중심 다섯 가지 힘
+      $('sjd-roles').innerHTML =
+        '<p class="sjd-roles-lead">사주는 일간(나)을 중심으로 다섯 기운이 각자 다른 역할을 맡아요. 어떤 힘이 넉넉하고 어떤 힘이 여백인지 보면, 내 에너지의 쓰임새가 보여요.</p>' +
+        [0, 1, 2, 3, 4].map(function (i) {
+          var el = ELEMENTS[i], p = pctOf(i), role = roleOf(i, dayEl);
+          var st = p >= 20 ? '넉넉해요' : p >= 10 ? '알맞게 갖춰져 있어요' : p > 0 ? '아껴 쓰는 편이에요' : '앞으로 채워갈 여백이에요';
+          return '<div class="sjd-role">' +
+            '<span class="sjd-role-el" style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + '</span>' +
+            '<span class="sjd-role-body"><b>' + role.name + '</b><i>' + role.desc + '</i>' + st + '</span>' +
+            '<span class="sjd-role-pct">' + p + '%</span></div>';
+        }).join('');
+
+      // 옅은 기운 채우기 (부족 오행 = 캐릭터 추천과 동일 판정)
+      var rec = recommend(r.counts, dayEl);
+      $('sjd-tips').innerHTML = rec.lacking.map(function (i) {
+        var el = ELEMENTS[i];
+        return '<div class="sjd-el" style="border-left-color:' + el.color + ';">' +
+          '<div class="sjd-el-head"><span style="color:' + el.text + ';">' + el.ko + ' ' + el.hj + ' 기운 채우기</span>' +
+          '<span class="sjd-state" style="color:' + el.text + '; border-color:' + el.text + '44; background:' + el.light + ';">' + CHARACTERS[i].name + '와 함께</span></div>' +
+          '<p class="sjd-el-msg">' + EL_DETAIL[i].tip + ' 결과 페이지의 ' + CHARACTERS[i].type + ' <b>' + CHARACTERS[i].name + '</b>도 바로 이 기운을 함께 채워주는 친구예요.</p></div>';
+      }).join('') +
+        '<p class="sj-ey-note">※ 재미로 보는 콘텐츠예요 — 옅은 기운은 결핍이 아니라 채워갈수록 변화가 크게 느껴지는 성장 여백이에요.</p>';
     }
   });
 })();
