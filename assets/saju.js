@@ -1076,21 +1076,20 @@
             tip: '아는 걸 기록으로 남길 것. 이 별은 쓰고 정리하는 만큼 운이 쌓이는 타입이에요.',
             absent: '공부·글재주의 별인데 이번 구성엔 없어요. 머리로 외우기보다 몸과 경험으로 배울 때 더 빠른 타입일 수 있죠.' }
         ];
-        var foundN = SAL.filter(function (x) { return x.found; }).length;
+        // 데이터는 5종 전부 보유하되, 화면에는 성립한 별만 노출 (2026-07-10 사용자 지시)
+        var foundSal = SAL.filter(function (x) { return x.found; });
         sinsalBox.innerHTML =
-          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 태어난 해나 날의 글자를 기준으로 정해진 짝 글자가 사주 안에 있으면 성립하는 방식이라, 있고 없음이 사람마다 달라요. 대표 길성 다섯 가지를 전부 확인해 봤어요 — 당신에게는 <b>' + foundN + '개</b>가 있네요. 있는 별은 자세히, 없는 별은 어떤 별인지만 짚고 갈게요.</p>' +
-          SAL.map(function (x) {
-            if (x.found) {
+          '<p class="sjd-roles-lead">신살은 여덟 글자의 조합에서 생기는 특수 기운이에요 — 사주에 붙는 별명 같은 거라 "별(星)"이라고도 부르죠. 태어난 해나 날의 글자를 기준으로 정해진 짝 글자가 사주 안에 있으면 성립해요. 대표 길성 다섯 가지(도화·역마·화개·천을귀인·문창귀인)를 확인해서 당신에게 있는 별만 보여드려요' +
+          (foundSal.length ? ' — <b>' + foundSal.length + '개</b>가 발견됐어요.' : '.') + '</p>' +
+          (foundSal.length ?
+            foundSal.map(function (x) {
               return '<div class="sjd-sal on">' +
                 '<div class="sjd-sal-head"><b style="color:' + x.color + ';">' + x.name + '(' + x.hj + ')</b><span>' + x.title + '</span><em class="on">있음</em></div>' +
                 '<i class="sjd-sal-base">' + x.found + '</i>' +
                 '<p>' + x.what + ' ' + x.life + '</p>' +
                 '<p class="sjd-sal-tip"><b>이렇게 써먹어요</b> — ' + x.tip + '</p></div>';
-            }
-            return '<div class="sjd-sal">' +
-              '<div class="sjd-sal-head"><b style="color:var(--faint);">' + x.name + '(' + x.hj + ')</b><span>' + x.title + '</span><em>없음</em></div>' +
-              '<p class="sjd-sal-off">' + x.absent + '</p></div>';
-          }).join('') +
+            }).join('') :
+            '<p class="sjd-el-msg" style="margin-top:4px;">이번 구성에서는 대표 신살 다섯 가지가 모두 조용해요. 특수 옵션 없이 기본기로 승부하는, 담백하고 단단한 사주라는 뜻이죠.</p>') +
           '<p class="sj-ey-note">※ 신살은 전통 조견표 기반의 재미 요소예요 — 좋고 나쁨의 판정이 아니라, 내 사주의 개성 포인트로 봐주세요.</p>';
       }
 
