@@ -112,7 +112,10 @@ resolves — keep the seed and the `DEFAULT`/`TT` output in sync when you edit e
 ## Backend — Cloudflare Pages Functions
 Routing: files under `functions/` map to paths; a leading `_` excludes a file from routing.
 - `functions/_middleware.js` — blocks public access to `*.md`, `wrangler.toml`,
-  `package*.json`, dotfiles, `CNAME`, `.claude/` → 404.
+  `package*.json`, dotfiles, `CNAME`, `.claude/` → 404. Also forces
+  `Cache-Control: no-cache` on every non-`/api/` response — middleware-wrapped
+  static assets ignore `_headers`, so without this Pages served max-age=14400
+  and deploys took hours to reach returning visitors (fixed 2026-07-10).
 - `functions/api/content.js` — `GET` (public) returns the content doc or `DEFAULT`;
   `PUT` (admin) sanitizes against `DEFAULT` (clamps strings to 4000 chars, arrays to 60
   items, coerces shape) and writes to KV key `content`. v1 docs (`{seo,contact,hero}`) are

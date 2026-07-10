@@ -16,5 +16,14 @@ export async function onRequest(context) {
   if (BLOCK.some((re) => re.test(path))) {
     return new Response("Not found", { status: 404 });
   }
-  return next();
+  const res = await next();
+  // Middleware-wrapped static responses ignore _headers, so Pages' default
+  // max-age=14400 would delay deploys for hours. Force revalidation instead
+  // (ETag -> 304). API routes manage their own caching.
+  if (!path.startsWith("/api/")) {
+    const out = new Response(res.body, res);
+    out.headers.set("Cache-Control", "no-cache");
+    return out;
+  }
+  return res;
 }
