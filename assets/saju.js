@@ -510,6 +510,7 @@
       // 태어난 시간 = 1시간 구간 선택 (00시~01시 …) — 시진 경계가 홀수 시각이라
       // 1시간 구간은 항상 한 시주 안에 들어감. 계산값은 구간 중앙(h:30).
       var tSel = $('sj-birthtime');
+      tSel.add(new Option('태어난 시간을 몰라요', 'unknown'));
       for (var h = 0; h < 24; h++) {
         tSel.add(new Option(pad2(h) + '시 ~ ' + pad2(h + 1) + '시', h + ':30'));
       }
@@ -549,20 +550,13 @@
         return y + '-' + pad2(mo) + '-' + pad2(da);
       }
 
-      function setNoTime(on) {
-        $('sj-noTime').checked = on;
-        tSel.disabled = on;
-        tSel.style.opacity = on ? .45 : 1;
-      }
-      $('sj-noTime').addEventListener('change', function () { setNoTime(this.checked); });
-
       // 재방문 시 마지막 입력 자동 채움
       var last = loadLast();
       if (last) {
         setDate(last.d);
         if (last.cal === 'lunar') { setCal('lunar'); if (leapChk) leapChk.checked = !!last.lp; }
-        if (last.t) { var lh = parseInt(last.t, 10); if (!isNaN(lh) && lh >= 0 && lh <= 23) tSel.value = lh + ':30'; }
-        setNoTime(!!last.nt);
+        if (last.nt) tSel.value = 'unknown';
+        else if (last.t) { var lh = parseInt(last.t, 10); if (!isNaN(lh) && lh >= 0 && lh <= 23) tSel.value = lh + ':30'; }
         var hint = $('sj-restored');
         if (hint) hint.style.display = '';
       }
@@ -572,7 +566,6 @@
         setDate('');
         setCal('solar');
         tSel.value = '12:30';
-        setNoTime(false);
         yIn.focus();
         var hint = $('sj-restored');
         if (hint) hint.style.display = 'none';
@@ -580,6 +573,7 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        var noTime = tSel.value === 'unknown';
         var dv, lunQ = '';
         if (calMode === 'lunar') {
           var ly = +yIn.value, lmo = +moIn.value, lda = +daIn.value;
@@ -597,14 +591,13 @@
           if (!sv) { alert('음력 날짜를 다시 확인해 주세요.'); return; }
           dv = sv.y + '-' + pad2(sv.m) + '-' + pad2(sv.d);
           lunQ = '&lun=' + encodeURIComponent(ly + '.' + (wantLeap ? '윤' : '') + lmo + '.' + lda);
-          saveLast({ d: ly + '-' + pad2(lmo) + '-' + pad2(lda), cal: 'lunar', lp: wantLeap ? 1 : 0, t: tSel.value, nt: $('sj-noTime').checked ? 1 : 0 });
+          saveLast({ d: ly + '-' + pad2(lmo) + '-' + pad2(lda), cal: 'lunar', lp: wantLeap ? 1 : 0, t: tSel.value, nt: noTime ? 1 : 0 });
         } else {
           dv = getDate();
           if (!dv) { alert('생년월일을 정확히 입력해 주세요.\n(연 1900–2100 · 월 1–12 · 일 1–31)'); return; }
-          saveLast({ d: dv, cal: 'solar', t: tSel.value, nt: $('sj-noTime').checked ? 1 : 0 });
+          saveLast({ d: dv, cal: 'solar', t: tSel.value, nt: noTime ? 1 : 0 });
         }
-        var noTime = $('sj-noTime').checked;
-        var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(tSel.value) + '&nt=' + (noTime ? 1 : 0) + lunQ;
+        var q = 'd=' + encodeURIComponent(dv) + '&t=' + encodeURIComponent(noTime ? '12:30' : tSel.value) + '&nt=' + (noTime ? 1 : 0) + lunQ;
         window.location.href = '/saju-result?' + q;
       });
       return;
