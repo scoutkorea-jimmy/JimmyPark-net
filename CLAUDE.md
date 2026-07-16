@@ -106,7 +106,11 @@ assets/
                 텍스트 카드만 최다 오행 유지). 두 페이지 공통으로 부팅 시
                 POST /api/saju-visit 방문 핑 → 입력 페이지 #sj-visits 에
                 "지금까지 N명 · 오늘 N명" 표시(집계 시작 2026-07-10).
-                (모리·루아·두리·세라·노아). 생년월일은 연/월/일 숫자 3칸 직접 입력
+                (캐릭터 5종 — v0.4.57 이름·종족 개편: 목 모리[숲의 정령]·화 루아
+                [불꽃 요정]·토 두리[포근한 감자]·금 가디[은빛 기사]·수 노아[물방울
+                정령]. 추천 카드 타일은 이모지 대신 **프로필 이미지**
+                img/saju-ch-<el>.png [흰 배경 1:1, .sj-char-img] — CHARACTERS[].img).
+                생년월일은 연/월/일 숫자 3칸 직접 입력
                 (네이티브 date picker 대신 — 어르신 스크롤 불편 해소; 숫자만·자동 포커스
                 이동·달력 유효성 검사 후 d=YYYY-MM-DD 조합). 입력 페이지는
                 /saju-result?d=&t=&nt= 로 이동, 결과 페이지는 쿼리에서 읽어 렌더
@@ -128,7 +132,10 @@ assets/
                 (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
                 (서버 미전송). Fully client-side; birth data never leaves the browser.
   img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
-                saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark)
+                saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark),
+                saju-el-{wood,fire,earth,metal,water}.png (결과 상단 원형 엠블럼 배지),
+                saju-ch-{wood,fire,earth,metal,water}.png (캐릭터 프로필 컷아웃,
+                흰 배경 1:1 — 추천 카드 타일용, v0.4.57)
 functions/      Cloudflare Pages Functions (see "Backend" below)
 _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
 robots.txt      allow all except /admin, /api/, /saju ; points to sitemap
