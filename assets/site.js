@@ -257,7 +257,9 @@
       document.querySelectorAll("[data-copy-email]").forEach(function (b) { b.setAttribute("data-copy", c.email); });
     }
     if (c.phone) {
-      document.querySelectorAll("a[data-tel]").forEach(function (a) { a.href = "tel:" + c.phone.replace(/[^0-9+]/g, ""); });
+      var dialNumber = c.phone.replace(/[^0-9+]/g, "");
+      if (/^010\d{8}$/.test(dialNumber)) dialNumber = "+82" + dialNumber.slice(1);
+      document.querySelectorAll("a[data-tel]").forEach(function (a) { a.href = "tel:" + dialNumber; });
       document.querySelectorAll("[data-copy-phone]").forEach(function (b) { b.setAttribute("data-copy", c.phone); });
     }
     var li = document.querySelector("[data-li-block]");

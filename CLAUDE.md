@@ -26,7 +26,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Normalize missing section IDs against the legacy order before migrating an unchanged order.
 - This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
-### Portfolio layout (v0.7.1)
+### Portfolio layout (v0.7.2)
 - One container/gutter, a shared spacing scale, explicit heading leading and reusable card rules
   apply across Home, Work, Global & Scouting and Contact.
 - Regular/CTA section padding is 48–80px on both ends; only snapshot/stats use compact padding.
@@ -221,6 +221,8 @@ reach it.** Page is chosen by `<body data-page>`; binds resolve against that pag
   `[data-href="section.field.href"]` sets a link target.
 - `[data-section="id"]` wrappers are reordered to match `pages.<page>.order` and hidden when
   in `pages.<page>.hidden`.
+- Contact phone (v0.7.2): display/copy `010.5418.6124`; telephone links use `+821054186124`.
+  Keep the static seed, Person JSON-LD, API default and live CMS contact field synchronized.
 - **Contact behaviors (from `global.contact`):** `a[data-mail]`→`mailto:`, `a[data-tel]`→`tel:`,
   `[data-copy-email]`/`[data-copy-phone]` get a `data-copy` value, `[data-li-block]` (LinkedIn)
   shows/hides + fills its `<a>` (`[data-li-label]`).

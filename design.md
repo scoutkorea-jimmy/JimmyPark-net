@@ -362,3 +362,9 @@ protect the documented contract; they do not replace visual review of real conte
 
 Run `node .checks/content.cjs` after schema/migration edits; it checks old-document upgrades,
 custom value/order preservation, idempotence, explicit empty edits, and no GET writes.
+
+
+### Contact phone formatting
+Display and copy the owner’s chosen domestic formatting (`010.5418.6124`). Use an
+international dial target (`tel:+821054186124`) for the link. The renderer converts
+11-digit Korean 010 numbers to +82 for dialing while preserving display/copy text.

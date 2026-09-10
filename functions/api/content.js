@@ -25,7 +25,7 @@ const DEFAULT = {
     },
     "contact": {
       "email": "scoutkorea@kakao.com",
-      "phone": "+82.010.2646.1635",
+      "phone": "010.5418.6124",
       "linkedin": "https://www.linkedin.com/in/jimmy1420",
       "location": "Korea · Korean / English"
     },
