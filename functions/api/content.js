@@ -955,6 +955,7 @@ const V5_LEGACY = [
   [["pages","scouting","meta","title"],"Scouting · Jimmy Park"],
   [["pages","scouting","meta","desc"],"Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media."],
   [["pages","scouting","order"],["hero","why","stats","timeline","roles","international","mediaprojects","gallery","cta"]],
+  [["pages","scouting","order"],["hero","why","stats","roles","international","mediaprojects","timeline","gallery","cta"]],
   [["pages","scouting","sections","hero","eyebrow"],"Scouting"],
   [["pages","scouting","sections","hero","title"],"Scouting has been my long-term base for communication, field experience, and international connection."],
   [["pages","scouting","sections","hero","lead"],"From Scout to Scout Leader, it taught me how people gather, move, and build trust across borders."],

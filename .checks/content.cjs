@@ -16,6 +16,11 @@ async function get(value) {
 }
 (async () => {
   const defaults = copy(api.defaults);
+  const oldestOrder = copy(defaults);
+  oldestOrder.version = 2;
+  oldestOrder.pages.scouting.order = ['hero','why','stats','roles','international','mediaprojects','timeline','gallery','cta'];
+  oldestOrder.pages.scouting.sections.timeline.items.forEach(item => { delete item.track; });
+  assert.deepEqual((await get(oldestOrder)).pages.scouting.order, defaults.pages.scouting.order, 'Original v2 seed order must migrate without resetting custom orders');
   for (const version of [2, 5]) {
     const legacy = copy(defaults); legacy.version = version;
     const home = legacy.pages.home.sections, work = legacy.pages.work.sections, sc = legacy.pages.scouting.sections;

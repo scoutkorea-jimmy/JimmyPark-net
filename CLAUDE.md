@@ -41,6 +41,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Schema v6 adds these collections and narrowly replaces Jamboree D-count with K-TrainRadar24.
   GET migration never writes KV. Keep home/work indexed legacy slots stable until migrateTo6
   replaces the retired item by identity; do not shift migrateTo5's numeric-index seed targets.
+  Recognize both historical Scouting seed orders; preserve other saved custom orders.
 - New fields must be reflected in DEFAULT, Admin SCHEMA, static markup and TT renderers.
 
 ## Golden rules
