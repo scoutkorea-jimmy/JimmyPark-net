@@ -26,11 +26,22 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Normalize missing section IDs against the legacy order before migrating an unchanged order.
 - This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
-### Portfolio layout (v0.6.0)
+### Portfolio layout (v0.7.0)
 - One container/gutter, a shared spacing scale, explicit heading leading and reusable card rules
   apply across Home, Work, Global & Scouting and Contact.
 - Regular/CTA section padding is 48–80px on both ends; only snapshot/stats use compact padding.
 - Keep this contract in [design.md](design.md) and validate it with `.checks/design.py`.
+
+### Owner-supplied portfolio evidence (v0.7.0)
+- Six video cases preserve the owner's specific planning/direction/filming/editing credits and
+  optional years. Photography links to an ongoing Drive folder; both are editable in Admin.
+- Scouting uses a page-scoped purple palette. Travel shows 19 countries & regions with an
+  automatically derived count and expandable city/destination list; this is personal travel,
+  not a count of clients or network relationships. Hamburg is video context, not a travel entry.
+- Schema v6 adds these collections and narrowly replaces Jamboree D-count with K-TrainRadar24.
+  GET migration never writes KV. Keep home/work indexed legacy slots stable until migrateTo6
+  replaces the retired item by identity; do not shift migrateTo5's numeric-index seed targets.
+- New fields must be reflected in DEFAULT, Admin SCHEMA, static markup and TT renderers.
 
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
@@ -184,7 +195,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
   contextual inline spacing; never inline raw spacing values or heading size/line-height.
   Reusable cards and all runtime collection templates must match the static seed markup.
 - Run `python3 .checks/design.py`, `node --check assets/site.js` and `git diff --check` before
-  every portfolio deployment. Review narrow/mobile and desktop layouts after geometry changes.
+  every portfolio deployment. Run `node .checks/content.cjs` for schema/migration changes. Review narrow/mobile and desktop layouts after geometry changes.
   `.checks/` requires only Python 3 and Node; it has no package install, network or KV writes.
 - New multi-column grid? Give it a class and add it to the matching breakpoint block in
   `site.css` (don't scatter new `@media` queries).
@@ -192,7 +203,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 5`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 6`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

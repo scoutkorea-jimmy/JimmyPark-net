@@ -111,6 +111,17 @@
 
   // collection item templates (markup mirrors the static seeds / design.md)
   var TT = {
+    travelPlaces: function (place) {
+      return '<div class="travel-place"><h3>' + esc(place.name) + '</h3>' + (place.cities ? '<p>' + esc(place.cities) + '</p>' : '') + '</div>';
+    },
+    videoCases: function (v) {
+      var href = /^https:\/\//.test(v.href || "") ? v.href : "";
+      var media = v.image ? '<img src="' + esc(v.image) + '" alt="Video still: ' + esc(v.title) + '" loading="lazy" decoding="async" width="640" height="360">' : '<span class="case-placeholder">' + esc(v.title) + '</span>';
+      return '<article class="card project-card video-case"><div class="case-media">' + media + '</div><div class="card-body">' +
+        '<div class="case-meta"><span class="eyebrow">' + esc(v.format) + '</span>' + (v.year ? '<span class="tag">' + esc(v.year) + '</span>' : '') + '</div>' +
+        '<h3>' + esc(v.title) + '</h3><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
+        (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((v.linkLabel || 'Watch film') + ': ' + v.title) + '">' + esc(v.linkLabel || 'Watch film') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
+    },
     snapshotRows: function (r) {
       return '<div class="snapshot-row"><dt>' + esc(r.label) + '</dt><dd>' + esc(r.value) + '</dd></div>';
     },
@@ -141,7 +152,7 @@
     vibeItems: function (v) {
       var media = v.image ? '<div class="project-image" role="img" aria-label="' + esc(v.title) + '" style="background-image:url(&quot;' + esc(v.image) + '&quot;)"></div>' : '';
       return '<article class="card project-card">' + media + '<div class="card-body"><span class="tag status-tag">' + esc(v.status) + '</span>' +
-        '<h3>' + esc(v.title) + '</h3><p>' + esc(v.desc) + '</p></div></article>';
+        '<h3>' + esc(v.title) + '</h3><p>' + esc(v.desc) + '</p>' + (/^https:\/\//.test(v.href || '') ? '<a class="card-link" href="' + esc(v.href) + '" target="_blank" rel="noopener noreferrer">Open project<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
     scoutStats: function (s, i) {
       return '<div class="stat' + (i === 0 ? ' stat--lead' : '') + '"><div class="stat-value">' + esc(s.value) + '</div><div class="stat-label">' + esc(s.label) + '</div></div>';
@@ -219,7 +230,11 @@
     // link hrefs — data-href="section.field.href"
     document.querySelectorAll("[data-href]").forEach(function (el) {
       var v = get(sd, el.getAttribute("data-href"));
-      if (v) el.setAttribute("href", v);
+      if (el.hasAttribute("data-optional-link")) {
+        var valid = /^https:\/\//.test(v || "");
+        el.hidden = !valid;
+        if (valid) el.setAttribute("href", v); else el.removeAttribute("href");
+      } else if (v) el.setAttribute("href", v);
     });
 
     // collections
@@ -228,6 +243,12 @@
       var t = TT[el.getAttribute("data-template")];
       if (Array.isArray(arr) && t) el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
     });
+
+    // Travel totals use the same entries shown in the destination list.
+    var places = get(content, "pages.scouting.sections.travel.items") || [];
+    var seenPlaces = {};
+    places.forEach(function (place) { var name = String(place.name || "").trim().toLowerCase(); if (name) seenPlaces[name] = true; });
+    document.querySelectorAll("[data-travel-count]").forEach(function (el) { el.textContent = String(Object.keys(seenPlaces).length); });
 
     // contact behaviors (from global.contact)
     var c = g.contact || {};

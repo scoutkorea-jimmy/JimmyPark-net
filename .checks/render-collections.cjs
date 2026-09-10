@@ -24,4 +24,5 @@ for (const [page, file] of Object.entries(pages)) {
   }
   result[file] = { order: defaults.pages[page].order, collections };
 }
+result.travelCount = new Set(defaults.pages.scouting.sections.travel.items.map(item => item.name.trim().toLowerCase()).filter(Boolean)).size;
 process.stdout.write(JSON.stringify(result));

@@ -8,8 +8,8 @@
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
 same header, footer, eyebrow, button, and card patterns by design.
 
-### Portfolio composition (v0.6.0)
-- Keep the existing burgundy/Scouting-green identity and approved typefaces.
+### Portfolio composition (v0.7.0)
+- Keep the burgundy site identity and approved typefaces. The Scouting page uses the owner-requested purple theme; existing Scouting references on other pages retain their green sub-accent.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
 - Portrait v0.5.1 uses the supplied `IMG_2902.jpeg` unchanged. Use `center 10%` for its
@@ -65,8 +65,11 @@ same header, footer, eyebrow, button, and card patterns by design.
 - Neutral card: `linear-gradient(150deg,#f1ede6,#e7e0d4)`
 - Scouting/green: `linear-gradient(150deg,#eef4ef 0%,#e1ebe4 100%)`
 
-**Rule:** burgundy is the spine of the brand; green appears *only* in Scouting contexts. Never
-introduce a new accent hue — pick the nearest token above.
+**Rule:** burgundy is the shared site accent. The Scouting page overrides the named accent
+and Scouting surface tokens to **purple**: accent `#622599`, hover `#4b167d`, eyebrow `#7e42aa`,
+surface `#efe4f7`, tint `#f7f2fb`, border `#deceed`, muted `#7d6695`, ink `#302039`.
+Scope these overrides to `.portfolio[data-page="scouting"]`; other pages keep their existing
+burgundy/green palette. The shared JP logo remains unchanged. Never recolor the standalone app.
 
 ### /saju — standalone app (fully scoped exception)
 The hidden `/saju` (input) + `/saju-result` (result) routes are a **self-contained two-page
@@ -236,7 +239,7 @@ tagline (`SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.`) and `© 2026 Jimmy
 <h2 class="section-title">Heading</h2>
 <p class="body-copy" style="margin:var(--space-16) 0 0;">Supporting copy.</p>
 ```
-Use green `#2f5a45` for the eyebrow in Scouting sections.
+Use `var(--scout-accent)` for Scouting eyebrows; it resolves to purple on the Scouting page.
 
 ### Buttons
 | Class | Look |
@@ -251,7 +254,7 @@ Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are 
 
 ### Cards
 - `.card` owns shared border, radius and 24–32px padding. `.card--compact` uses 24px;
-  `.card--scouting` adds the approved green surface and border.
+  `.card--scouting` adds the page-aware Scouting surface and border.
 - `.capability` uses a vertical flex layout with visible tags and a bottom action link.
 - `.project-card` owns clipping; `.card-body` owns padding. Missing images leave a complete
   text card. Status labels always remain visible.
@@ -267,7 +270,7 @@ Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are 
 
 ### Tags / pills
 `.tag`: 14px text, pill radius, **4px 12px** padding and a neutral border.
-`.tag--scouting`: green text/border. `.tag--large`: **12px 16px** padding and control radius.
+`.tag--scouting`: page-aware Scouting text/border. `.tag--large`: **12px 16px** padding and control radius.
 
 ---
 
@@ -333,3 +336,27 @@ After changes to geometry, visually review all four pages at desktop, tablet and
 widths, especially CTA boundaries, contact topics, timeline, gallery and the portrait crop.
 Check a reordered/hidden neighboring section when changing CMS section structure. Static checks
 protect the documented contract; they do not replace visual review of real content.
+
+
+## 11. Evidence and travel (v0.7.0)
+
+- Work shows six owner-supplied video projects before the expandable format list. Each case
+  has format, optional year, title, explicit production credit, context and a direct video/playlist
+  link. Use a 16:9 thumbnail or a complete text cover, never an empty image slot. Two columns
+  become one at 520px. Keep actual roles separate from project/client context; do not imply
+  a personal award, independent credit verification, or travel to an exhibition location.
+- The photography CTA links to the ongoing Drive folder. Keep its stable folder URL; do not
+  import a one-time snapshot of the folder. Admin supports label/URL/note edits; a blank or
+  non-HTTPS URL hides the optional link.
+- Travel lists the owner's **19 countries & regions**, with supplied cities/destinations.
+  The total is derived from distinct nonempty country/region names in the same CMS collection.
+  Hong Kong/Macau are separate region entries. Do not relabel the count as countries alone,
+  network partners, clients, or professional engagements. Do not claim a distinct-city count.
+- The travel summary and expandable destination grid use the shared section/card/gap tokens.
+  The grid is 3 / 2 / 1 columns at desktop / 840px / 520px; mobile keeps the large number above
+  its introduction. Native details/summary supports mouse, touch and keyboard.
+- K-TrainRadar24 replaces the retired countdown project. Describe positions as timetable-based
+  **estimates**, never GPS or live operational tracking. Its URL is editable in Admin.
+
+Run `node .checks/content.cjs` after schema/migration edits; it checks old-document upgrades,
+custom value/order preservation, idempotence, explicit empty edits, and no GET writes.

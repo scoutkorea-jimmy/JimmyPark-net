@@ -90,6 +90,8 @@ def check():
                     assert not re.search(r'\d(?:px|rem|em|vw|vh)\b|clamp\(', value), f'{file}: use a spacing token for {prop}: {value}'
             if node.tag in ('h1','h2','h3'):
                 assert not {'font-size','line-height'} & node.style().keys(), f'{file}: heading scale must come from shared CSS'
+            if 'data-travel-count' in node.attrs:
+                assert ''.join(c for c in node.children if isinstance(c,str)).strip() == str(rendered['travelCount']), f'{file}: static travel count must match destinations'
             if node.tag == 'img':
                 assert 'alt' in node.attrs, f'{file}: image needs alt text'
             container_classes = {'pills': 'tag-list', 'intlTags': 'tag-list', 'photoDeliverables': 'deliverable-list'}
