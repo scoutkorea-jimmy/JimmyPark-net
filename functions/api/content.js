@@ -470,6 +470,20 @@ const V5_LEGACY = [
   [["pages","work","sections","lecture","topics",2],{"name":"Photography for Purpose","desc":"Shooting for press, SNS, and reports"}],
   [["pages","work","sections","lecture","topics",3],{"name":"AI · Vibe Coding","desc":"Turning ideas into working web prototypes"}]
 ];
+function matchesLegacy(value, legacy) {
+  if (Array.isArray(legacy)) {
+    return Array.isArray(value) && value.length === legacy.length &&
+      legacy.every((item, i) => matchesLegacy(value[i], item));
+  }
+  if (legacy && typeof legacy === "object") {
+    // KV objects can have a different key order from the public sanitized doc.
+    // Compare schema fields by value; removed fields are discarded by sanitize.
+    return !!value && typeof value === "object" && !Array.isArray(value) &&
+      Object.keys(legacy).every((key) => matchesLegacy(value[key], legacy[key]));
+  }
+  return value === legacy;
+}
+
 function migrateTo5(doc) {
   for (const [path, legacy] of V5_LEGACY) {
     let target = doc;
@@ -479,7 +493,7 @@ function migrateTo5(doc) {
       currentDefault = currentDefault[path[i]];
     }
     const key = path[path.length - 1];
-    if (target && JSON.stringify(target[key]) === JSON.stringify(legacy)) {
+    if (target && matchesLegacy(target[key], legacy)) {
       target[key] = JSON.parse(JSON.stringify(currentDefault[key]));
     }
   }

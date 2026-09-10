@@ -19,7 +19,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   so the home page also has a real image before hydration. Uploaded CMS images still override it.
 - Schema v5 migrates unchanged legacy seed values in memory, never writes KV on GET, and preserves
   custom text, media, contacts, hidden sections and custom ordering. Semantically repurposed rows
-  (capabilities, snapshot, process and workshop topics) migrate atomically only when unchanged.
+  (capabilities, snapshot, process and workshop topics) migrate atomically only when unchanged;
+  compare their schema values independently of object key order in raw KV documents.
 - This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
 ## Golden rules

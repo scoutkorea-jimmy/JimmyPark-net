@@ -22,6 +22,7 @@ same header, footer, eyebrow, button, and card patterns by design.
   values. Anchor destinations clear the sticky header. All canonical routes remain unchanged.
 - Keep static text/collections aligned with the API defaults and runtime templates. Custom CMS
   images remain editable, and removing an image restores the component's fallback presentation.
+  Unchanged legacy cards migrate as complete rows; saved field order does not affect matching.
 
 ---
 
