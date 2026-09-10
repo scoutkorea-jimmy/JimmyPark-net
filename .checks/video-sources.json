@@ -1,0 +1,79 @@
+{
+  "checked": "2026-09-10",
+  "folder": "https://drive.google.com/drive/folders/1502bMKOCZIbR0aUb8_AbHQPPLeg4ySJf",
+  "basis": "Public folder and file names, owner-supplied credits, and inspected Drive thumbnails; full videos not watched.",
+  "videoCount": 61,
+  "supportingDocumentCount": 3,
+  "newCases": [
+    {
+      "id": "samsung-keynote",
+      "title": "Samsung Tech Conference 2025",
+      "year": "2025",
+      "role": "Planning, Direction, Filming & Editing",
+      "desc": "Keynote presentation videos combining presenter footage, chroma key and presentation graphics.",
+      "href": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
+      "image": "",
+      "format": "Technology · Keynote videos",
+      "linkLabel": "View video collection"
+    },
+    {
+      "id": "d-hack",
+      "title": "D-Hack × Sisa Japanese",
+      "year": "2021",
+      "role": "Planning & Direction",
+      "desc": "A Japanese-learning web entertainment series featuring D-Hack.",
+      "href": "https://drive.google.com/drive/folders/1oss4rQepxf1_Bi1ryEBJyThOrAzhZeIh",
+      "image": "/assets/img/video/d-hack.jpg",
+      "format": "Education · Web series",
+      "linkLabel": "View series"
+    },
+    {
+      "id": "siheung",
+      "title": "Siheung Policy EZ",
+      "year": "2021",
+      "role": "Planning, Direction, Filming & Editing",
+      "desc": "A policy information series using presenter footage, chroma key and motion graphics.",
+      "href": "https://drive.google.com/drive/folders/14K3KOWnmX50TZKDFmjr4isRzpRZs6SmO",
+      "image": "/assets/img/video/siheung.jpg",
+      "format": "Public communication · Video series",
+      "linkLabel": "View series"
+    },
+    {
+      "id": "korean-jamboree-opening",
+      "title": "16th Korea National Jamboree · Opening Ceremony",
+      "year": "2026",
+      "role": "AI, Planning & Editing",
+      "desc": "Opening-ceremony video work combining AI, planning and editing.",
+      "href": "https://drive.google.com/file/d/16a40q_FxOuc2uRkgvGlNhAWhrSeogo-W/view",
+      "image": "",
+      "format": "Scouting · Opening film",
+      "linkLabel": "Watch film"
+    }
+  ],
+  "thumbnails": [
+    {
+      "slug": "concert",
+      "fileId": "1tSY0pWkJNHkgO6Vf2j4J0Jyt6rdnY81A",
+      "url": "https://drive.google.com/thumbnail?id=1tSY0pWkJNHkgO6Vf2j4J0Jyt6rdnY81A&sz=w1600",
+      "type": "image/jpeg",
+      "size": 260523,
+      "path": "assets/img/video/concert.jpg"
+    },
+    {
+      "slug": "d-hack",
+      "fileId": "1dCrdenGTGh1O0ihoJ2DprmaOuYciiew8",
+      "url": "https://drive.google.com/thumbnail?id=1dCrdenGTGh1O0ihoJ2DprmaOuYciiew8&sz=w1600",
+      "type": "image/jpeg",
+      "size": 187074,
+      "path": "assets/img/video/d-hack.jpg"
+    },
+    {
+      "slug": "siheung",
+      "fileId": "1Nm7T1os454DxN3_pUUiSiCsUDnXhe5r6",
+      "url": "https://drive.google.com/thumbnail?id=1Nm7T1os454DxN3_pUUiSiCsUDnXhe5r6&sz=w1600",
+      "type": "image/jpeg",
+      "size": 84247,
+      "path": "assets/img/video/siheung.jpg"
+    }
+  ]
+}

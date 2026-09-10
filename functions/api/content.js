@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 6,
+  "version": 7,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -30,18 +30,19 @@ const DEFAULT = {
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park | Content Strategy, AI & AX Consulting",
-      "desc": "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."
+      "title": "Jimmy Park (박지민) | Content, Video & AI",
+      "desc": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park | Content Strategy, AI & AX Consulting",
-        "desc": "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."
+        "title": "Jimmy Park (박지민) | Content, Video & AI",
+        "desc": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
       },
       "order": [
         "hero",
+        "selected",
         "activities",
         "snapshot",
         "projects",
@@ -51,16 +52,16 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator",
-          "title": "Content with purpose.\nAI put to work.",
-          "lead": "I plan content, build with AI, and help teams explore better ways of working — with a global network rooted in Scouting and Asia-Pacific collaboration.",
+          "eyebrow": "Content strategy · Video production · AI & AX",
+          "title": "From a clear brief\nto content that works.",
+          "lead": "I’m Jimmy Park, a Korea-based content strategist and video producer. I plan, direct, film and edit — and build practical AI tools for content teams.",
           "ctaPrimary": {
-            "label": "Explore my work",
-            "href": "/work"
+            "label": "Start a project",
+            "href": "/contact"
           },
           "ctaGhost": {
-            "label": "Discuss a project",
-            "href": "/contact"
+            "label": "See selected work",
+            "href": "#selected"
           },
           "image": "/assets/img/jimmy-park-portrait.jpg?v=0.5.1",
           "badge": "Jimmy Park",
@@ -85,20 +86,24 @@ const DEFAULT = {
               "label": "Based in",
               "value": "Korea · Korean / English"
             }
-          ]
+          ],
+          "eyebrow": "About Jimmy Park",
+          "title": "Who is Jimmy Park?",
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. He founded BP Media and works across content production, practical AI tools and international Scouting collaboration.",
+          "detail": "His portfolio includes technology films, educational web series, institutional communication and event media. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
         },
         "activities": {
-          "eyebrow": "Four ways I contribute",
-          "title": "From the first idea to work people can use.",
+          "eyebrow": "What you can bring me in for",
+          "title": "A defined scope. A useful deliverable.",
           "items": [
             {
               "kicker": "01 / Content",
-              "title": "Content Strategy",
-              "desc": "Turn a communication goal into a clear message, the right format, and a plan for production and distribution.",
+              "title": "Content & Video Production",
+              "desc": "Commission a campaign concept, keynote video, interview series or event film — with a clear brief and defined production responsibilities.",
               "tags": [
-                "Editorial planning",
-                "Campaigns",
-                "Video & media"
+                "Concept & script",
+                "Direction & production",
+                "Editing & delivery"
               ],
               "href": "/work#video",
               "accent": "burgundy"
@@ -106,7 +111,7 @@ const DEFAULT = {
             {
               "kicker": "02 / AI",
               "title": "AI in Practice",
-              "desc": "Use AI to turn ideas into campaign pages, content tools, and working prototypes built around real project needs.",
+              "desc": "Build and test a focused content tool, campaign page or AI-assisted prototype around one practical need.",
               "tags": [
                 "Prototyping",
                 "Content tools",
@@ -118,7 +123,7 @@ const DEFAULT = {
             {
               "kicker": "03 / AX",
               "title": "AX Consulting",
-              "desc": "Explore AI transformation from the work itself: identify useful opportunities, test a focused workflow, and help a team take its next step.",
+              "desc": "Review a content workflow, plan a small AI pilot or arrange a hands-on team workshop with a clear starting point.",
               "tags": [
                 "Workflow review",
                 "Pilot design",
@@ -130,7 +135,7 @@ const DEFAULT = {
             {
               "kicker": "04 / Global",
               "title": "Global Collaboration",
-              "desc": "Bring Scouting experience, Asia-Pacific relationships, and international event media work to projects that connect people across borders.",
+              "desc": "Discuss Scouting media, international events and cross-cultural projects, grounded in my documented Asia-Pacific roles.",
               "tags": [
                 "Asia-Pacific",
                 "Scouting",
@@ -168,8 +173,8 @@ const DEFAULT = {
           ]
         },
         "projects": {
-          "eyebrow": "Selected Projects",
-          "title": "Where the work takes shape.",
+          "eyebrow": "Stay connected",
+          "title": "A place to start. A reason to stay in touch.",
           "feature": {
             "badge": "Content strategy · Global Scouting",
             "sub": "Founder · Scouting media",
@@ -180,35 +185,74 @@ const DEFAULT = {
           },
           "items": [
             {
-              "tag": "Content · Education",
-              "title": "Korea Dream Path",
-              "desc": "An education and youth-growth initiative connecting content, learning, and global collaboration.",
-              "href": "/work#video",
+              "tag": "Professional network",
+              "title": "Connect on LinkedIn",
+              "desc": "For professional introductions, shared interests and future collaboration.",
+              "href": "https://www.linkedin.com/in/jimmy1420",
               "image": ""
             },
             {
-              "tag": "AI practice · Prototype",
-              "title": "Scout Tour Assistant",
-              "desc": "A map-based prototype that organizes meaningful Scouting places into an explorable resource.",
-              "href": "/work#vibecoding",
+              "tag": "International collaboration",
+              "title": "Global & Scouting",
+              "desc": "My dated roles, international experience and Scouting media work.",
+              "href": "/scouting",
               "image": ""
             },
             {
-              "tag": "Web · Transport data",
-              "title": "K-TrainRadar24",
-              "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.",
-              "href": "https://scoutingapp.net/ktrainrader24/",
+              "tag": "Writing & ideas",
+              "title": "Insights",
+              "desc": "A home for notes on content, AI and working across cultures.",
+              "href": "/insights",
               "image": ""
             }
           ]
         },
         "cta": {
-          "title": "What are you working on?",
-          "body": "A content challenge, an AI idea, a team workflow, or an international project — let’s work out a useful next step.",
+          "title": "Have a brief in mind?",
+          "body": "Tell me the audience, deliverables and timing. For introductions or Scouting collaboration, a short hello is welcome too.",
           "button": {
-            "label": "Discuss a project",
+            "label": "Start a conversation",
             "href": "/contact"
           }
+        },
+        "selected": {
+          "eyebrow": "Selected production work",
+          "title": "The brief. The role. The work.",
+          "cases": [
+            {
+              "id": "ai2re",
+              "title": "AI2RE by SPAID",
+              "year": "2025",
+              "role": "Planning & Direction Lead",
+              "desc": "CES Innovation Award promotional film for AI2RE.",
+              "href": "https://www.youtube.com/watch?v=OmnvbFs-6Ws",
+              "image": "https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg",
+              "format": "Technology · Promotional film",
+              "linkLabel": "Watch film"
+            },
+            {
+              "id": "d-hack",
+              "title": "D-Hack × Sisa Japanese",
+              "year": "2021",
+              "role": "Planning & Direction",
+              "desc": "A Japanese-learning web entertainment series featuring D-Hack.",
+              "href": "https://drive.google.com/drive/folders/1oss4rQepxf1_Bi1ryEBJyThOrAzhZeIh",
+              "image": "/assets/img/video/d-hack.jpg",
+              "format": "Education · Web series",
+              "linkLabel": "View series"
+            },
+            {
+              "id": "siheung",
+              "title": "Siheung Policy EZ",
+              "year": "2021",
+              "role": "Planning, Direction, Filming & Editing",
+              "desc": "A policy information series using presenter footage, chroma key and motion graphics.",
+              "href": "https://drive.google.com/drive/folders/14K3KOWnmX50TZKDFmjr4isRzpRZs6SmO",
+              "image": "/assets/img/video/siheung.jpg",
+              "format": "Public communication · Video series",
+              "linkLabel": "View series"
+            }
+          ]
         }
       }
     },
@@ -277,7 +321,7 @@ const DEFAULT = {
           "kicker": "01 / Content strategy",
           "title": "Plan the story. Shape the content.",
           "sub": "From communication goals to production and distribution",
-          "desc": "I translate a project’s purpose into an audience, a message, and a format. From campaign concepts to interviews and short-form video, I plan how the content will be made and where it will be used.",
+          "desc": "I turn a communication brief into a content plan and finished video: concept, script, direction, filming and editing. The credits below show my role on each project.",
           "formats": [
             {
               "name": "Promotion",
@@ -307,6 +351,17 @@ const DEFAULT = {
           "caption": "Content planning · Production · Distribution",
           "casesTitle": "Selected video work",
           "cases": [
+            {
+              "id": "samsung-keynote",
+              "title": "Samsung Tech Conference 2025",
+              "year": "2025",
+              "role": "Planning, Direction, Filming & Editing",
+              "desc": "Keynote presentation videos combining presenter footage, chroma key and presentation graphics.",
+              "href": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
+              "image": "",
+              "format": "Technology · Keynote videos",
+              "linkLabel": "View video collection"
+            },
             {
               "id": "ai2re",
               "title": "AI2RE by SPAID",
@@ -341,6 +396,28 @@ const DEFAULT = {
               "linkLabel": "Watch film"
             },
             {
+              "id": "d-hack",
+              "title": "D-Hack × Sisa Japanese",
+              "year": "2021",
+              "role": "Planning & Direction",
+              "desc": "A Japanese-learning web entertainment series featuring D-Hack.",
+              "href": "https://drive.google.com/drive/folders/1oss4rQepxf1_Bi1ryEBJyThOrAzhZeIh",
+              "image": "/assets/img/video/d-hack.jpg",
+              "format": "Education · Web series",
+              "linkLabel": "View series"
+            },
+            {
+              "id": "siheung",
+              "title": "Siheung Policy EZ",
+              "year": "2021",
+              "role": "Planning, Direction, Filming & Editing",
+              "desc": "A policy information series using presenter footage, chroma key and motion graphics.",
+              "href": "https://drive.google.com/drive/folders/14K3KOWnmX50TZKDFmjr4isRzpRZs6SmO",
+              "image": "/assets/img/video/siheung.jpg",
+              "format": "Public communication · Video series",
+              "linkLabel": "View series"
+            },
+            {
               "id": "kb-life",
               "title": "KB Life · Hashtag Interviews",
               "year": "",
@@ -352,13 +429,24 @@ const DEFAULT = {
               "linkLabel": "View playlist"
             },
             {
+              "id": "korean-jamboree-opening",
+              "title": "16th Korea National Jamboree · Opening Ceremony",
+              "year": "2026",
+              "role": "AI, Planning & Editing",
+              "desc": "Opening-ceremony video work combining AI, planning and editing.",
+              "href": "https://drive.google.com/file/d/16a40q_FxOuc2uRkgvGlNhAWhrSeogo-W/view",
+              "image": "",
+              "format": "Scouting · Opening film",
+              "linkLabel": "Watch film"
+            },
+            {
               "id": "military-concert",
               "title": "12th Infantry Division · 69th Anniversary Concert",
               "year": "2021",
               "role": "Video Direction, Filming & Editing Lead",
               "desc": "Military band concert film for the division’s 69th anniversary.",
               "href": "https://youtu.be/36-q294zBtQ",
-              "image": "https://i.ytimg.com/vi/36-q294zBtQ/hqdefault.jpg",
+              "image": "/assets/img/video/concert.jpg",
               "format": "Live event · Concert",
               "linkLabel": "Watch film"
             },
@@ -373,7 +461,12 @@ const DEFAULT = {
               "format": "University · Event film",
               "linkLabel": "Watch film"
             }
-          ]
+          ],
+          "portfolio": {
+            "label": "Explore the full video portfolio",
+            "href": "https://drive.google.com/drive/folders/1502bMKOCZIbR0aUb8_AbHQPPLeg4ySJf"
+          },
+          "portfolioNote": "Keynotes, branded series, interviews, performance films and AI-assisted video."
         },
         "vibecoding": {
           "kicker": "02 / AI practice",
@@ -1042,7 +1135,7 @@ function migrateTo6(doc) {
   const home = pages.home && pages.home.sections;
   const work = pages.work && pages.work.sections;
   const scouting = pages.scouting && pages.scouting.sections;
-  replaceProject(home && home.projects, DEFAULT.pages.home.sections.projects.items[2]);
+  replaceProject(home && home.projects, {"tag": "Web · Transport data", "title": "K-TrainRadar24", "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.", "href": "https://scoutingapp.net/ktrainrader24/", "image": ""});
   replaceProject(work && work.vibecoding, DEFAULT.pages.work.sections.vibecoding.items[1]);
   if (scouting && scouting.mediaprojects && Array.isArray(scouting.mediaprojects.items)) {
     scouting.mediaprojects.items = scouting.mediaprojects.items.filter(item => !isCountdown(item));
@@ -1057,6 +1150,370 @@ function migrateTo6(doc) {
   return doc;
 }
 
+// v6 → v7: resume the owner’s project, identity and network goals.
+// No KV writes during reads; replace only unchanged seed values and video rows.
+const V7_SEEDS = [
+  [
+    [
+      "global",
+      "seo",
+      "title"
+    ],
+    "Jimmy Park | Content Strategy, AI & AX Consulting"
+  ],
+  [
+    [
+      "global",
+      "seo",
+      "desc"
+    ],
+    "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "meta",
+      "title"
+    ],
+    "Jimmy Park | Content Strategy, AI & AX Consulting"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "meta",
+      "desc"
+    ],
+    "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "order"
+    ],
+    [
+      "hero",
+      "activities",
+      "snapshot",
+      "projects",
+      "approach",
+      "cta"
+    ]
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "lead"
+    ],
+    "I plan content, build with AI, and help teams explore better ways of working — with a global network rooted in Scouting and Asia-Pacific collaboration."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "title"
+    ],
+    "Content with purpose.\nAI put to work."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "eyebrow"
+    ],
+    "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "activities",
+      "title"
+    ],
+    "From the first idea to work people can use."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "activities",
+      "eyebrow"
+    ],
+    "Four ways I contribute"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "activities",
+      "items"
+    ],
+    [
+      {
+        "kicker": "01 / Content",
+        "title": "Content Strategy",
+        "desc": "Turn a communication goal into a clear message, the right format, and a plan for production and distribution.",
+        "tags": [
+          "Editorial planning",
+          "Campaigns",
+          "Video & media"
+        ],
+        "href": "/work#video",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "02 / AI",
+        "title": "AI in Practice",
+        "desc": "Use AI to turn ideas into campaign pages, content tools, and working prototypes built around real project needs.",
+        "tags": [
+          "Prototyping",
+          "Content tools",
+          "AI workflows"
+        ],
+        "href": "/work#vibecoding",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "03 / AX",
+        "title": "AX Consulting",
+        "desc": "Explore AI transformation from the work itself: identify useful opportunities, test a focused workflow, and help a team take its next step.",
+        "tags": [
+          "Workflow review",
+          "Pilot design",
+          "Workshops"
+        ],
+        "href": "/work#lecture",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "04 / Global",
+        "title": "Global Collaboration",
+        "desc": "Bring Scouting experience, Asia-Pacific relationships, and international event media work to projects that connect people across borders.",
+        "tags": [
+          "Asia-Pacific",
+          "Scouting",
+          "Partnerships"
+        ],
+        "href": "/scouting#roles",
+        "accent": "green"
+      }
+    ]
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "projects",
+      "title"
+    ],
+    "Where the work takes shape."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "projects",
+      "eyebrow"
+    ],
+    "Selected Projects"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "projects",
+      "items"
+    ],
+    [
+      {
+        "tag": "Content · Education",
+        "title": "Korea Dream Path",
+        "desc": "An education and youth-growth initiative connecting content, learning, and global collaboration.",
+        "href": "/work#video",
+        "image": ""
+      },
+      {
+        "tag": "AI practice · Prototype",
+        "title": "Scout Tour Assistant",
+        "desc": "A map-based prototype that organizes meaningful Scouting places into an explorable resource.",
+        "href": "/work#vibecoding",
+        "image": ""
+      },
+      {
+        "tag": "Web · Transport data",
+        "title": "K-TrainRadar24",
+        "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.",
+        "href": "https://scoutingapp.net/ktrainrader24/",
+        "image": ""
+      }
+    ]
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "cta",
+      "button",
+      "label"
+    ],
+    "Discuss a project"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "cta",
+      "title"
+    ],
+    "What are you working on?"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "cta",
+      "body"
+    ],
+    "A content challenge, an AI idea, a team workflow, or an international project — let’s work out a useful next step."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "video",
+      "desc"
+    ],
+    "I translate a project’s purpose into an audience, a message, and a format. From campaign concepts to interviews and short-form video, I plan how the content will be made and where it will be used."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "ctaPrimary"
+    ],
+    {
+      "label": "Explore my work",
+      "href": "/work"
+    }
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "ctaGhost"
+    ],
+    {
+      "label": "Discuss a project",
+      "href": "/contact"
+    }
+  ]
+];
+const V6_VIDEO_CASES = [
+  {
+    "id": "ai2re",
+    "title": "AI2RE by SPAID",
+    "year": "2025",
+    "role": "Planning & Direction Lead",
+    "desc": "CES Innovation Award promotional film for AI2RE.",
+    "href": "https://www.youtube.com/watch?v=OmnvbFs-6Ws",
+    "image": "https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg",
+    "format": "Technology · Promotional film",
+    "linkLabel": "Watch film"
+  },
+  {
+    "id": "manas",
+    "title": "MANAS — Intelligent Navigation Support System",
+    "year": "2024",
+    "role": "Planning & Direction Lead",
+    "desc": "A promotional film created for use at SMM in Hamburg, Germany.",
+    "href": "https://www.youtube.com/watch?v=As1BN53BpFY",
+    "image": "https://i.ytimg.com/vi/As1BN53BpFY/hqdefault.jpg",
+    "format": "Maritime technology · Exhibition",
+    "linkLabel": "Watch film"
+  },
+  {
+    "id": "daekyo",
+    "title": "Daekyo Newif · Jangsuhae",
+    "year": "2024",
+    "role": "Direction, Production & Editing Lead",
+    "desc": "TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
+    "href": "https://www.youtube.com/watch?v=DJcwT3V79B0",
+    "image": "https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg",
+    "format": "Brand · TV commercial",
+    "linkLabel": "Watch film"
+  },
+  {
+    "id": "kb-life",
+    "title": "KB Life · Hashtag Interviews",
+    "year": "",
+    "role": "Lead Filming & Editing",
+    "desc": "A branded interview series sharing people’s stories and perspectives on life.",
+    "href": "https://www.youtube.com/playlist?list=PL7K0gdyN-9BQjyWAFqmtk9vfBv8qwmyuE",
+    "image": "",
+    "format": "Brand · Interview series",
+    "linkLabel": "View playlist"
+  },
+  {
+    "id": "military-concert",
+    "title": "12th Infantry Division · 69th Anniversary Concert",
+    "year": "2021",
+    "role": "Video Direction, Filming & Editing Lead",
+    "desc": "Military band concert film for the division’s 69th anniversary.",
+    "href": "https://youtu.be/36-q294zBtQ",
+    "image": "https://i.ytimg.com/vi/36-q294zBtQ/hqdefault.jpg",
+    "format": "Live event · Concert",
+    "linkLabel": "Watch film"
+  },
+  {
+    "id": "inha-mun",
+    "title": "Inha Model United Nations",
+    "year": "2019",
+    "role": "Lead Filming & Editing",
+    "desc": "Event sketch and closing film for the first Inha University Model UN.",
+    "href": "https://youtu.be/HCb285yis9M",
+    "image": "https://i.ytimg.com/vi/HCb285yis9M/hqdefault.jpg",
+    "format": "University · Event film",
+    "linkLabel": "Watch film"
+  }
+];
+function migrateTo7(doc) {
+  const clone = value => JSON.parse(JSON.stringify(value));
+  for (const [path, previous] of V7_SEEDS) {
+    let target = doc, next = DEFAULT;
+    for (const key of path.slice(0, -1)) { target = target && target[key]; next = next[key]; }
+    const key = path[path.length - 1];
+    const saved = target && key === 'order' ? mergeOrder(previous, target[key]) : target && target[key];
+    if (target && matchesLegacy(saved, previous)) target[key] = clone(next[key]);
+  }
+  const video = doc.pages && doc.pages.work && doc.pages.work.sections && doc.pages.work.sections.video;
+  if (video && matchesLegacy(video.cases, V6_VIDEO_CASES)) video.cases = clone(DEFAULT.pages.work.sections.video.cases);
+  doc.version = 7;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -1068,11 +1525,12 @@ export async function onRequestGet({ env }) {
   let doc = null;
   try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
   if (!doc) return json({ ok: true, content: DEFAULT });
-  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4 && doc.version !== 5 && doc.version !== 6) doc = fromV1(doc);
+  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4 && doc.version !== 5 && doc.version !== 6 && doc.version !== 7) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
   if ((doc.version || 0) < 6) doc = migrateTo6(doc);
+  if ((doc.version || 0) < 7) doc = migrateTo7(doc);
   // Re-sanitize on read so older/partial docs always match the current shape.
   const clean = normalizeOrders(sanitize(DEFAULT, doc));
   clean.updatedAt = doc.updatedAt || 0;
@@ -1084,12 +1542,13 @@ export async function onRequestPut({ request, env }) {
   let body = {};
   try { body = await request.json(); } catch (_) {}
   let incoming = body.content || body;
-  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4 && incoming.version !== 5 && incoming.version !== 6) incoming = fromV1(incoming);
+  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4 && incoming.version !== 5 && incoming.version !== 6 && incoming.version !== 7) incoming = fromV1(incoming);
   if (incoming && (incoming.version || 0) < 4) migrateTo4(incoming);
   if (incoming && (incoming.version || 0) < 5) migrateTo5(incoming);
   if (incoming && (incoming.version || 0) < 6) migrateTo6(incoming);
+  if (incoming && (incoming.version || 0) < 7) migrateTo7(incoming);
   const doc = sanitize(DEFAULT, incoming);
-  doc.version = 6;
+  doc.version = 7;
   doc.updatedAt = Date.now();
   await env.JP_KV.put(KEY, JSON.stringify(doc));
   return json({ ok: true, content: doc });

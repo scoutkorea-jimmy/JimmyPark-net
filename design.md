@@ -1,7 +1,7 @@
 # Design System — JimmyPark.net
 
 > The single source of truth for how the site looks and feels.
-> Visual language: **warm-minimal, English-only, soft rounded corners.**
+> Visual language: **warm-minimal, English-first, soft rounded corners.**
 > Identity: *Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.*
 > Tagline: **SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.**
 
@@ -53,7 +53,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 ### Brand
 | Token | Hex | Use |
 |-------|-----|-----|
-| **Burgundy (primary accent)** | `#7a1e2c` | Logo border, primary buttons, links-on-hover, active nav, CTA panel, `::selection`, focus ring |
+| **Burgundy (primary accent)** | `#7a1e2c` | Wordmark terminal, primary buttons, links-on-hover, active nav, CTA panel, `::selection`, focus ring |
 | Burgundy dark (hover) | `#651825` | `.btn-primary:hover` only |
 | Eyebrow red | `#9b3544` | Small uppercase eyebrow labels, decorative numbers context |
 | **Scouting green (sub-accent)** | `#2f5a45` | Scouting-related eyebrows, tags, badges |
@@ -88,7 +88,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 and Scouting surface tokens to **purple**: accent `#622599`, hover `#4b167d`, eyebrow `#7e42aa`,
 surface `#efe4f7`, tint `#f7f2fb`, border `#deceed`, muted `#7d6695`, ink `#302039`.
 Scope these overrides to `.portfolio[data-page="scouting"]`; other pages keep their existing
-burgundy/green palette. The shared JP logo remains unchanged. Never recolor the standalone app.
+burgundy/green palette. The shared wordmark stays burgundy/near-black across all pages. Never recolor the standalone app.
 
 ### /saju — standalone app (fully scoped exception)
 The hidden `/saju` (input) + `/saju-result` (result) routes are a **self-contained two-page
@@ -244,15 +244,15 @@ may use inline columns only with a named responsive class; never inline gaps or 
 ## 5. Core components
 
 ### Header (identical on every page)
-Sticky, `z-index:60`, translucent `rgba(255,255,255,.82)` + `backdrop-filter: saturate(150%)
-blur(10px)`, bottom border `#ece8e1`, height `68px`. Left: **JP monogram** (`assets/img/logo.svg`
-— elegant serif "JP" in near-black `#141414` with a short burgundy `#7a1e2c` underline under the
-J) + `Jimmy Park` wordmark. Right: desktop nav (`Home · Work · Scouting`)
-+ burgundy **Contact** button; hamburger on mobile.
+Sticky, `z-index:60`, translucent white with the existing blur and divider. Left:
+**Jimmy Park.** in Wanted Sans with a small burgundy terminal square. No initials, serif monogram
+or repeated name. The SVG embeds the approved font, so the logo needs no font-network request.
+Use 190×38px in the header and 170×34px in the footer, with accessible `alt="Jimmy Park"`.
+Right: Home, Work, Global & Scouting, Insights and Contact; hamburger below 880px.
+The matching favicon uses an abstract open frame and terminal square with no lettering.
 
 ### Footer (identical on every page)
-`#f7f6f3` band, JP monogram + name + role line, nav links, then a baseline row with the
-tagline (`SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.`) and `© 2026 Jimmy Park`.
+`#f7f6f3` band, the same wordmark and role line, nav links, tagline and copyright.
 
 ### Eyebrow + heading pattern
 ```html
@@ -308,7 +308,7 @@ Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are 
 
 ## 7. Language rule
 
-**English-only.** The site carries no Korean text — no companion lines, no `*Ko` content
+**English-first.** A limited v0.9.0 exception allows `박지민` in the home identity line, biography and metadata for name disambiguation. All remaining portfolio copy stays English. The site carries no other Korean text — no companion lines, no `*Ko` content
 fields, no `박지민` alongside the name. (The site was bilingual through v0.2.x; v0.3.0
 removed all Korean. The content schema's `dekoreanize` migration strips any residual
 Korean from older saved docs on read.)
@@ -361,7 +361,7 @@ protect the documented contract; they do not replace visual review of real conte
 
 ## 11. Evidence and travel (v0.7.0)
 
-- Work shows six owner-supplied video projects before the expandable format list. Each case
+- Work shows ten owner-supplied video projects before the expandable format list. Each case
   has format, optional year, title, explicit production credit, context and a direct video/playlist
   link. Use a 16:9 thumbnail or a complete text cover, never an empty image slot. Two columns
   become one at 520px. Keep actual roles separate from project/client context; do not imply
@@ -387,3 +387,15 @@ custom value/order preservation, idempotence, explicit empty edits, and no GET w
 Display and copy the owner’s chosen domestic formatting (`010.5418.6124`). Use an
 international dial target (`tel:+821054186124`) for the link. The renderer converts
 11-digit Korean 010 numbers to +82 for dialing while preserving display/copy text.
+
+## 12. Evidence-led homepage (v0.9.0)
+- First flow: positioning and enquiry CTA → three credited videos → concrete scopes → factual
+  personal introduction → dated experience → network links. Existing project and article routes stay.
+- Selected videos use three desktop columns and one below 840px; all labels/roles are always
+  visible, images retain 16:9 and source filenames/links are recorded in `.checks/video-sources.json`.
+- Additional Drive cases describe only what titles and owner-labelled credits support. No invented
+  performance results, end-client employment, independent credit verification or automatic sync.
+- Keep a visible biography aligned with the home Person JSON-LD. The Korean name exception is
+  identity metadata and one biographical mention, not a bilingual site redesign.
+- Contact presents project-brief and introduction mail links, plus existing email/phone/LinkedIn.
+  Brief prompts include audience, deliverables, timing and optional budget; no submission backend.

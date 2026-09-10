@@ -3,13 +3,13 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <title>__TITLE__</title><meta name="description" content="__DESC__"><link rel="canonical" href="__URL__">
 <meta property="og:type" content="__TYPE__"><meta property="og:site_name" content="Jimmy Park"><meta property="og:title" content="__TITLE__"><meta property="og:description" content="__DESC__"><meta property="og:url" content="__URL__">
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
-<link rel="icon" href="/assets/img/favicon.svg?v=0.4.3" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.8.0"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.9.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
-    <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.4.3" alt="" width="40" height="34"><span>Jimmy Park</span></a>
+    <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.9.0" alt="Jimmy Park" width="190" height="38"></a>
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a href="/" data-nav="home" class="lnk nav-link">Home</a>
       <a href="/work" data-nav="work" class="lnk nav-link">Work</a>
@@ -34,7 +34,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
   <div class="site-container footer-inner">
     <div class="footer-main">
       <div class="footer-brand">
-        <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.4.3" alt="" width="33" height="28"><span>Jimmy Park</span></a>
+        <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.9.0" alt="Jimmy Park" width="190" height="38"></a>
         <p data-gbind="brand.roleline">Content Strategist · AI Practitioner · AX Consultant · Global Collaborator</p>
       </div>
       <nav class="footer-links" aria-label="Footer navigation">
@@ -51,4 +51,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.8.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.9.0" defer></script></body></html>`;

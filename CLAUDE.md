@@ -75,6 +75,30 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Recognize both historical Scouting seed orders; preserve other saved custom orders.
 - New fields must be reflected in DEFAULT, Admin SCHEMA, static markup and TT renderers.
 
+### Project, identity and network update (v0.9.0)
+- Resumed the 2026-09-10 22:48 KST request about enquiries, personal search and network value.
+  v0.8.0 was already deployed. The following audit ended in reasoning at 22:51, with no error
+  or explicit stop reason recorded; do not claim a technical cause or unfinished v0.8 work.
+- Header/footer use a Wanted Sans `Jimmy Park.` wordmark, with an embedded font and burgundy
+  terminal square. Favicon is an open frame and square; neither uses a JP monogram.
+- Home foregrounds three actual videos, defines engagement scopes, adds a factual biography,
+  and links to professional connections, Scouting and Insights. Existing AI projects stay on Work.
+- Work preserves the six earlier project credits and adds Samsung keynote, D-Hack, Siheung policy
+  and Korea National Jamboree cases from the owner's public Drive filenames. New credits are
+  owner-labelled file metadata, not independently verified credits; full films were not watched.
+  The full video-folder CTA is editable in Admin. No automatic Drive synchronization.
+- Identity exception to English-only: `박지민` is allowed in the homepage name, biography and
+  metadata to connect it to Jimmy Park / Park Jimin. This does not authorize full translation.
+  Person JSON-LD includes stable identity, portrait, biography and existing LinkedIn sameAs.
+- Schema v7 upgrades unchanged v6 seed fields/arrays only, never writes KV on GET, and preserves
+  customized credits, cards, portrait, contact, order, visibility and intentionally empty lists.
+  Keep the historical K-TrainRadar24 replacement stable in migrateTo6 even as home cards evolve.
+- Contact has separate project-brief and introduction mail links. Their subject/body are preserved
+  when the current CMS email is applied. Links only open a visitor's mail app; they send nothing.
+- Required checks remain below, including v6→v7/custom-value migration tests. Browser visual and
+  interaction QA are not implied by code/HTTP checks. No analytics account or enquiry rate was
+  inspected; improved search visibility or new work is not a measured result of this release.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -86,7 +110,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 3. **Follow [design.md](design.md) exactly.** Reuse existing header/footer/eyebrow/button/card
    blocks; use the documented color tokens only. Shared spacing/typography belongs in
    `site.css`; page-specific visual styles may be inline using the existing tokens.
-4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
+4. **English-first; limited identity exception in v0.9.0 above.** Otherwise no Korean anywhere — no companion lines, no `*Ko` content fields, no
    `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
    Korean left in older saved docs on read. See design.md §7.)
    **Exception: `/saju` + `/saju-result` + `/saju-detail`** — hidden Korean-UI entertainment
@@ -199,7 +223,7 @@ assets/
                 본문 카피 ≈50%↓). 마지막 입력은 localStorage
                 (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
                 (서버 미전송). Fully client-side; birth data never leaves the browser.
-  img/          favicon.svg + logo.svg (serif JP monogram, burgundy underline), og.png (1200×630),
+  img/          favicon.svg + logo.svg (open-frame favicon, Wanted Sans wordmark), og.png (1200×630),
                 saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark),
                 saju-el-{wood,fire,earth,metal,water}.png (결과 상단 원형 엠블럼 배지),
                 saju-ch-{wood,fire,earth,metal,water}.png (캐릭터 프로필 컷아웃,
@@ -235,7 +259,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 6`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 7`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

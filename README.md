@@ -12,7 +12,7 @@ strategy, AI prototypes, AX consulting/workshops, and field production. The exis
 AX is an offered collaboration scope; no client outcomes or productivity metrics
 are claimed. Existing prototype maturity labels are preserved.
 
-Content schema v6 adds owner-supplied video credits, the ongoing photography folder, and
+Content schema v7 adds owner-supplied video credits, the ongoing photography folder, and
 a travel collection with an automatically derived country/region count. It refreshes
 unchanged legacy defaults and replaces the retired countdown project on read without writing KV.
 Custom copy, images, contact details and section preferences survive; repurposed
@@ -40,6 +40,18 @@ robots.txt · sitemap.xml
 wrangler.toml   Pages config + KV binding
 .checks/        dependency-free layout consistency checks (not public)
 ```
+
+## Project, identity and network update (v0.9.0 · 2026-09-10)
+- Replaced the JP monogram with a Wanted Sans wordmark and an abstract frame favicon.
+- Home now leads with three credited video projects, explicit collaboration scopes, a factual
+  Jimmy Park / 박지민 biography and links to LinkedIn, Scouting and Insights.
+- Work shows ten selected video projects and links to the ongoing video Drive folder. Four
+  additions use the owner's file/folder labels for roles and dates; no full-film review is claimed.
+- Contact provides project-brief and introduction email links; it does not automatically send mail.
+- v7 migration retains custom content, roles, ordering and hidden/empty collections without KV
+  writes on read. New fields are editable in Admin. Search/enquiry outcomes are unmeasured.
+- Resume audit: v0.8.0 was complete. The next strategic audit ended in reasoning with no recorded
+  error or explicit interruption reason. Continued from that audit, preserving existing features.
 
 ## Insights and portfolio update (v0.8.0 · 2026-09-10)
 - `/admin` → **Insights** → **New draft**. Edit title, URL, date, category, summary and

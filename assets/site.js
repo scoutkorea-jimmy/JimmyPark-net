@@ -259,7 +259,10 @@
     // contact behaviors (from global.contact)
     var c = g.contact || {};
     if (c.email) {
-      document.querySelectorAll("a[data-mail]").forEach(function (a) { a.href = "mailto:" + c.email; });
+      document.querySelectorAll("a[data-mail]").forEach(function (a) { var params = [];
+        if (a.hasAttribute('data-mail-subject')) params.push('subject=' + encodeURIComponent(a.getAttribute('data-mail-subject')));
+        if (a.hasAttribute('data-mail-body')) params.push('body=' + encodeURIComponent(a.getAttribute('data-mail-body')));
+        a.href = "mailto:" + c.email + (params.length ? '?' + params.join('&') : ''); });
       document.querySelectorAll("[data-copy-email]").forEach(function (b) { b.setAttribute("data-copy", c.email); });
     }
     if (c.phone) {

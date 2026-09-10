@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="JP">
-  <rect x="2" y="2" width="60" height="60" rx="15" fill="#ffffff" stroke="#e6e1da" stroke-width="1.5"/>
-  <text x="33" y="45" text-anchor="middle" font-family="'Didot','Bodoni MT','Bodoni 72',Georgia,'Times New Roman',serif" font-size="42" letter-spacing="-5" fill="#141414">JP</text>
-  <rect x="16" y="48.5" width="19" height="2.6" fill="#7a1e2c"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+<title id="title">Jimmy Park</title>
+<rect width="64" height="64" rx="13" fill="#faf9f6"/>
+<path d="M48 23V15H15V48H36" fill="none" stroke="#171717" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+<rect x="44" y="40" width="9" height="9" rx="1" fill="#7a1e2c"/>
 </svg>
