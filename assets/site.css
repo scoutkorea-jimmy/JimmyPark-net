@@ -1,35 +1,21 @@
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+
 /* Jimmy Park / 박지민 — shared design system
    Burgundy var(--accent) accent · scouting green var(--scout-accent) sub-accent · off-white canvas
-   Primary font Cafe24ProSlim (KR/EN), Pretendard fallback. Warm-minimal, soft rounded corners. */
-
-@font-face {
-  font-family: 'Cafe24ProSlim';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/Cafe24PROSlim-Light.woff2') format('woff2');
-  font-weight: 300; font-display: swap;
-}
-@font-face {
-  font-family: 'Cafe24ProSlim';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/Cafe24PROSlim-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
-}
-@font-face {
-  font-family: 'Cafe24ProSlim';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2511-1@1.0/Cafe24PROSlim-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
-}
+   Primary font Wanted Sans Variable (KR/EN), Pretendard fallback. Warm-minimal, soft rounded corners. */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+button, input, textarea, select { font-family: inherit; }
 body {
   margin: 0;
   background: #ffffff;
   color: #171717;
-  font-family: 'Cafe24ProSlim', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Wanted Sans Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.65;
-  letter-spacing: 0.004em;
-  /* keep-all stops Korean words from breaking mid-word; the slim display font reads
-     cleaner with optimizeLegibility + a hair of tracking. */
+  letter-spacing: 0;
+  /* Preserve word boundaries; long strings can still wrap within narrow cards. */
   word-break: keep-all;
   overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
@@ -220,7 +206,7 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio .snapshot-row:last-child { padding-bottom: 0; border-bottom: 0; }
 .portfolio .snapshot-row dt { font-size: .875rem; font-weight: 700; line-height: 1.5; }
 .portfolio .snapshot-row dd { margin: 0; font-size: 1rem; color: #2c2925; }
-.portfolio .process-step .step-number { font-size: 2rem; line-height: 1; font-weight: 300; color: var(--eyebrow-color); }
+.portfolio .process-step .step-number { font-size: 2rem; line-height: 1; font-weight: 400; color: var(--eyebrow-color); }
 .portfolio .process-step h3 { font-size: 1.125rem; margin: var(--space-16) 0 0; }
 .portfolio .process-step p { margin: var(--space-12) 0 0; color: #66615c; }
 .portfolio .flow { padding-top: var(--space-32); }

@@ -8,7 +8,7 @@
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
 same header, footer, eyebrow, button, and card patterns by design.
 
-### Portfolio composition (v0.7.0)
+### Portfolio composition (v0.7.1)
 - Keep the burgundy site identity and approved typefaces. The Scouting page uses the owner-requested purple theme; existing Scouting references on other pages retain their green sub-accent.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
@@ -119,9 +119,11 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 
 ## 2. Typography
 
-- **Primary font:** **Cafe24ProSlim** (KR/EN), self-`@font-face`'d in `site.css` from
-  jsDelivr (`projectnoonnu/2511-1@1.0`, weights 300/400/700, `font-display:swap`). Weights
-  above 700 (e.g. 800 headings) fall back to 700 — keep that in mind for heavy headings.
+- **Primary font:** **Wanted Sans Variable** (KR/EN), the owner-selected v1.0.1 split webfont.
+  Import it once at the very start of `site.css` from
+  `https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css`.
+  Its CSS family is `'Wanted Sans Variable'`, weight range **400–1000**, `font-display:swap`.
+  Public pages and Admin use the same primary family; native text controls inherit it.
 - **Fallback font:** Pretendard, loaded from jsDelivr CDN
   (`pretendard@v1.3.9/dist/web/static/pretendard.min.css`), then
   `-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`.
@@ -319,7 +321,7 @@ Korean from older saved docs on read.)
 
 **Don't**
 - Don't add a CSS framework, a build step, or web fonts beyond the approved set
-  (Cafe24ProSlim primary, Pretendard fallback, Material Symbols icons).
+  (Wanted Sans Variable primary, Pretendard fallback, Material Symbols icons).
 - Don't introduce new accent colors — use the tokens above.
 - Don't rely on JS for primary content (JS only *enhances* and applies admin overrides).
 - Don't use shadows for separation where a border will do.

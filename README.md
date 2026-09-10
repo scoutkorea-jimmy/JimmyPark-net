@@ -3,6 +3,7 @@
 Personal portfolio: Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.
 Clean, modern, warm-minimal. English-only. Burgundy `#7a1e2c`
 accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
+Wanted Sans Variable is the default typeface, with Pretendard/system fallbacks.
 
 The home page leads with four capabilities, connects each to supporting work, and
 places dated international roles alongside the projects. Work covers content
