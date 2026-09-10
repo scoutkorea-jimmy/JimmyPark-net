@@ -327,7 +327,7 @@ Korean from older saved docs on read.)
 Run `python3 .checks/design.py` after portfolio edits. This dependency-free Python/Node check
 verifies section/container/CTA ownership, token use, heading scales, matching headers/footers,
 valid routes and assets, and exact static/runtime collection parity. `.checks/` is development-only
-and excluded from deployment by `.assetsignore`. It does not read/write live KV.
+and blocked from public access by the `.checks` rule in `functions/_middleware.js`. It does not read/write live KV.
 
 After changes to geometry, visually review all four pages at desktop, tablet and narrow mobile
 widths, especially CTA boundaries, contact topics, timeline, gallery and the portrait crop.

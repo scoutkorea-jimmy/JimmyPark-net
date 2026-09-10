@@ -166,7 +166,6 @@ _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
 robots.txt      allow all except /admin, /api/, /saju ; points to sitemap
 sitemap.xml     the 4 public routes
 wrangler.toml   Pages config: pages_build_output_dir=".", JP_KV binding
-.assetsignore  excludes development-only validation tooling from deployment
 .checks/        development-only layout contract + static/runtime collection checks
 VERSION         site version string (currently mirrored in ?v= asset query strings)
 ```

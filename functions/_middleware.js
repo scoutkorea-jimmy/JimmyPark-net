@@ -8,6 +8,7 @@ const BLOCK = [
   /^\/?\.assetsignore$/i,
   /^\/?CNAME$/i,
   /^\/?\.claude\//i,
+  /^\/?\.checks(?:\/|$)/i,
 ];
 
 export async function onRequest(context) {
