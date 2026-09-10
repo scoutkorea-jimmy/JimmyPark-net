@@ -493,7 +493,11 @@ function migrateTo5(doc) {
       currentDefault = currentDefault[path[i]];
     }
     const key = path[path.length - 1];
-    if (target && matchesLegacy(target[key], legacy)) {
+    // Older stored docs may predate sections such as workshops. Normalize with
+    // the legacy order before comparing, while retaining genuinely custom order.
+    const saved = target && key === "order" && Array.isArray(legacy)
+      ? mergeOrder(legacy, target[key]) : target && target[key];
+    if (target && matchesLegacy(saved, legacy)) {
       target[key] = JSON.parse(JSON.stringify(currentDefault[key]));
     }
   }

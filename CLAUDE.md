@@ -21,6 +21,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   custom text, media, contacts, hidden sections and custom ordering. Semantically repurposed rows
   (capabilities, snapshot, process and workshop topics) migrate atomically only when unchanged;
   compare their schema values independently of object key order in raw KV documents.
+  Normalize missing section IDs against the legacy order before migrating an unchanged order.
 - This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
 ## Golden rules

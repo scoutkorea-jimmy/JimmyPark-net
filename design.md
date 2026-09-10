@@ -23,6 +23,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 - Keep static text/collections aligned with the API defaults and runtime templates. Custom CMS
   images remain editable, and removing an image restores the component's fallback presentation.
   Unchanged legacy cards migrate as complete rows; saved field order does not affect matching.
+  Earlier default section orders also migrate when a subsequently added section was absent.
 
 ---
 
