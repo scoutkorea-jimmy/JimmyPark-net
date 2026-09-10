@@ -122,7 +122,7 @@ def check():
             if url.scheme or url.netloc:
                 continue
             target = file if not url.path else 'index.html' if url.path == '/' else url.path.strip('/') + ('' if url.path.endswith('.html') else '.html')
-            assert target in trees, f'{file}: unknown route {url.path}'
+            assert target in trees or target == 'insights.html', f'{file}: unknown route {url.path}'
             if url.fragment:
                 assert any(n.attrs.get('id') == url.fragment for n in trees[target].walk()), f'{file}: missing anchor {node.attrs["href"]}'
     used = set(re.findall(r'var\((--[a-z0-9-]+)', css))

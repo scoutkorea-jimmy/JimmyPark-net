@@ -34,6 +34,35 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   version-pinned import once in `assets/site.css`. Keep Material Symbols for icons.
 - Keep this contract in [design.md](design.md) and validate it with `.checks/design.py`.
 
+### Insights and portfolio completion (v0.8.0)
+- Add `/insights` and `/insights/:slug` to the portfolio. The existing four routes and all
+  standalone app files stay intact. Shared header/mobile/footer navigation includes Insights.
+- `functions/api/_posts.js` manages separate KV key `insights:v1`; `/api/posts` always requires
+  the existing signed admin session. Public server-rendered views and dynamic sitemap select
+  published posts only. Draft/unknown slug = 404. Keep `no-store` intact in middleware.
+- Posts: title, unique lowercase ASCII slug, date, category, summary, plain-text body with
+  optional `## ` paragraph headings, and draft/published state. Escape all rendered fields.
+  Validate before writes; revision checks are best-effort against eventual KV reads, not a
+  guarantee for simultaneous editors. Do not put drafts in the public `/api/content` document.
+- `assets/insights-admin.js` owns article editing and its save/publish/unpublish/delete controls.
+  Clone stored rows before editing, disable controls while saving, and preserve unsaved text
+  across auth expiry. Explicit sign-out may discard it only after the editor's discard prompt.
+  Hide the unrelated page-preview column while writing. Keep article SEO out of public CMS
+  global-SEO hydration. `insights.html` and `_insights-shell.js` share the public shell.
+- Work uses six locally served Drive portfolio photos (`assets/img/portfolio/`) with
+  randomized order per visit and source links. `.checks/photo-sources.json` records provenance.
+  Future Drive additions do not auto-sync. The photography hero has a supplied-photo fallback;
+  a custom CMS image takes precedence. Do not relabel these event photos as Scouting.
+- Empty Scouting gallery rows render nothing; hide the section until it has an image, while
+  respecting CMS visibility. Uploaded images open in a native keyboard-accessible dialog.
+- Page save responses rebind controls only when no newer edits exist; preserve newer edits and
+  prevent duplicate saves. Preview messages require the same-origin parent and `?preview=1`;
+  late live content cannot overwrite a received preview. Copy/upload success must be verified.
+- `404.html` stops nonexistent paths from returning the homepage with HTTP 200.
+- Required checks: `.checks/design.py`, `.checks/content.cjs`, `.checks/insights.cjs`,
+  `.checks/admin-save.cjs`, JS syntax, diff whitespace and local HTTP routes.
+  v0.8.0 has code/HTTP verification; browser interaction and visual QA were not run.
+
 ### Owner-supplied portfolio evidence (v0.7.0)
 - Six video cases preserve the owner's specific planning/direction/filming/editing credits and
   optional years. Photography links to an ongoing Drive folder; both are editable in Admin.

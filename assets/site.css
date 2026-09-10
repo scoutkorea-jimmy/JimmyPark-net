@@ -361,4 +361,25 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 
 /* Gallery modal */
 .gal-modal { position: fixed; inset: 0; z-index: 90; background: rgba(23, 23, 23, .62); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 24px; }
-.gal-modal.open { display: flex; }
+.gal-modal[open] { display: flex; }
+.gal-modal { width: min(860px, calc(100% - 32px)); height: auto; max-height: calc(100dvh - 32px); margin: auto; border: 0; border-radius: var(--radius-panel); background: #fff; padding: 0; }
+.gal-modal::backdrop { background: rgba(23,23,23,.65); }
+.gal-modal img { display: block; max-height: 70dvh; width: 100%; object-fit: contain; }
+.portfolio [hidden], [hidden] { display: none !important; }
+.insights-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+.insight-card h2 { font-size: var(--title-card); line-height: 1.3; margin: var(--space-16) 0; overflow-wrap: anywhere; }
+.insight-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-16); color: #66615c; font-size: .875rem; margin: var(--space-24) 0 var(--space-16); }
+.insight-reading { max-width: 850px; }
+.insight-reading h1 { overflow-wrap: anywhere; }
+.insight-body { margin-top: var(--space-48); font-size: 1.0625rem; line-height: 1.85; overflow-wrap: anywhere; }
+.insight-body p { white-space: pre-line; margin: 0 0 var(--space-24); }
+.insight-body h2 { font-size: var(--title-card); line-height: 1.3; margin: var(--space-48) 0 var(--space-16); }
+.insights-empty { margin-top: var(--space-48); color: #66615c; }
+.insight-fields { border: 0; padding: 0; min-width: 0; margin: 0; }
+.insight-admin-list, .insight-admin-actions { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-24); }
+.insight-admin-list { flex-direction: column; align-items: flex-start; }
+.photo-selection { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--grid-gap); margin-top: var(--space-32); }
+.photo-selection a { display: block; overflow: hidden; border-radius: var(--radius-card); }
+.photo-selection img { display: block; width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
+@media(max-width:840px) { .photo-selection { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:520px) { .insights-grid, .photo-selection { grid-template-columns: minmax(0,1fr); } }

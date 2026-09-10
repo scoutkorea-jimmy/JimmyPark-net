@@ -27,6 +27,25 @@ same header, footer, eyebrow, button, and card patterns by design.
   Unchanged legacy cards migrate as complete rows; saved field order does not affect matching.
   Earlier default section orders also migrate when a subsequently added section was absent.
 
+### Insights and real photography (v0.8.0)
+- Add Insights consistently to desktop, mobile and footer navigation. Its list uses the
+  shared container, burgundy identity and a two-column article grid (one below 520px).
+  The article view has an 850px maximum container, 17px body text at 1.85 leading, and the
+  existing heading scale. Long titles/URLs wrap; date and category remain readable at 14px.
+- Show an honest empty state until the owner publishes a first article. Public list/detail
+  content renders on the server; drafts and missing articles have no public body.
+- Admin writing uses a single 880px column with labelled fields and its own save actions.
+  Hide the unrelated page preview. Unsaved-change prompts, disabled pending controls and
+  live save/error messages support draft → publish → unpublish transitions.
+- Work photography: a supplied-photo hero fallback plus six real event photographs in a
+  three-column grid, two below 840px and one below 520px. Preserve original proportions in
+  source files; CSS uses 3:2 crops. Shuffle ordering once per visit; no automatic carousel.
+  Each image links to its original in Drive. CMS hero replacement remains available.
+- Scouting gallery placeholders are hidden until populated. Real uploads use labelled
+  buttons opening a native dialog with Escape/focus behavior and the full photo.
+- The 404 page reuses the shared shell and provides a direct route home. No indexable
+  placeholder article or artificial author content is introduced.
+
 ---
 
 ## 1. Color

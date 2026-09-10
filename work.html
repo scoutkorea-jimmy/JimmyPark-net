@@ -21,7 +21,7 @@
 <link rel="icon" href="/assets/img/favicon.svg?v=0.4.3" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.7.2">
+<link rel="stylesheet" href="/assets/site.css?v=0.8.0">
 </head>
 <body data-page="work" class="portfolio">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -34,6 +34,7 @@
       <a href="/" data-nav="home" class="lnk nav-link">Home</a>
       <a href="/work" data-nav="work" class="lnk nav-link">Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk nav-link">Global &amp; Scouting</a>
+      <a href="/insights" data-nav="insights" class="lnk nav-link">Insights</a>
       <a href="/contact" data-nav="contact" class="btn btn-primary site-button">Contact</a>
     </nav>
     <button class="nav-toggle btn" aria-label="Menu" aria-controls="mobile-navigation" aria-expanded="false"><span class="msym" aria-hidden="true">menu</span></button>
@@ -43,6 +44,7 @@
       <a href="/" data-nav="home" class="lnk">Home</a>
       <a href="/work" data-nav="work" class="lnk">Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk">Global &amp; Scouting</a>
+      <a href="/insights" data-nav="insights" class="lnk">Insights</a>
       <a href="/contact" data-nav="contact" class="lnk">Contact</a>
     </div>
   </nav>
@@ -130,14 +132,23 @@
       </div>
       <div>
         <figure style="margin:0;">
-          <div data-img="photography.image" style="position:relative; aspect-ratio:16/9; border-radius:var(--radius-panel); overflow:hidden; border:1px solid #e6e1da; background:#f7f6f3; display:flex; align-items:center; justify-content:center; padding:var(--space-48);">
-<span data-image-fallback style="font-size:clamp(24px,3vw,34px); font-weight:700; line-height:1.25; max-width:15ch;">The right moments. Ready to publish.</span><span style="position:absolute; top:14px; left:14px; font-size:11px; font-weight:600; background:rgba(255,255,255,.9); color:#3a3631; padding:var(--space-4) var(--space-12); border-radius:var(--radius-pill);">Event overview</span></div>
+          <div data-img="photography.image" data-default-image="/assets/img/portfolio/field-01.jpg" style="position:relative; aspect-ratio:16/9; border-radius:var(--radius-panel); overflow:hidden; border:1px solid #e6e1da; background:#f7f6f3 url(/assets/img/portfolio/field-01.jpg) center/cover; display:flex; align-items:center; justify-content:center; padding:var(--space-48);">
+<span data-image-fallback hidden style="font-size:clamp(24px,3vw,34px); font-weight:700; line-height:1.25; max-width:15ch;">The right moments. Ready to publish.</span><span style="position:absolute; top:14px; left:14px; font-size:11px; font-weight:600; background:rgba(255,255,255,.9); color:#3a3631; padding:var(--space-4) var(--space-12); border-radius:var(--radius-pill);">Event overview</span></div>
           <figcaption data-bind="photography.caption" style="margin-top:var(--space-8); font-size:13px; color:#6b665f; font-style:italic;">Event documentation · press-ready selection · same-day delivery</figcaption>
         </figure>
 
       </div>
     </div>
-  </div></section>
+
+    <div class="photo-selection" data-photo-shuffle>
+<a href="https://drive.google.com/file/d/170eSqkEkAOgunivdJXaAoxJ25CGrionI/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-01.jpg" alt="Roundtable discussion in an event space" loading="lazy" decoding="async" width="1000" height="667"></a>
+<a href="https://drive.google.com/file/d/1uhnm3bYrlAi6KQ7dk_1mvadJ6R6TPnEV/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-02.jpg" alt="Speaker at a roundtable" loading="lazy" decoding="async" width="1000" height="667"></a>
+<a href="https://drive.google.com/file/d/1udBTWVkSvkm7uukoSJAArXNmgyMqrgZm/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-03.jpg" alt="Participants listening during a roundtable" loading="lazy" decoding="async" width="1000" height="667"></a>
+<a href="https://drive.google.com/file/d/1kAIXtXkKnU33VllllLdXM2XsUjokD_DS/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-04.jpg" alt="Guests greeting at an event" loading="lazy" decoding="async" width="1000" height="667"></a>
+<a href="https://drive.google.com/file/d/1tY6jHdZKTVTQdZrDG1suxPXXP5ZhIDub/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-05.jpg" alt="Conversation at an event" loading="lazy" decoding="async" width="1000" height="667"></a>
+<a href="https://drive.google.com/file/d/1Xm3afkrgwymC3bSSzpuLjfzdf9P4Od4Y/view" target="_blank" rel="noopener noreferrer"><img src="/assets/img/portfolio/field-06.jpg" alt="Guests greeting at an alumni event" loading="lazy" decoding="async" width="1000" height="667"></a>
+    </div>
+</div></section>
 
 
   <section data-section="cta" id="cta" class="site-section site-section--cta"><div class="site-container">
@@ -162,6 +173,7 @@
         <a href="/" class="lnk">Home</a>
         <a href="/work" class="lnk">Work</a>
         <a href="/scouting" class="lnk">Global &amp; Scouting</a>
+        <a href="/insights" class="lnk">Insights</a>
         <a href="/contact" class="lnk">Contact</a>
       </nav>
     </div>
@@ -173,6 +185,6 @@
 </footer>
 
 <div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
-<script src="/assets/site.js?v=0.7.2" defer></script>
+<script src="/assets/site.js?v=0.8.0" defer></script>
 </body>
 </html>

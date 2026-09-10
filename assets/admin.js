@@ -17,6 +17,7 @@
   var pendingPick = null;   // fn(url) used by the image picker / upload
   var idleTimer = null, idleDeadline = 0, idleTick = null, prevTimer = null;
   var lastAvail = -1;       // last preview-stage width the iframe scale was fit to
+  var editRevision = 0, saving = false;
 
   // ── small DOM helpers ─────────────────────────────────────────────────────
   function el(tag, props, kids) {
@@ -112,7 +113,7 @@
       })
       .catch(function () { $("gate-msg").textContent = "Network error. Try again."; });
   }
-  function logout() { clearSession(); showGate("Signed out."); }
+  function logout() { if (window.JPInsights && !window.JPInsights.canLeave()) return; clearSession(); if (window.JPInsights) window.JPInsights.reset(); showGate("Signed out."); }
 
   // ── idle auto sign-out ────────────────────────────────────────────────────
   function startIdle() {
@@ -163,7 +164,7 @@
   // Two groups: the site's actual pages (in top-to-bottom nav order) first, then the
   // site-wide / shared content (Global + Media) separated as its own group.
   var TAB_GROUPS = [
-    { label: "Pages", tabs: ["home", "work", "scouting", "contact"] },
+    { label: "Pages", tabs: ["home", "work", "scouting", "contact", "insights"] },
     { label: "Site-wide", tabs: ["global", "media"] },
   ];
   function buildTabs() {
@@ -172,16 +173,22 @@
       if (gi) bar.appendChild(el("span", { class: "ad-tab-div", "aria-hidden": "true" }));
       bar.appendChild(el("span", { class: "ad-tab-grp", text: g.label }));
       g.tabs.forEach(function (t) {
-        var label = t === "media" ? "Media" : SCHEMA[t] ? SCHEMA[t].title : t;
+        var label = t === "media" ? "Media" : t === "insights" ? "Insights" : SCHEMA[t] ? SCHEMA[t].title : t;
         bar.appendChild(el("button", { class: "ad-tab" + (t === activeTab ? " active" : ""), text: label, "data-tab": t, onclick: function () { selectTab(t); } }));
       });
     });
   }
   function selectTab(t) {
+    if (activeTab === 'insights' && t !== activeTab && !window.JPInsights.canLeave()) return;
     activeTab = t;
     Array.prototype.forEach.call($("tabs").children, function (b) { b.classList.toggle("active", b.getAttribute("data-tab") === t); });
     $("media-panel").style.display = t === "media" ? "block" : "none";
-    $("editor").style.display = t === "media" ? "none" : "block";
+    $("editor").style.display = t === "media" || t === "insights" ? "none" : "block";
+    $("insights-panel").hidden = t !== "insights";
+    $("save").hidden = t === "insights";
+    $("prev-toggle").hidden = t === "insights";
+    document.body.classList.toggle('ad-writing', t === 'insights');
+    if (t === "insights") { window.JPInsights.open($("insights-panel"), authHeader, function () { clearSession(); showGate('Session expired — enter a new code.'); }); return; }
     if (t === "media") { loadMedia(); return; }
     if (SCHEMA[t] && SCHEMA[t].kind === "page") { if (previewPage !== t) { previewPage = t; setPreviewSrc(); } }
     renderEditor();
@@ -494,18 +501,26 @@
   function previewPath() { return (previewPage === "home" ? "/" : "/" + previewPage) + "?preview=1"; }
   function setPreviewSrc() { $("preview-page").textContent = previewPage; $("preview").src = previewPath(); }
   function postPreview() { try { var f = $("preview"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "jp-preview", content: content }, location.origin); } catch (_) {} }
-  function schedulePreview() { clearTimeout(prevTimer); prevTimer = setTimeout(postPreview, 140); }
+  function schedulePreview() { editRevision++; clearTimeout(prevTimer); prevTimer = setTimeout(postPreview, 140); }
 
   // ── save ──────────────────────────────────────────────────────────────────
   function save() {
+    if (saving) return;
+    saving = true; $("save").disabled = true;
+    var revision = editRevision;
     var msg = $("save-msg"); msg.textContent = "Saving…"; msg.className = "ad-msg";
-    fetch("/api/content", { method: "PUT", headers: Object.assign({ "content-type": "application/json" }, authHeader()), body: JSON.stringify({ content: content }) })
+    return fetch("/api/content", { method: "PUT", headers: Object.assign({ "content-type": "application/json" }, authHeader()), body: JSON.stringify({ content: content }) })
       .then(function (r) { if (r.status === 401) { clearSession(); showGate("Session expired — enter a new code."); throw new Error("401"); } return r.json(); })
       .then(function (j) {
-        if (j && j.ok) { content = j.content; ensureShape(); msg.textContent = "✓ Saved & live"; msg.className = "ad-msg ad-ok"; setTimeout(function () { msg.textContent = ""; }, 2600); postPreview(); }
+        if (j && j.ok) {
+          if (editRevision === revision) { content = j.content; ensureShape(); renderEditor(); msg.textContent = "✓ Saved & live"; }
+          else { msg.textContent = "Saved earlier changes. New edits still need saving."; }
+          msg.className = "ad-msg ad-ok"; postPreview();
+        }
         else { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; }
       })
-      .catch(function (e) { if (String(e.message) !== "401") { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; } });
+      .catch(function (e) { if (String(e.message) !== "401") { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; } })
+      .finally(function () { saving = false; $("save").disabled = false; });
   }
 
   // ── media library ─────────────────────────────────────────────────────────
@@ -554,9 +569,9 @@
     arr.forEach(function (f) {
       chain = chain.then(function () {
         return downscale(f, 1600, 0.85).then(function (blob) {
-          return fetch("/api/image", { method: "POST", headers: Object.assign({ "content-type": "image/jpeg", "X-Filename": f.name || "image.jpg" }, authHeader()), body: blob })
-            .then(function (r) { if (r.status === 401) { clearSession(); showGate("Session expired — enter a new code."); throw new Error("401"); } return r.json(); })
-            .then(function (j) { if (j && j.url) lastUrl = j.url; });
+          return fetch("/api/image", { method: "POST", headers: Object.assign({ "content-type": "image/jpeg", "X-Filename": encodeURIComponent(f.name || "image.jpg") }, authHeader()), body: blob })
+            .then(function (r) { if (r.status === 401) { clearSession(); showGate("Session expired — enter a new code."); throw new Error("401"); } if (!r.ok) throw new Error('upload'); return r.json(); })
+            .then(function (j) { if (!j || !j.ok || !j.url) throw new Error('upload'); lastUrl = j.url; });
         });
       });
     });

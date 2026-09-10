@@ -24,6 +24,8 @@ index.html      Home  (/)
 work.html       Work  (/work)
 scouting.html   Scouting (/scouting)
 contact.html    Contact (/contact)
+insights.html   Insights static fallback; Pages Functions render /insights and /insights/:slug
+404.html        Missing-page response (disables the Pages SPA fallback)
 admin.html      Hidden admin (/admin · noindex)
 assets/         site.css · site.js (public) · admin.js · img/ (favicon, og)
 functions/      Cloudflare Pages Functions (API)
@@ -38,6 +40,25 @@ robots.txt · sitemap.xml
 wrangler.toml   Pages config + KV binding
 .checks/        dependency-free layout consistency checks (not public)
 ```
+
+## Insights and portfolio update (v0.8.0 · 2026-09-10)
+- `/admin` → **Insights** → **New draft**. Edit title, URL, date, category, summary and
+  article text, then **Save draft** or **Publish**. Existing articles can be edited,
+  unpublished or deleted. Article controls save independently of the page editor.
+- A blank line separates paragraphs; `## ` starts a heading. HTML is displayed as text.
+- Drafts require the existing admin login. Only published posts enter public HTML and
+  the sitemap. There are no invented starter articles. Content is rendered on the server
+  for reading without JavaScript and carries article-specific metadata.
+- Posts live in a separate `insights:v1` KV document. One editor is intended; revision
+  checks reject observed stale saves but Cloudflare KV is eventually consistent, not a
+  transactional multi-editor database. Publishing visibility may lag briefly between regions.
+- Work displays six actual photos from the supplied public Drive portfolio, in shuffled
+  order on each visit, with original-file links. These are locally served selected images,
+  **not automatic synchronization** of future Drive uploads; the folder link remains current.
+- Empty Scouting gallery entries stay hidden. Existing CMS image uploads can populate them.
+- Fixed repeated page saves, edits during a pending save, Korean upload filenames,
+  false upload/copy success, and untrusted preview messages. Article text survives an
+  expired session while the current admin tab remains open.
 
 ## How it works
 - Public pages render full static content (good for SEO / no-JS). `site.js` enhances
@@ -60,11 +81,18 @@ Before deploying portfolio changes:
 python3 .checks/design.py
 node --check assets/site.js
 node .checks/content.cjs
+node .checks/insights.cjs
+node .checks/admin-save.cjs
 git diff --check
 ```
 The check uses Python 3 and Node only. It verifies layout rules, shared shell, links/assets and
 static/runtime collection parity without network requests or KV writes. Also visually review
 changed layouts at desktop, tablet and narrow mobile widths.
+
+The additional checks exercise authenticated draft/publication transitions, escaped HTML,
+invalid/stale writes, repeated saves and in-flight edits with isolated data. Local HTTP checks
+cover public routes, sitemap, missing routes and unauthorized admin requests. No production
+test posts are created. This release did not run browser interaction or visual QA.
 
 ## Deploy (Cloudflare Pages)
 1. Connect this repo to a Pages project (build output dir = repo root, no build cmd).

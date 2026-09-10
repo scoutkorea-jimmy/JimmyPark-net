@@ -42,31 +42,33 @@
   // ── Copy to clipboard + toast (delegated) ─────────────────────────────────
   var toast = document.querySelector(".copy-toast");
   var toastTimer;
-  function showToast() {
+  function showToast(message) {
     if (!toast) return;
+    toast.textContent = message;
+    toast.setAttribute('role', 'status');
     toast.classList.add("show");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 1700);
   }
   function copyText(t) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(t).catch(function () { legacyCopy(t); });
-    } else { legacyCopy(t); }
+      return navigator.clipboard.writeText(t).then(function () { return true; }).catch(function () { return legacyCopy(t); });
+    } else { return Promise.resolve(legacyCopy(t)); }
   }
   function legacyCopy(t) {
+    var ta, previous = document.activeElement;
     try {
-      var ta = document.createElement("textarea");
+      ta = document.createElement("textarea");
       ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
-      document.body.appendChild(ta); ta.select(); document.execCommand("copy");
-      document.body.removeChild(ta);
-    } catch (_) {}
+      document.body.appendChild(ta); ta.select(); return document.execCommand("copy");
+    } catch (_) { return false; }
+    finally { if (ta && ta.parentNode) ta.remove(); if (previous && previous.focus) previous.focus(); }
   }
   document.addEventListener("click", function (e) {
     var btn = e.target.closest && e.target.closest("[data-copy]");
     if (!btn) return;
     e.preventDefault();
-    copyText(btn.getAttribute("data-copy") || "");
-    showToast();
+    copyText(btn.getAttribute("data-copy") || "").then(function (ok) { showToast(ok ? 'Copied' : 'Couldn’t copy. Please select and copy the text.'); });
   });
 
   // ── Gallery modal (delegated, survives re-render) ─────────────────────────
@@ -78,16 +80,19 @@
       var fig = e.target.closest && e.target.closest(".galfig");
       if (fig) {
         if (mLabel) mLabel.textContent = fig.getAttribute("data-glabel") || "";
-        if (mCat) mCat.textContent = (fig.getAttribute("data-gcat") || "") + " · year / event placeholder";
-        modal.classList.add("open");
+        if (!fig.getAttribute('data-gimage')) return;
+        if (mCat) mCat.textContent = fig.getAttribute("data-gcat") || "";
+        var photo = modal.querySelector('[data-gal-image]');
+        if (photo) { photo.src = fig.getAttribute('data-gimage'); photo.alt = fig.getAttribute('data-glabel') || ''; }
+        modal.showModal();
         return;
       }
       if (e.target === modal || (e.target.closest && e.target.closest("[data-gal-close]"))) {
-        modal.classList.remove("open");
+        modal.close();
       }
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") modal.classList.remove("open");
+      if (e.key === "Escape" && modal.open) modal.close();
     });
   }
 
@@ -171,9 +176,10 @@
         '<div class="tlctx">' + esc(t.context) + '</div></details>';
     },
     gallery: function (g, i) {
+      if (!g.image) return '';
       var bg = g.image ? ' style="background-image:url(&quot;' + esc(g.image) + '&quot;)"' : '';
-      return '<figure class="galfig' + (i === 0 ? ' gallery-first' : '') + '" data-glabel="' + esc(g.label) + '" data-gcat="' + esc(g.category) + '">' +
-        '<div class="gallery-image"' + bg + '><span>' + esc(g.label) + '</span></div></figure>';
+      return '<figure class="galfig' + (i === 0 ? ' gallery-first' : '') + '" data-glabel="' + esc(g.label) + '" data-gcat="' + esc(g.category) + '" data-gimage="' + esc(g.image) + '">' +
+        '<button type="button" class="gallery-image" aria-label="' + esc('View ' + g.label) + '"' + bg + '><span>' + esc(g.label) + '</span></button></figure>';
     },
   };
 
@@ -191,7 +197,7 @@
     var sd = sectionData(content);
 
     // SEO
-    var meta = pd.meta || g.seo || {};
+    var meta = pd.meta || (page === 'home' ? g.seo : {}) || {};
     if (meta.title) document.title = meta.title;
     if (meta.desc) {
       var m = document.querySelector('meta[name="description"]');
@@ -214,7 +220,7 @@
     // images (background) — data-img="section.field" within page, or "@global.path"
     document.querySelectorAll("[data-img]").forEach(function (el) {
       var path = el.getAttribute("data-img");
-      var v = path.charAt(0) === "@" ? get(g, path.slice(1)) : get(sd, path);
+      var v = (path.charAt(0) === "@" ? get(g, path.slice(1)) : get(sd, path)) || el.getAttribute('data-default-image');
       if (v) { el.style.backgroundImage = "url('" + v + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = "center"; }
       else { el.style.backgroundImage = ""; }
       var fallback = el.querySelector("[data-image-fallback]");
@@ -298,17 +304,28 @@
     });
     nodes.forEach(function (n) {
       n.style.display = hidden.indexOf(n.getAttribute("data-section")) >= 0 ? "none" : "";
+      if (n.getAttribute('data-section') === 'gallery') n.hidden = !(get(sd, 'gallery.figs') || []).some(function (fig) { return !!fig.image; });
     });
   }
 
+  // Shuffle the supplied portfolio selection once per visit; keep every image visible.
+  document.querySelectorAll('[data-photo-shuffle]').forEach(function (grid) {
+    var photos = Array.prototype.slice.call(grid.children);
+    for (var i = photos.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var swap = photos[i]; photos[i] = photos[j]; photos[j] = swap; }
+    photos.forEach(function (photo) { grid.appendChild(photo); });
+  });
+
   // ── Load live content, then accept preview messages ───────────────────────
+  var previewReceived = false;
   fetch("/api/content")
     .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (j) { if (j && j.content) applyDoc(j.content); })
+    .then(function (j) { if (!previewReceived && j && j.content) applyDoc(j.content); })
     .catch(function () {});
 
   window.addEventListener("message", function (e) {
+    if (e.origin !== location.origin || window.parent === window || e.source !== window.parent || new URLSearchParams(location.search).get('preview') !== '1') return;
     if (e.data && e.data.type === "jp-preview" && e.data.content) {
+      previewReceived = true;
       try { applyDoc(e.data.content); } catch (_) {}
     }
   });

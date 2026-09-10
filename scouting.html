@@ -21,7 +21,7 @@
 <link rel="icon" href="/assets/img/favicon.svg?v=0.4.3" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.7.2">
+<link rel="stylesheet" href="/assets/site.css?v=0.8.0">
 </head>
 <body data-page="scouting" class="portfolio">
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -34,6 +34,7 @@
       <a href="/" data-nav="home" class="lnk nav-link">Home</a>
       <a href="/work" data-nav="work" class="lnk nav-link">Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk nav-link">Global &amp; Scouting</a>
+      <a href="/insights" data-nav="insights" class="lnk nav-link">Insights</a>
       <a href="/contact" data-nav="contact" class="btn btn-primary site-button">Contact</a>
     </nav>
     <button class="nav-toggle btn" aria-label="Menu" aria-controls="mobile-navigation" aria-expanded="false"><span class="msym" aria-hidden="true">menu</span></button>
@@ -43,6 +44,7 @@
       <a href="/" data-nav="home" class="lnk">Home</a>
       <a href="/work" data-nav="work" class="lnk">Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk">Global &amp; Scouting</a>
+      <a href="/insights" data-nav="insights" class="lnk">Insights</a>
       <a href="/contact" data-nav="contact" class="lnk">Contact</a>
     </div>
   </nav>
@@ -163,14 +165,10 @@
 </section>
 
 <!-- FIELD GALLERY (modal) -->
-<section data-section="gallery" id="gallery" class="site-section">
+<section data-section="gallery" id="gallery" class="site-section" hidden>
   <div class="site-container">
     <h2 data-bind="gallery.title" class="heading section-title">Field Gallery</h2>
-    <div class="gal-grid collection-grid" data-collection="gallery.figs" data-template="gallery" style="display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-auto-rows:1fr;"><figure class="galfig gallery-first" data-glabel="International Meeting" data-gcat="Scouting field"><div class="gallery-image"><span>International Meeting</span></div></figure>
-<figure class="galfig" data-glabel="Jamboree" data-gcat="Scouting field"><div class="gallery-image"><span>Jamboree</span></div></figure>
-<figure class="galfig" data-glabel="Media Operation" data-gcat="Scouting field"><div class="gallery-image"><span>Media Operation</span></div></figure>
-<figure class="galfig" data-glabel="Scout Field" data-gcat="Scouting field"><div class="gallery-image"><span>Scout Field</span></div></figure>
-<figure class="galfig" data-glabel="Youth Activity" data-gcat="Scouting field"><div class="gallery-image"><span>Youth Activity</span></div></figure></div>
+    <div class="gal-grid collection-grid" data-collection="gallery.figs" data-template="gallery" style="display:grid; grid-template-columns:1.4fr 1fr 1fr; grid-auto-rows:1fr;"></div>
   </div>
 </section>
 
@@ -198,6 +196,7 @@
         <a href="/" class="lnk">Home</a>
         <a href="/work" class="lnk">Work</a>
         <a href="/scouting" class="lnk">Global &amp; Scouting</a>
+        <a href="/insights" class="lnk">Insights</a>
         <a href="/contact" class="lnk">Contact</a>
       </nav>
     </div>
@@ -209,9 +208,9 @@
 </footer>
 
 <!-- GALLERY MODAL -->
-<div class="gal-modal">
+<dialog class="gal-modal" aria-label="Photo viewer">
   <div style="max-width:680px; width:100%; background:#fff; border-radius:var(--radius-panel); overflow:hidden; box-shadow:0 40px 90px -30px rgba(0,0,0,.5);">
-    <div style="position:relative; aspect-ratio:16/10; background:linear-gradient(150deg,var(--scout-surface),var(--scout-grad-end));">
+    <div style="position:relative;"><img data-gal-image alt="">
       <button data-gal-close aria-label="Close" class="btn site-button" style="position:absolute; top:14px; right:14px; width:38px; height:38px; border:none; background:rgba(255,255,255,.92); color:#171717; justify-content:center;"><span class="msym" aria-hidden="true" style="font-size:20px;">close</span></button>
     </div>
     <div style="padding:var(--space-16) var(--space-24) var(--space-24);">
@@ -219,9 +218,9 @@
       <div data-gal-cat style="margin-top:var(--space-4); font-size:13px; color:#66615c;"></div>
     </div>
   </div>
-</div>
+</dialog>
 
 <div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
-<script src="/assets/site.js?v=0.7.2" defer></script>
+<script src="/assets/site.js?v=0.8.0" defer></script>
 </body>
 </html>

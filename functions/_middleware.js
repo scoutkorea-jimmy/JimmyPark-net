@@ -23,7 +23,7 @@ export async function onRequest(context) {
   // (ETag -> 304). API routes manage their own caching.
   if (!path.startsWith("/api/")) {
     const out = new Response(res.body, res);
-    out.headers.set("Cache-Control", "no-cache");
+    if (!/no-store/i.test(out.headers.get('Cache-Control') || '')) out.headers.set("Cache-Control", "no-cache");
     return out;
   }
   return res;

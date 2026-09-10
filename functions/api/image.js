@@ -38,7 +38,8 @@ export async function onRequestPost({ request, env }) {
   if (buf.byteLength > MAX_BYTES) return json({ ok: false, error: "too_large" }, 413);
   const id = newId();
   const ct = request.headers.get("content-type") || "image/jpeg";
-  const name = request.headers.get("X-Filename") || "";
+  let name = request.headers.get("X-Filename") || "";
+  try { name = decodeURIComponent(name); } catch (_) {}
   await env.JP_KV.put("img:" + id, buf);
   const index = await getIndex(env);
   index.unshift({ id, ct, name: String(name).slice(0, 200), size: buf.byteLength, at: Date.now() });
