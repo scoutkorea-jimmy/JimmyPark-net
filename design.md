@@ -12,6 +12,8 @@ same header, footer, eyebrow, button, and card patterns by design.
 - Keep the existing burgundy/Scouting-green identity and approved typefaces.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
+- Portrait v0.5.1 uses the supplied `IMG_2902.jpeg` unchanged. Use `center 10%` for its
+  background position in both static HTML and CMS hydration to retain the top of the head.
 - `.capability-grid`: two equal columns, one below 520px. Capability descriptions and tags are
   always visible; keyboard and touch users do not depend on hover to discover the offer.
 - `.project-grid`: three equal columns, one below 840px. Cards with no uploaded image render as

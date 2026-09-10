@@ -32,8 +32,8 @@ const DEFAULT = {
           "lead": "I plan content, build with AI, and help teams explore better ways of working — with a global network rooted in Scouting and Asia-Pacific collaboration.",
           "ctaPrimary": {"label":"Explore my work","href":"/work"},
           "ctaGhost": {"label":"Discuss a project","href":"/contact"},
-          "image": "/assets/img/jimmy-park-portrait.jpg",
-          "badge": "Jimmy Park · On location",
+          "image": "/assets/img/jimmy-park-portrait.jpg?v=0.5.1",
+          "badge": "Jimmy Park",
           "caption": "Content, technology, and people.",
           "captionRight": "Based in Korea"
         },

@@ -247,7 +247,7 @@
     // hero image back-compat
     document.querySelectorAll("[data-hero-image]").forEach(function (el) {
       var hero = sd.hero || {};
-      if (hero.image) { el.style.backgroundImage = "url('" + hero.image + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = "center"; }
+      if (hero.image) { el.style.backgroundImage = "url('" + hero.image + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = el.getAttribute("data-image-position") || "center"; }
       else { el.style.backgroundImage = ""; }
     });
 

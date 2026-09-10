@@ -15,8 +15,10 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - `/scouting` is labelled **Global & Scouting** in navigation; roles and international context
   appear before the detailed timeline. Keep historical dates and the owner's exact role titles.
 - AX is an offered scope and process, not a claim of completed enterprise engagements or measured results.
-- The portrait is the owner's existing public CMS photo, copied to `assets/img/jimmy-park-portrait.jpg`
-  so the home page also has a real image before hydration. Uploaded CMS images still override it.
+- The portrait (v0.5.1) is the owner's supplied `IMG_2902.jpeg`, copied without image edits to
+  `assets/img/jimmy-park-portrait.jpg`. Static and CMS image URLs use `?v=0.5.1`.
+  Home declares `data-image-position="center 10%"`; the hero renderer honors that position
+  so the head remains visible in both desktop and mobile crops. Other heroes default to center.
 - Schema v5 migrates unchanged legacy seed values in memory, never writes KV on GET, and preserves
   custom text, media, contacts, hidden sections and custom ordering. Semantically repurposed rows
   (capabilities, snapshot, process and workshop topics) migrate atomically only when unchanged;
