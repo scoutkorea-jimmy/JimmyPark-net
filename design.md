@@ -8,7 +8,7 @@
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
 same header, footer, eyebrow, button, and card patterns by design.
 
-### Portfolio composition (v0.5.0)
+### Portfolio composition (v0.6.0)
 - Keep the existing burgundy/Scouting-green identity and approved typefaces.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
@@ -19,7 +19,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 - `.project-grid`: three equal columns, one below 840px. Cards with no uploaded image render as
   complete text cards instead of empty image placeholders. AI maturity labels remain visible.
 - Main body copy in the new components is 16px; regular labels are 14px. The home headline is
-  `clamp(40px,5.3vw,62px)` with 1.12 line-height. Other existing type scales remain available.
+  `clamp(40px,5.3vw,62px)` with 1.12 line-height. Use the shared scale below for all headings.
 - Public pages have a skip link, a main landmark, and stable IDs matching their `data-section`
   values. Anchor destinations clear the sticky header. All canonical routes remain unchanged.
 - Keep static text/collections aligned with the API defaults and runtime templates. Custom CMS
@@ -126,21 +126,24 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
   FILL 0, GRAD 0`. Always add `aria-hidden="true"` to decorative icons.
 - **Base:** `line-height: 1.65`, antialiased.
 
-### Scale (all fluid via `clamp()`)
-| Role | Size |
-|------|------|
-| Hero H1 | `clamp(42px, 6.6vw, 68px)`, weight 800, `letter-spacing:-.03em`, `line-height:1.02` |
-| Page H1 | `clamp(34px, 5vw, 52px)`, weight 800, `-.025em` |
-| Section H2 | `clamp(24px, 3.4vw, 34px)`, weight 800, `-.015em` |
-| Activity title | `clamp(21px, 2.8vw, 28px)`, weight 700 |
-| Card H3 | `16.5px`–`clamp(22px,2.8vw,28px)`, weight 700–800 |
-| Lead paragraph | `clamp(19px, 2.4vw, 25px)`, weight 600 |
-| Body | `14.5px`–`15.5px`, weight 400–500 |
-| Small / caption | `11px`–`13.5px` |
-| **Eyebrow** | `12.5px`, weight 600, `letter-spacing:.13em`, `text-transform:uppercase` |
+### Shared portfolio scale
+| Role | Token / size | Line height |
+|------|--------------|-------------|
+| Home H1 | `--title-hero`: 40–62px | 1.12 |
+| Page H1 | `--title-page`: 36–52px | 1.15 |
+| Section H2 | `--title-section`: 28–36px | 1.2 |
+| Card H3 | `--title-card`: 22–26px | 1.3 |
+| Lead paragraph | `.hero-lead`: 18–22px | 1.65 |
+| Body | 16px | 1.75 |
+| Labels / tags / eyebrow | 14px | 1.5 |
+| Footer metadata | 12px | 1.6 |
+
+All H1/H2/H3 sizes and leading belong in `site.css`, never in inline page styles.
+Use `.hero-title`, `.page-heading`, `.section-title` and `.hero-lead` for their named roles.
+Compact process/topic/role headings have explicit shared component rules (18–20px).
 
 ### Weight conventions
-- Headings: **800** (700 for sub-items).
+- Headings: **700**, matching the available font weight.
 - Eyebrows / labels / buttons: **600–700**.
 - Body: **400–500**.
 
@@ -152,21 +155,42 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 
 ## 3. Layout & spacing
 
-- **Container:** `max-width: 1180px; margin: 0 auto;` with horizontal padding
-  `clamp(22px, 5vw, 44px)` (utility class `.wrap`, or inline the same values).
-- **Section vertical rhythm:** `clamp(44px, 6vw, 80px)` top/bottom.
-- **Grid gaps:** `clamp(16px, 2vw, 28px)` typical; hero gap `clamp(32px, 5vw, 64px)`.
-- **`* { box-sizing: border-box }`**, smooth scroll on `html`.
+`assets/site.css` is the source of layout tokens. Public pages use `body.portfolio`;
+these rules do not style the standalone app or the admin layout.
+
+| Purpose | Token | Range / value |
+|---------|-------|---------------|
+| Content width | `--content-width` | 1180px including gutters |
+| Horizontal gutter | `--page-gutter` | 20–44px |
+| Standard section, including CTA | `--section-space` | 48–80px on **both** ends |
+| Explicit compact section | `--compact-space` | 32–48px on both ends |
+| Card inset | `--card-padding` | 24–32px |
+| CTA panel inset | `--panel-padding` | 32–56px |
+| Collection gap | `--grid-gap` | 16–24px |
+| Split layout gap | `--split-gap` | 32–48px |
+
+- Base tokens: `--space-2`, `4`, `8`, `12`, `16`, `24`, `32`, `48`, `64`, `80`, `96` (px).
+  Use these for margins, padding and gaps; do not add arbitrary per-page values.
+- Every `section[data-section]` is a direct child of `<main>` and owns one direct
+  `.site-container`. Header and footer use the same container, aligning all page edges.
+- `.site-section` owns vertical padding; `.site-container` owns horizontal gutters.
+  Neither may carry inline spacing/width overrides. Avoid nested containers.
+- Only the home snapshot and Scouting stats use `.site-section--compact`.
+- Every CTA uses `.site-section--cta > .site-container > .cta-panel`. Its balanced outside
+  spacing belongs to the CTA itself, so CMS hiding/reordering cannot remove its top gap.
+- Flow: eyebrow → title **12px** (page H1 **16px**), title → description **16px**,
+  intro → collection **32px**. Card title → description **12px**.
+- Use `.collection-grid` for shared collection gaps and top spacing. Grids use `minmax(0,1fr)`
+  and `min-width:0`; auto-fit minimums use `min(100%, minimum)` to avoid horizontal overflow.
+- `* { box-sizing: border-box }`, smooth scroll on `html`.
 
 ### Border radius
-| Element | Radius |
-|---------|--------|
-| Large panels / CTA / hero image | `28px`–`32px` |
-| Cards | `22px` |
-| Buttons / inputs | `13px`–`14px` |
-| Logo monogram | `10px`–`11px` |
-| Pills / tags / toast | `999px` |
-| Focus ring | `6px` |
+| Element | Token / radius |
+|---------|----------------|
+| Large panels / CTA / hero image | `--radius-panel`: 28px |
+| Cards / gallery images | `--radius-card`: 24px |
+| Buttons / controls | `--radius-control`: 12px |
+| Pills / tags | `--radius-pill`: 999px |
 
 ### Shadows
 - Card hover only: `box-shadow: 0 20px 44px -28px rgba(23,23,23,.32)` (`.soft:hover`).
@@ -179,13 +203,17 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 
 | Width | Change |
 |-------|--------|
-| `≤ 880px` | Desktop nav hidden; hamburger `.nav-toggle` shown; `.mobile-menu` toggles `.open` |
-| `≤ 840px` | `.split`, `.feat`, `.cta-grid`, `.vid-grid`, `.roles2` → 1 col; `.flow` → 2 col; `.gal-grid` → 2 col; `.split-img` follows text (`order:0`) |
-| `≤ 520px` | `.flow` → 1 col; `.snap4` → 2 col; `.snap-grid` → 1 col |
+| `≤ 880px` | Desktop nav hidden; 44px menu button shown |
+| `≤ 840px` | Split/feature/CTA/video/roles/project grids → 1 column; process/gallery → 2 columns; home portrait follows text |
+| `≤ 520px` | Capability/process/snapshot-row/format/gallery grids → 1 column; stats → 2 columns |
 
-Grids are declared inline (`grid-template-columns`) and **overridden** by these named classes
-in `site.css`. When you add a new multi-column grid, give it a class and add it to the right
-breakpoint block rather than writing a new media query.
+Contact topics use auto-fit columns with a 190px minimum, allowing a single column
+inside a narrow desktop split. The first gallery image stops spanning rows on mobile. Gallery media always has `width:100%`;
+its spanning variant uses `aspect-ratio:auto` and returns to 4:3/auto height on mobile,
+so the two-row height cannot force its image across a neighboring column.
+Mobile role cards stack the date below the role text consistently.
+Put reusable grid geometry and breakpoint rules in `site.css`. Page-specific composition
+may use inline columns only with a named responsive class; never inline gaps or section padding.
 
 ---
 
@@ -204,8 +232,9 @@ tagline (`SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.`) and `© 2026 Jimmy
 
 ### Eyebrow + heading pattern
 ```html
-<div style="font-size:12.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:#9b3544;">Section Label</div>
-<h2 style="margin:10px 0 0; font-size:clamp(24px,3.4vw,34px); font-weight:800; letter-spacing:-.015em;">Heading</h2>
+<div class="eyebrow">Section label</div>
+<h2 class="section-title">Heading</h2>
+<p class="body-copy" style="margin:var(--space-16) 0 0;">Supporting copy.</p>
 ```
 Use green `#2f5a45` for the eyebrow in Scouting sections.
 
@@ -216,16 +245,19 @@ Use green `#2f5a45` for the eyebrow in Scouting sections.
 | `.btn-ghost` | White bg, `#171717` text, `1px #ddd6cc` border, hover → border `#171717` |
 | `.btn-white` | White bg, burgundy text (used on dark CTA), hover → `#f3ece9` |
 
-All buttons: `.btn` adds `translateY(-1px)` lift on hover. Pad `14px 26px` (large) / `10px 20px`
-(nav). Trailing `arrow_forward` icon is common.
+All public buttons use `.site-button` plus their color variant and `.btn` hover behavior.
+Minimum height is **44px**; regular padding is **12px 24px**, navigation **8px 24px**.
+Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are decorative.
 
 ### Cards
-- `.soft` — hover lift + shadow; optional `.pmeta` reveals extra meta on hover.
-- `.act` — full-width activity row (home "What I Actually Do"); hover tints bg, slides arrow,
-  reveals `.out` tag row.
-- `details.tl` — timeline disclosure; `.tlctx` expands, `.tlchev` rotates 90°.
-- Reveal-on-hover pattern: collapsed element has `max-height:0; opacity:0; overflow:hidden`,
-  parent `:hover` sets `max-height` + `opacity:1`.
+- `.card` owns shared border, radius and 24–32px padding. `.card--compact` uses 24px;
+  `.card--scouting` adds the approved green surface and border.
+- `.capability` uses a vertical flex layout with visible tags and a bottom action link.
+- `.project-card` owns clipping; `.card-body` owns padding. Missing images leave a complete
+  text card. Status labels always remain visible.
+- `.soft` provides optional hover lift/shadow. Never hide essential information on hover.
+- `details.tl` is the keyboard-operable timeline disclosure; `.tlctx` expands and `.tlchev` rotates.
+- Collection HTML in `site.js` **must match the static seed**; both use these same classes.
 
 ### Feedback
 - **Copy toast** `.copy-toast` — dark pill, bottom-center, shows ~1.7s after a `[data-copy]`
@@ -234,8 +266,8 @@ All buttons: `.btn` adds `translateY(-1px)` lift on hover. Pad `14px 26px` (larg
   backdrop / `[data-gal-close]` / `Escape`.
 
 ### Tags / pills
-`font-size:11–12px; border-radius:999px; padding:5px 12px;` — neutral (`1px #e6e1da`) or green
-(`#2f5a45` text, `#f6faf7` bg, `#d7e3dc` border).
+`.tag`: 14px text, pill radius, **4px 12px** padding and a neutral border.
+`.tag--scouting`: green text/border. `.tag--large`: **12px 16px** padding and control radius.
 
 ---
 
@@ -277,8 +309,9 @@ Korean from older saved docs on read.)
 
 **Do**
 - Reuse the header/footer/eyebrow/button/card blocks verbatim across pages.
-- Keep page-specific styling **inline** (no build step); put *shared behavior* in `site.css`.
-- Use `clamp()` for anything that should scale with viewport.
+- Keep shared geometry and typography in `site.css`; inline page visuals may use existing tokens.
+- Run `python3 .checks/design.py`, `node --check assets/site.js` and `git diff --check` before deploying.
+- Adjust fluid layout through the named tokens, not one-off inline `clamp()` spacing.
 - Bump the `?v=` query on `site.css` / `site.js` links when they change (match `VERSION`).
 
 **Don't**
@@ -287,3 +320,16 @@ Korean from older saved docs on read.)
 - Don't introduce new accent colors — use the tokens above.
 - Don't rely on JS for primary content (JS only *enhances* and applies admin overrides).
 - Don't use shadows for separation where a border will do.
+
+
+## 10. Keeping the rules consistent
+
+Run `python3 .checks/design.py` after portfolio edits. This dependency-free Python/Node check
+verifies section/container/CTA ownership, token use, heading scales, matching headers/footers,
+valid routes and assets, and exact static/runtime collection parity. `.checks/` is development-only
+and excluded from deployment by `.assetsignore`. It does not read/write live KV.
+
+After changes to geometry, visually review all four pages at desktop, tablet and narrow mobile
+widths, especially CTA boundaries, contact topics, timeline, gallery and the portrait crop.
+Check a reordered/hidden neighboring section when changing CMS section structure. Static checks
+protect the documented contract; they do not replace visual review of real content.

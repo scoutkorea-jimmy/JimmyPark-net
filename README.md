@@ -33,6 +33,7 @@ functions/      Cloudflare Pages Functions (API)
 _headers        no-cache (deploy applies immediately)
 robots.txt · sitemap.xml
 wrangler.toml   Pages config + KV binding
+.checks/        dependency-free layout consistency checks (not public)
 ```
 
 ## How it works
@@ -45,6 +46,21 @@ wrangler.toml   Pages config + KV binding
   12h signed session, and edits the **whole site** through a schema-driven editor
   (Global + one tab per page) with a live-preview iframe, section reorder/hide, and a
   Media Library (uploads auto-resized to ≤1600px JPEG). 30-min idle auto sign-out.
+
+## Design maintenance
+Shared layout tokens in `assets/site.css` control container width, gutters, section spacing,
+card padding, radii and heading scales across all four public pages. Every CTA owns balanced
+outside padding, independent of CMS section order or visibility. See [design.md](design.md).
+
+Before deploying portfolio changes:
+```sh
+python3 .checks/design.py
+node --check assets/site.js
+git diff --check
+```
+The check uses Python 3 and Node only. It verifies layout rules, shared shell, links/assets and
+static/runtime collection parity without network requests or KV writes. Also visually review
+changed layouts at desktop, tablet and narrow mobile widths.
 
 ## Deploy (Cloudflare Pages)
 1. Connect this repo to a Pages project (build output dir = repo root, no build cmd).

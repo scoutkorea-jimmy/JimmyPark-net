@@ -26,6 +26,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Normalize missing section IDs against the legacy order before migrating an unchanged order.
 - This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
+### Portfolio layout (v0.6.0)
+- One container/gutter, a shared spacing scale, explicit heading leading and reusable card rules
+  apply across Home, Work, Global & Scouting and Contact.
+- Regular/CTA section padding is 48–80px on both ends; only snapshot/stats use compact padding.
+- Keep this contract in [design.md](design.md) and validate it with `.checks/design.py`.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Cafe24ProSlim** (primary, woff2 from jsdelivr, weights 300/400/700),
@@ -35,7 +41,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
    `site.js` only *enhances* (nav, copy, modal) and applies admin overrides — never gate
    primary content behind JS.
 3. **Follow [design.md](design.md) exactly.** Reuse existing header/footer/eyebrow/button/card
-   blocks; use the documented color tokens only; style page-specifics inline.
+   blocks; use the documented color tokens only. Shared spacing/typography belongs in
+   `site.css`; page-specific visual styles may be inline using the existing tokens.
 4. **English-only.** No Korean anywhere — no companion lines, no `*Ko` content fields, no
    `박지민` by the name. (Removed in v0.3.0; content.js's `dekoreanize` migration scrubs any
    Korean left in older saved docs on read. See design.md §7.)
@@ -159,6 +166,8 @@ _headers        no-cache (Cache-Control: no-cache) + nosniff + referrer policy
 robots.txt      allow all except /admin, /api/, /saju ; points to sitemap
 sitemap.xml     the 4 public routes
 wrangler.toml   Pages config: pages_build_output_dir=".", JP_KV binding
+.assetsignore  excludes development-only validation tooling from deployment
+.checks/        development-only layout contract + static/runtime collection checks
 VERSION         site version string (currently mirrored in ?v= asset query strings)
 ```
 
@@ -169,8 +178,15 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
   (`site.js` matches `data-nav` against it). Set it correctly on new pages.
 - **SEO is mandatory per page:** `<title>`, `meta description`, `link canonical`, full
   `og:*` + `twitter:*`, favicon. `index.html` also carries JSON-LD `Person` schema.
-- Page-specific layout is **inline `style="..."`** — that's intentional, not tech debt.
-  Shared, reusable behavior/classes go in `site.css`.
+- Public pages use `body.portfolio`. Each `section[data-section]` is a direct `<main>` child,
+  has `.site-section`, and owns exactly one `.site-container`. CTA sections own their balanced
+  outside spacing through `.site-section--cta`; never borrow padding from adjacent sections.
+- Shared layout, spacing, radii and typography live in `site.css`. Use its named tokens for
+  contextual inline spacing; never inline raw spacing values or heading size/line-height.
+  Reusable cards and all runtime collection templates must match the static seed markup.
+- Run `python3 .checks/design.py`, `node --check assets/site.js` and `git diff --check` before
+  every portfolio deployment. Review narrow/mobile and desktop layouts after geometry changes.
+  `.checks/` requires only Python 3 and Node; it has no package install, network or KV writes.
 - New multi-column grid? Give it a class and add it to the matching breakpoint block in
   `site.css` (don't scatter new `@media` queries).
 - Bump `?v=` on `site.css`/`site.js` links (keep it equal to `VERSION`) when those files change.
