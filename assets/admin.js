@@ -17,7 +17,7 @@
   var pendingPick = null;   // fn(url) used by the image picker / upload
   var idleTimer = null, idleDeadline = 0, idleTick = null, prevTimer = null;
   var lastAvail = -1;       // last preview-stage width the iframe scale was fit to
-  var editRevision = 0, saving = false;
+  var editRevision = 0, saving = false, contentLoaded = false, savedRevision = 0;
 
   // ── small DOM helpers ─────────────────────────────────────────────────────
   function el(tag, props, kids) {
@@ -131,13 +131,22 @@
 
   // ── boot: load content + media + build UI ─────────────────────────────────
   function boot() {
-    fetch("/api/content").then(function (r) { return r.json(); }).then(function (j) {
-      content = (j && j.content) ? j.content : {};
-      ensureShape();
-      buildTabs();
-      selectTab(activeTab);
-      loadMedia();
-    }).catch(function () {});
+    if (contentLoaded && editRevision !== savedRevision) { buildTabs(); selectTab(activeTab); $("save").disabled = false; return; }
+    contentLoaded = false; $("save").disabled = true;
+    $("save-msg").textContent = 'Loading saved content…';
+    return fetch("/api/content").then(function (r) {
+      return r.json().then(function (j) {
+        if (!r.ok || !j.ok || !j.content || !j.content.global || !j.content.pages) throw new Error('load_failed');
+        return j.content;
+      });
+    }).then(function (doc) {
+      content = doc; contentLoaded = true; savedRevision = editRevision;
+      ensureShape(); buildTabs(); selectTab(activeTab); loadMedia();
+      $("save").disabled = false; $("save-msg").textContent = '';
+    }).catch(function () {
+      $("save").disabled = true; $("save-msg").className = 'ad-msg ad-err';
+      $("save-msg").textContent = 'Saved content could not be loaded. Reload this page to retry. Saving is disabled.';
+    });
   }
 
   function ensureShape() {
@@ -506,7 +515,7 @@
 
   // ── save ──────────────────────────────────────────────────────────────────
   function save() {
-    if (saving) return;
+    if (saving || !contentLoaded) return;
     saving = true; $("save").disabled = true;
     var revision = editRevision;
     var msg = $("save-msg"); msg.textContent = "Saving…"; msg.className = "ad-msg";
@@ -515,13 +524,14 @@
       .then(function (j) {
         if (j && j.ok) {
           if (editRevision === revision) { content = j.content; ensureShape(); renderEditor(); msg.textContent = "✓ Saved & live"; }
-          else { msg.textContent = "Saved earlier changes. New edits still need saving."; }
+          else { content.updatedAt = j.content.updatedAt; msg.textContent = "Saved earlier changes. New edits still need saving."; }
+          savedRevision = revision;
           msg.className = "ad-msg ad-ok"; postPreview();
         }
-        else { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; }
+        else { msg.textContent = j && (j.error === 'conflict' || j.error === 'schema_changed') ? 'Another save changed this page. Your edits are preserved here. Copy them before reloading.' : j && j.error === 'invalid_url' ? 'Use HTTPS or a site-relative URL. Check ' + j.field + '.' : j && j.error === 'invalid_email' ? 'Enter a valid email address.' : 'Save failed. Your edits are preserved; try again.'; msg.className = "ad-msg ad-err"; }
       })
       .catch(function (e) { if (String(e.message) !== "401") { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; } })
-      .finally(function () { saving = false; $("save").disabled = false; });
+      .finally(function () { saving = false; $("save").disabled = !contentLoaded; });
   }
 
   // ── media library ─────────────────────────────────────────────────────────
@@ -635,6 +645,10 @@
       if (pw) ro.observe(pw);
     }
   }
+
+  window.addEventListener('beforeunload', function (e) {
+    if (saving || (contentLoaded && editRevision !== savedRevision)) { e.preventDefault(); e.returnValue = ''; }
+  });
 
   // ── init ──────────────────────────────────────────────────────────────────
   wire();

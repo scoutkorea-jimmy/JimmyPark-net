@@ -5,7 +5,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <meta name="twitter:card" content="summary"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.9.0"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.10.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -35,7 +35,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     <div class="footer-main">
       <div class="footer-brand">
         <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.9.0" alt="Jimmy Park" width="190" height="38"></a>
-        <p data-gbind="brand.roleline">Content Strategist · AI Practitioner · AX Consultant · Global Collaborator</p>
+        <p data-gbind="brand.roleline">Content strategy · Video production · Applied AI · Global Scouting</p>
       </div>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="/" class="lnk">Home</a>
@@ -51,4 +51,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.9.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.10.0" defer></script></body></html>`;

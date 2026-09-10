@@ -99,6 +99,38 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   interaction QA are not implied by code/HTTP checks. No analytics account or enquiry rate was
   inspected; improved search visibility or new work is not a measured result of this release.
 
+### Stability, professional positioning and Scouting refresh (v0.10.0)
+- Owner supplied `https://scoutingapp.net/tour/`: Scout Tour Assistant now links there and is
+  marked Live (public URL verified). Its map concerns Scout units, offices and heritage sites;
+  AI-assisted development describes how it was built, not a claim of AI inference in the app.
+- Remove Card News Generator and BP Media Tools by stable slug/title when upgrading older
+  stored documents. Preserve all other projects. Historical migration targets are frozen; later layouts cannot change their semantics. Migrations tolerate removed fields;
+  v2 CTA links migrate as intact historical pairs before their newer destinations are applied.
+- Scouting hero uses the owner-supplied Be Prepared photo, a 2048px JPEG display derivative
+  (~610 KB versus ~11 MB supplied PNG), at 16:9. The source capture is unmodified outside the
+  checkout. CMS v8 applies this explicit replacement once; later hero edits remain possible.
+- Scouting history is a readable chronology with two era labels, year, role and visible
+  context; no repeated Scout/Leader badges and no hidden detail behind per-row toggles.
+- Public titles/descriptions consistently describe content strategy, video production,
+  applied AI development, practical AI workflow consulting/workshops and global Scouting.
+  Keep factual role scope: the 2023 Jamboree role is Korean Contingent media. Do not add
+  unverified expert rankings, awards, client results or claims of AI-search guarantees.
+- Insights detail has a visible author link and escaped BlogPosting JSON-LD referencing the
+  homepage `#person`; missing pages have accurate noindex metadata. No posts were authored.
+- Content GET returns 503 on unavailable/corrupt storage; defaults only for a genuinely missing
+  key. PUT requires the complete current schema and rejects malformed/partial documents,
+  invalid URLs/email, and stale `updatedAt` before writing. Old editor versions must reload.
+- Admin waits for a successful content load before enabling Save, retains unsaved in-flight
+  edits and acknowledges the saved server revision, and warns before leaving unsaved changes.
+  Article saves match the returned ID/trimmed slug. HTML/SVG uploads are rejected; raster
+  signatures determine served MIME and images carry nosniff. Unsafe preview URLs are stripped.
+- KV revision comparison is optimistic, NOT atomic. One active editor is still intended;
+  simultaneous distributed writes cannot be guaranteed conflict-free without a transactional
+  store. Do not claim that these regression checks guarantee all concurrency or uptime.
+- Required regression check now includes `node .checks/stability.cjs`: malformed/partial PUT,
+  storage failure, stale saves, unsafe URLs, raster uploads and admin recovery, with isolated KV.
+  Existing auth, article, content, layout and HTTP checks remain required. No production test writes.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -259,7 +291,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 7`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 8`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

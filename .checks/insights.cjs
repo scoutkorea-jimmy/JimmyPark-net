@@ -36,6 +36,11 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   assert.match(detail.html,/<title>A &lt;script&gt; &amp; &quot;title&quot; \| Jimmy Park<\/title>/);
   assert.match(detail.html,/<h2>A heading<\/h2>/); assert.ok(!detail.html.includes('<script>alert(1)'));
   assert.match(detail.html,/https:\/\/jimmypark.net\/insights\/test-note/);
+  assert.match(detail.html, /rel="author" href="\/#snapshot">By Jimmy Park/);
+  const structured = JSON.parse(detail.html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(structured['@type'], 'BlogPosting');
+  assert.equal(structured.author['@id'], 'https://jimmypark.net/#person');
+  assert.equal(structured.headline, current.title);
   assert.ok((await page()).html.includes('/insights/test-note'));
   const before = writes;
   assert.equal((await manage('POST',{revision:store.revision,post:{...post,status:'published'}})).status,409);
@@ -54,5 +59,8 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
     const html=read(file); assert.match(html,/href="\/insights"/); assert.match(html,/id="main-content"/);
     assert.equal((html.match(/<main\b/g)||[]).length,1);
   }
+  const offline = { ...env, JP_KV: { get: async () => { throw new Error('offline'); } } };
+  const unavailable = await api.renderInsights({env:offline});
+  assert.equal(unavailable.status,503); assert.match(await unavailable.text(), /will be back shortly/);
   console.log('PASS: real session auth, draft privacy, server-rendered list/detail, publish/unpublish/delete, validation, slug conflicts, stale revisions, escaping, no-store and navigation.');
 })().catch(error=>{ console.error(error); process.exitCode=1; });

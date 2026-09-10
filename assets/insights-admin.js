@@ -58,7 +58,7 @@
       var outgoing = Object.assign({}, selected, { status: nextStatus || selected.status });
       try {
         store = await request(method, { revision: store.revision, post: outgoing });
-        selected = method === 'DELETE' ? null : JSON.parse(JSON.stringify(store.posts.find(function (p) { return p.slug === outgoing.slug; })));
+        selected = method === 'DELETE' ? null : JSON.parse(JSON.stringify(store.posts.find(function (p) { return outgoing.id ? p.id === outgoing.id : p.slug === outgoing.slug.trim(); })));
         dirty = false; render();
         var done = node('p', method === 'DELETE' ? 'Article deleted.' : outgoing.status === 'published' ? 'Published. Your article is live.' : 'Draft saved. Only you can see it.', 'ad-msg ad-ok'); done.setAttribute('role','status'); panel.appendChild(done);
       } catch (err) { status.textContent = errorText(err.message); status.className = 'ad-msg ad-err'; }

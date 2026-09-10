@@ -3,7 +3,9 @@ import { json, isAdmin } from './_lib.js';
 export const POSTS_KEY = 'insights:v1';
 export async function readPosts(env) {
   const saved = await env.JP_KV.get(POSTS_KEY, 'json');
-  return saved || { revision: '', posts: [] };
+  if (saved === null || saved === undefined) return { revision: '', posts: [] };
+  if (typeof saved.revision !== 'string' || !Array.isArray(saved.posts)) throw new Error('invalid_post_store');
+  return saved;
 }
 export function publishedPosts(store) {
   return store.posts.filter(p => p.status === 'published')
@@ -11,7 +13,8 @@ export function publishedPosts(store) {
 }
 export async function managePosts({ request, env }) {
   if (!(await isAdmin(request, env))) return json({ ok: false, error: 'unauthorized' }, 401);
-  const store = await readPosts(env);
+  let store;
+  try { store = await readPosts(env); } catch (_) { return json({ ok: false, error: "storage_unavailable" }, 503); }
   if (request.method === 'GET') return json({ ok: true, ...store });
   if (!['POST', 'DELETE'].includes(request.method)) return json({ ok: false, error: 'method_not_allowed' }, 405);
   const raw = await request.text();
@@ -47,6 +50,6 @@ export async function managePosts({ request, env }) {
     if (index < 0) store.posts.push(post); else store.posts[index] = post;
   }
   store.revision = crypto.randomUUID();
-  await env.JP_KV.put(POSTS_KEY, JSON.stringify(store));
+  try { await env.JP_KV.put(POSTS_KEY, JSON.stringify(store)); } catch (_) { return json({ ok: false, error: "storage_unavailable" }, 503); }
   return json({ ok: true, ...store });
 }

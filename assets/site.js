@@ -168,12 +168,12 @@
     },
     intlTags: function (t) { return '<span class="tag tag--scouting tag--large">' + esc(t.text) + '</span>'; },
     mediaProjects: function (m) { return '<div class="card card--compact"><h3>' + esc(m.title) + '</h3><p>' + esc(m.desc) + '</p></div>'; },
-    timeline: function (t) {
+    timeline: function (t, i, items) {
       var leader = t.track ? t.track === "Leader" : t.accent === "green";
-      return '<details class="tl' + (leader ? ' tl--leader' : '') + '"><span class="timeline-dot" aria-hidden="true"></span>' +
-        '<summary><span class="tlchev msym" aria-hidden="true">chevron_right</span><span class="timeline-year">' + esc(t.year) + '</span>' +
-        (t.track ? '<span class="tag timeline-track">' + esc(t.track) + '</span>' : '') + '<span class="timeline-title">' + esc(t.title) + '</span></summary>' +
-        '<div class="tlctx">' + esc(t.context) + '</div></details>';
+      var previous = i > 0 ? items[i - 1] : null;
+      var previousLeader = previous && (previous.track ? previous.track === 'Leader' : previous.accent === 'green');
+      var group = !previous || leader !== previousLeader ? '<div class="timeline-era">' + (leader ? 'Leadership &amp; media' : 'Early Scouting') + '</div>' : '';
+      return group + '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') + '</div></article>';
     },
     gallery: function (g, i) {
       if (!g.image) return '';
@@ -190,8 +190,26 @@
     });
   }
 
+  function safeSiteUrl(value, externalOnly) {
+    if (typeof value !== 'string') return '';
+    var url = value.trim();
+    if (!url || /[\u0000-\u0020\\]/.test(url)) return '';
+    if (!externalOnly && (url.charAt(0) === '#' || (url.charAt(0) === '/' && url.slice(0,2) !== '//'))) return url;
+    if (url.slice(0,8) !== 'https://') return '';
+    try { var parsed = new URL(url); return parsed.hostname && !parsed.username && !parsed.password ? url : ''; } catch (_) { return ''; }
+  }
+  function cleanPreviewUrls(value) {
+    if (!value || typeof value !== 'object') return value;
+    Object.keys(value).forEach(function (key) {
+      if (['href','image','linkedin'].indexOf(key) >= 0 && typeof value[key] === 'string') value[key] = safeSiteUrl(value[key], key === 'linkedin');
+      else if (value[key] && typeof value[key] === 'object') cleanPreviewUrls(value[key]);
+    });
+    return value;
+  }
+
   function applyDoc(content) {
     if (!content) return;
+    content = cleanPreviewUrls(content);
     var g = content.global || {};
     var pd = pageData(content);
     var sd = sectionData(content);
@@ -212,6 +230,22 @@
       var el = document.querySelector('meta[property="' + key + '"], meta[name="' + key + '"]');
       if (el && meta.desc) el.setAttribute("content", meta.desc);
     });
+
+    // Keep the profile's machine-readable identity aligned with editable visible content.
+    if (page === 'home') {
+      var personNode = document.querySelector('script[type="application/ld+json"]');
+      if (personNode) try {
+        var person = JSON.parse(personNode.textContent);
+        if (person['@type'] === 'Person') {
+          person.name = (g.brand || {}).name || person.name;
+          person.description = (sd.snapshot || {}).body || person.description;
+          if ((sd.hero || {}).image) person.image = new URL(sd.hero.image, 'https://jimmypark.net').href;
+          person.sameAs = (g.contact || {}).linkedin ? [g.contact.linkedin] : [];
+          if ((g.contact || {}).email) person.email = g.contact.email;
+          personNode.textContent = JSON.stringify(person).replace(/</g, '\\u003c');
+        }
+      } catch (_) {}
+    }
 
     // text binds — section-scoped and global-scoped
     applyText("data-bind", sd);

@@ -235,7 +235,7 @@ Contact topics use auto-fit columns with a 190px minimum, allowing a single colu
 inside a narrow desktop split. The first gallery image stops spanning rows on mobile. Gallery media always has `width:100%`;
 its spanning variant uses `aspect-ratio:auto` and returns to 4:3/auto height on mobile,
 so the two-row height cannot force its image across a neighboring column.
-Mobile role cards stack the date below the role text consistently.
+Mobile role cards stack the date below the role text consistently. Timeline entries stack the year above their title and context.
 Put reusable grid geometry and breakpoint rules in `site.css`. Page-specific composition
 may use inline columns only with a named responsive class; never inline gaps or section padding.
 
@@ -280,7 +280,7 @@ Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are 
 - `.project-card` owns clipping; `.card-body` owns padding. Missing images leave a complete
   text card. Status labels always remain visible.
 - `.soft` provides optional hover lift/shadow. Never hide essential information on hover.
-- `details.tl` is the keyboard-operable timeline disclosure; `.tlctx` expands and `.tlchev` rotates.
+- `.timeline-entry` shows year, role and context directly; era labels separate the two stages.
 - Collection HTML in `site.js` **must match the static seed**; both use these same classes.
 
 ### Feedback
@@ -399,3 +399,16 @@ international dial target (`tel:+821054186124`) for the link. The renderer conve
   identity metadata and one biographical mention, not a bilingual site redesign.
 - Contact presents project-brief and introduction mail links, plus existing email/phone/LinkedIn.
   Brief prompts include audience, deliverables, timing and optional budget; no submission backend.
+
+## 13. Professional scope and Scouting presentation (v0.10.0)
+- Use precise specialty language: content strategy, video production, applied AI development,
+  AI workflow consulting and workshops, and international Scouting communication. Project
+  credits and dated roles carry credibility; avoid superlatives or unmeasured results.
+- The Scouting hero is a full-width 16:9 owner-supplied photograph below its introduction,
+  keeping both the person and Be Prepared backdrop visible. Use the optimized local JPEG.
+- History is grouped into Early Scouting and Leadership & media. Each entry has a 120px year
+  column and a flexible title/context column, with subtle dividers. On narrow screens the year
+  sits above the text. All context is visible, without repeating track pills or disclosure arrows.
+- Card News Generator and BP Media Tools are removed. Scout Tour Assistant has its actual URL.
+- Author bylines and BlogPosting JSON-LD share the homepage Person identity. These improve
+  clarity and machine-readable attribution; they are not claims of search inclusion or ranking.

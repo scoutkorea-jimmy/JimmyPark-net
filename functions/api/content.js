@@ -13,11 +13,11 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 7,
+  "version": 8,
   "global": {
     "brand": {
       "name": "Jimmy Park",
-      "roleline": "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator"
+      "roleline": "Content strategy · Video production · Applied AI · Global Scouting"
     },
     "footer": {
       "tagline": "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.",
@@ -30,15 +30,15 @@ const DEFAULT = {
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park (박지민) | Content, Video & AI",
-      "desc": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
+      "title": "Jimmy Park (박지민) | Content Strategy, Video & AI",
+      "desc": "Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park (박지민) | Content, Video & AI",
-        "desc": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
+        "title": "Jimmy Park (박지민) | Content Strategy, Video & AI",
+        "desc": "Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."
       },
       "order": [
         "hero",
@@ -52,9 +52,9 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Content strategy · Video production · AI & AX",
-          "title": "From a clear brief\nto content that works.",
-          "lead": "I’m Jimmy Park, a Korea-based content strategist and video producer. I plan, direct, film and edit — and build practical AI tools for content teams.",
+          "eyebrow": "Content strategy · Video production · Applied AI",
+          "title": "Content strategy.\nVideo production.\nApplied AI.",
+          "lead": "I’m Jimmy Park, a Korea-based content strategist and video producer. I develop content from brief to delivery, build AI-assisted web tools, and help teams explore practical AI workflows.",
           "ctaPrimary": {
             "label": "Start a project",
             "href": "/contact"
@@ -94,12 +94,12 @@ const DEFAULT = {
         },
         "activities": {
           "eyebrow": "What you can bring me in for",
-          "title": "A defined scope. A useful deliverable.",
+          "title": "Expertise for your next project.",
           "items": [
             {
               "kicker": "01 / Content",
-              "title": "Content & Video Production",
-              "desc": "Commission a campaign concept, keynote video, interview series or event film — with a clear brief and defined production responsibilities.",
+              "title": "Content Strategy & Video Production",
+              "desc": "Turn a communication brief into a clear concept, script and production plan. My project work spans branded films, keynote videos, interviews and event media.",
               "tags": [
                 "Concept & script",
                 "Direction & production",
@@ -110,8 +110,8 @@ const DEFAULT = {
             },
             {
               "kicker": "02 / AI",
-              "title": "AI in Practice",
-              "desc": "Build and test a focused content tool, campaign page or AI-assisted prototype around one practical need.",
+              "title": "Applied AI & Web Prototyping",
+              "desc": "Use AI-assisted development to build focused web tools and test workflows around a practical need. Explore the available projects.",
               "tags": [
                 "Prototyping",
                 "Content tools",
@@ -122,8 +122,8 @@ const DEFAULT = {
             },
             {
               "kicker": "03 / AX",
-              "title": "AX Consulting",
-              "desc": "Review a content workflow, plan a small AI pilot or arrange a hands-on team workshop with a clear starting point.",
+              "title": "AI Workflow Consulting & Workshops",
+              "desc": "Review recurring content tasks, define a focused AI pilot and give your team hands-on practice with a real workflow.",
               "tags": [
                 "Workflow review",
                 "Pilot design",
@@ -134,8 +134,8 @@ const DEFAULT = {
             },
             {
               "kicker": "04 / Global",
-              "title": "Global Collaboration",
-              "desc": "Discuss Scouting media, international events and cross-cultural projects, grounded in my documented Asia-Pacific roles.",
+              "title": "Global Scouting & Collaboration",
+              "desc": "Connect content and field media with international Scouting experience, Asia-Pacific communications and cross-cultural collaboration.",
               "tags": [
                 "Asia-Pacific",
                 "Scouting",
@@ -174,7 +174,7 @@ const DEFAULT = {
         },
         "projects": {
           "eyebrow": "Stay connected",
-          "title": "A place to start. A reason to stay in touch.",
+          "title": "Projects, writing and professional connections.",
           "feature": {
             "badge": "Content strategy · Global Scouting",
             "sub": "Founder · Scouting media",
@@ -258,8 +258,8 @@ const DEFAULT = {
     },
     "work": {
       "meta": {
-        "title": "Content, AI & AX Consulting | Jimmy Park",
-        "desc": "Explore Jimmy Park’s content planning, AI-assisted prototypes, AX consulting and workshops, and field media production."
+        "title": "Video Production, Applied AI & AX Workshops | Jimmy Park",
+        "desc": "Explore Jimmy Park’s video production credits, AI-assisted web projects, practical AX workshops and event photography. View films and discuss a project."
       },
       "order": [
         "intro",
@@ -273,8 +273,8 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Work & collaboration",
-          "title": "Strategy that moves into practice.",
-          "lead": "Content planning, hands-on AI work, and practical AI adoption — connected by the same question: what will help people do their work better?"
+          "title": "Video production, applied AI\nand practical workshops.",
+          "lead": "Explore video production credits, web tools built with AI-assisted development, and collaboration opportunities in content strategy and AI adoption."
         },
         "photography": {
           "kicker": "04 / Field production",
@@ -319,8 +319,8 @@ const DEFAULT = {
         },
         "video": {
           "kicker": "01 / Content strategy",
-          "title": "Plan the story. Shape the content.",
-          "sub": "From communication goals to production and distribution",
+          "title": "Content Strategy & Video Production",
+          "sub": "From the brief to the finished film",
           "desc": "I turn a communication brief into a content plan and finished video: concept, script, direction, filming and editing. The credits below show my role on each project.",
           "formats": [
             {
@@ -470,18 +470,18 @@ const DEFAULT = {
         },
         "vibecoding": {
           "kicker": "02 / AI practice",
-          "title": "AI in Practice",
-          "sub": "Ideas turned into usable tools and prototypes",
-          "desc": "I use AI and web tools to build campaign pages, organize content flows, and test small systems. These projects show how I move from a practical need to a working prototype.",
+          "title": "Applied AI & Web Prototyping",
+          "sub": "Practical tools, built around a clear need",
+          "desc": "I use AI-assisted development to turn practical ideas into working web tools. These projects demonstrate how I organize information, design user flows and test useful digital services.",
           "items": [
             {
               "slug": "scout-tour-assistant",
               "title": "Scout Tour Assistant",
-              "desc": "A map-based prototype for discovering and organizing meaningful Scouting places.",
-              "status": "Prototype",
+              "desc": "A map for finding Scout units, national offices and heritage sites near a chosen location.",
+              "status": "Live",
               "accent": "green",
               "image": "",
-              "href": ""
+              "href": "https://scoutingapp.net/tour/"
             },
             {
               "slug": "k-trainradar24",
@@ -491,32 +491,14 @@ const DEFAULT = {
               "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.",
               "href": "https://scoutingapp.net/ktrainrader24/",
               "image": ""
-            },
-            {
-              "slug": "card-news",
-              "title": "Card News Generator",
-              "desc": "A beta tool for turning content into card-news formats.",
-              "status": "Beta",
-              "accent": "neutral",
-              "image": "",
-              "href": ""
-            },
-            {
-              "slug": "bp-media-tools",
-              "title": "BP Media Tools",
-              "desc": "Tools in development to support everyday media operations.",
-              "status": "In Progress",
-              "accent": "neutral",
-              "image": "",
-              "href": ""
             }
           ]
         },
         "lecture": {
           "kicker": "03 / AI transformation",
-          "title": "AX Consulting & Workshops",
-          "sub": "Practical AI adoption, shaped around your team",
-          "desc": "AX means AI transformation: applying AI to the way a team works. We can review a content workflow, choose a focused pilot, and plan how people will use it. My workshops draw on field media, content workflows, and AI-assisted prototyping.",
+          "title": "AI Workflow Consulting & Workshops",
+          "sub": "Focused pilots and hands-on practice",
+          "desc": "AX means AI transformation: applying AI to everyday work. I offer workflow reviews, focused pilot planning and hands-on workshops built around content production and web prototyping.",
           "topics": [
             {
               "name": "Workflow review",
@@ -548,8 +530,8 @@ const DEFAULT = {
     },
     "scouting": {
       "meta": {
-        "title": "Global Network & Scouting | Jimmy Park",
-        "desc": "Jimmy Park’s international network is rooted in Scouting, Asia-Pacific communications and partnerships, and World Scout Jamboree media work."
+        "title": "Global Scouting & International Collaboration | Jimmy Park",
+        "desc": "Explore Jimmy Park’s Scouting communications roles, Asia-Pacific collaboration, Korean Contingent Jamboree media work and international experience."
       },
       "order": [
         "hero",
@@ -567,11 +549,11 @@ const DEFAULT = {
       "sections": {
         "hero": {
           "eyebrow": "Global network · Scouting",
-          "title": "Connections built through shared work.",
+          "title": "Scouting, media and\ninternational collaboration.",
           "lead": "My international network grows through Scouting, Asia-Pacific communication and partnerships, and media work at global events.",
-          "image": "",
-          "badge": "International event",
-          "caption": "Scouting field · international event · youth movement"
+          "image": "/assets/img/scouting-main.jpg?v=0.10.0",
+          "badge": "Scouting",
+          "caption": "Scouting, communication and international connections."
         },
         "why": {
           "eyebrow": "The foundation of my network",
@@ -613,7 +595,7 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
-              "title": "Deputy Head of Media Dept.",
+              "title": "Deputy Head of Media · Korean Contingent",
               "org": "25th World Scout Jamboree",
               "period": "2023",
               "accent": "neutral"
@@ -667,8 +649,8 @@ const DEFAULT = {
           ]
         },
         "timeline": {
-          "title": "Scouting History",
-          "note": "From Scout (2003) to Scout Leader (2014) — tap any item to expand.",
+          "title": "A life in Scouting. A practice in communication.",
+          "note": "From joining in 2003 to leadership, international communication and media projects.",
           "items": [
             {
               "year": "2003",
@@ -862,8 +844,8 @@ const DEFAULT = {
     },
     "contact": {
       "meta": {
-        "title": "Discuss a Project | Jimmy Park",
-        "desc": "Contact Jimmy Park about content strategy, AI prototypes, AX consulting and workshops, or international collaboration."
+        "title": "Contact Jimmy Park | Video, AI & Project Collaboration",
+        "desc": "Contact Jimmy Park for content strategy, video production, AI-assisted web projects, practical workshops and international Scouting collaboration."
       },
       "order": [
         "intro"
@@ -872,8 +854,8 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Let’s collaborate",
-          "title": "Tell me what you want to make possible.",
-          "lead": "Content strategy, an AI prototype, a team workshop, or an international project — share the challenge and the people it needs to work for."
+          "title": "Discuss a video, AI\nor collaboration project.",
+          "lead": "Share your goal, audience, timeline and expected deliverables. Contact me about content strategy and video production, AI prototypes, practical workshops or Scouting collaboration."
         }
       }
     }
@@ -1096,21 +1078,244 @@ function matchesLegacy(value, legacy) {
   return value === legacy;
 }
 
+// Freeze the historic destinations: later designs must not mix old titles with new links.
+const V5_TARGETS = {
+  "[\"global\",\"brand\",\"roleline\"]": "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator",
+  "[\"global\",\"contact\",\"linkedin\"]": "https://www.linkedin.com/in/jimmy1420",
+  "[\"global\",\"contact\",\"location\"]": "Korea · Korean / English",
+  "[\"global\",\"seo\",\"title\"]": "Jimmy Park | Content Strategy, AI & AX Consulting",
+  "[\"global\",\"seo\",\"desc\"]": "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration.",
+  "[\"pages\",\"home\",\"meta\",\"title\"]": "Jimmy Park | Content Strategy, AI & AX Consulting",
+  "[\"pages\",\"home\",\"meta\",\"desc\"]": "Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration.",
+  "[\"pages\",\"home\",\"order\"]": [
+    "hero",
+    "activities",
+    "snapshot",
+    "projects",
+    "approach",
+    "cta"
+  ],
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"eyebrow\"]": "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"title\"]": "Content with purpose.\nAI put to work.",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"lead\"]": "I plan content, build with AI, and help teams explore better ways of working — with a global network rooted in Scouting and Asia-Pacific collaboration.",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"ctaPrimary\",\"label\"]": "Explore my work",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"ctaGhost\",\"label\"]": "Discuss a project",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"image\"]": "/assets/img/jimmy-park-portrait.jpg?v=0.5.1",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"badge\"]": "Jimmy Park",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"caption\"]": "Content, technology, and people.",
+  "[\"pages\",\"home\",\"sections\",\"hero\",\"captionRight\"]": "Based in Korea",
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"eyebrow\"]": "Four ways I contribute",
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"title\"]": "From the first idea to work people can use.",
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"eyebrow\"]": "How we can work together",
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"title\"]": "Start with the work. Build a useful next step.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"title\"]": "Where the work takes shape.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"feature\",\"badge\"]": "Content strategy · Global Scouting",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"feature\",\"sub\"]": "Founder · Scouting media",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"feature\",\"desc\"]": "A Scouting media platform bringing stories, events, and people into a shared editorial space. My work connects field documentation with content planning and international perspectives.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"feature\",\"href\"]": "/scouting#mediaprojects",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",0,\"tag\"]": "Content · Education",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",0,\"desc\"]": "An education and youth-growth initiative connecting content, learning, and global collaboration.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",0,\"href\"]": "/work#video",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",1,\"tag\"]": "AI practice · Prototype",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",1,\"desc\"]": "A map-based prototype that organizes meaningful Scouting places into an explorable resource.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",1,\"href\"]": "/work#vibecoding",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",2,\"tag\"]": "Web · Transport data",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",2,\"desc\"]": "A map that estimates train positions across South Korea using published timetables and public rail data.",
+  "[\"pages\",\"home\",\"sections\",\"projects\",\"items\",2,\"href\"]": "https://scoutingapp.net/ktrainrader24/",
+  "[\"pages\",\"home\",\"sections\",\"cta\",\"title\"]": "What are you working on?",
+  "[\"pages\",\"home\",\"sections\",\"cta\",\"body\"]": "A content challenge, an AI idea, a team workflow, or an international project — let’s work out a useful next step.",
+  "[\"pages\",\"home\",\"sections\",\"cta\",\"button\",\"label\"]": "Discuss a project",
+  "[\"pages\",\"work\",\"meta\",\"title\"]": "Content, AI & AX Consulting | Jimmy Park",
+  "[\"pages\",\"work\",\"meta\",\"desc\"]": "Explore Jimmy Park’s content planning, AI-assisted prototypes, AX consulting and workshops, and field media production.",
+  "[\"pages\",\"work\",\"order\"]": [
+    "intro",
+    "video",
+    "vibecoding",
+    "lecture",
+    "photography",
+    "cta"
+  ],
+  "[\"pages\",\"work\",\"sections\",\"intro\",\"eyebrow\"]": "Work & collaboration",
+  "[\"pages\",\"work\",\"sections\",\"intro\",\"title\"]": "Strategy that moves into practice.",
+  "[\"pages\",\"work\",\"sections\",\"intro\",\"lead\"]": "Content planning, hands-on AI work, and practical AI adoption — connected by the same question: what will help people do their work better?",
+  "[\"pages\",\"work\",\"sections\",\"photography\",\"kicker\"]": "04 / Field production",
+  "[\"pages\",\"work\",\"sections\",\"photography\",\"title\"]": "Photography & Field Media",
+  "[\"pages\",\"work\",\"sections\",\"video\",\"kicker\"]": "01 / Content strategy",
+  "[\"pages\",\"work\",\"sections\",\"video\",\"title\"]": "Plan the story. Shape the content.",
+  "[\"pages\",\"work\",\"sections\",\"video\",\"sub\"]": "From communication goals to production and distribution",
+  "[\"pages\",\"work\",\"sections\",\"video\",\"desc\"]": "I translate a project’s purpose into an audience, a message, and a format. From campaign concepts to interviews and short-form video, I plan how the content will be made and where it will be used.",
+  "[\"pages\",\"work\",\"sections\",\"video\",\"caption\"]": "Content planning · Production · Distribution",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"kicker\"]": "02 / AI practice",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"title\"]": "AI in Practice",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"sub\"]": "Ideas turned into usable tools and prototypes",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"desc\"]": "I use AI and web tools to build campaign pages, organize content flows, and test small systems. These projects show how I move from a practical need to a working prototype.",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"items\",0,\"desc\"]": "A map-based prototype for discovering and organizing meaningful Scouting places.",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"items\",1,\"desc\"]": "A map that estimates train positions across South Korea using published timetables and public rail data.",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"items\",2,\"desc\"]": "A beta tool for turning content into card-news formats.",
+  "[\"pages\",\"work\",\"sections\",\"vibecoding\",\"items\",3,\"desc\"]": "Tools in development to support everyday media operations.",
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"kicker\"]": "03 / AI transformation",
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"title\"]": "AX Consulting & Workshops",
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"sub\"]": "Practical AI adoption, shaped around your team",
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"desc\"]": "AX means AI transformation: applying AI to the way a team works. We can review a content workflow, choose a focused pilot, and plan how people will use it. My workshops draw on field media, content workflows, and AI-assisted prototyping.",
+  "[\"pages\",\"work\",\"sections\",\"cta\",\"title\"]": "Have a brief, a workflow, or an idea to explore?",
+  "[\"pages\",\"work\",\"sections\",\"cta\",\"body\"]": "Share the goal, the people involved, and what you need to deliver. We can define the content, prototype, or workshop that fits.",
+  "[\"pages\",\"work\",\"sections\",\"cta\",\"button\",\"label\"]": "Discuss a project",
+  "[\"pages\",\"scouting\",\"meta\",\"title\"]": "Global Network & Scouting | Jimmy Park",
+  "[\"pages\",\"scouting\",\"meta\",\"desc\"]": "Jimmy Park’s international network is rooted in Scouting, Asia-Pacific communications and partnerships, and World Scout Jamboree media work.",
+  "[\"pages\",\"scouting\",\"order\"]": [
+    "hero",
+    "roles",
+    "international",
+    "travel",
+    "why",
+    "stats",
+    "mediaprojects",
+    "timeline",
+    "gallery",
+    "cta"
+  ],
+  "[\"pages\",\"scouting\",\"sections\",\"hero\",\"eyebrow\"]": "Global network · Scouting",
+  "[\"pages\",\"scouting\",\"sections\",\"hero\",\"title\"]": "Connections built through shared work.",
+  "[\"pages\",\"scouting\",\"sections\",\"hero\",\"lead\"]": "My international network grows through Scouting, Asia-Pacific communication and partnerships, and media work at global events.",
+  "[\"pages\",\"scouting\",\"sections\",\"why\",\"eyebrow\"]": "The foundation of my network",
+  "[\"pages\",\"scouting\",\"sections\",\"why\",\"body\"]": "Scouting is where I learned to work across cultures, understand different audiences, and build trust through shared projects. I bring that experience to content planning, international communication, and collaboration.",
+  "[\"pages\",\"scouting\",\"sections\",\"roles\",\"title\"]": "Roles behind the relationships",
+  "[\"pages\",\"scouting\",\"sections\",\"roles\",\"items\",0,\"title\"]": "National Commissioner on PR II",
+  "[\"pages\",\"scouting\",\"sections\",\"roles\",\"items\",2,\"title\"]": "Deputy Head of Media Dept.",
+  "[\"pages\",\"scouting\",\"sections\",\"roles\",\"items\",2,\"org\"]": "25th World Scout Jamboree",
+  "[\"pages\",\"scouting\",\"sections\",\"international\",\"title\"]": "A network with a working context",
+  "[\"pages\",\"scouting\",\"sections\",\"international\",\"body\"]": "World Scout Jamborees, Asia-Pacific regional activities, and international Scout networks connect me with people working in youth engagement, media, and partnerships. These relationships inform how I approach cross-cultural projects and communication.",
+  "[\"pages\",\"contact\",\"meta\",\"title\"]": "Discuss a Project | Jimmy Park",
+  "[\"pages\",\"contact\",\"meta\",\"desc\"]": "Contact Jimmy Park about content strategy, AI prototypes, AX consulting and workshops, or international collaboration.",
+  "[\"pages\",\"contact\",\"sections\",\"intro\",\"eyebrow\"]": "Let’s collaborate",
+  "[\"pages\",\"contact\",\"sections\",\"intro\",\"title\"]": "Tell me what you want to make possible.",
+  "[\"pages\",\"contact\",\"sections\",\"intro\",\"lead\"]": "Content strategy, an AI prototype, a team workshop, or an international project — share the challenge and the people it needs to work for.",
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"items\",0]": {
+    "kicker": "01 / Content",
+    "title": "Content Strategy",
+    "desc": "Turn a communication goal into a clear message, the right format, and a plan for production and distribution.",
+    "tags": [
+      "Editorial planning",
+      "Campaigns",
+      "Video & media"
+    ],
+    "href": "/work#video",
+    "accent": "burgundy"
+  },
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"items\",1]": {
+    "kicker": "02 / AI",
+    "title": "AI in Practice",
+    "desc": "Use AI to turn ideas into campaign pages, content tools, and working prototypes built around real project needs.",
+    "tags": [
+      "Prototyping",
+      "Content tools",
+      "AI workflows"
+    ],
+    "href": "/work#vibecoding",
+    "accent": "burgundy"
+  },
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"items\",2]": {
+    "kicker": "03 / AX",
+    "title": "AX Consulting",
+    "desc": "Explore AI transformation from the work itself: identify useful opportunities, test a focused workflow, and help a team take its next step.",
+    "tags": [
+      "Workflow review",
+      "Pilot design",
+      "Workshops"
+    ],
+    "href": "/work#lecture",
+    "accent": "burgundy"
+  },
+  "[\"pages\",\"home\",\"sections\",\"activities\",\"items\",3]": {
+    "kicker": "04 / Global",
+    "title": "Global Collaboration",
+    "desc": "Bring Scouting experience, Asia-Pacific relationships, and international event media work to projects that connect people across borders.",
+    "tags": [
+      "Asia-Pacific",
+      "Scouting",
+      "Partnerships"
+    ],
+    "href": "/scouting#roles",
+    "accent": "green"
+  },
+  "[\"pages\",\"home\",\"sections\",\"snapshot\",\"rows\",0]": {
+    "label": "Content & media",
+    "value": "BP Media · Founder, 2026–"
+  },
+  "[\"pages\",\"home\",\"sections\",\"snapshot\",\"rows\",1]": {
+    "label": "Asia-Pacific",
+    "value": "Communications & Partnerships · 2nd Vice Chair, 2025–2028"
+  },
+  "[\"pages\",\"home\",\"sections\",\"snapshot\",\"rows\",2]": {
+    "label": "International fieldwork",
+    "value": "25th World Scout Jamboree · Korean Contingent Media, 2023"
+  },
+  "[\"pages\",\"home\",\"sections\",\"snapshot\",\"rows\",3]": {
+    "label": "Based in",
+    "value": "Korea · Korean / English"
+  },
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"steps\",0]": {
+    "num": "01",
+    "title": "Understand",
+    "desc": "Clarify the audience, the goal, and the way work happens today."
+  },
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"steps\",1]": {
+    "num": "02",
+    "title": "Design",
+    "desc": "Choose the message, format, or AI use case that fits the need."
+  },
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"steps\",2]": {
+    "num": "03",
+    "title": "Make & test",
+    "desc": "Produce the content or build a small pilot, then review it with the people who will use it."
+  },
+  "[\"pages\",\"home\",\"sections\",\"approach\",\"steps\",3]": {
+    "num": "04",
+    "title": "Put it to use",
+    "desc": "Prepare the output, guidance, and next steps for the team."
+  },
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"topics\",0]": {
+    "name": "Workflow review",
+    "desc": "Map recurring tasks, handoffs, and opportunities where AI could help."
+  },
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"topics\",1]": {
+    "name": "Pilot planning",
+    "desc": "Choose one use case, define a useful output, and agree how to review it."
+  },
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"topics\",2]": {
+    "name": "AI workshops",
+    "desc": "Practice turning a real content or web idea into a working prototype."
+  },
+  "[\"pages\",\"work\",\"sections\",\"lecture\",\"topics\",3]": {
+    "name": "Field & youth media",
+    "desc": "Workshops on documentation, photography, Scouting, and international communication."
+  }
+};
+
 function migrateTo5(doc) {
+  const hero = doc.pages && doc.pages.home && doc.pages.home.sections && doc.pages.home.sections.hero;
+  if (hero) {
+    for (const [key, oldLabel, oldHref, nextLabel] of [
+      ['ctaPrimary', 'View Work', '/work', 'Explore my work'],
+      ['ctaGhost', 'Contact', '/contact', 'Discuss a project']
+    ]) {
+      if (matchesLegacy(hero[key], { label: oldLabel, href: oldHref })) hero[key] = { label: nextLabel, href: oldHref };
+    }
+  }
   for (const [path, legacy] of V5_LEGACY) {
+    if (path[3] === "hero" && ["ctaPrimary", "ctaGhost"].includes(path[4])) continue;
     let target = doc;
-    let currentDefault = DEFAULT;
+    const historic = V5_TARGETS[JSON.stringify(path)];
     for (let i = 0; i < path.length - 1; i++) {
       target = target && target[path[i]];
-      currentDefault = currentDefault[path[i]];
     }
     const key = path[path.length - 1];
     // Older stored docs may predate sections such as workshops. Normalize with
     // the legacy order before comparing, while retaining genuinely custom order.
     const saved = target && key === "order" && Array.isArray(legacy)
       ? mergeOrder(legacy, target[key]) : target && target[key];
-    if (target && matchesLegacy(saved, legacy)) {
-      target[key] = JSON.parse(JSON.stringify(currentDefault[key]));
+    if (target && historic !== undefined && matchesLegacy(saved, legacy)) {
+      target[key] = JSON.parse(JSON.stringify(historic));
     }
   }
   doc.version = 5;
@@ -1514,6 +1719,422 @@ function migrateTo7(doc) {
   return doc;
 }
 
+// v8: owner-requested removals, actual tour URL and professional positioning.
+const V8_SEEDS = [
+  [
+    [
+      "global",
+      "brand",
+      "roleline"
+    ],
+    "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator"
+  ],
+  [
+    [
+      "global",
+      "seo",
+      "title"
+    ],
+    "Jimmy Park (박지민) | Content, Video & AI"
+  ],
+  [
+    [
+      "global",
+      "seo",
+      "desc"
+    ],
+    "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
+  ],
+  [
+    [
+      "pages",
+      "contact",
+      "sections",
+      "intro",
+      "lead"
+    ],
+    "Content strategy, an AI prototype, a team workshop, or an international project — share the challenge and the people it needs to work for."
+  ],
+  [
+    [
+      "pages",
+      "contact",
+      "sections",
+      "intro",
+      "title"
+    ],
+    "Tell me what you want to make possible."
+  ],
+  [
+    [
+      "pages",
+      "contact",
+      "meta",
+      "title"
+    ],
+    "Discuss a Project | Jimmy Park"
+  ],
+  [
+    [
+      "pages",
+      "contact",
+      "meta",
+      "desc"
+    ],
+    "Contact Jimmy Park about content strategy, AI prototypes, AX consulting and workshops, or international collaboration."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "eyebrow"
+    ],
+    "Content strategy · Video production · AI & AX"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "title"
+    ],
+    "From a clear brief\nto content that works."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "hero",
+      "lead"
+    ],
+    "I’m Jimmy Park, a Korea-based content strategist and video producer. I plan, direct, film and edit — and build practical AI tools for content teams."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "activities",
+      "items"
+    ],
+    [
+      {
+        "kicker": "01 / Content",
+        "title": "Content & Video Production",
+        "desc": "Commission a campaign concept, keynote video, interview series or event film — with a clear brief and defined production responsibilities.",
+        "tags": [
+          "Concept & script",
+          "Direction & production",
+          "Editing & delivery"
+        ],
+        "href": "/work#video",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "02 / AI",
+        "title": "AI in Practice",
+        "desc": "Build and test a focused content tool, campaign page or AI-assisted prototype around one practical need.",
+        "tags": [
+          "Prototyping",
+          "Content tools",
+          "AI workflows"
+        ],
+        "href": "/work#vibecoding",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "03 / AX",
+        "title": "AX Consulting",
+        "desc": "Review a content workflow, plan a small AI pilot or arrange a hands-on team workshop with a clear starting point.",
+        "tags": [
+          "Workflow review",
+          "Pilot design",
+          "Workshops"
+        ],
+        "href": "/work#lecture",
+        "accent": "burgundy"
+      },
+      {
+        "kicker": "04 / Global",
+        "title": "Global Collaboration",
+        "desc": "Discuss Scouting media, international events and cross-cultural projects, grounded in my documented Asia-Pacific roles.",
+        "tags": [
+          "Asia-Pacific",
+          "Scouting",
+          "Partnerships"
+        ],
+        "href": "/scouting#roles",
+        "accent": "green"
+      }
+    ]
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "activities",
+      "title"
+    ],
+    "A defined scope. A useful deliverable."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "sections",
+      "projects",
+      "title"
+    ],
+    "A place to start. A reason to stay in touch."
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "meta",
+      "title"
+    ],
+    "Jimmy Park (박지민) | Content, Video & AI"
+  ],
+  [
+    [
+      "pages",
+      "home",
+      "meta",
+      "desc"
+    ],
+    "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. Explore credited projects, Scouting roles and ways to collaborate."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "intro",
+      "lead"
+    ],
+    "Content planning, hands-on AI work, and practical AI adoption — connected by the same question: what will help people do their work better?"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "intro",
+      "title"
+    ],
+    "Strategy that moves into practice."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "lecture",
+      "desc"
+    ],
+    "AX means AI transformation: applying AI to the way a team works. We can review a content workflow, choose a focused pilot, and plan how people will use it. My workshops draw on field media, content workflows, and AI-assisted prototyping."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "lecture",
+      "title"
+    ],
+    "AX Consulting & Workshops"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "lecture",
+      "sub"
+    ],
+    "Practical AI adoption, shaped around your team"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "vibecoding",
+      "desc"
+    ],
+    "I use AI and web tools to build campaign pages, organize content flows, and test small systems. These projects show how I move from a practical need to a working prototype."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "vibecoding",
+      "title"
+    ],
+    "AI in Practice"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "vibecoding",
+      "sub"
+    ],
+    "Ideas turned into usable tools and prototypes"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "video",
+      "title"
+    ],
+    "Plan the story. Shape the content."
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "sections",
+      "video",
+      "sub"
+    ],
+    "From communication goals to production and distribution"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "meta",
+      "title"
+    ],
+    "Content, AI & AX Consulting | Jimmy Park"
+  ],
+  [
+    [
+      "pages",
+      "work",
+      "meta",
+      "desc"
+    ],
+    "Explore Jimmy Park’s content planning, AI-assisted prototypes, AX consulting and workshops, and field media production."
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "sections",
+      "timeline",
+      "note"
+    ],
+    "From Scout (2003) to Scout Leader (2014) — tap any item to expand."
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "sections",
+      "timeline",
+      "title"
+    ],
+    "Scouting History"
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "sections",
+      "hero",
+      "title"
+    ],
+    "Connections built through shared work."
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "sections",
+      "roles",
+      "items"
+    ],
+    [
+      {
+        "title": "National Commissioner on PR II",
+        "org": "Korea Scout Association",
+        "period": "2022–2024",
+        "accent": "neutral"
+      },
+      {
+        "title": "APR Communication & Partnerships",
+        "org": "2nd Vice Chair",
+        "period": "2025–2028",
+        "accent": "neutral"
+      },
+      {
+        "title": "Deputy Head of Media Dept.",
+        "org": "25th World Scout Jamboree",
+        "period": "2023",
+        "accent": "neutral"
+      },
+      {
+        "title": "BP Media",
+        "org": "Founder",
+        "period": "2026–",
+        "accent": "green"
+      }
+    ]
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "meta",
+      "title"
+    ],
+    "Global Network & Scouting | Jimmy Park"
+  ],
+  [
+    [
+      "pages",
+      "scouting",
+      "meta",
+      "desc"
+    ],
+    "Jimmy Park’s international network is rooted in Scouting, Asia-Pacific communications and partnerships, and World Scout Jamboree media work."
+  ]
+];
+function migrateTo8(doc) {
+  const hero = doc.pages && doc.pages.scouting && doc.pages.scouting.sections && doc.pages.scouting.sections.hero;
+  if (hero) { hero.image = DEFAULT.pages.scouting.sections.hero.image; hero.badge = DEFAULT.pages.scouting.sections.hero.badge; hero.caption = DEFAULT.pages.scouting.sections.hero.caption; }
+  for (const [path, previous] of V8_SEEDS) {
+    let target = doc, next = DEFAULT;
+    for (const key of path.slice(0, -1)) { target = target && target[key]; next = next[key]; }
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(next[key]));
+  }
+  const work = doc.pages && doc.pages.work && doc.pages.work.sections;
+  if (work && work.vibecoding && Array.isArray(work.vibecoding.items)) {
+    work.vibecoding.items = work.vibecoding.items.filter(item => !['card-news','bp-media-tools'].includes(item.slug) && !['Card News Generator','BP Media Tools'].includes(item.title));
+    for (const item of work.vibecoding.items) {
+      if (item.slug === 'scout-tour-assistant' || item.title === 'Scout Tour Assistant') {
+        item.href = 'https://scoutingapp.net/tour/'; item.status = 'Live';
+        if (item.desc === 'A map-based prototype for discovering and organizing meaningful Scouting places.') item.desc = DEFAULT.pages.work.sections.vibecoding.items[0].desc;
+      }
+    }
+  }
+  doc.version = 8;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -1521,35 +2142,95 @@ function normalizeOrders(doc) {
   return doc;
 }
 
+// Only navigation/asset URLs can reach executable DOM attributes.
+function safeSiteUrl(value, externalOnly = false) {
+  if (typeof value !== 'string') return '';
+  const url = value.trim();
+  if (!url) return '';
+  if (/[\u0000-\u0020\\]/.test(url)) return '';
+  if (!externalOnly && (url.startsWith('#') || (url.startsWith('/') && !url.startsWith('//')))) return url;
+  if (!url.startsWith('https://')) return '';
+  try { const parsed = new URL(url); return parsed.hostname && !parsed.username && !parsed.password ? url : ''; } catch (_) { return ''; }
+}
+function cleanUrls(value, errors, path = '') {
+  if (!value || typeof value !== 'object') return value;
+  for (const key of Object.keys(value)) {
+    const current = value[key], location = path ? path + '.' + key : key;
+    if (['href','image','linkedin'].includes(key) && typeof current === 'string') {
+      const safe = safeSiteUrl(current, key === 'linkedin');
+      if (current.trim() && !safe && errors) errors.push(location);
+      value[key] = safe;
+    } else if (current && typeof current === 'object') cleanUrls(current, errors, location);
+  }
+  return value;
+}
+function completeShape(def, value) {
+  if (Array.isArray(def)) return Array.isArray(value) && value.every(item => !def.length || completeShape(def[0], item));
+  if (def && typeof def === 'object') return !!value && typeof value === 'object' && !Array.isArray(value) && Object.keys(def).every(key => completeShape(def[key], value[key]));
+  if (typeof def === 'number') return typeof value === 'number' && Number.isFinite(value);
+  return typeof value === typeof def;
+}
+function validDocument(value) {
+  const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
+  return object(value) && [2,3,4,5,6,7,8].includes(value.version) && object(value.global) && object(value.pages) &&
+    ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
+}
+async function storedContent(env) {
+  const raw = await env.JP_KV.get(KEY);
+  if (raw === null || raw === undefined) return null;
+  const parsed = JSON.parse(raw);
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
+  const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
+  const shaped = [2,3,4,5,6,7,8].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  if (!shaped && !legacy) throw new Error('invalid_stored_content');
+  return parsed;
+}
 export async function onRequestGet({ env }) {
-  let doc = null;
-  try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
-  if (!doc) return json({ ok: true, content: DEFAULT });
-  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4 && doc.version !== 5 && doc.version !== 6 && doc.version !== 7) doc = fromV1(doc);
+  let doc;
+  try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
+  if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
+  if (![2,3,4,5,6,7,8].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
   if ((doc.version || 0) < 6) doc = migrateTo6(doc);
   if ((doc.version || 0) < 7) doc = migrateTo7(doc);
-  // Re-sanitize on read so older/partial docs always match the current shape.
-  const clean = normalizeOrders(sanitize(DEFAULT, doc));
+  if ((doc.version || 0) < 8) doc = migrateTo8(doc);
+  const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
 }
 
 export async function onRequestPut({ request, env }) {
-  if (!(await isAdmin(request, env))) return json({ ok: false, error: "unauthorized" }, 401);
-  let body = {};
-  try { body = await request.json(); } catch (_) {}
-  let incoming = body.content || body;
-  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4 && incoming.version !== 5 && incoming.version !== 6 && incoming.version !== 7) incoming = fromV1(incoming);
-  if (incoming && (incoming.version || 0) < 4) migrateTo4(incoming);
-  if (incoming && (incoming.version || 0) < 5) migrateTo5(incoming);
-  if (incoming && (incoming.version || 0) < 6) migrateTo6(incoming);
-  if (incoming && (incoming.version || 0) < 7) migrateTo7(incoming);
-  const doc = sanitize(DEFAULT, incoming);
-  doc.version = 7;
-  doc.updatedAt = Date.now();
-  await env.JP_KV.put(KEY, JSON.stringify(doc));
+  if (!(await isAdmin(request, env))) return json({ ok: false, error: 'unauthorized' }, 401);
+  let body;
+  try {
+    const raw = await request.text();
+    if (new TextEncoder().encode(raw).length > 2 * 1024 * 1024) return json({ ok: false, error: 'too_large' }, 413);
+    body = JSON.parse(raw);
+  } catch (_) { return json({ ok: false, error: 'invalid_json' }, 400); }
+  const incoming = body && (body.content || body);
+  if (!validDocument(incoming)) return json({ ok: false, error: 'invalid_content' }, 400);
+  if (incoming.version !== DEFAULT.version) return json({ ok: false, error: 'schema_changed' }, 409);
+  if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
+  if (incoming.updatedAt !== undefined && (!Number.isFinite(incoming.updatedAt) || incoming.updatedAt < 0)) return json({ ok: false, error: 'invalid_revision' }, 400);
+  let previous;
+  try { previous = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
+  // Optimistic conflict detection; KV is eventually consistent, so use one active editor.
+  if ((incoming.updatedAt || 0) !== (previous && previous.updatedAt || 0)) return json({ ok: false, error: 'conflict' }, 409);
+  if (incoming.version < 3) migrateTo3(incoming);
+  if (incoming.version < 4) migrateTo4(incoming);
+  if (incoming.version < 5) migrateTo5(incoming);
+  if (incoming.version < 6) migrateTo6(incoming);
+  if (incoming.version < 7) migrateTo7(incoming);
+  if (incoming.version < 8) migrateTo8(incoming);
+  const doc = normalizeOrders(sanitize(DEFAULT, incoming));
+  const invalidUrls = [];
+  cleanUrls(doc, invalidUrls);
+  if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
+  if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
+  doc.version = 8;
+  doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
+  try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
 }

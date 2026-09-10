@@ -12,7 +12,7 @@ strategy, AI prototypes, AX consulting/workshops, and field production. The exis
 AX is an offered collaboration scope; no client outcomes or productivity metrics
 are claimed. Existing prototype maturity labels are preserved.
 
-Content schema v7 adds owner-supplied video credits, the ongoing photography folder, and
+Content schema v8 adds owner-supplied video credits, the ongoing photography folder, and
 a travel collection with an automatically derived country/region count. It refreshes
 unchanged legacy defaults and replaces the retired countdown project on read without writing KV.
 Custom copy, images, contact details and section preferences survive; repurposed
@@ -40,6 +40,16 @@ robots.txt · sitemap.xml
 wrangler.toml   Pages config + KV binding
 .checks/        dependency-free layout consistency checks (not public)
 ```
+
+## Stability and Scouting refresh (v0.10.0 · 2026-09-10)
+- Connected the actual Scout Tour app and removed the two retired/incomplete tool cards.
+- Added the owner's main Scouting photo, optimized from ~11 MB to ~610 KB, and replaced the
+  badge-heavy history with a readable year/role/context chronology.
+- Refined specialty language, metadata, factual role scope and article author attribution.
+- Hardened content reads/saves, schema/revision checks, URL handling, admin failure recovery
+  and raster-only media serving. Regression checks use isolated data; no production test writes.
+- KV remains eventually consistent with one active editor intended. Sequential stale saves
+  are rejected; simultaneous writes need a transactional store for a strict guarantee.
 
 ## Project, identity and network update (v0.9.0 · 2026-09-10)
 - Replaced the JP monogram with a Wanted Sans wordmark and an abstract frame favicon.
@@ -95,6 +105,7 @@ node --check assets/site.js
 node .checks/content.cjs
 node .checks/insights.cjs
 node .checks/admin-save.cjs
+node .checks/stability.cjs
 git diff --check
 ```
 The check uses Python 3 and Node only. It verifies layout rules, shared shell, links/assets and

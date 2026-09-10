@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
-const sandbox = { json: value => value, isAdmin: async () => true };
+const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
 const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
 async function get(value) {
@@ -32,21 +32,21 @@ async function get(value) {
     if (version === 2) sc.timeline.items.forEach(item => { delete item.track; });
     sc.timeline.items.push({ year: '2026–', track: version === 2 ? '' : 'Leader', title: 'Scout Tour Assistant · Jamboree D-count experiments', context: 'Jamboree D-count', accent: 'green' });
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
-    work.vibecoding.items[2].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
+    work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 7);
+    assert.equal(result.version, 8);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
     assert.ok(!/Jamboree D-count|jamboree-dcount/.test(JSON.stringify(result)));
     assert.equal(result.pages.work.sections.vibecoding.items[1].title, 'K-TrainRadar24');
-    assert.equal(result.pages.work.sections.vibecoding.items[2].desc, 'Custom beta description');
+    assert.equal(result.pages.work.sections.vibecoding.items[0].desc, 'Custom beta description');
     assert.deepEqual(result.global.contact, legacy.global.contact);
     assert.deepEqual(result.pages.home.sections.hero, home.hero);
     assert.deepEqual(result.pages.scouting.sections.roles, sc.roles);
     assert.deepEqual(result.pages.scouting.hidden, ['gallery']);
     assert.equal(result.pages.scouting.order[0], 'cta');
-    assert.deepEqual(await get(result), result, 'v7 normalization must be idempotent');
+    assert.deepEqual(await get(result), result, 'v8 normalization must be idempotent');
   }
   const legacy6 = {
   "version": 6,
@@ -357,7 +357,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 7);
+  assert.equal(refreshed.version, 8);
   assert.equal(refreshed.pages.work.sections.video.cases.length, 10);
   assert.equal(refreshed.pages.home.sections.selected.cases.length, 3);
   assert.deepEqual(refreshed.pages.home.order, defaults.pages.home.order);
@@ -386,7 +386,29 @@ async function get(value) {
   assert.deepEqual(links.ctaGhost, customLink6.pages.home.sections.hero.ctaGhost, 'Custom CTA URL must preserve its label');
   const empty6 = copy(legacy6); empty6.pages.work.sections.video.cases = [];
   assert.deepEqual((await get(empty6)).pages.work.sections.video.cases, []);
+  const retiredV4 = copy(defaults); retiredV4.version = 4;
+  retiredV4.pages.work.sections.vibecoding.items.push({slug:'card-news', title:'Card News Generator', desc:'Content production tool'}, {slug:'bp-media-tools', title:'BP Media Tools', desc:'Media operation support'});
+  assert.equal((await get(retiredV4)).pages.work.sections.vibecoding.items.length, 2, 'Retired legacy fields cannot crash migration');
+  const oldProjectLabels = copy(defaults); oldProjectLabels.version = 2;
+  oldProjectLabels.pages.home.sections.projects.items = [{"tag": "Education · Strategy · Video", "title": "Korea Dream Path", "desc": "A Life Learning Initiative for education, youth growth, and global collaboration.", "descKo": "교육 · 청소년 성장 · 국제 협력", "href": "/work", "image": ""}, {"tag": "Scouting · Web Prototype", "title": "Scout Tour Assistant", "desc": "A map-based prototype for meaningful Scouting places worldwide.", "descKo": "스카우트 장소 지도 프로토타입", "href": "/scouting", "image": ""}, {"tag": "Campaign · Scouting", "title": "Jamboree D-count", "desc": "A participation campaign page for the 16th Korea Jamboree countdown.", "descKo": "제16회 한국잼버리 캠페인", "href": "/scouting", "image": ""}];
+  const labels = (await get(oldProjectLabels)).pages.home.sections.projects.items;
+  assert.deepEqual(labels, defaults.pages.home.sections.projects.items, 'Old project names must not be mixed with new network destinations');
+  const historical = copy(legacy6); historical.version = 2;
+  historical.pages.home.sections.hero.ctaPrimary = { label: 'View Work', href: '/work' };
+  historical.pages.home.sections.hero.ctaGhost = { label: 'Contact', href: '/contact' };
+  const historicalResult = await get(historical);
+  assert.deepEqual(historicalResult.pages.home.sections.hero.ctaPrimary, defaults.pages.home.sections.hero.ctaPrimary);
+  assert.deepEqual(historicalResult.pages.home.sections.hero.ctaGhost, defaults.pages.home.sections.hero.ctaGhost);
+  historical.pages.home.sections.hero.ctaPrimary.href = '/my-custom-work';
+  assert.deepEqual((await get(historical)).pages.home.sections.hero.ctaPrimary, historical.pages.home.sections.hero.ctaPrimary);
+  const removed = copy(defaults); removed.version = 7;
+  removed.pages.work.sections.vibecoding.items.push({ slug: 'card-news', title: 'Card News Generator' }, { slug: 'bp-media-tools', title: 'Custom tools title' });
+  removed.pages.work.sections.vibecoding.items[0].href = '';
+  const revised = await get(removed);
+  assert.equal(revised.pages.work.sections.vibecoding.items.length, 2);
+  assert.equal(revised.pages.work.sections.vibecoding.items[0].href, 'https://scoutingapp.net/tour/');
+  assert.equal(revised.pages.scouting.sections.hero.image, '/assets/img/scouting-main.jpg?v=0.10.0');
   const edited = copy(defaults); edited.pages.scouting.sections.travel.items = []; edited.pages.work.sections.video.cases = []; edited.pages.work.sections.photography.portfolio.href = '';
   assert.deepEqual(await get(edited), edited, 'Explicit current-schema empty values must remain editable');
-  console.log('PASS: v2/v5/v6 to v7 migrations, retired project removal, additive evidence, custom values/order/visibility, empty edits, idempotence and no GET writes.');
+  console.log('PASS: v2/v5/v6 to v8 migrations, retired project removal, additive evidence, custom values/order/visibility, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });
