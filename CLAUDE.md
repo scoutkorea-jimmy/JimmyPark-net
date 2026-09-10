@@ -4,9 +4,23 @@ Operating manual for working in this repo. Read this and [design.md](design.md) 
 Keep both in sync with reality when you change how the site works.
 
 ## What this is
-Personal portfolio for **Jimmy Park / 박지민** — Photographer · Videographer · Scout · Builder.
+Personal portfolio for **Jimmy Park / 박지민** — Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.
 Live at **https://jimmypark.net**. **Vanilla HTML/CSS/JS, no build step, no framework.**
 Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-gated admin.
+
+### Portfolio positioning (v0.5.0)
+- Home leads with four capabilities, then dated experience, selected projects, process, and contact.
+- Work order: content strategy (`#video`), AI practice (`#vibecoding`), AX consulting and workshops
+  (`#lecture`), then field photography. Legacy section keys and all four routes remain stable.
+- `/scouting` is labelled **Global & Scouting** in navigation; roles and international context
+  appear before the detailed timeline. Keep historical dates and the owner's exact role titles.
+- AX is an offered scope and process, not a claim of completed enterprise engagements or measured results.
+- The portrait is the owner's existing public CMS photo, copied to `assets/img/jimmy-park-portrait.jpg`
+  so the home page also has a real image before hydration. Uploaded CMS images still override it.
+- Schema v5 migrates unchanged legacy seed values in memory, never writes KV on GET, and preserves
+  custom text, media, contacts, hidden sections and custom ordering. Semantically repurposed rows
+  (capabilities, snapshot, process and workshop topics) migrate atomically only when unchanged.
+- This release changes portfolio code only. Preserve the separate entertainment app and its API/assets.
 
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
@@ -159,7 +173,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 2`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 5`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

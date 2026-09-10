@@ -1,8 +1,19 @@
 # JimmyPark.net — Jimmy Park
 
-Personal profile site: Photographer · Videographer · Scout · Builder.
+Personal portfolio: Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.
 Clean, modern, warm-minimal. English-only. Burgundy `#7a1e2c`
 accent, Scouting green `#2f5a45` sub-accent. **Vanilla HTML/CSS/JS — no build step.**
+
+The home page leads with four capabilities, connects each to supporting work, and
+places dated international roles alongside the projects. Work covers content
+strategy, AI prototypes, AX consulting/workshops, and field production. The existing
+`/scouting` route presents the global network through concrete Scouting experience.
+AX is an offered collaboration scope; no client outcomes or productivity metrics
+are claimed. Existing prototype maturity labels are preserved.
+
+Content schema v5 refreshes unchanged legacy defaults on read without writing KV.
+Custom copy, images, contact details and section preferences survive; repurposed
+collection rows migrate only if the entire old row is unchanged.
 
 ## Structure
 ```

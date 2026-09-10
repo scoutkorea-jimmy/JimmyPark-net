@@ -2,11 +2,26 @@
 
 > The single source of truth for how the site looks and feels.
 > Visual language: **warm-minimal, English-only, soft rounded corners.**
-> Identity: *Photographer · Videographer · Scout · Builder.*
+> Identity: *Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.*
 > Tagline: **SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.**
 
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
 same header, footer, eyebrow, button, and card patterns by design.
+
+### Portfolio composition (v0.5.0)
+- Keep the existing burgundy/Scouting-green identity and approved typefaces.
+- Home: purpose-led headline and existing portrait, four capability cards, dated experience,
+  selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
+- `.capability-grid`: two equal columns, one below 520px. Capability descriptions and tags are
+  always visible; keyboard and touch users do not depend on hover to discover the offer.
+- `.project-grid`: three equal columns, one below 840px. Cards with no uploaded image render as
+  complete text cards instead of empty image placeholders. AI maturity labels remain visible.
+- Main body copy in the new components is 16px; regular labels are 14px. The home headline is
+  `clamp(40px,5.3vw,62px)` with 1.12 line-height. Other existing type scales remain available.
+- Public pages have a skip link, a main landmark, and stable IDs matching their `data-section`
+  values. Anchor destinations clear the sticky header. All canonical routes remain unchanged.
+- Keep static text/collections aligned with the API defaults and runtime templates. Custom CMS
+  images remain editable, and removing an image restores the component's fallback presentation.
 
 ---
 
@@ -161,7 +176,7 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 | Width | Change |
 |-------|--------|
 | `≤ 880px` | Desktop nav hidden; hamburger `.nav-toggle` shown; `.mobile-menu` toggles `.open` |
-| `≤ 840px` | `.split`, `.feat`, `.cta-grid`, `.vid-grid`, `.roles2` → 1 col; `.flow` → 2 col; `.gal-grid` → 2 col; `.split-img` moves above text (`order:-1`) |
+| `≤ 840px` | `.split`, `.feat`, `.cta-grid`, `.vid-grid`, `.roles2` → 1 col; `.flow` → 2 col; `.gal-grid` → 2 col; `.split-img` follows text (`order:0`) |
 | `≤ 520px` | `.flow` → 1 col; `.snap4` → 2 col; `.snap-grid` → 1 col |
 
 Grids are declared inline (`grid-template-columns`) and **overridden** by these named classes

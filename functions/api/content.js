@@ -13,234 +13,261 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  version: 4,
-  global: {
-    brand: { name: "Jimmy Park", roleline: "Photographer · Videographer · Scout · Builder" },
-    footer: { tagline: "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.", copyright: "© 2026 Jimmy Park" },
-    contact: { email: "scoutkorea@kakao.com", phone: "+82.010.2646.1635", linkedin: "", location: "Korea" },
-    seo: {
-      title: "Jimmy Park",
-      desc: "Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes.",
-    },
+  "version": 5,
+  "global": {
+    "brand": {"name":"Jimmy Park","roleline":"Content Strategist · AI Practitioner · AX Consultant · Global Collaborator"},
+    "footer": {"tagline":"SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.","copyright":"© 2026 Jimmy Park"},
+    "contact": {"email":"scoutkorea@kakao.com","phone":"+82.010.2646.1635","linkedin":"https://www.linkedin.com/in/jimmy1420","location":"Korea · Korean / English"},
+    "seo": {"title":"Jimmy Park | Content Strategy, AI & AX Consulting","desc":"Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."}
   },
-  pages: {
-    home: {
-      meta: { title: "Jimmy Park", desc: "Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes." },
-      order: ["hero", "snapshot", "activities", "approach", "projects", "cta"],
-      hidden: [],
-      sections: {
-        hero: {
-          eyebrow: "Photographer · Videographer · Scout · Builder",
-          title: "Jimmy Park",
-          lead: "I help turn a clear purpose into the right content, field execution, and working systems.",
-          ctaPrimary: link("View Work", "/work"),
-          ctaGhost: link("Contact", "/contact"),
-          image: "", badge: "On location",
-          caption: "Field documentation · Event media · Scouting", captionRight: "Korea",
+  "pages": {
+    "home": {
+      "meta": {"title":"Jimmy Park | Content Strategy, AI & AX Consulting","desc":"Jimmy Park connects content strategy, hands-on AI work, and practical AI transformation consulting with a global network built through Scouting and Asia-Pacific collaboration."},
+      "order": ["hero","activities","snapshot","projects","approach","cta"],
+      "hidden": [],
+      "sections": {
+        "hero": {
+          "eyebrow": "Content Strategist · AI Practitioner · AX Consultant · Global Collaborator",
+          "title": "Content with purpose.\nAI put to work.",
+          "lead": "I plan content, build with AI, and help teams explore better ways of working — with a global network rooted in Scouting and Asia-Pacific collaboration.",
+          "ctaPrimary": {"label":"Explore my work","href":"/work"},
+          "ctaGhost": {"label":"Discuss a project","href":"/contact"},
+          "image": "/assets/img/jimmy-park-portrait.jpg",
+          "badge": "Jimmy Park · On location",
+          "caption": "Content, technology, and people.",
+          "captionRight": "Based in Korea"
         },
-        snapshot: {
-          rows: [
-            { label: "Current Roles", value: "BP Media · Korea Dream Path · APR C&P" },
-            { label: "Main Fields", value: "Photography · Video · Scouting · Vibe Coding" },
-            { label: "Collaboration", value: "Event media · Video production · Scouting projects · Web prototypes" },
-            { label: "Base", value: "Korea" },
-          ],
+        "snapshot": {
+          "rows": [
+            {"label":"Content & media","value":"BP Media · Founder, 2026–"},
+            {"label":"Asia-Pacific","value":"Communications & Partnerships · 2nd Vice Chair, 2025–2028"},
+            {"label":"International fieldwork","value":"25th World Scout Jamboree · Korean Contingent Media, 2023"},
+            {"label":"Based in","value":"Korea · Korean / English"}
+          ]
         },
-        activities: {
-          eyebrow: "What I Actually Do",
-          title: "Document → Produce → Connect → Build",
-          items: [
-            { kicker: "Document", title: "Field Documentation", desc: "I capture events, people, and key moments so they can be used immediately for press, social media, reports, and archives.", tags: ["Press", "SNS", "Report", "Archive"], href: "/work", accent: "burgundy" },
-            { kicker: "Produce", title: "Purpose-based Production", desc: "I design video formats according to the purpose — promotion, event film, interview, campaign, IR/PR, or short-form.", tags: ["Promotion", "Interview", "Event Film", "Short-form"], href: "/work", accent: "burgundy" },
-            { kicker: "Connect", title: "Scouting Communication", desc: "I connect youth movement, international exchange, media, and field experience through Scouting.", tags: ["Youth", "International", "Media"], href: "/scouting", accent: "green" },
-            { kicker: "Build", title: "Working Prototypes", desc: "I use AI and web tools to quickly shape ideas into campaign pages, maps, content tools, and small systems.", tags: ["Campaign Page", "Map", "Content Tool"], href: "/work", accent: "burgundy" },
-          ],
+        "activities": {
+          "eyebrow": "Four ways I contribute",
+          "title": "From the first idea to work people can use.",
+          "items": [
+            {
+              "kicker": "01 / Content",
+              "title": "Content Strategy",
+              "desc": "Turn a communication goal into a clear message, the right format, and a plan for production and distribution.",
+              "tags": ["Editorial planning","Campaigns","Video & media"],
+              "href": "/work#video",
+              "accent": "burgundy"
+            },
+            {
+              "kicker": "02 / AI",
+              "title": "AI in Practice",
+              "desc": "Use AI to turn ideas into campaign pages, content tools, and working prototypes built around real project needs.",
+              "tags": ["Prototyping","Content tools","AI workflows"],
+              "href": "/work#vibecoding",
+              "accent": "burgundy"
+            },
+            {
+              "kicker": "03 / AX",
+              "title": "AX Consulting",
+              "desc": "Explore AI transformation from the work itself: identify useful opportunities, test a focused workflow, and help a team take its next step.",
+              "tags": ["Workflow review","Pilot design","Workshops"],
+              "href": "/work#lecture",
+              "accent": "burgundy"
+            },
+            {
+              "kicker": "04 / Global",
+              "title": "Global Collaboration",
+              "desc": "Bring Scouting experience, Asia-Pacific relationships, and international event media work to projects that connect people across borders.",
+              "tags": ["Asia-Pacific","Scouting","Partnerships"],
+              "href": "/scouting#roles",
+              "accent": "green"
+            }
+          ]
         },
-        approach: {
-          eyebrow: "How I Approach a Project",
-          title: "Tell me the purpose. I'll suggest the direction, then execute.",
-          steps: [
-            { num: "01", title: "Understand the Purpose", desc: "Clarify why the project exists, who it is for, and where the output will be used." },
-            { num: "02", title: "Suggest the Direction", desc: "Propose the most suitable format, workflow, and communication approach." },
-            { num: "03", title: "Execute in the Field", desc: "Document, film, produce, coordinate, or build according to the project's needs." },
-            { num: "04", title: "Deliver for Use", desc: "Prepare outputs ready for press, social media, reports, websites, or campaigns." },
-          ],
+        "approach": {
+          "eyebrow": "How we can work together",
+          "title": "Start with the work. Build a useful next step.",
+          "steps": [
+            {"num":"01","title":"Understand","desc":"Clarify the audience, the goal, and the way work happens today."},
+            {"num":"02","title":"Design","desc":"Choose the message, format, or AI use case that fits the need."},
+            {"num":"03","title":"Make & test","desc":"Produce the content or build a small pilot, then review it with the people who will use it."},
+            {"num":"04","title":"Put it to use","desc":"Prepare the output, guidance, and next steps for the team."}
+          ]
         },
-        projects: {
-          eyebrow: "Selected Projects",
-          title: "A few things I've built",
-          feature: { badge: "Scouting · Media · Content", sub: "BP Media platform", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement.", href: "/scouting", image: "" },
-          items: [
-            { tag: "Education · Strategy · Video", title: "Korea Dream Path", desc: "A Life Learning Initiative for education, youth growth, and global collaboration.", href: "/work", image: "" },
-            { tag: "Scouting · Web Prototype", title: "Scout Tour Assistant", desc: "A map-based prototype for meaningful Scouting places worldwide.", href: "/scouting", image: "" },
-            { tag: "Campaign · Scouting", title: "Jamboree D-count", desc: "A participation campaign page for the 16th Korea Jamboree countdown.", href: "/scouting", image: "" },
-          ],
+        "projects": {
+          "eyebrow": "Selected Projects",
+          "title": "Where the work takes shape.",
+          "feature": {"badge":"Content strategy · Global Scouting","sub":"Founder · Scouting media","title":"BP Media","desc":"A Scouting media platform bringing stories, events, and people into a shared editorial space. My work connects field documentation with content planning and international perspectives.","href":"/scouting#mediaprojects","image":""},
+          "items": [
+            {"tag":"Content · Education","title":"Korea Dream Path","desc":"An education and youth-growth initiative connecting content, learning, and global collaboration.","href":"/work#video","image":""},
+            {"tag":"AI practice · Prototype","title":"Scout Tour Assistant","desc":"A map-based prototype that organizes meaningful Scouting places into an explorable resource.","href":"/work#vibecoding","image":""},
+            {"tag":"Content · Campaign","title":"Jamboree D-count","desc":"A countdown and participation page created for the 16th Korea Jamboree.","href":"/work#vibecoding","image":""}
+          ]
         },
-        cta: {
-          title: "Let's start with the purpose.",
-          body: "For collaboration, documentation, video, Scouting projects, or web prototypes — feel free to reach out.",
-          button: link("Contact", "/contact"),
-        },
-      },
+        "cta": {
+          "title": "What are you working on?",
+          "body": "A content challenge, an AI idea, a team workflow, or an international project — let’s work out a useful next step.",
+          "button": {"label":"Discuss a project","href":"/contact"}
+        }
+      }
     },
-
-    work: {
-      meta: { title: "Work · Jimmy Park", desc: "Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs." },
-      order: ["intro", "photography", "video", "vibecoding", "lecture", "cta"],
-      hidden: [],
-      sections: {
-        intro: {
-          eyebrow: "Work",
-          title: "Made for use, based on purpose.",
-          lead: "I work across field documentation, purpose-based video, and small digital tools — depending on what the project needs.",
-        },
-        photography: {
-          kicker: "Document", title: "Photography", sub: "Field documentation for immediate use",
-          desc: "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.",
-          deliverables: [
-            { text: "Event sketch · speaker & participant photos" },
-            { text: "Press-ready selections · atmosphere shots" },
-            { text: "Same-day basic edits · purpose-based sorting" },
+    "work": {
+      "meta": {"title":"Content, AI & AX Consulting | Jimmy Park","desc":"Explore Jimmy Park’s content planning, AI-assisted prototypes, AX consulting and workshops, and field media production."},
+      "order": ["intro","video","vibecoding","lecture","photography","cta"],
+      "hidden": [],
+      "sections": {
+        "intro": {"eyebrow":"Work & collaboration","title":"Strategy that moves into practice.","lead":"Content planning, hands-on AI work, and practical AI adoption — connected by the same question: what will help people do their work better?"},
+        "photography": {
+          "kicker": "04 / Field production",
+          "title": "Photography & Field Media",
+          "sub": "Field documentation for immediate use",
+          "desc": "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.",
+          "deliverables": [
+            {"text":"Event sketch · speaker & participant photos"},
+            {"text":"Press-ready selections · atmosphere shots"},
+            {"text":"Same-day basic edits · purpose-based sorting"}
           ],
-          usefulFor: [{ text: "Press" }, { text: "SNS" }, { text: "Card news" }, { text: "Report" }, { text: "Archive" }],
-          caption: "Event documentation · press-ready selection · same-day delivery",
-          image: "",
-        },
-        video: {
-          kicker: "Produce", title: "Video", sub: "Formats shaped by purpose",
-          desc: "Video should change depending on its purpose. I organize the format, rhythm, and message according to the audience and use case.",
-          formats: [
-            { name: "Promotion", desc: "For institutions, brands, projects" },
-            { name: "Event Film", desc: "For records and highlights" },
-            { name: "Interview", desc: "For people-centered stories" },
-            { name: "IR / PR", desc: "For institutional communication" },
-            { name: "Campaign", desc: "For message-driven content" },
-            { name: "Short-form", desc: "For social media distribution" },
+          "usefulFor": [
+            {"text":"Press"},
+            {"text":"SNS"},
+            {"text":"Card news"},
+            {"text":"Report"},
+            {"text":"Archive"}
           ],
-          caption: "Video type · purpose · availability",
+          "caption": "Event documentation · press-ready selection · same-day delivery",
+          "image": ""
         },
-        vibecoding: {
-          kicker: "Build", title: "Vibe Coding", sub: "Small systems that make ideas work",
-          desc: "I'm not presenting myself as a traditional developer. I use AI and web tools to quickly test ideas, build campaign pages, organize content flows, and create small tools that support real projects.",
-          items: [
-            { slug: "scout-tour-assistant", title: "Scout Tour Assistant", desc: "Map-based Scouting place archive", status: "Prototype", accent: "green", image: "" },
-            { slug: "jamboree-dcount", title: "Jamboree D-count", desc: "Campaign participation page", status: "Live", accent: "burgundy", image: "" },
-            { slug: "card-news", title: "Card News Generator", desc: "Content production tool", status: "Beta", accent: "neutral", image: "" },
-            { slug: "bp-media-tools", title: "BP Media Tools", desc: "Media operation support", status: "In Progress", accent: "neutral", image: "" },
+        "video": {
+          "kicker": "01 / Content strategy",
+          "title": "Plan the story. Shape the content.",
+          "sub": "From communication goals to production and distribution",
+          "desc": "I translate a project’s purpose into an audience, a message, and a format. From campaign concepts to interviews and short-form video, I plan how the content will be made and where it will be used.",
+          "formats": [
+            {"name":"Promotion","desc":"For institutions, brands, projects"},
+            {"name":"Event Film","desc":"For records and highlights"},
+            {"name":"Interview","desc":"For people-centered stories"},
+            {"name":"IR / PR","desc":"For institutional communication"},
+            {"name":"Campaign","desc":"For message-driven content"},
+            {"name":"Short-form","desc":"For social media distribution"}
           ],
+          "caption": "Content planning · Production · Distribution"
         },
-        lecture: {
-          kicker: "Teach", title: "Lecture", sub: "Talks & workshops from the field",
-          desc: "I share field experience through lectures and workshops — on Scouting and youth communication, field media and documentation, and AI-assisted prototyping. Each session is shaped around the audience and the purpose.",
-          topics: [
-            { name: "Scouting & Youth", desc: "Communication, international exchange, youth movement" },
-            { name: "Field Media", desc: "Documentation, event media, content workflows" },
-            { name: "Photography for Purpose", desc: "Shooting for press, SNS, and reports" },
-            { name: "AI · Vibe Coding", desc: "Turning ideas into working web prototypes" },
-          ],
+        "vibecoding": {
+          "kicker": "02 / AI practice",
+          "title": "AI in Practice",
+          "sub": "Ideas turned into usable tools and prototypes",
+          "desc": "I use AI and web tools to build campaign pages, organize content flows, and test small systems. These projects show how I move from a practical need to a working prototype.",
+          "items": [
+            {"slug":"scout-tour-assistant","title":"Scout Tour Assistant","desc":"A map-based prototype for discovering and organizing meaningful Scouting places.","status":"Prototype","accent":"green","image":""},
+            {"slug":"jamboree-dcount","title":"Jamboree D-count","desc":"A countdown and participation page for the 16th Korea Jamboree.","status":"Live","accent":"burgundy","image":""},
+            {"slug":"card-news","title":"Card News Generator","desc":"A beta tool for turning content into card-news formats.","status":"Beta","accent":"neutral","image":""},
+            {"slug":"bp-media-tools","title":"BP Media Tools","desc":"Tools in development to support everyday media operations.","status":"In Progress","accent":"neutral","image":""}
+          ]
         },
-        cta: {
-          title: "Need field documentation, video, or a small web prototype? Tell me the purpose first.",
-          body: "If the purpose and use case are clear, we can plan the structure, execution, and delivery together.",
-          button: link("Contact", "/contact"),
+        "lecture": {
+          "kicker": "03 / AI transformation",
+          "title": "AX Consulting & Workshops",
+          "sub": "Practical AI adoption, shaped around your team",
+          "desc": "AX means AI transformation: applying AI to the way a team works. We can review a content workflow, choose a focused pilot, and plan how people will use it. My workshops draw on field media, content workflows, and AI-assisted prototyping.",
+          "topics": [
+            {"name":"Workflow review","desc":"Map recurring tasks, handoffs, and opportunities where AI could help."},
+            {"name":"Pilot planning","desc":"Choose one use case, define a useful output, and agree how to review it."},
+            {"name":"AI workshops","desc":"Practice turning a real content or web idea into a working prototype."},
+            {"name":"Field & youth media","desc":"Workshops on documentation, photography, Scouting, and international communication."}
+          ]
         },
-      },
+        "cta": {
+          "title": "Have a brief, a workflow, or an idea to explore?",
+          "body": "Share the goal, the people involved, and what you need to deliver. We can define the content, prototype, or workshop that fits.",
+          "button": {"label":"Discuss a project","href":"/contact"}
+        }
+      }
     },
-
-    scouting: {
-      meta: { title: "Scouting · Jimmy Park", desc: "Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media." },
-      order: ["hero", "why", "stats", "timeline", "roles", "international", "mediaprojects", "gallery", "cta"],
-      hidden: [],
-      sections: {
-        hero: {
-          eyebrow: "Scouting",
-          title: "Scouting has been my long-term base for communication, field experience, and international connection.",
-          lead: "From Scout to Scout Leader, it taught me how people gather, move, and build trust across borders.",
-          image: "", badge: "International event",
-          caption: "Scouting field · international event · youth movement",
+    "scouting": {
+      "meta": {"title":"Global Network & Scouting | Jimmy Park","desc":"Jimmy Park’s international network is rooted in Scouting, Asia-Pacific communications and partnerships, and World Scout Jamboree media work."},
+      "order": ["hero","roles","international","why","stats","mediaprojects","timeline","gallery","cta"],
+      "hidden": [],
+      "sections": {
+        "hero": {"eyebrow":"Global network · Scouting","title":"Connections built through shared work.","lead":"My international network grows through Scouting, Asia-Pacific communication and partnerships, and media work at global events.","image":"","badge":"International event","caption":"Scouting field · international event · youth movement"},
+        "why": {"eyebrow":"The foundation of my network","body":"Scouting is where I learned to work across cultures, understand different audiences, and build trust through shared projects. I bring that experience to content planning, international communication, and collaboration."},
+        "stats": {
+          "items": [
+            {"value":"10+ Years","label":"Scouting experience"},
+            {"value":"Youth Movement","label":"Growth & social impact"},
+            {"value":"International Exchange","label":"Global network"},
+            {"value":"Media & Documentation","label":"Records · communication"}
+          ]
         },
-        why: {
-          eyebrow: "Why Scouting Matters",
-          body: "Scouting is where I learned how people gather, move, communicate, and build trust across different backgrounds. It shaped the way I document fields, design messages, and connect projects.",
+        "roles": {
+          "title": "Roles behind the relationships",
+          "items": [
+            {"title":"National Commissioner on PR II","org":"Korea Scout Association","period":"2022–2024","accent":"neutral"},
+            {"title":"APR Communication & Partnerships","org":"2nd Vice Chair","period":"2025–2028","accent":"neutral"},
+            {"title":"Deputy Head of Media Dept.","org":"25th World Scout Jamboree","period":"2023","accent":"neutral"},
+            {"title":"BP Media","org":"Founder","period":"2026–","accent":"green"}
+          ]
         },
-        stats: {
-          items: [
-            { value: "10+ Years", label: "Scouting experience" },
-            { value: "Youth Movement", label: "Growth & social impact" },
-            { value: "International Exchange", label: "Global network" },
-            { value: "Media & Documentation", label: "Records · communication" },
-          ],
+        "international": {
+          "title": "A network with a working context",
+          "body": "World Scout Jamborees, Asia-Pacific regional activities, and international Scout networks connect me with people working in youth engagement, media, and partnerships. These relationships inform how I approach cross-cultural projects and communication.",
+          "tags": [
+            {"text":"World Scout Jamboree"},
+            {"text":"APR Scouting"},
+            {"text":"International Exchange"},
+            {"text":"Media Operation"},
+            {"text":"Youth Communication"}
+          ]
         },
-        roles: {
-          title: "Key Roles",
-          items: [
-            { title: "National Commissioner", org: "Korea Scout Association", period: "2022–2024", accent: "neutral" },
-            { title: "APR Communication & Partnerships", org: "2nd Vice Chair", period: "2025–2028", accent: "neutral" },
-            { title: "25th World Scout Jamboree", org: "Korea Contingent Media", period: "2023", accent: "neutral" },
-            { title: "BP Media", org: "Founder", period: "2026–", accent: "green" },
-          ],
+        "mediaprojects": {
+          "title": "Scouting Media Projects",
+          "feature": {"badge":"Flagship","title":"BP Media","desc":"A Scouting-specialized media platform documenting stories, events, people, and international movement.","image":""},
+          "items": [
+            {"title":"Scout Tour Assistant","desc":"A map-based prototype for meaningful Scouting places, heritage sites, offices, and campsites."},
+            {"title":"Jamboree D-count","desc":"A participation campaign page for the 16th Korea Jamboree countdown."},
+            {"title":"Jamboree Media Work","desc":"Field media, documentation, and communication for large-scale Scouting events."}
+          ]
         },
-        international: {
-          title: "International Experience",
-          body: "Through World Scout Jamboree, Asia-Pacific regional activities, international Scout networks, and field media operations, I work with Scouting as a language of global communication.",
-          tags: [{ text: "World Scout Jamboree" }, { text: "APR Scouting" }, { text: "International Exchange" }, { text: "Media Operation" }, { text: "Youth Communication" }],
+        "timeline": {
+          "title": "Scouting History",
+          "note": "From Scout (2003) to Scout Leader (2014) — tap any item to expand.",
+          "items": [
+            {"year":"2003","title":"Joined Scouting as a Scout","context":"I started Scouting as a Scout, experiencing people and activities first-hand in the field.","track":"Scout","accent":"neutral"},
+            {"year":"2012","title":"Started Scouting media activities","context":"While active as a Scout, I grew interested in documentation and communication, and began building toward Scouting media work.","track":"Scout","accent":"neutral"},
+            {"year":"2014","title":"Became a Scout Leader","context":"I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.","track":"Leader","accent":"green"},
+            {"year":"2016–2017","title":"World Scout Jamboree bid & related projects","context":"I took part as a leader in the World Scout Jamboree bid and related projects.","track":"Leader","accent":"neutral"},
+            {"year":"2022–2024","title":"National Commissioner, Korea Scout Association","context":"I served as National Commissioner of the Korea Scout Association, working on domestic Scouting activity and communication.","track":"Leader","accent":"green"},
+            {"year":"2023","title":"Korea Contingent Media, 25th World Scout Jamboree","context":"I served as Deputy Director of the Media Department for the Korean Contingent at the 25th World Scout Jamboree.","track":"Leader","accent":"green"},
+            {"year":"2025–2028","title":"APR C&P Sub-Committee, 2nd Vice Chair","context":"I serve as 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.","track":"Leader","accent":"green"},
+            {"year":"2026–","title":"BP Media","context":"I run BP Media, a Scouting-specialized media platform.","track":"Leader","accent":"green"},
+            {"year":"2026–","title":"Scout Tour Assistant · Jamboree D-count experiments","context":"I'm experimenting with Scouting-based web projects like Scout Tour Assistant and the Jamboree D-count.","track":"Leader","accent":"green"}
+          ]
         },
-        mediaprojects: {
-          title: "Scouting Media Projects",
-          feature: { badge: "Flagship", title: "BP Media", desc: "A Scouting-specialized media platform documenting stories, events, people, and international movement.", image: "" },
-          items: [
-            { title: "Scout Tour Assistant", desc: "A map-based prototype for meaningful Scouting places, heritage sites, offices, and campsites." },
-            { title: "Jamboree D-count", desc: "A participation campaign page for the 16th Korea Jamboree countdown." },
-            { title: "Jamboree Media Work", desc: "Field media, documentation, and communication for large-scale Scouting events." },
-          ],
+        "gallery": {
+          "title": "Field Gallery",
+          "figs": [
+            {"label":"International Meeting","category":"Scouting field","image":""},
+            {"label":"Jamboree","category":"Scouting field","image":""},
+            {"label":"Media Operation","category":"Scouting field","image":""},
+            {"label":"Scout Field","category":"Scouting field","image":""},
+            {"label":"Youth Activity","category":"Scouting field","image":""}
+          ]
         },
-        timeline: {
-          title: "Scouting History",
-          note: "From Scout (2003) to Scout Leader (2014) — tap any item to expand.",
-          items: [
-            { year: "2003", title: "Joined Scouting as a Scout", context: "I started Scouting as a Scout, experiencing people and activities first-hand in the field.", track: "Scout", accent: "neutral" },
-            { year: "2012", title: "Started Scouting media activities", context: "While active as a Scout, I grew interested in documentation and communication, and began building toward Scouting media work.", track: "Scout", accent: "neutral" },
-            { year: "2014", title: "Became a Scout Leader", context: "I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.", track: "Leader", accent: "green" },
-            { year: "2016–2017", title: "World Scout Jamboree bid & related projects", context: "I took part as a leader in the World Scout Jamboree bid and related projects.", track: "Leader", accent: "neutral" },
-            { year: "2022–2024", title: "National Commissioner, Korea Scout Association", context: "I served as National Commissioner of the Korea Scout Association, working on domestic Scouting activity and communication.", track: "Leader", accent: "green" },
-            { year: "2023", title: "Korea Contingent Media, 25th World Scout Jamboree", context: "I served as Deputy Director of the Media Department for the Korean Contingent at the 25th World Scout Jamboree.", track: "Leader", accent: "green" },
-            { year: "2025–2028", title: "APR C&P Sub-Committee, 2nd Vice Chair", context: "I serve as 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.", track: "Leader", accent: "green" },
-            { year: "2026–", title: "BP Media", context: "I run BP Media, a Scouting-specialized media platform.", track: "Leader", accent: "green" },
-            { year: "2026–", title: "Scout Tour Assistant · Jamboree D-count experiments", context: "I'm experimenting with Scouting-based web projects like Scout Tour Assistant and the Jamboree D-count.", track: "Leader", accent: "green" },
-          ],
-        },
-        gallery: {
-          title: "Field Gallery",
-          figs: [
-            { label: "International Meeting", category: "Scouting field", image: "" },
-            { label: "Jamboree", category: "Scouting field", image: "" },
-            { label: "Media Operation", category: "Scouting field", image: "" },
-            { label: "Scout Field", category: "Scouting field", image: "" },
-            { label: "Youth Activity", category: "Scouting field", image: "" },
-          ],
-        },
-        cta: {
-          title: "If the project is related to Scouting, youth, or international collaboration, let's talk.",
-          body: "Reach out and tell me the purpose — I'll suggest where to take it.",
-          button: link("Contact", "/contact"),
-        },
-      },
+        "cta": {
+          "title": "If the project is related to Scouting, youth, or international collaboration, let's talk.",
+          "body": "Reach out and tell me the purpose — I'll suggest where to take it.",
+          "button": {"label":"Contact","href":"/contact"}
+        }
+      }
     },
-
-    contact: {
-      meta: { title: "Contact · Jimmy Park", desc: "Contact Jimmy Park for collaboration, event documentation, video production, Scouting projects, or small web prototypes. Email and phone." },
-      order: ["intro"],
-      hidden: [],
-      sections: {
-        intro: {
-          eyebrow: "Contact",
-          title: "Let's get in touch.",
-          lead: "For collaboration, event documentation, video production, Scouting projects, or small web prototypes, feel free to get in touch.",
-        },
-      },
-    },
+    "contact": {
+      "meta": {"title":"Discuss a Project | Jimmy Park","desc":"Contact Jimmy Park about content strategy, AI prototypes, AX consulting and workshops, or international collaboration."},
+      "order": ["intro"],
+      "hidden": [],
+      "sections": {
+        "intro": {"eyebrow":"Let’s collaborate","title":"Tell me what you want to make possible.","lead":"Content strategy, an AI prototype, a team workshop, or an international project — share the challenge and the people it needs to work for."}
+      }
+    }
   },
-  updatedAt: 0,
+  "updatedAt": 0
 };
 
 // ── generic validator: use DEFAULT as the schema, clamp strings/arrays ────────
@@ -336,6 +363,130 @@ function migrateTo4(doc) {
   return doc;
 }
 
+// v4 → v5: update only unchanged legacy seed values. Uploaded images, custom
+// copy, contact details, visibility and custom section orders remain intact.
+// Rows whose purpose changes migrate atomically, avoiding mixed old/new meanings.
+// This runs in memory on read; KV is written only by an explicit admin save.
+const V5_LEGACY = [
+  [["global","brand","roleline"],"Photographer · Videographer · Scout · Builder"],
+  [["global","contact","linkedin"],""],
+  [["global","contact","location"],"Korea"],
+  [["global","seo","title"],"Jimmy Park"],
+  [["global","seo","desc"],"Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes."],
+  [["pages","home","meta","title"],"Jimmy Park"],
+  [["pages","home","meta","desc"],"Jimmy Park is a photographer, videographer, Scout, and builder working across field documentation, purpose-based video production, Scouting communication, and AI-assisted web prototypes."],
+  [["pages","home","order"],["hero","snapshot","activities","approach","projects","cta"]],
+  [["pages","home","sections","hero","eyebrow"],"Photographer · Videographer · Scout · Builder"],
+  [["pages","home","sections","hero","title"],"Jimmy Park"],
+  [["pages","home","sections","hero","lead"],"I help turn a clear purpose into the right content, field execution, and working systems."],
+  [["pages","home","sections","hero","ctaPrimary","label"],"View Work"],
+  [["pages","home","sections","hero","ctaGhost","label"],"Contact"],
+  [["pages","home","sections","hero","image"],""],
+  [["pages","home","sections","hero","badge"],"On location"],
+  [["pages","home","sections","hero","caption"],"Field documentation · Event media · Scouting"],
+  [["pages","home","sections","hero","captionRight"],"Korea"],
+  [["pages","home","sections","activities","eyebrow"],"What I Actually Do"],
+  [["pages","home","sections","activities","title"],"Document → Produce → Connect → Build"],
+  [["pages","home","sections","approach","eyebrow"],"How I Approach a Project"],
+  [["pages","home","sections","approach","title"],"Tell me the purpose. I'll suggest the direction, then execute."],
+  [["pages","home","sections","projects","title"],"A few things I've built"],
+  [["pages","home","sections","projects","feature","badge"],"Scouting · Media · Content"],
+  [["pages","home","sections","projects","feature","sub"],"BP Media platform"],
+  [["pages","home","sections","projects","feature","desc"],"A Scouting-specialized media platform documenting stories, events, people, and international movement."],
+  [["pages","home","sections","projects","feature","href"],"/scouting"],
+  [["pages","home","sections","projects","items",0,"tag"],"Education · Strategy · Video"],
+  [["pages","home","sections","projects","items",0,"desc"],"A Life Learning Initiative for education, youth growth, and global collaboration."],
+  [["pages","home","sections","projects","items",0,"href"],"/work"],
+  [["pages","home","sections","projects","items",1,"tag"],"Scouting · Web Prototype"],
+  [["pages","home","sections","projects","items",1,"desc"],"A map-based prototype for meaningful Scouting places worldwide."],
+  [["pages","home","sections","projects","items",1,"href"],"/scouting"],
+  [["pages","home","sections","projects","items",2,"tag"],"Campaign · Scouting"],
+  [["pages","home","sections","projects","items",2,"desc"],"A participation campaign page for the 16th Korea Jamboree countdown."],
+  [["pages","home","sections","projects","items",2,"href"],"/scouting"],
+  [["pages","home","sections","cta","title"],"Let's start with the purpose."],
+  [["pages","home","sections","cta","body"],"For collaboration, documentation, video, Scouting projects, or web prototypes — feel free to reach out."],
+  [["pages","home","sections","cta","button","label"],"Contact"],
+  [["pages","work","meta","title"],"Work · Jimmy Park"],
+  [["pages","work","meta","desc"],"Field documentation, purpose-based video, lectures, and small web prototypes — Jimmy Park combines photography, video, teaching, and digital tools depending on what the project needs."],
+  [["pages","work","order"],["intro","photography","video","vibecoding","lecture","cta"]],
+  [["pages","work","sections","intro","eyebrow"],"Work"],
+  [["pages","work","sections","intro","title"],"Made for use, based on purpose."],
+  [["pages","work","sections","intro","lead"],"I work across field documentation, purpose-based video, and small digital tools — depending on what the project needs."],
+  [["pages","work","sections","photography","kicker"],"Document"],
+  [["pages","work","sections","photography","title"],"Photography"],
+  [["pages","work","sections","video","kicker"],"Produce"],
+  [["pages","work","sections","video","title"],"Video"],
+  [["pages","work","sections","video","sub"],"Formats shaped by purpose"],
+  [["pages","work","sections","video","desc"],"Video should change depending on its purpose. I organize the format, rhythm, and message according to the audience and use case."],
+  [["pages","work","sections","video","caption"],"Video type · purpose · availability"],
+  [["pages","work","sections","vibecoding","kicker"],"Build"],
+  [["pages","work","sections","vibecoding","title"],"Vibe Coding"],
+  [["pages","work","sections","vibecoding","sub"],"Small systems that make ideas work"],
+  [["pages","work","sections","vibecoding","desc"],"I'm not presenting myself as a traditional developer. I use AI and web tools to quickly test ideas, build campaign pages, organize content flows, and create small tools that support real projects."],
+  [["pages","work","sections","vibecoding","items",0,"desc"],"Map-based Scouting place archive"],
+  [["pages","work","sections","vibecoding","items",1,"desc"],"Campaign participation page"],
+  [["pages","work","sections","vibecoding","items",2,"desc"],"Content production tool"],
+  [["pages","work","sections","vibecoding","items",3,"desc"],"Media operation support"],
+  [["pages","work","sections","lecture","kicker"],"Teach"],
+  [["pages","work","sections","lecture","title"],"Lecture"],
+  [["pages","work","sections","lecture","sub"],"Talks & workshops from the field"],
+  [["pages","work","sections","lecture","desc"],"I share field experience through lectures and workshops — on Scouting and youth communication, field media and documentation, and AI-assisted prototyping. Each session is shaped around the audience and the purpose."],
+  [["pages","work","sections","cta","title"],"Need field documentation, video, or a small web prototype? Tell me the purpose first."],
+  [["pages","work","sections","cta","body"],"If the purpose and use case are clear, we can plan the structure, execution, and delivery together."],
+  [["pages","work","sections","cta","button","label"],"Contact"],
+  [["pages","scouting","meta","title"],"Scouting · Jimmy Park"],
+  [["pages","scouting","meta","desc"],"Scouting has been Jimmy Park's long-term base for communication, field experience, and international connection — National Commissioner, APR C&P, World Scout Jamboree media, and BP Media."],
+  [["pages","scouting","order"],["hero","why","stats","timeline","roles","international","mediaprojects","gallery","cta"]],
+  [["pages","scouting","sections","hero","eyebrow"],"Scouting"],
+  [["pages","scouting","sections","hero","title"],"Scouting has been my long-term base for communication, field experience, and international connection."],
+  [["pages","scouting","sections","hero","lead"],"From Scout to Scout Leader, it taught me how people gather, move, and build trust across borders."],
+  [["pages","scouting","sections","why","eyebrow"],"Why Scouting Matters"],
+  [["pages","scouting","sections","why","body"],"Scouting is where I learned how people gather, move, communicate, and build trust across different backgrounds. It shaped the way I document fields, design messages, and connect projects."],
+  [["pages","scouting","sections","roles","title"],"Key Roles"],
+  [["pages","scouting","sections","roles","items",0,"title"],"National Commissioner"],
+  [["pages","scouting","sections","roles","items",2,"title"],"25th World Scout Jamboree"],
+  [["pages","scouting","sections","roles","items",2,"org"],"Korea Contingent Media"],
+  [["pages","scouting","sections","international","title"],"International Experience"],
+  [["pages","scouting","sections","international","body"],"Through World Scout Jamboree, Asia-Pacific regional activities, international Scout networks, and field media operations, I work with Scouting as a language of global communication."],
+  [["pages","contact","meta","title"],"Contact · Jimmy Park"],
+  [["pages","contact","meta","desc"],"Contact Jimmy Park for collaboration, event documentation, video production, Scouting projects, or small web prototypes. Email and phone."],
+  [["pages","contact","sections","intro","eyebrow"],"Contact"],
+  [["pages","contact","sections","intro","title"],"Let's get in touch."],
+  [["pages","contact","sections","intro","lead"],"For collaboration, event documentation, video production, Scouting projects, or small web prototypes, feel free to get in touch."],
+  [["pages","home","sections","activities","items",0],{"kicker":"Document","title":"Field Documentation","desc":"I capture events, people, and key moments so they can be used immediately for press, social media, reports, and archives.","tags":["Press","SNS","Report","Archive"],"href":"/work","accent":"burgundy"}],
+  [["pages","home","sections","activities","items",1],{"kicker":"Produce","title":"Purpose-based Production","desc":"I design video formats according to the purpose — promotion, event film, interview, campaign, IR/PR, or short-form.","tags":["Promotion","Interview","Event Film","Short-form"],"href":"/work","accent":"burgundy"}],
+  [["pages","home","sections","activities","items",2],{"kicker":"Connect","title":"Scouting Communication","desc":"I connect youth movement, international exchange, media, and field experience through Scouting.","tags":["Youth","International","Media"],"href":"/scouting","accent":"green"}],
+  [["pages","home","sections","activities","items",3],{"kicker":"Build","title":"Working Prototypes","desc":"I use AI and web tools to quickly shape ideas into campaign pages, maps, content tools, and small systems.","tags":["Campaign Page","Map","Content Tool"],"href":"/work","accent":"burgundy"}],
+  [["pages","home","sections","snapshot","rows",0],{"label":"Current Roles","value":"BP Media · Korea Dream Path · APR C&P"}],
+  [["pages","home","sections","snapshot","rows",1],{"label":"Main Fields","value":"Photography · Video · Scouting · Vibe Coding"}],
+  [["pages","home","sections","snapshot","rows",2],{"label":"Collaboration","value":"Event media · Video production · Scouting projects · Web prototypes"}],
+  [["pages","home","sections","snapshot","rows",3],{"label":"Base","value":"Korea"}],
+  [["pages","home","sections","approach","steps",0],{"num":"01","title":"Understand the Purpose","desc":"Clarify why the project exists, who it is for, and where the output will be used."}],
+  [["pages","home","sections","approach","steps",1],{"num":"02","title":"Suggest the Direction","desc":"Propose the most suitable format, workflow, and communication approach."}],
+  [["pages","home","sections","approach","steps",2],{"num":"03","title":"Execute in the Field","desc":"Document, film, produce, coordinate, or build according to the project's needs."}],
+  [["pages","home","sections","approach","steps",3],{"num":"04","title":"Deliver for Use","desc":"Prepare outputs ready for press, social media, reports, websites, or campaigns."}],
+  [["pages","work","sections","lecture","topics",0],{"name":"Scouting & Youth","desc":"Communication, international exchange, youth movement"}],
+  [["pages","work","sections","lecture","topics",1],{"name":"Field Media","desc":"Documentation, event media, content workflows"}],
+  [["pages","work","sections","lecture","topics",2],{"name":"Photography for Purpose","desc":"Shooting for press, SNS, and reports"}],
+  [["pages","work","sections","lecture","topics",3],{"name":"AI · Vibe Coding","desc":"Turning ideas into working web prototypes"}]
+];
+function migrateTo5(doc) {
+  for (const [path, legacy] of V5_LEGACY) {
+    let target = doc;
+    let currentDefault = DEFAULT;
+    for (let i = 0; i < path.length - 1; i++) {
+      target = target && target[path[i]];
+      currentDefault = currentDefault[path[i]];
+    }
+    const key = path[path.length - 1];
+    if (target && JSON.stringify(target[key]) === JSON.stringify(legacy)) {
+      target[key] = JSON.parse(JSON.stringify(currentDefault[key]));
+    }
+  }
+  doc.version = 5;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -347,9 +498,10 @@ export async function onRequestGet({ env }) {
   let doc = null;
   try { doc = JSON.parse((await env.JP_KV.get(KEY)) || "null"); } catch (_) {}
   if (!doc) return json({ ok: true, content: DEFAULT });
-  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4) doc = fromV1(doc);
+  if (doc.version !== 2 && doc.version !== 3 && doc.version !== 4 && doc.version !== 5) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
+  if ((doc.version || 0) < 5) doc = migrateTo5(doc);
   // Re-sanitize on read so older/partial docs always match the current shape.
   const clean = normalizeOrders(sanitize(DEFAULT, doc));
   clean.updatedAt = doc.updatedAt || 0;
@@ -361,10 +513,11 @@ export async function onRequestPut({ request, env }) {
   let body = {};
   try { body = await request.json(); } catch (_) {}
   let incoming = body.content || body;
-  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4) incoming = fromV1(incoming);
+  if (incoming && incoming.version !== 2 && incoming.version !== 3 && incoming.version !== 4 && incoming.version !== 5) incoming = fromV1(incoming);
   if (incoming && (incoming.version || 0) < 4) migrateTo4(incoming);
+  if (incoming && (incoming.version || 0) < 5) migrateTo5(incoming);
   const doc = sanitize(DEFAULT, incoming);
-  doc.version = 4;
+  doc.version = 5;
   doc.updatedAt = Date.now();
   await env.JP_KV.put(KEY, JSON.stringify(doc));
   return json({ ok: true, content: doc });
