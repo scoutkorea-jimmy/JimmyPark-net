@@ -3,3 +3,6 @@ node_modules/
 _admintest.html
 .wrangler/
 *.log
+
+.env*
+!.env.example

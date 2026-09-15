@@ -13,7 +13,17 @@ const BLOCK = [
 
 export async function onRequest(context) {
   const { request, next } = context;
-  const path = new URL(request.url).pathname;
+  const url = new URL(request.url);
+  const path = url.pathname;
+  if (path === "/setukor" || path === "/setukor/") {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "https://setukor-learning.jimmy-park.chatgpt.site/" + url.search,
+        "Cache-Control": "no-store",
+      },
+    });
+  }
   if (BLOCK.some((re) => re.test(path))) {
     return new Response("Not found", { status: 404 });
   }

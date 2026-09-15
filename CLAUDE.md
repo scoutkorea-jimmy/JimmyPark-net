@@ -370,3 +370,6 @@ curl -s -o /dev/null -w "%{http_code}\n" https://jimmypark.net/api/content   # e
 - Don't put real content only in JS, or behind the API.
 - Don't introduce new accent colors (see design.md tokens).
 - Don't commit `TOTP_SECRET` or any secret. Don't expose `/admin` in nav/sitemap.
+
+## SETUKOR connection (2026-09-16)
+`/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

@@ -127,3 +127,6 @@ test posts are created. This release did not run browser interaction or visual Q
 
 Or deploy from CLI:
 `wrangler pages deploy . --project-name jimmypark-net --branch main`
+
+## SETUKOR connection (2026-09-16)
+`/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

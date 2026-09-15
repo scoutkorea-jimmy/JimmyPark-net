@@ -412,3 +412,6 @@ international dial target (`tel:+821054186124`) for the link. The renderer conve
 - Card News Generator and BP Media Tools are removed. Scout Tour Assistant has its actual URL.
 - Author bylines and BlogPosting JSON-LD share the homepage Person identity. These improve
   clarity and machine-readable attribution; they are not claims of search inclusion or ranking.
+
+## SETUKOR connection (2026-09-16)
+`/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
