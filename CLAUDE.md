@@ -229,6 +229,23 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Still open (owner must supply): engagement/pricing/timelines, showreel and stills, client-name
   permission, workshop record, CV/work history, domain email/form approval.
 
+### Equal card heights, BP Media and the cooperative's AI pages (v0.14.1–v0.15.0, 2026-09-19)
+- Owner rule: cards side by side in one row share one height, last block on the common bottom line
+  (Contact cards were 642/555px). Verify by measuring every page in headless Chrome: no row of `.card`s
+  may differ by more than 2px (see design.md §15).
+- BP Media (bpmedia.net, owner = Founder) is the second Dev Work showcase, after Korea Dream Path.
+  Sources (read-only, 2026-09-19): `gilwell-media` repo — `public/admin.html`, `public/js/admin-v3.js`,
+  `functions/api/**` (111 route files excluding Dreampath), `db/migration_*.sql` (76), `wrangler.*.toml`
+  (3 confirmed scheduled jobs; the error-alert worker is not confirmed live and is not claimed),
+  `public/data/changelog.json` (892 entries). No admin screenshot: no demo mode; live panels hold
+  usernames and commenter names.
+- The cooperative row says its product detail pages and product images were created with AI (owner
+  statement, recorded in `cham/docs/handoff.md`). Chip: "AI-made product detail pages".
+- Home website cards: Korea Dream Path, BP Media, cooperative. Home BP Media feature card → bpmedia.net.
+- Schema v13 (`migrateTo13`): inserts BP Media once after Korea Dream Path unless a row already points
+  to bpmedia.net; replaces the unchanged cooperative row; replaces the untouched home trio (by row
+  identity, since older rows may already be newer defaults); curated lists stay as the owner left them.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -390,7 +407,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 12`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 13`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
