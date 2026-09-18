@@ -9,6 +9,8 @@
   "use strict";
 
   var page = document.body.getAttribute("data-page") || "home";
+  var motionOK = !!(window.IntersectionObserver && window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches);
+  if (motionOK) document.documentElement.classList.add("motion");
 
   // ── Active nav + mobile menu ──────────────────────────────────────────────
   document.querySelectorAll("[data-nav]").forEach(function (a) {
@@ -19,24 +21,111 @@
   });
   var toggle = document.querySelector(".nav-toggle");
   var menu = document.querySelector(".mobile-menu");
+  // M3 modal navigation drawer: scrim, scroll lock, focus on open, close on scrim/link/Escape.
   if (toggle && menu) {
     toggle.addEventListener("click", function () {
       var open = menu.classList.toggle("open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      document.body.style.overflow = open ? "hidden" : "";
       var icon = toggle.querySelector(".msym");
       if (icon) icon.textContent = open ? "close" : "menu";
+      var first = open && menu.querySelector("a");
+      if (first) first.focus();
     });
   }
 
   if (toggle && menu) {
     function closeMenu() {
       menu.classList.remove("open"); toggle.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
       var icon = toggle.querySelector(".msym"); if (icon) icon.textContent = "menu";
     }
-    menu.addEventListener("click", function (e) { if (e.target.closest("a")) closeMenu(); });
+    menu.addEventListener("click", function (e) { if (e.target === menu || e.target.closest("a")) closeMenu(); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && menu.classList.contains("open")) { closeMenu(); toggle.focus(); }
     });
+  }
+
+  // M3 top app bar: the surface tones up once content scrolls beneath it; a linear progress
+  // indicator on its lower edge follows the reading position.
+  var appBar = document.querySelector(".site-header");
+  if (appBar) {
+    var bar = null;
+    if (motionOK) { var track = document.createElement("div"); track.className = "md-progress"; track.setAttribute("aria-hidden", "true"); bar = document.createElement("span"); track.appendChild(bar); appBar.appendChild(track); }
+    var ticking = false;
+    var tone = function () {
+      ticking = false;
+      appBar.classList.toggle("is-scrolled", window.scrollY > 4);
+      if (bar) { var max = document.documentElement.scrollHeight - window.innerHeight; bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")"; }
+    };
+    tone();
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; window.requestAnimationFrame(tone); } }, { passive: true });
+  }
+
+  // M3 ripple on press for buttons, navigation, interactive cards and disclosures.
+  var RIPPLE_HOSTS = ".site-button, .nav-link, .mobile-links a, .copybtn, .nav-toggle, a.card, a.card-link, .backend-toggle, .format-details > summary, .travel-details > summary";
+  if (motionOK) document.addEventListener("pointerdown", function (e) {
+    var host = e.target.closest && e.target.closest(RIPPLE_HOSTS);
+    if (!host || !host.closest(".portfolio")) return;
+    var r = host.getBoundingClientRect(), size = Math.max(r.width, r.height) * 2.2;
+    var dot = document.createElement("span");
+    dot.className = "md-ripple";
+    dot.style.width = dot.style.height = size + "px";
+    dot.style.left = (e.clientX - r.left - size / 2) + "px";
+    dot.style.top = (e.clientY - r.top - size / 2) + "px";
+    host.appendChild(dot);
+    dot.addEventListener("animationend", function () { dot.remove(); });
+  });
+
+  // Scroll reveals: each kind of element gets its own entrance; grid items are staggered.
+  var REVEALS = [
+    ["rise", ".eyebrow, .section-title, .section-subtitle, .case-section-title, .selected-group-head, .video-portfolio, .photo-portfolio, .profile-intro, .timeline-era, .showcase-body, .showcase-backend, .contact-card, .deliverable-list, .label-heading, .format-details, .travel-details, .principle-grid .process-step"],
+    ["card", ".collection-grid > *"],
+    ["zoom", ".photo-item, .scouting-hero-photo, [data-img], .gallery-image"],
+    ["wipe", ".cta-panel, .info-panel, .feature-card"],
+    ["slide", ".timeline-entry, .snapshot-row, .backend-list li, .brief-list li, .showcase-facts > div, .browser-frame"],
+    ["pop", ".phone-frame"]
+  ];
+  var revealObserver = motionOK ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var group = [entry.target];
+      // A wipe panel clips its children while it opens, so they may never register as visible;
+      // reveal them with the panel instead (their own stagger delays still apply).
+      if (entry.target.getAttribute("data-reveal") === "wipe") group = group.concat(Array.prototype.slice.call(entry.target.querySelectorAll("[data-reveal]:not(.is-revealed)")));
+      group.forEach(function (el) {
+        el.classList.add("is-revealed");
+        revealObserver.unobserve(el);
+        countUp(el);
+      });
+    });
+  }, { rootMargin: "0px 0px -6% 0px", threshold: 0 }) : null;
+  function registerReveals() {
+    if (!revealObserver) return;
+    REVEALS.forEach(function (pair) {
+      document.querySelectorAll(pair[1]).forEach(function (el) {
+        if (el.hasAttribute("data-reveal") || el.closest(".portfolio-hero, [data-section='intro'], .site-header, .site-footer, .mobile-menu")) return;
+        if (pair[0] === "rise" && el.closest(".card, .cta-panel, .info-panel")) return;
+        if (el.parentElement && el.parentElement.closest("[data-reveal]:not(.site-showcase)") && pair[0] !== "slide" && pair[0] !== "pop") return;
+        var siblings = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+        el.setAttribute("data-reveal", pair[0]);
+        el.style.setProperty("--reveal-delay", Math.min(siblings, 6) * 70 + "ms");
+        // Content hydrated after the visitor scrolled past it is already "seen": show it as is.
+        if (el.getBoundingClientRect().bottom < 0) { el.classList.add("is-revealed"); return; }
+        revealObserver.observe(el);
+      });
+    });
+  }
+  function countUp(root) {
+    root.querySelectorAll ? [root].concat(Array.prototype.slice.call(root.querySelectorAll("[data-travel-count], .stat-value"))).forEach(function (el) {
+      if (!el.matches || !el.matches("[data-travel-count], .stat-value") || el.__counted) return;
+      var m = /^(\d{1,4})(.*)$/.exec((el.textContent || "").trim());
+      if (!m) return;
+      el.__counted = true;
+      var target = +m[1], rest = m[2], start = null;
+      var step = function (t) { if (start === null) start = t; var k = Math.min(1, (t - start) / 1100), eased = 1 - Math.pow(1 - k, 4); el.textContent = Math.round(target * eased) + rest; if (k < 1) window.requestAnimationFrame(step); };
+      window.requestAnimationFrame(step);
+    }) : null;
   }
 
   // ── Copy to clipboard + toast (delegated) ─────────────────────────────────
@@ -378,11 +467,12 @@
       if (n.getAttribute('data-section') === 'gallery') n.hidden = !(get(sd, 'gallery.figs') || []).some(function (fig) { return !!fig.image; });
     });
     compactDetails();
+    registerReveals();
   }
 
   // Phones: long back-end lists start collapsed; the facts (chips) stay visible. Without JS they stay open.
   function compactDetails() {
-    if (!window.matchMedia || !window.matchMedia('(max-width: 520px)').matches) return;
+    if (!window.matchMedia || !window.matchMedia('(max-width: 599px)').matches) return;
     document.querySelectorAll('.backend-details[open]').forEach(function (d) { d.open = false; });
   }
   compactDetails();
@@ -393,6 +483,8 @@
     for (var i = photos.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var swap = photos[i]; photos[i] = photos[j]; photos[j] = swap; }
     photos.forEach(function (photo) { grid.appendChild(photo); });
   });
+
+  registerReveals();
 
   // ── Load live content, then accept preview messages ───────────────────────
   var previewReceived = false;
