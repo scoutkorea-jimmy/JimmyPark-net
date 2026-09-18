@@ -38,7 +38,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 
 ### Insights and portfolio completion (v0.8.0)
 - Add `/insights` and `/insights/:slug` to the portfolio. The existing four routes and all
-  standalone app files stay intact. Shared header/mobile/footer navigation includes Insights.
+  standalone app files stay intact. (v0.14.0: Insights left the navigation until it has 3+ posts; routes stay.)
 - `functions/api/_posts.js` manages separate KV key `insights:v1`; `/api/posts` always requires
   the existing signed admin session. Public server-rendered views and dynamic sitemap select
   published posts only. Draft/unknown slug = 404. Keep `no-store` intact in middleware.
@@ -204,6 +204,31 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Schema v11 (`migrateTo11`, `upgradeSiteRows`): unchanged v10 website rows (Dev Work and home
   `selected.sites`) become v11 rows; custom rows get empty back-end fields.
 
+### Client and recruiter review follow-up (v0.14.0, 2026-09-19)
+- Review: `Claude_Memories/reports/claude-2026-09-19-jimmypark-발주자-채용자-관점-검토.md` and
+  `.impeccable/critique/` (score 20/32). Owner decisions: priority is **winning projects**; hiring is a
+  separate path; Korea Dream Path is the owner's **own platform (CEO)**; no new materials supplied yet.
+- KDP rows (Dev Work + Home) read "Own platform · Global education", role "CEO · Planning & development";
+  Home profile adds "Education · Korea Dream Path · CEO" and the bio says he leads KDP as CEO. Other titles
+  in memory (THE MOMENT PM, Korea Jamboree Head of PR, KSA National Commissioner, 25th WSJ Deputy Head
+  of Media) are NOT published: unconfirmed, and the 25th WSJ title conflicts with "Korean Contingent Media".
+- Home films: Samsung Tech Conference 2025 (text cover — no still; do not pull corporate keynote frames
+  from Drive without the owner), AI2RE, Daekyo. Hero eyebrow adds "Video producer & web developer";
+  Person JSON-LD jobTitle "Video Producer and Web Developer" (image stays the full-resolution original).
+- Hiring: Contact `#hiring` block with a "Role enquiry" mailto; Home "Stay connected" third card is
+  "Hiring enquiries" → `/contact#hiring` (replaced the Insights card). Card links read "Learn more".
+- Insights is out of header/mobile/footer nav on every shell (`.checks/insights.cjs` asserts this);
+  `/insights` still works, is in the sitemap and now has og:image/twitter:image. Re-add at 3+ posts.
+- Fixes: section subtitles and the Scouting timeline note use `#6b665f` (AA); `/dev` has an `.sr-only`
+  H2 before the principles; the hero uses `jimmy-park-portrait-960.jpg` (152 KB display derivative,
+  original 1.19 MB file kept unchanged).
+- Schema v12 (`migrateTo12`): v11 defaults → v12, plus exact early-seed values that migrations had missed
+  and were live on 2026-09-19 — /work and /contact meta descriptions, "Base" profile label, BP Media
+  "…in Korean." descriptions and the Korean `dev.vibecoding.sub`. Custom values stay. Verified by running
+  the live saved document through the new GET (no KV write): only the allowed 박지민 identity remains.
+- Still open (owner must supply): engagement/pricing/timelines, showreel and stills, client-name
+  permission, workshop record, CV/work history, domain email/form approval.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -365,7 +390,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 11`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 12`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

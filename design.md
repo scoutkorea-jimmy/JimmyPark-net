@@ -12,7 +12,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 - Keep the burgundy site identity and approved typefaces. The Scouting page uses the owner-requested purple theme; existing Scouting references on other pages retain their green sub-accent.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
-- Portrait v0.5.1 uses the supplied `IMG_2902.jpeg` unchanged. Use `center 10%` for its
+- Portrait v0.5.1 uses the supplied `IMG_2902.jpeg` unchanged; since v0.14.0 the hero shows a 960px display derivative (`jimmy-park-portrait-960.jpg`) and keeps the original file. Use `center 10%` for its
   background position in both static HTML and CMS hydration to retain the top of the head.
 - `.capability-grid`: two equal columns, one below 520px. Capability descriptions and tags are
   always visible; keyboard and touch users do not depend on hover to discover the offer.
@@ -65,7 +65,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 | Primary | `#171717` | Headings, body default |
 | Body strong | `#2c2925` | Lead paragraphs, table values |
 | Muted | `#66615c` | Secondary paragraphs, footer nav |
-| Muted light | `#8a847c` | Captions, sub-meta |
+| Muted light | `#8a847c` | Decorative sub-meta only — fails AA for text; section subtitles use `#6b665f` (v0.14.0) |
 | Muted alt | `#6b665f`, `#4a463f` | Figcaptions, tag text |
 | Decorative | `#cdbfb3` (numbers, dot separators), `#bdb6ab` (idle arrows) |
 
@@ -249,7 +249,7 @@ Sticky, `z-index:60`, translucent white with the existing blur and divider. Left
 **Jimmy Park.** in Wanted Sans with a small burgundy terminal square. No initials, serif monogram
 or repeated name. The SVG embeds the approved font, so the logo needs no font-network request.
 Use 190×38px in the header and 170×34px in the footer, with accessible `alt="Jimmy Park"`.
-Right: Home, Media Work, Dev Work, Global & Scouting, Insights and Contact; hamburger at 960px and below.
+Right: Home, Media Work, Dev Work, Global & Scouting and Contact (Insights hidden until it has posts, v0.14.0); hamburger at 960px and below.
 The matching favicon uses an abstract open frame and terminal square with no lettering.
 
 ### Footer (identical on every page)
