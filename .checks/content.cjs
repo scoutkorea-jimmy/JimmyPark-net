@@ -6,8 +6,17 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
-const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut });', sandbox);
+const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
+// Documents saved before v9 kept the AI practice and AX workshop sections on Work.
+const MOVED = ['vibecoding', 'lecture'];
+function preV9(doc) {
+  const legacy = copy(doc);
+  for (const id of MOVED) legacy.pages.work.sections[id] = legacy.pages.dev.sections[id];
+  legacy.pages.work.order = ['intro', 'video', 'vibecoding', 'lecture', 'photography', 'cta'];
+  delete legacy.pages.dev;
+  return legacy;
+}
 async function get(value) {
   let writes = 0;
   const result = await api.get({ env: { JP_KV: { get: async () => JSON.stringify(value), put: async () => { writes++; } } } });
@@ -16,13 +25,13 @@ async function get(value) {
 }
 (async () => {
   const defaults = copy(api.defaults);
-  const oldestOrder = copy(defaults);
+  const oldestOrder = preV9(defaults);
   oldestOrder.version = 2;
   oldestOrder.pages.scouting.order = ['hero','why','stats','roles','international','mediaprojects','timeline','gallery','cta'];
   oldestOrder.pages.scouting.sections.timeline.items.forEach(item => { delete item.track; });
   assert.deepEqual((await get(oldestOrder)).pages.scouting.order, defaults.pages.scouting.order, 'Original v2 seed order must migrate without resetting custom orders');
   for (const version of [2, 5]) {
-    const legacy = copy(defaults); legacy.version = version;
+    const legacy = preV9(defaults); legacy.version = version;
     const home = legacy.pages.home.sections, work = legacy.pages.work.sections, sc = legacy.pages.scouting.sections;
     delete sc.travel; legacy.pages.scouting.order = ['cta', ...legacy.pages.scouting.order.filter(id => id !== 'cta' && id !== 'travel')];
     delete work.video.cases; delete work.video.casesTitle; delete work.photography.portfolio; delete work.photography.portfolioNote;
@@ -34,19 +43,21 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 8);
+    assert.equal(result.version, 9);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
     assert.ok(!/Jamboree D-count|jamboree-dcount/.test(JSON.stringify(result)));
-    assert.equal(result.pages.work.sections.vibecoding.items[1].title, 'K-TrainRadar24');
-    assert.equal(result.pages.work.sections.vibecoding.items[0].desc, 'Custom beta description');
+    assert.equal(result.pages.dev.sections.vibecoding.items[1].title, 'K-TrainRadar24');
+    assert.equal(result.pages.dev.sections.vibecoding.items[0].desc, 'Custom beta description');
+    assert.equal(result.pages.work.sections.vibecoding, undefined);
+    assert.deepEqual(result.pages.dev.sections.sites, defaults.pages.dev.sections.sites);
     assert.deepEqual(result.global.contact, legacy.global.contact);
     assert.deepEqual(result.pages.home.sections.hero, home.hero);
     assert.deepEqual(result.pages.scouting.sections.roles, sc.roles);
     assert.deepEqual(result.pages.scouting.hidden, ['gallery']);
     assert.equal(result.pages.scouting.order[0], 'cta');
-    assert.deepEqual(await get(result), result, 'v8 normalization must be idempotent');
+    assert.deepEqual(await get(result), result, 'v9 normalization must be idempotent');
   }
   const legacy6 = {
   "version": 6,
@@ -357,7 +368,11 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 8);
+  assert.equal(refreshed.version, 9);
+  assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
+  assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
+  assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
+  assert.ok(!/\/work#(?:vibecoding|lecture)/.test(JSON.stringify(refreshed)), 'Links must follow the moved sections');
   assert.equal(refreshed.pages.work.sections.video.cases.length, 10);
   assert.equal(refreshed.pages.home.sections.selected.cases.length, 3);
   assert.deepEqual(refreshed.pages.home.order, defaults.pages.home.order);
@@ -386,9 +401,9 @@ async function get(value) {
   assert.deepEqual(links.ctaGhost, customLink6.pages.home.sections.hero.ctaGhost, 'Custom CTA URL must preserve its label');
   const empty6 = copy(legacy6); empty6.pages.work.sections.video.cases = [];
   assert.deepEqual((await get(empty6)).pages.work.sections.video.cases, []);
-  const retiredV4 = copy(defaults); retiredV4.version = 4;
+  const retiredV4 = preV9(defaults); retiredV4.version = 4;
   retiredV4.pages.work.sections.vibecoding.items.push({slug:'card-news', title:'Card News Generator', desc:'Content production tool'}, {slug:'bp-media-tools', title:'BP Media Tools', desc:'Media operation support'});
-  assert.equal((await get(retiredV4)).pages.work.sections.vibecoding.items.length, 2, 'Retired legacy fields cannot crash migration');
+  assert.equal((await get(retiredV4)).pages.dev.sections.vibecoding.items.length, 2, 'Retired legacy fields cannot crash migration');
   const oldProjectLabels = copy(defaults); oldProjectLabels.version = 2;
   oldProjectLabels.pages.home.sections.projects.items = [{"tag": "Education · Strategy · Video", "title": "Korea Dream Path", "desc": "A Life Learning Initiative for education, youth growth, and global collaboration.", "descKo": "교육 · 청소년 성장 · 국제 협력", "href": "/work", "image": ""}, {"tag": "Scouting · Web Prototype", "title": "Scout Tour Assistant", "desc": "A map-based prototype for meaningful Scouting places worldwide.", "descKo": "스카우트 장소 지도 프로토타입", "href": "/scouting", "image": ""}, {"tag": "Campaign · Scouting", "title": "Jamboree D-count", "desc": "A participation campaign page for the 16th Korea Jamboree countdown.", "descKo": "제16회 한국잼버리 캠페인", "href": "/scouting", "image": ""}];
   const labels = (await get(oldProjectLabels)).pages.home.sections.projects.items;
@@ -401,14 +416,44 @@ async function get(value) {
   assert.deepEqual(historicalResult.pages.home.sections.hero.ctaGhost, defaults.pages.home.sections.hero.ctaGhost);
   historical.pages.home.sections.hero.ctaPrimary.href = '/my-custom-work';
   assert.deepEqual((await get(historical)).pages.home.sections.hero.ctaPrimary, historical.pages.home.sections.hero.ctaPrimary);
-  const removed = copy(defaults); removed.version = 7;
+  const removed = preV9(defaults); removed.version = 7;
   removed.pages.work.sections.vibecoding.items.push({ slug: 'card-news', title: 'Card News Generator' }, { slug: 'bp-media-tools', title: 'Custom tools title' });
   removed.pages.work.sections.vibecoding.items[0].href = '';
   const revised = await get(removed);
-  assert.equal(revised.pages.work.sections.vibecoding.items.length, 2);
-  assert.equal(revised.pages.work.sections.vibecoding.items[0].href, 'https://scoutingapp.net/tour/');
+  assert.equal(revised.pages.dev.sections.vibecoding.items.length, 2);
+  assert.equal(revised.pages.dev.sections.vibecoding.items[0].href, 'https://scoutingapp.net/tour/');
   assert.equal(revised.pages.scouting.sections.hero.image, '/assets/img/scouting-main.jpg?v=0.10.0');
   const edited = copy(defaults); edited.pages.scouting.sections.travel.items = []; edited.pages.work.sections.video.cases = []; edited.pages.work.sections.photography.portfolio.href = '';
   assert.deepEqual(await get(edited), edited, 'Explicit current-schema empty values must remain editable');
-  console.log('PASS: v2/v5/v6 to v8 migrations, retired project removal, additive evidence, custom values/order/visibility, empty edits, idempotence and no GET writes.');
+
+  // v8 → v9: Work splits into Media Work (/work) and Dev Work (/dev).
+  const v8 = preV9(defaults); v8.version = 8;
+  for (const [path, previous] of api.v9Seeds) { let target = v8; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
+  assert.deepEqual(await get(v8), defaults, 'An unchanged v8 document must upgrade to the v9 defaults');
+  const custom8 = copy(v8);
+  custom8.pages.work.sections.vibecoding.title = 'Custom AI title';
+  custom8.pages.work.sections.vibecoding.items.push({ slug: 'custom-tool', title: 'Custom tool', desc: 'Mine', status: 'Beta', accent: 'neutral', image: '', href: 'https://example.test/' });
+  custom8.pages.work.sections.lecture.topics = [];
+  custom8.pages.work.sections.intro.title = 'Custom work headline';
+  custom8.pages.work.hidden = ['lecture', 'photography'];
+  custom8.pages.work.order = ['intro', 'lecture', 'photography', 'vibecoding', 'video', 'cta'];
+  custom8.pages.home.sections.activities.items[1].title = 'Custom capability';
+  const split = await get(custom8);
+  assert.equal(split.pages.dev.sections.vibecoding.title, 'Custom AI title');
+  assert.equal(split.pages.dev.sections.vibecoding.items.at(-1).title, 'Custom tool');
+  assert.deepEqual(split.pages.dev.sections.lecture.topics, []);
+  assert.equal(split.pages.work.sections.intro.title, 'Custom work headline');
+  assert.equal(split.pages.work.sections.vibecoding, undefined);
+  assert.equal(split.pages.work.sections.lecture, undefined);
+  assert.deepEqual(split.pages.work.hidden, ['photography']);
+  assert.deepEqual(split.pages.dev.hidden, ['lecture']);
+  assert.deepEqual(split.pages.work.order, ['intro', 'photography', 'video', 'cta']);
+  assert.deepEqual(split.pages.dev.order, ['intro', 'sites', 'lecture', 'vibecoding', 'cta']);
+  assert.equal(split.pages.home.sections.activities.items[1].title, 'Custom capability');
+  assert.equal(split.pages.home.sections.activities.items[1].href, '/dev#vibecoding');
+  assert.equal(split.pages.home.sections.activities.items[2].href, '/dev#lecture');
+  assert.deepEqual(split.pages.dev.sections.sites, defaults.pages.dev.sections.sites);
+  assert.equal(split.pages.dev.sections.sites.items[0].title, 'Korea Dream Path', 'Korea Dream Path leads the website portfolio');
+  assert.deepEqual(await get(split), split, 'v9 normalization must be idempotent');
+  console.log('PASS: v2/v5/v6/v8 to v9 migrations, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

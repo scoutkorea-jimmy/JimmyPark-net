@@ -249,7 +249,7 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio header .site-button { padding: var(--space-8) var(--space-24); font-size: .875rem; }
 .portfolio footer nav { line-height: 1.5; }
 
-/* Identical public shell on all four pages. */
+/* Identical public shell on every portfolio page. */
 .portfolio .site-header { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.9); backdrop-filter: saturate(150%) blur(10px); border-bottom: 1px solid #ece8e1; }
 .portfolio .header-inner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-24); }
 .portfolio .brand { display: inline-flex; align-items: center; gap: var(--space-12); font-weight: 700; font-size: 1rem; line-height: 1.2; flex-shrink: 0; }
@@ -291,21 +291,23 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio .travel-place h3 { margin: 0; font-size: 1.25rem; line-height: 1.3; color: var(--scout-accent); }
 .portfolio .travel-place p { margin: var(--space-8) 0 0; font-size: .9375rem; color: #66615c; }
 .portfolio .case-section-title { margin: var(--space-32) 0 0; }
-.portfolio .video-case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.portfolio :is(.video-case-grid, .site-case-grid) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .portfolio .case-media { aspect-ratio: 16 / 9; background: #f3eeea; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .portfolio .case-media img { width: 100%; height: 100%; object-fit: cover; }
 .portfolio .case-placeholder { padding: var(--space-32); max-width: 20ch; color: var(--accent); font-size: var(--title-section); line-height: 1.2; font-weight: 700; text-align: center; }
 .portfolio .case-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-16); width: 100%; }
 .portfolio .card p.case-role { font-size: .9375rem; font-weight: 600; color: #2c2925; }
+.portfolio .site-case .case-media { border-bottom: 1px solid #ece8e1; }
+.portfolio .card p.case-stack { font-size: .875rem; line-height: 1.5; color: #6b665f; }
 .portfolio .format-details { border-color: #e6e1da; }
 .portfolio .format-details .collection-grid { margin-top: 0; }
 .portfolio .photo-portfolio { margin-block: var(--space-24); }
 .portfolio .photo-portfolio p { margin: var(--space-12) 0 0; font-size: .875rem; color: #66615c; }
 .portfolio [data-optional-link][hidden] { display: none; }
 
-/* Responsive header */
+/* Responsive header: six destinations need the full desktop row above 960px. */
 .nav-toggle { display: none; }
-@media (max-width: 880px) {
+@media (max-width: 960px) {
   .desktop-nav { display: none !important; }
   .nav-toggle { display: inline-flex !important; }
 }
@@ -347,7 +349,7 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
   .gal-grid { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width: 520px) {
-  .portfolio :is(.travel-intro, .travel-grid, .video-case-grid) { grid-template-columns: 1fr; }
+  .portfolio :is(.travel-intro, .travel-grid, .video-case-grid, .site-case-grid) { grid-template-columns: 1fr; }
   .portfolio .timeline-entry { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
   .portfolio .role-header { flex-direction: column; }
   .portfolio .role-body { flex-basis: auto; }

@@ -10,7 +10,7 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ('index.html', 'work.html', 'scouting.html', 'contact.html')
+PAGES = ('index.html', 'work.html', 'dev.html', 'scouting.html', 'contact.html')
 VOID = {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
 SPACING = re.compile(r'^(?:padding|margin)(?:-.+)?$|^(?:gap|row-gap|column-gap|border-radius)$')
 
@@ -94,7 +94,7 @@ def check():
                 assert ''.join(c for c in node.children if isinstance(c,str)).strip() == str(rendered['travelCount']), f'{file}: static travel count must match destinations'
             if node.tag == 'img':
                 assert 'alt' in node.attrs, f'{file}: image needs alt text'
-            container_classes = {'pills': 'tag-list', 'intlTags': 'tag-list', 'photoDeliverables': 'deliverable-list'}
+            container_classes = {'pills': 'tag-list', 'intlTags': 'tag-list', 'photoDeliverables': 'deliverable-list', 'siteCases': 'site-case-grid'}
             expected_class = container_classes.get(node.attrs.get('data-template'))
             if expected_class:
                 assert expected_class in node.classes(), f'{file}: missing collection spacing class {expected_class}'
@@ -127,7 +127,7 @@ def check():
                 assert any(n.attrs.get('id') == url.fragment for n in trees[target].walk()), f'{file}: missing anchor {node.attrs["href"]}'
     used = set(re.findall(r'var\((--[a-z0-9-]+)', css))
     assert used <= defined, f'CSS: undefined tokens {used - defined}'
-    print('PASS: 4 pages — section/CTA spacing, container alignment, tokens, heading scale, shared shell, static/CMS collection parity, routes and assets.')
+    print(f'PASS: {len(PAGES)} pages — section/CTA spacing, container alignment, tokens, heading scale, shared shell, static/CMS collection parity, routes and assets.')
 
 if __name__ == '__main__':
     check()

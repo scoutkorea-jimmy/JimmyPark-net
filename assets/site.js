@@ -127,6 +127,14 @@
         '<h3>' + esc(v.title) + '</h3><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((v.linkLabel || 'Watch film') + ': ' + v.title) + '">' + esc(v.linkLabel || 'Watch film') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
+    siteCases: function (s) {
+      var href = /^https:\/\//.test(s.href || "") ? s.href : "";
+      var media = s.image ? '<img src="' + esc(s.image) + '" alt="Homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="960" height="540">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
+      return '<article class="card project-card site-case"><div class="case-media">' + media + '</div><div class="card-body">' +
+        '<div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
+        '<h3>' + esc(s.title) + '</h3><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.desc) + '</p>' + (s.stack ? '<p class="case-stack">' + esc(s.stack) + '</p>' : '') +
+        (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
+    },
     snapshotRows: function (r) {
       return '<div class="snapshot-row"><dt>' + esc(r.label) + '</dt><dd>' + esc(r.value) + '</dd></div>';
     },

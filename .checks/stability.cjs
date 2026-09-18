@@ -38,7 +38,7 @@ function between(source, start, end) {
   });
   await check('PUT rejects an empty document skeleton without resetting saved fields',async()=>{
     const store=memoryStore(current());
-    const skeleton={version:content.defaults.version,updatedAt:100,global:{},pages:Object.fromEntries(['home','work','scouting','contact'].map(p=>[p,{sections:{}}]))};
+    const skeleton={version:content.defaults.version,updatedAt:100,global:{},pages:Object.fromEntries(['home','work','dev','scouting','contact'].map(p=>[p,{sections:{}}]))};
     const res=await put(store.env,JSON.stringify({content:skeleton}));
     assert.equal(res.status,400);assert.equal(store.writes(),0);
   });

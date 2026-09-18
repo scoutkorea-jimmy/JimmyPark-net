@@ -11,7 +11,7 @@ const esc = value => String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&
 const templates = vm.runInNewContext(source.slice(start, end) + '; TT;', { esc });
 const api = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8');
 const defaults = JSON.parse(api.match(/const DEFAULT = ([\s\S]*?);\n\n\/\/ ── generic validator/)[1]);
-const pages = { home: 'index.html', work: 'work.html', scouting: 'scouting.html', contact: 'contact.html' };
+const pages = { home: 'index.html', work: 'work.html', dev: 'dev.html', scouting: 'scouting.html', contact: 'contact.html' };
 const result = {};
 for (const [page, file] of Object.entries(pages)) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');

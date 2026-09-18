@@ -54,7 +54,7 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   assert.equal((await manage('DELETE',{revision:store.revision,post:store.posts[0]})).status,200);
   assert.equal(saved.posts.length,0);
   assert.ok(!read('assets/site.js').includes('var meta = pd.meta || g.seo'));
-  const publicHTML = ['index.html','work.html','scouting.html','contact.html','insights.html','404.html'];
+  const publicHTML = ['index.html','work.html','dev.html','scouting.html','contact.html','insights.html','404.html'];
   for (const file of publicHTML) {
     const html=read(file); assert.match(html,/href="\/insights"/); assert.match(html,/id="main-content"/);
     assert.equal((html.match(/<main\b/g)||[]).length,1);

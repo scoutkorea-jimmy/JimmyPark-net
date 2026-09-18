@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 8,
+  "version": 9,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -110,14 +110,14 @@ const DEFAULT = {
             },
             {
               "kicker": "02 / AI",
-              "title": "Applied AI & Web Prototyping",
-              "desc": "Use AI-assisted development to build focused web tools and test workflows around a practical need. Explore the available projects.",
+              "title": "Web Development & Applied AI",
+              "desc": "Build websites and focused web tools with AI-assisted development, from public pages to the forms and admin consoles behind them. Explore the live sites.",
               "tags": [
-                "Prototyping",
-                "Content tools",
+                "Websites",
+                "Web tools",
                 "AI workflows"
               ],
-              "href": "/work#vibecoding",
+              "href": "/dev",
               "accent": "burgundy"
             },
             {
@@ -129,7 +129,7 @@ const DEFAULT = {
                 "Pilot design",
                 "Workshops"
               ],
-              "href": "/work#lecture",
+              "href": "/dev#lecture",
               "accent": "burgundy"
             },
             {
@@ -258,26 +258,24 @@ const DEFAULT = {
     },
     "work": {
       "meta": {
-        "title": "Video Production, Applied AI & AX Workshops | Jimmy Park",
-        "desc": "Explore Jimmy Park’s video production credits, AI-assisted web projects, practical AX workshops and event photography. View films and discuss a project."
+        "title": "Media Work: Video Production & Photography | Jimmy Park",
+        "desc": "Explore Jimmy Park’s media work: keynote videos, promotional films, branded series and event films with credited roles, plus press-ready field photography."
       },
       "order": [
         "intro",
         "video",
-        "vibecoding",
-        "lecture",
         "photography",
         "cta"
       ],
       "hidden": [],
       "sections": {
         "intro": {
-          "eyebrow": "Work & collaboration",
-          "title": "Video production, applied AI\nand practical workshops.",
-          "lead": "Explore video production credits, web tools built with AI-assisted development, and collaboration opportunities in content strategy and AI adoption."
+          "eyebrow": "Media work",
+          "title": "Video production\nand field photography.",
+          "lead": "Explore video production credits and field photography, from the brief and script to filming, editing and press-ready images."
         },
         "photography": {
-          "kicker": "04 / Field production",
+          "kicker": "02 / Field production",
           "title": "Photography & Field Media",
           "sub": "Field documentation for immediate use",
           "desc": "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.",
@@ -468,6 +466,91 @@ const DEFAULT = {
           },
           "portfolioNote": "Keynotes, branded series, interviews, performance films and AI-assisted video."
         },
+        "cta": {
+          "title": "Have a film, an event or a campaign in mind?",
+          "body": "Share the goal, the audience and what you need to deliver. We can plan the video or photography that fits.",
+          "button": {
+            "label": "Discuss a project",
+            "href": "/contact"
+          }
+        }
+      }
+    },
+    "dev": {
+      "meta": {
+        "title": "Dev Work: Websites & Applied AI | Jimmy Park",
+        "desc": "Live websites developed by Jimmy Park, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community, plus applied AI tools and AX workshops."
+      },
+      "order": [
+        "intro",
+        "sites",
+        "vibecoding",
+        "lecture",
+        "cta"
+      ],
+      "hidden": [],
+      "sections": {
+        "intro": {
+          "eyebrow": "Dev work",
+          "title": "Websites and web tools,\nbuilt for real use.",
+          "lead": "Live websites I have developed for education, a food cooperative, after-school program administration and a travel community, alongside applied AI tools and practical AI workflow workshops."
+        },
+        "sites": {
+          "kicker": "01 / Websites",
+          "title": "Live Websites",
+          "sub": "Developed, launched and in use",
+          "desc": "Websites I have developed and launched, from public pages to the forms, member accounts and admin consoles behind them. Each link opens the live site.",
+          "items": [
+            {
+              "id": "korea-dream-path",
+              "title": "Korea Dream Path",
+              "year": "2026",
+              "role": "Web development",
+              "desc": "A global learning platform connecting young people worldwide with Korean higher education, with program, scholarship and online application pages.",
+              "stack": "Cloudflare Workers · KV · D1 · R2",
+              "format": "Education · Global learning platform",
+              "href": "https://koreadreampath.com",
+              "linkLabel": "Visit koreadreampath.com",
+              "image": "/assets/img/dev/korea-dream-path.jpg"
+            },
+            {
+              "id": "charmjt",
+              "title": "Authentic Korean Traditional Fermented Foods Cooperative",
+              "year": "2026",
+              "role": "Web development",
+              "desc": "The cooperative’s official website for fermentation education, instructor-course applications, a product shop with order lookup, news and an admin console.",
+              "stack": "Cloudflare Pages Functions · D1 · R2",
+              "format": "Food cooperative · Official website",
+              "href": "https://charmjt.org",
+              "linkLabel": "Visit charmjt.org",
+              "image": "/assets/img/dev/charmjt.jpg"
+            },
+            {
+              "id": "nfee",
+              "title": "nfee",
+              "year": "2026",
+              "role": "Web development",
+              "desc": "A web service for after-school program instructors to write result reports and fee claims, print them in the original A4 forms and submit them for administrator review.",
+              "stack": "Cloudflare Pages Functions · D1",
+              "format": "Education administration · Web service",
+              "href": "https://nfee.app",
+              "linkLabel": "Visit nfee.app",
+              "image": "/assets/img/dev/nfee.jpg"
+            },
+            {
+              "id": "banginoja",
+              "title": "BANGINOJA",
+              "year": "2026",
+              "role": "Web development",
+              "desc": "A community for exploring Korea’s history, culture and nature through palace and regional tours, lectures, history columns and a members’ community.",
+              "stack": "React · Cloudflare Workers · D1 · R2",
+              "format": "Travel community · Korean history & culture",
+              "href": "https://bgnj.net",
+              "linkLabel": "Visit bgnj.net",
+              "image": "/assets/img/dev/banginoja.jpg"
+            }
+          ]
+        },
         "vibecoding": {
           "kicker": "02 / AI practice",
           "title": "Applied AI & Web Prototyping",
@@ -519,8 +602,8 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "Have a brief, a workflow, or an idea to explore?",
-          "body": "Share the goal, the people involved, and what you need to deliver. We can define the content, prototype, or workshop that fits.",
+          "title": "Have a website, a tool or a workflow in mind?",
+          "body": "Share the goal, the people who will use it and what it needs to do. We can scope the website, prototype or workshop that fits.",
           "button": {
             "label": "Discuss a project",
             "href": "/contact"
@@ -1325,6 +1408,7 @@ function migrateTo5(doc) {
 // v5 → v6: the owner replaced the countdown project and supplied travel/media work.
 // Keep the v5 indexed project slots stable until this identity-based replacement runs.
 // New fields are additive via sanitize; customized unrelated rows remain untouched.
+const V6_TRAIN_PROJECT = {"slug": "k-trainradar24", "status": "Live", "accent": "burgundy", "title": "K-TrainRadar24", "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.", "href": "https://scoutingapp.net/ktrainrader24/", "image": ""};
 function migrateTo6(doc) {
   const copy = value => JSON.parse(JSON.stringify(value));
   const isCountdown = item => item && (/^(?:jamboree[ -]d[ -]?count|d[ _-]?day(?: count)?(?: project)?)$/i.test(item.title || "") || item.slug === "jamboree-dcount");
@@ -1341,7 +1425,7 @@ function migrateTo6(doc) {
   const work = pages.work && pages.work.sections;
   const scouting = pages.scouting && pages.scouting.sections;
   replaceProject(home && home.projects, {"tag": "Web · Transport data", "title": "K-TrainRadar24", "desc": "A map that estimates train positions across South Korea using published timetables and public rail data.", "href": "https://scoutingapp.net/ktrainrader24/", "image": ""});
-  replaceProject(work && work.vibecoding, DEFAULT.pages.work.sections.vibecoding.items[1]);
+  replaceProject(work && work.vibecoding, V6_TRAIN_PROJECT);
   if (scouting && scouting.mediaprojects && Array.isArray(scouting.mediaprojects.items)) {
     scouting.mediaprojects.items = scouting.mediaprojects.items.filter(item => !isCountdown(item));
   }
@@ -1704,14 +1788,20 @@ const V6_VIDEO_CASES = [
     "linkLabel": "Watch film"
   }
 ];
+// Seeds written before v9 address Work sections that now live on Dev Work.
+const V9_MOVED = ['vibecoding', 'lecture'];
+function currentDefault(path) {
+  const moved = path[0] === 'pages' && path[1] === 'work' && path[2] === 'sections' && V9_MOVED.includes(path[3]);
+  return (moved ? ['pages', 'dev', ...path.slice(2)] : path).reduce((value, key) => value == null ? undefined : value[key], DEFAULT);
+}
 function migrateTo7(doc) {
   const clone = value => JSON.parse(JSON.stringify(value));
   for (const [path, previous] of V7_SEEDS) {
-    let target = doc, next = DEFAULT;
-    for (const key of path.slice(0, -1)) { target = target && target[key]; next = next[key]; }
-    const key = path[path.length - 1];
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1], next = currentDefault(path);
     const saved = target && key === 'order' ? mergeOrder(previous, target[key]) : target && target[key];
-    if (target && matchesLegacy(saved, previous)) target[key] = clone(next[key]);
+    if (target && next !== undefined && matchesLegacy(saved, previous)) target[key] = clone(next);
   }
   const video = doc.pages && doc.pages.work && doc.pages.work.sections && doc.pages.work.sections.video;
   if (video && matchesLegacy(video.cases, V6_VIDEO_CASES)) video.cases = clone(DEFAULT.pages.work.sections.video.cases);
@@ -2116,10 +2206,10 @@ function migrateTo8(doc) {
   const hero = doc.pages && doc.pages.scouting && doc.pages.scouting.sections && doc.pages.scouting.sections.hero;
   if (hero) { hero.image = DEFAULT.pages.scouting.sections.hero.image; hero.badge = DEFAULT.pages.scouting.sections.hero.badge; hero.caption = DEFAULT.pages.scouting.sections.hero.caption; }
   for (const [path, previous] of V8_SEEDS) {
-    let target = doc, next = DEFAULT;
-    for (const key of path.slice(0, -1)) { target = target && target[key]; next = next[key]; }
-    const key = path[path.length - 1];
-    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(next[key]));
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1], next = currentDefault(path);
+    if (target && next !== undefined && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(next));
   }
   const work = doc.pages && doc.pages.work && doc.pages.work.sections;
   if (work && work.vibecoding && Array.isArray(work.vibecoding.items)) {
@@ -2127,11 +2217,65 @@ function migrateTo8(doc) {
     for (const item of work.vibecoding.items) {
       if (item.slug === 'scout-tour-assistant' || item.title === 'Scout Tour Assistant') {
         item.href = 'https://scoutingapp.net/tour/'; item.status = 'Live';
-        if (item.desc === 'A map-based prototype for discovering and organizing meaningful Scouting places.') item.desc = DEFAULT.pages.work.sections.vibecoding.items[0].desc;
+        if (item.desc === 'A map-based prototype for discovering and organizing meaningful Scouting places.') item.desc = 'A map for finding Scout units, national offices and heritage sites near a chosen location.';
       }
     }
   }
   doc.version = 8;
+  return doc;
+}
+
+// v9: Work splits into Media Work (/work) and Dev Work (/dev). The AI practice and AX
+// workshop sections move intact with their visibility and relative order; custom copy is
+// kept. Only unchanged v8 seed values change, and links to the moved anchors follow them.
+const V9_SEEDS = [
+  [["pages","home","sections","activities","items"],[{"kicker":"01 / Content","title":"Content Strategy & Video Production","desc":"Turn a communication brief into a clear concept, script and production plan. My project work spans branded films, keynote videos, interviews and event media.","tags":["Concept & script","Direction & production","Editing & delivery"],"href":"/work#video","accent":"burgundy"},{"kicker":"02 / AI","title":"Applied AI & Web Prototyping","desc":"Use AI-assisted development to build focused web tools and test workflows around a practical need. Explore the available projects.","tags":["Prototyping","Content tools","AI workflows"],"href":"/work#vibecoding","accent":"burgundy"},{"kicker":"03 / AX","title":"AI Workflow Consulting & Workshops","desc":"Review recurring content tasks, define a focused AI pilot and give your team hands-on practice with a real workflow.","tags":["Workflow review","Pilot design","Workshops"],"href":"/work#lecture","accent":"burgundy"},{"kicker":"04 / Global","title":"Global Scouting & Collaboration","desc":"Connect content and field media with international Scouting experience, Asia-Pacific communications and cross-cultural collaboration.","tags":["Asia-Pacific","Scouting","Partnerships"],"href":"/scouting#roles","accent":"green"}]],
+  [["pages","work","meta","title"],"Video Production, Applied AI & AX Workshops | Jimmy Park"],
+  [["pages","work","meta","desc"],"Explore Jimmy Park’s video production credits, AI-assisted web projects, practical AX workshops and event photography. View films and discuss a project."],
+  [["pages","work","sections","intro","eyebrow"],"Work & collaboration"],
+  [["pages","work","sections","intro","title"],"Video production, applied AI\nand practical workshops."],
+  [["pages","work","sections","intro","lead"],"Explore video production credits, web tools built with AI-assisted development, and collaboration opportunities in content strategy and AI adoption."],
+  [["pages","work","sections","photography","kicker"],"04 / Field production"],
+  [["pages","work","sections","cta","title"],"Have a brief, a workflow, or an idea to explore?"],
+  [["pages","work","sections","cta","body"],"Share the goal, the people involved, and what you need to deliver. We can define the content, prototype, or workshop that fits."]
+];
+const V9_LINKS = { "/work#vibecoding": "/dev#vibecoding", "/work#lecture": "/dev#lecture" };
+function retargetMovedLinks(value) {
+  if (!value || typeof value !== 'object') return;
+  for (const key of Object.keys(value)) {
+    if (key === 'href' && typeof value[key] === 'string' && V9_LINKS[value[key].trim()]) value[key] = V9_LINKS[value[key].trim()];
+    else retargetMovedLinks(value[key]);
+  }
+}
+function migrateTo9(doc) {
+  const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
+  const pages = object(doc.pages) ? doc.pages : (doc.pages = {});
+  const work = object(pages.work) ? pages.work : null;
+  const dev = object(pages.dev) ? pages.dev : (pages.dev = {});
+  if (!object(dev.sections)) dev.sections = {};
+  if (work && object(work.sections)) {
+    for (const id of V9_MOVED) {
+      if (work.sections[id] !== undefined && dev.sections[id] === undefined) dev.sections[id] = work.sections[id];
+      delete work.sections[id];
+    }
+  }
+  if (work && Array.isArray(work.hidden)) {
+    const moved = work.hidden.filter(id => V9_MOVED.includes(id));
+    work.hidden = work.hidden.filter(id => !V9_MOVED.includes(id));
+    if (moved.length) dev.hidden = [...new Set([...(Array.isArray(dev.hidden) ? dev.hidden : []), ...moved])];
+  }
+  if (work && Array.isArray(work.order) && !Array.isArray(dev.order)) {
+    const movedOrder = work.order.filter((id, i) => V9_MOVED.includes(id) && work.order.indexOf(id) === i);
+    if (movedOrder.length === V9_MOVED.length) dev.order = ['intro', 'sites', ...movedOrder, 'cta'];
+  }
+  for (const [path, previous] of V9_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  retargetMovedLinks(pages);
+  doc.version = 9;
   return doc;
 }
 
@@ -2172,7 +2316,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2181,7 +2325,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2189,13 +2333,14 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
   if ((doc.version || 0) < 6) doc = migrateTo6(doc);
   if ((doc.version || 0) < 7) doc = migrateTo7(doc);
   if ((doc.version || 0) < 8) doc = migrateTo8(doc);
+  if ((doc.version || 0) < 9) doc = migrateTo9(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2224,12 +2369,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 6) migrateTo6(incoming);
   if (incoming.version < 7) migrateTo7(incoming);
   if (incoming.version < 8) migrateTo8(incoming);
+  if (incoming.version < 9) migrateTo9(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 8;
+  doc.version = 9;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

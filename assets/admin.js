@@ -11,7 +11,7 @@
 
   var session = null;       // { token, exp }
   var content = null;       // working document (deep copy of server doc)
-  var activeTab = "home";   // home | work | scouting | contact | global | media
+  var activeTab = "home";   // home | work | dev | scouting | contact | global | media
   var previewPage = "home"; // which page the iframe shows
   var deviceMode = "desktop"; // desktop | mobile — preview viewport width
   var pendingPick = null;   // fn(url) used by the image picker / upload
@@ -60,10 +60,15 @@
       { id: "projects", title: "Selected Projects", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("sub", "Sub-label"), F("title", "Title"), F("desc", "Description", "textarea"), F("href", "Link")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Project cards", fields: [F("tag", "Tag"), F("title", "Title"), F("desc", "Description", "textarea"), F("href", "Link")], images: [["image", "Image"]], tmpl: { tag: "", title: "", desc: "", href: "/work", image: "" } }] },
       { id: "cta", title: "Contact CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
-    work: { title: "Work", kind: "page", page: "work", sections: [
+    work: { title: "Media Work", kind: "page", page: "work", sections: [
       { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
       { id: "photography", title: "Photography", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Photography portfolio (blank URL = hidden)"]], images: [["image", "Image"]], collections: [{ k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } }, { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("casesTitle", "Selected work title"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Full video portfolio"]], collections: [{ k: "cases", label: "Video portfolio", fields: [F("id", "ID"), F("title", "Title"), F("year", "Year (optional)"), F("role", "Your role"), F("desc", "Context", "textarea"), F("format", "Format"), F("href", "Video or playlist HTTPS URL"), F("linkLabel", "Link label")], images: [["image", "Thumbnail"]], tmpl: { id: "", title: "", year: "", role: "", desc: "", format: "", href: "", linkLabel: "Watch film", image: "" } }, { k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
+      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
+    ] },
+    dev: { title: "Dev Work", kind: "page", page: "dev", sections: [
+      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
+      { id: "sites", title: "Live websites", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Websites (top card first)", fields: [F("id", "ID"), F("title", "Title"), F("format", "Sector · type"), F("year", "Year (optional)"), F("role", "Your role"), F("desc", "Description", "textarea"), F("stack", "Stack (optional)"), F("href", "Live site HTTPS URL"), F("linkLabel", "Link label")], images: [["image", "Screenshot"]], tmpl: { id: "", title: "", format: "", year: "", role: "Web development", desc: "", stack: "", href: "", linkLabel: "Visit site", image: "" } }] },
       { id: "vibecoding", title: "AI in Practice", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Projects", fields: [F("slug", "Project ID"), F("href", "Project HTTPS URL (optional)"), F("title", "Title"), F("desc", "Description"), F("status", "Status", "select", STATUS), F("accent", "Accent", "select", ACCENT_NG)], images: [["image", "Image"]], tmpl: { slug: "", href: "", title: "", desc: "", status: "Prototype", accent: "neutral", image: "" } }] },
       { id: "lecture", title: "AX Consulting & Workshops", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "topics", label: "Topics", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
@@ -151,7 +156,7 @@
 
   function ensureShape() {
     content.global = content.global || {}; content.pages = content.pages || {};
-    ["home", "work", "scouting", "contact"].forEach(function (p) {
+    ["home", "work", "dev", "scouting", "contact"].forEach(function (p) {
       var ps = content.pages[p] = content.pages[p] || {};
       ps.meta = ps.meta || { title: "", desc: "" };
       ps.sections = ps.sections || {};
@@ -174,7 +179,7 @@
   // Two groups: the site's actual pages (in top-to-bottom nav order) first, then the
   // site-wide / shared content (Global + Media) separated as its own group.
   var TAB_GROUPS = [
-    { label: "Pages", tabs: ["home", "work", "scouting", "contact", "insights"] },
+    { label: "Pages", tabs: ["home", "work", "dev", "scouting", "contact", "insights"] },
     { label: "Site-wide", tabs: ["global", "media"] },
   ];
   function buildTabs() {
