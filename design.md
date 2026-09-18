@@ -418,10 +418,9 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
 - Work is two tabs. Media Work (`/work`): video credits then field photography. Dev Work (`/dev`):
   live websites first, then Applied AI tools and AI workflow workshops. Both reuse the shared
   intro, alternating section bands, card and CTA blocks; no new colors or fonts.
-- Website cards (`.site-case`) mirror the video case card: 16:9 screenshot with a `#ece8e1` bottom
-  divider, sector eyebrow and year tag, title, role line, description, a muted stack line
-  (`.case-stack`, 14px, `#6b665f`) and a "Visit <domain>" external link. `.site-case-grid` is two
-  columns, one at 520px. Missing images fall back to the text cover. Korea Dream Path leads.
+- Website cards (`.site-case`) mirror the video case card (screenshot with a `#ece8e1` divider, sector,
+  year, title, role, summary, "Visit <domain>" link). Since v0.12.0 they appear on Home only; Dev Work
+  uses the §15 showcase. Korea Dream Path leads both.
 - Screenshots are real first screens of the owner's live sites, stored locally at 960×540.
 - Six header destinations need the desktop row above 960px; the hamburger takes over below.
 
