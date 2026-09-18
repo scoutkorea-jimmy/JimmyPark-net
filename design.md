@@ -450,5 +450,13 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
   everything is one column at 840px. Admin screenshots sit in the browser frame with the URL pill
   reading "Admin console", a 16:10 screen and a 14px caption stating the demo/sample-data source.
 
+## 17. Phones (v0.16.0)
+- At 520px and below, card collections scroll sideways instead of stacking: one row, `scroll-snap`,
+  cards 84% wide so the next one peeks in, full-bleed to the viewport edges, no visible scrollbar,
+  equal card heights. Keyboard users reach every card through its link.
+- Dev Work showcases have no outer panel on phones; items are separated by a `#e0dacf` rule. The
+  back-end list sits behind a 44px "Show admin features" disclosure; stat chips stay visible.
+- Work photos: two columns with an 8px gap; every photo has a 14px `#6b665f` project caption.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

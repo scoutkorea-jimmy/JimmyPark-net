@@ -246,6 +246,22 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   to bpmedia.net; replaces the unchanged cooperative row; replaces the untouched home trio (by row
   identity, since older rows may already be newer defaults); curated lists stay as the owner left them.
 
+### Lighter mobile, Samsung still and photo captions (v0.16.0, 2026-09-19)
+- Owner: "mobile feels cramped". At ≤520px only: `.selected-work-grid`, `.video-case-grid`,
+  `.capability-grid` and `.project-grid` become one horizontal scroll-snap row (84% cards, next card
+  peeks, equal heights); Dev Work showcases lose their outer panel; `.backend-details` (the admin list)
+  is collapsed by `site.js` `compactDetails()` on phones, open without JS and on larger screens; Work
+  photos use two columns. Measured at 390px (live): Home 11,027→7,490px, Work 9,657→4,191px,
+  Dev 13,318→10,188px, no horizontal overflow. Desktop is unchanged.
+- Samsung Tech Conference 2025 card: `assets/img/video/samsung-keynote.jpg`, a 2×2 still (Drive title
+  thumbnail + three frames from "Keynote 5 Jim Jemlin" extracted with AVFoundation), made at the
+  owner's request; provenance in `.checks/video-sources.json`; the downloaded video was deleted.
+  Schema v14 fills the image only where the card image is still empty.
+- Work photos carry project captions (`.photo-item figcaption`): English renderings of their Drive
+  folder names (Climate Response Center June roundtable 2026; Geumcheon Vocational Rehabilitation
+  Day concert 2024; Mokpo High School alumni golf tournament 2026). Korean originals are recorded in
+  `.checks/photo-sources.json` only — the public site stays English.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -407,7 +423,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 13`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 14`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
