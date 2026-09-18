@@ -438,5 +438,14 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
 - Contact `.contact-layout`: channels card (uppercase 14px labels, 44px copy buttons, full-width brief
   button) beside a numbered `.brief-list`; 1 column at 840px. No introduction button.
 
+## 16. Behind the site (v0.13.0)
+- `.showcase-backend` spans the whole showcase panel below a `#ece8e1` rule and always comes last
+  (`order: 3`, so alternating rows never move the mockup below it). Head: eyebrow + 20px H4 +
+  `.stat-chip`s (`#f7f6f3` fill, `#e0dacf` border, 14px/600).
+- `.backend-list`: accent `check_circle` icons, 16px text; two columns without a screenshot, one
+  column beside a screenshot. With a screenshot the grid is 1.2fr / .8fr, mirrored on even rows;
+  everything is one column at 840px. Admin screenshots sit in the browser frame with the URL pill
+  reading "Admin console", a 16:10 screen and a 14px caption stating the demo/sample-data source.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

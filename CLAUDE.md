@@ -186,6 +186,24 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Verified: all `.checks` (v8/v9 → v10 incl. custom rows), local screenshots at 1440/390px, live routes
   and live v10 GET of the saved document. Browser interaction on real devices was not tested.
 
+### Behind the site: admin and back-end evidence (v0.13.0, 2026-09-19)
+- Owner request: show the admin features too — the sites are built with the back end in mind, not
+  only as homepages. Each Dev Work showcase ends with "Behind the site / Admin console & back end":
+  six implemented admin capabilities (`backend`, one per line), verified facts as chips (`stats`,
+  separated by ·) and an optional admin screenshot (`adminImage` 1280×800 + `adminCaption`).
+- Sources (read-only research of each repo, 2026-09-19): KDP `ui_kits/website/admin-*.js`, `worker.js`
+  (50 admin tabs, 95 API routes); cooperative `public/assets/admin.js`, `functions/api/admin/*`;
+  nfee `public/admin.html`, `functions/api/admin/*`, `REVIEW-2026-09-18.md` (338 tests → shown as
+  "300+"); BANGINOJA `pages/AuthAdminPage.jsx`, `pages/admin/*`, `workers/src/index.js` (143 handlers),
+  `version-history.json` (368 entries). Excluded on purpose: BANGINOJA's mock privacy/legal tabs,
+  a cooperative "version history" (it has none), nfee bank-account collection (removed 2026-09-18).
+- Screenshots never show real people. nfee = its demo build (`docs/`, sample data; header shows the
+  owner's demo admin name). Cooperative = local static demo mode (`public/`, demo login, empty
+  data). KDP and BANGINOJA have no safe demo, so they show lists only — do not capture live admin
+  screens with member, order, booking, application or mail data. Other repos were not modified.
+- Schema v11 (`migrateTo11`, `upgradeSiteRows`): unchanged v10 website rows (Dev Work and home
+  `selected.sites`) become v11 rows; custom rows get empty back-end fields.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -347,7 +365,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 10`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 11`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
