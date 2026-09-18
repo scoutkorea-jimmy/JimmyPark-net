@@ -78,18 +78,40 @@
   ],
   "samsungStill": {
     "file": "assets/img/video/samsung-keynote.jpg",
-    "requested": "2026-09-19 (owner: capture a few frames from the keynote videos)",
-    "frames": [
+    "requested": "2026-09-19 (owner: capture frames from the keynote videos; each person only once)",
+    "tiles": [
       {
-        "source": "Keynote 5 Jim Jemlin_Edit3(1119).mov — Drive thumbnail (title card)",
-        "id": "1jUlMFma_y42eoSRXO6R6iIQEpnKHKmph"
+        "speaker": "Paul Cheun (on-screen title: President & CTO, DX Division)",
+        "source": "Opening Speech_Edit5(1120v3).mov at 17s",
+        "id": "1Zmr9iVZFDVG8MVQAOCxXl3l7x75wMHOA"
       },
       {
-        "source": "Keynote 5 Jim Jemlin_Edit3(1119).mov at 193s, 837s and 966s (AVFoundation frame extraction)",
+        "speaker": "Keynote 1 presenter",
+        "source": "Keynote1_Edit2(1119).mov at 36s",
+        "id": "1icbw04HCaR0IZXiwf1iVByjTO3yBEg2-"
+      },
+      {
+        "speaker": "Keynote 2 presenter",
+        "source": "Keynote2_Edit4(1120v3).mov at 52s",
+        "id": "1YHB5Vvt2j_9kveLL2DkBKsnfTCDep2_U"
+      },
+      {
+        "speaker": "Jim Zemlin (Linux Foundation)",
+        "source": "Keynote 5 Jim Jemlin_Edit3(1119).mov at 193s",
         "id": "1jUlMFma_y42eoSRXO6R6iIQEpnKHKmph"
       }
     ],
-    "folder": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
-    "note": "2x2 collage, 1280x720. The downloaded video was deleted after extraction."
+    "method": "AVFoundation frame extraction over HTTP range requests (Keynote 5 was downloaded and deleted). Keynote 3 and 4 could not be read remotely.",
+    "folder": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g"
+  },
+  "kbLifeStill": {
+    "file": "assets/img/video/kb-life.jpg",
+    "tiles": "Published YouTube thumbnails of EP1 (cVkOlLcoxJk), EP3 (0G55Fo2CDEk), EP4 (yTCu9bnl0B0), EP7 (94sHO61AZtM) — each interviewee once",
+    "playlist": "https://www.youtube.com/playlist?list=PL7K0gdyN-9BQjyWAFqmtk9vfBv8qwmyuE"
+  },
+  "jamboreeOpeningStill": {
+    "file": "assets/img/video/korean-jamboree-opening.jpg",
+    "tiles": "Frames at 3s, 17s, 30s and 51s of [AI/기획/편집] 26-AUG_제16회한국잼버리-개영식.mp4 (the file was downloaded, sampled and deleted)",
+    "id": "16a40q_FxOuc2uRkgvGlNhAWhrSeogo-W"
   }
 }
