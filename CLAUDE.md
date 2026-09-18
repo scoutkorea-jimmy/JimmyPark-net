@@ -4,7 +4,9 @@ Operating manual for working in this repo. Read this and [design.md](design.md) 
 Keep both in sync with reality when you change how the site works.
 
 ## What this is
-Personal portfolio for **Jimmy Park / 박지민** — Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.
+Personal portfolio for **Jimmy Park / 박지민** — a **solution maker** who reaches the client’s goal in the most fitting way
+(content & video, websites built with AI, AI workflows, global Scouting). Earlier label (≤ v0.11): Content Strategist ·
+AI Practitioner · AX Consultant · Global Collaborator.
 Live at **https://jimmypark.net**. **Vanilla HTML/CSS/JS, no build step, no framework.**
 Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-gated admin.
 
@@ -138,12 +140,10 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - `/work` (`work.html`, `data-page="work"`) is now Media Work: intro → `#video` → `#photography`
   (kicker `02`) → CTA. `/dev` (`dev.html`, `data-page="dev"`, CMS page key `dev`) is Dev Work:
   intro → `#sites` → `#vibecoding` → `#lecture` → CTA. Section keys/anchors were kept; only the page changed.
-- `#sites` uses collection `sites.items` + template `siteCases` (`.site-case-grid`, 2 → 1 column at
-  520px): Korea Dream Path (koreadreampath.com), Authentic Korean Traditional Fermented Foods
+- `#sites` uses collection `sites.items` (v0.12.0: template `siteShowcase`, see below): Korea Dream Path (koreadreampath.com), Authentic Korean Traditional Fermented Foods
   Cooperative (charmjt.org; the site's own English alternateName), nfee (nfee.app) and BANGINOJA
-  (bgnj.net). Each card: sector, year, role, description, stack line and "Visit <domain>" link.
-  Role "Web development" rests on the owner's statement that they developed these sites; do not
-  add clients, traffic, revenue or awards. Descriptions describe features visible on the live sites.
+  (bgnj.net). Descriptions describe features visible on the live sites or documented in their repos;
+  do not add clients, traffic, revenue or awards.
 - Card images are local 960×540 JPEGs in `assets/img/dev/`, captured 2026-09-19 from the live
   homepages with headless Chrome after dismissing consent banners/popups (visitor actions in a
   temporary profile). They do not auto-refresh; replace them from Admin or by recapturing.
@@ -157,6 +157,34 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Verified: all `.checks` pass (5 pages), local HTTP routes, desktop/961/960/390px screenshots,
   live routes and live v9 GET of the saved CMS document. The K-TrainRadar24 card still uses its
   old name; its URL redirects to K-TransportRadar24 — rename only on the owner's request.
+
+### Solution maker, need-first Dev Work and Contact essentials (v0.12.0, 2026-09-19)
+- Owner request: polish Home; position Jimmy as a **solution maker** who supports what the client
+  needs in the most fitting way (not "content strategist / video producer" first); Dev Work must say
+  the most important thing is not flashy technique but quickly judging and understanding the need,
+  and that **AI makes all of it possible**; show the websites more impressively; Contact without
+  "Introduce yourself", only the essentials, phone with +82.
+- Home: hero "Your goal. / The right way to reach it."; `selected` holds two groups — `selected.sites`
+  (`siteCases`, 3 cards: Korea Dream Path, cooperative, BANGINOJA → /dev) and `selected.cases`
+  (films → /work#video); capabilities framed as client needs (Be understood / Launch online /
+  Work smarter / Reach further); process Listen → Choose → Build with AI → Hand over; CTA
+  "Tell me your goal". Footer role line: "Solutions through content, web & AI · Global Scouting".
+- Dev Work intro: "Understand the need fast. / Build it with AI." + `intro.principles` (approachSteps in
+  `.principle-grid`: Needs before technique · Fast judgement · AI at every step). `#sites` renders
+  `siteShowcase`: alternating white panels with a browser mockup (domain in the URL bar), an
+  overlapping phone mockup, summary, The need / What I built / Role, stack tags and a Visit button.
+  Website rows: id, title, format, year, role, summary, need, built, stack, href, linkLabel, image,
+  mobileImage (desktop 1280×720, mobile 360 wide; KDP mobile captured at 430px because its own
+  header clips "Log in" at 390px — a Korea Dream Path issue, not fixed here). Role "Planning &
+  development" follows the owner's statement that they judge needs and develop these sites.
+- Contact: email + copy, phone `+82 10.5418.6124` + copy, LinkedIn, languages, one "Email a project
+  brief" mailto (Goal / Who it is for / Timing / Budget / References) and a five-point "What to
+  include" list with "I can help with" tags. The introduction mail link was removed.
+- Schema v10 (`migrateTo10`): `V10_SEEDS` replace only unchanged v9 values (incl. phone); v9 website
+  rows matching `V10_SITE_ROWS` become the new rows; custom rows keep text (`desc` → `summary`) and
+  get empty need/built/mobileImage so they never inherit the first default row via `sanitize`.
+- Verified: all `.checks` (v8/v9 → v10 incl. custom rows), local screenshots at 1440/390px, live routes
+  and live v10 GET of the saved document. Browser interaction on real devices was not tested.
 
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
@@ -319,7 +347,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 9`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 10`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
@@ -334,7 +362,7 @@ reach it.** Page is chosen by `<body data-page>`; binds resolve against that pag
   `[data-href="section.field.href"]` sets a link target.
 - `[data-section="id"]` wrappers are reordered to match `pages.<page>.order` and hidden when
   in `pages.<page>.hidden`.
-- Contact phone (v0.7.2): display/copy `010.5418.6124`; telephone links use `+821054186124`.
+- Contact phone (v0.12.0, owner request): display/copy `+82 10.5418.6124`; telephone links use `+821054186124`.
   Keep the static seed, Person JSON-LD, API default and live CMS contact field synchronized.
 - **Contact behaviors (from `global.contact`):** `a[data-mail]`→`mailto:`, `a[data-tel]`→`tel:`,
   `[data-copy-email]`/`[data-copy-phone]` get a `data-copy` value, `[data-li-block]` (LinkedIn)

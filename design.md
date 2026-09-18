@@ -2,7 +2,7 @@
 
 > The single source of truth for how the site looks and feels.
 > Visual language: **warm-minimal, English-first, soft rounded corners.**
-> Identity: *Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.*
+> Identity (v0.12.0): *Solution maker — the right way to reach the client’s goal, through content, web & AI.*
 > Tagline: **SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.**
 
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
@@ -219,6 +219,7 @@ these rules do not style the standalone app or the admin layout.
 ### Shadows
 - Card hover only: `box-shadow: 0 20px 44px -28px rgba(23,23,23,.32)` (`.soft:hover`).
 - Toast: `0 14px 30px -12px rgba(0,0,0,.5)`.
+- Device mockups on Dev Work (`.browser-frame`, `.phone-frame`) reuse the same card-hover shadow statically (v0.12.0 exception).
 - Otherwise **flat** — depth comes from borders, not shadows.
 
 ---
@@ -384,9 +385,9 @@ custom value/order preservation, idempotence, explicit empty edits, and no GET w
 
 
 ### Contact phone formatting
-Display and copy the owner’s chosen domestic formatting (`010.5418.6124`). Use an
-international dial target (`tel:+821054186124`) for the link. The renderer converts
-11-digit Korean 010 numbers to +82 for dialing while preserving display/copy text.
+Since v0.12.0 display and copy the owner’s international formatting (`+82 10.5418.6124`). Use an
+international dial target (`tel:+821054186124`) for the link. The renderer strips separators for
+dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds one.
 
 ## 12. Evidence-led homepage (v0.9.0)
 - First flow: positioning and enquiry CTA → three credited videos → concrete scopes → factual
@@ -423,6 +424,20 @@ international dial target (`tel:+821054186124`) for the link. The renderer conve
   columns, one at 520px. Missing images fall back to the text cover. Korea Dream Path leads.
 - Screenshots are real first screens of the owner's live sites, stored locally at 960×540.
 - Six header destinations need the desktop row above 960px; the hamburger takes over below.
+
+## 15. Solution-maker home, Dev Work showcase and Contact (v0.12.0)
+- Home copy leads with the client’s goal. Selected work shows two labelled groups (`.selected-group-head`
+  with a right-aligned "All …" link): three website cards, then three film cards, both 3 → 1 columns.
+- Dev Work intro uses the lead scale for the key message and a three-column `.principle-grid`
+  (1 column at 840px) of process-step items under a `#e0dacf` rule.
+- `.site-showcase`: white panel (`--radius-panel`, `#e6e1da` border, card padding), grid 1.2fr / .8fr
+  (reversed and swapped on even rows), 1 column at 840px with the stage first. `.showcase-stage` uses
+  the neutral card gradient; browser frame = control radius, `#f7f6f3` bar with three `#e0dacf` dots
+  and a pill URL; phone frame = 24% width (30% at 520px), 5px `#171717` bezel, card radius, anchored
+  bottom-right over the browser. Facts use eyebrow-red 14px labels and 16px text; stack as `.tag`s;
+  the visit action is a primary `.site-button`.
+- Contact `.contact-layout`: channels card (uppercase 14px labels, 44px copy buttons, full-width brief
+  button) beside a numbered `.brief-list`; 1 column at 840px. No introduction button.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
