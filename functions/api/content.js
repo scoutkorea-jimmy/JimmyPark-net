@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 12,
+  "version": 13,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -94,7 +94,7 @@ const DEFAULT = {
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
           "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media and leads Korea Dream Path as CEO.",
-          "detail": "His work includes technology films, educational web series and event media, as well as live websites for global education, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
+          "detail": "His work includes technology films, educational web series and event media, as well as live websites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
         },
         "activities": {
           "eyebrow": "How I can help",
@@ -184,7 +184,7 @@ const DEFAULT = {
             "sub": "Founder · Scouting media",
             "title": "BP Media",
             "desc": "A Scouting media platform bringing stories, events, and people into a shared editorial space. My work connects field documentation with content planning and international perspectives.",
-            "href": "/scouting#mediaprojects",
+            "href": "https://bpmedia.net",
             "image": ""
           },
           "items": [
@@ -244,42 +244,42 @@ const DEFAULT = {
               "adminCaption": ""
             },
             {
+              "id": "bp-media",
+              "title": "BP Media",
+              "format": "Own platform · Scouting media",
+              "year": "2026",
+              "role": "Founder · Planning & development",
+              "summary": "The Korean-language Scouting news platform I founded, covering Korea, the Asia-Pacific Region and world Scouting.",
+              "need": "An independent home for Scouting news in Korean, with reference material that stays useful beyond the news cycle.",
+              "built": "News boards with article pages and sharing, search, a Scout calendar, a glossary with a keyword chatbot, a memorabilia encyclopedia, card news, RSS and sitemaps.",
+              "stack": "Cloudflare Pages Functions · D1 · Scheduled Workers",
+              "backend": "Write articles in a block editor, keep drafts and schedule publishing\nControl the homepage, with the main story picked automatically each night from the month’s most-read articles\nManage the calendar, glossary, memorabilia, events and a card-news builder\nScore article quality with AI and keep a score history\nSee visits, tag insights and where readers come from\nGive team members menu-level permissions, with two-factor sign-in and a settings audit trail",
+              "stats": "111 API routes · 76 database migrations · 3 scheduled jobs · 892 recorded releases",
+              "href": "https://bpmedia.net",
+              "linkLabel": "Visit bpmedia.net",
+              "image": "/assets/img/dev/bp-media.jpg",
+              "mobileImage": "/assets/img/dev/bp-media-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
+            },
+            {
               "id": "charmjt",
               "title": "Authentic Korean Traditional Fermented Foods Cooperative",
               "format": "Food cooperative · Official website",
               "year": "2026",
               "role": "Planning & development",
-              "summary": "The official website of a traditional fermented-foods cooperative.",
+              "summary": "The official website of a traditional fermented-foods cooperative, with product detail pages made with AI.",
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
-              "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
+              "built": "Education and course-application pages, a product shop whose detail pages and product images were created with AI, guest order lookup, member accounts, a news board and an admin console.",
               "stack": "Cloudflare Pages Functions · D1 · R2",
               "backend": "Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual",
-              "stats": "Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot",
+              "stats": "AI-made product detail pages · Server-checked order totals · Guest order lookup · AI help chatbot",
               "href": "https://charmjt.org",
               "linkLabel": "Visit charmjt.org",
               "image": "/assets/img/dev/charmjt.jpg",
               "mobileImage": "/assets/img/dev/charmjt-mobile.jpg",
               "adminImage": "/assets/img/dev/charmjt-admin.jpg",
               "adminCaption": "Admin dashboard in local demo mode, with no customer data."
-            },
-            {
-              "id": "banginoja",
-              "title": "BANGINOJA",
-              "format": "Travel community · Korean history & culture",
-              "year": "2026",
-              "role": "Planning & development",
-              "summary": "A travel community for exploring Korea’s history, culture and nature.",
-              "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
-              "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
-              "stack": "React · Cloudflare Workers · D1 · R2",
-              "backend": "Publish history columns as drafts, scheduled or live posts\nRun lectures and tours with sign-ups, payment checks and reviews\nSell books with order, shipping and refund handling\nManage a guesthouse booking system: rooms, rates, availability and coupons\nModerate the community with a report queue and automatic member grades\nWatch analytics, audit and error logs, and manage search-engine settings",
-              "stats": "143 API handlers · About 40 database tables · 368 recorded releases",
-              "href": "https://bgnj.net",
-              "linkLabel": "Visit bgnj.net",
-              "image": "/assets/img/dev/banginoja.jpg",
-              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg",
-              "adminImage": "",
-              "adminCaption": ""
             }
           ],
           "casesTitle": "Films",
@@ -544,7 +544,7 @@ const DEFAULT = {
     "dev": {
       "meta": {
         "title": "Dev Work: Websites Built Fast with AI | Jimmy Park",
-        "desc": "Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community."
+        "desc": "Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, BP Media, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community."
       },
       "order": [
         "intro",
@@ -603,17 +603,36 @@ const DEFAULT = {
               "adminCaption": ""
             },
             {
+              "id": "bp-media",
+              "title": "BP Media",
+              "format": "Own platform · Scouting media",
+              "year": "2026",
+              "role": "Founder · Planning & development",
+              "summary": "The Korean-language Scouting news platform I founded, covering Korea, the Asia-Pacific Region and world Scouting.",
+              "need": "An independent home for Scouting news in Korean, with reference material that stays useful beyond the news cycle.",
+              "built": "News boards with article pages and sharing, search, a Scout calendar, a glossary with a keyword chatbot, a memorabilia encyclopedia, card news, RSS and sitemaps.",
+              "stack": "Cloudflare Pages Functions · D1 · Scheduled Workers",
+              "backend": "Write articles in a block editor, keep drafts and schedule publishing\nControl the homepage, with the main story picked automatically each night from the month’s most-read articles\nManage the calendar, glossary, memorabilia, events and a card-news builder\nScore article quality with AI and keep a score history\nSee visits, tag insights and where readers come from\nGive team members menu-level permissions, with two-factor sign-in and a settings audit trail",
+              "stats": "111 API routes · 76 database migrations · 3 scheduled jobs · 892 recorded releases",
+              "href": "https://bpmedia.net",
+              "linkLabel": "Visit bpmedia.net",
+              "image": "/assets/img/dev/bp-media.jpg",
+              "mobileImage": "/assets/img/dev/bp-media-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
+            },
+            {
               "id": "charmjt",
               "title": "Authentic Korean Traditional Fermented Foods Cooperative",
               "format": "Food cooperative · Official website",
               "year": "2026",
               "role": "Planning & development",
-              "summary": "The official website of a traditional fermented-foods cooperative.",
+              "summary": "The official website of a traditional fermented-foods cooperative, with product detail pages made with AI.",
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
-              "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
+              "built": "Education and course-application pages, a product shop whose detail pages and product images were created with AI, guest order lookup, member accounts, a news board and an admin console.",
               "stack": "Cloudflare Pages Functions · D1 · R2",
               "backend": "Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual",
-              "stats": "Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot",
+              "stats": "AI-made product detail pages · Server-checked order totals · Guest order lookup · AI help chatbot",
               "href": "https://charmjt.org",
               "linkLabel": "Visit charmjt.org",
               "image": "/assets/img/dev/charmjt.jpg",
@@ -2524,6 +2543,51 @@ function migrateTo12(doc) {
   return doc;
 }
 
+// v13: BP Media joins the website showcase (the owner's own Scouting media platform) and the
+// cooperative's row tells how its product detail pages were made with AI.
+const V13_SEEDS = [
+  [["pages","home","sections","projects","feature","href"],"/scouting#mediaprojects"],
+  [["pages","home","sections","snapshot","detail"],"His work includes technology films, educational web series and event media, as well as live websites for global education, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."],
+  [["pages","dev","meta","desc"],"Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community."]
+];
+const V13_HOME_SITES = [{"id":"korea-dream-path","title":"Korea Dream Path","format":"Own platform · Global education","year":"2026","role":"CEO · Planning & development","summary":"The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.","need":"One place where young people around the world can discover programs and scholarships and apply online.","built":"Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.","stack":"Cloudflare Workers · KV · D1 · R2","backend":"Edit every page of the site without code, with a live preview\nMove applicants through admission stages, with every change logged\nHandle company email, including attachments, inside the admin\nManage members, groups and role-based permissions, with two-factor sign-in for sensitive sections\nAnswer student inquiries and send notification campaigns\nFollow visitor journeys and catch errors on a monitoring dashboard","stats":"50 admin tabs · 95 API routes · Encrypted personal data · Automatic data-retention clean-up","href":"https://koreadreampath.com","linkLabel":"Visit koreadreampath.com","image":"/assets/img/dev/korea-dream-path.jpg","mobileImage":"/assets/img/dev/korea-dream-path-mobile.jpg","adminImage":"","adminCaption":""},{"id":"charmjt","title":"Authentic Korean Traditional Fermented Foods Cooperative","format":"Food cooperative · Official website","year":"2026","role":"Planning & development","summary":"The official website of a traditional fermented-foods cooperative.","need":"One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.","built":"Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.","stack":"Cloudflare Pages Functions · D1 · R2","backend":"Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual","stats":"Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot","href":"https://charmjt.org","linkLabel":"Visit charmjt.org","image":"/assets/img/dev/charmjt.jpg","mobileImage":"/assets/img/dev/charmjt-mobile.jpg","adminImage":"/assets/img/dev/charmjt-admin.jpg","adminCaption":"Admin dashboard in local demo mode, with no customer data."},{"id":"banginoja","title":"BANGINOJA","format":"Travel community · Korean history & culture","year":"2026","role":"Planning & development","summary":"A travel community for exploring Korea’s history, culture and nature.","need":"A home for a travel community’s tours, lectures and history writing, where members can join in and talk.","built":"Tour and lecture pages, history columns, a members’ community board and an admin console.","stack":"React · Cloudflare Workers · D1 · R2","backend":"Publish history columns as drafts, scheduled or live posts\nRun lectures and tours with sign-ups, payment checks and reviews\nSell books with order, shipping and refund handling\nManage a guesthouse booking system: rooms, rates, availability and coupons\nModerate the community with a report queue and automatic member grades\nWatch analytics, audit and error logs, and manage search-engine settings","stats":"143 API handlers · About 40 database tables · 368 recorded releases","href":"https://bgnj.net","linkLabel":"Visit bgnj.net","image":"/assets/img/dev/banginoja.jpg","mobileImage":"/assets/img/dev/banginoja-mobile.jpg","adminImage":"","adminCaption":""}];
+const V13_CHAM_ROW = {"id":"charmjt","title":"Authentic Korean Traditional Fermented Foods Cooperative","format":"Food cooperative · Official website","year":"2026","role":"Planning & development","summary":"The official website of a traditional fermented-foods cooperative.","need":"One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.","built":"Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.","stack":"Cloudflare Pages Functions · D1 · R2","backend":"Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual","stats":"Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot","href":"https://charmjt.org","linkLabel":"Visit charmjt.org","image":"/assets/img/dev/charmjt.jpg","mobileImage":"/assets/img/dev/charmjt-mobile.jpg","adminImage":"/assets/img/dev/charmjt-admin.jpg","adminCaption":"Admin dashboard in local demo mode, with no customer data."};
+function migrateTo13(doc) {
+  for (const [path, previous] of V13_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  const pages = doc.pages || {};
+  const clone = value => JSON.parse(JSON.stringify(value));
+  // Home website cards: replace the untouched earlier trio (rows may already be newer defaults).
+  const selected = pages.home && pages.home.sections && pages.home.sections.selected;
+  const current = id => DEFAULT.pages.dev.sections.sites.items.find(item => item.id === id);
+  if (selected && Array.isArray(selected.sites) && selected.sites.length === V13_HOME_SITES.length &&
+      selected.sites.every((row, i) => row && row.id === V13_HOME_SITES[i].id && (matchesLegacy(row, V13_HOME_SITES[i]) || matchesLegacy(row, current(row.id)) || matchesLegacy(row, V13_CHAM_ROW)))) {
+    selected.sites = clone(DEFAULT.pages.home.sections.selected.sites);
+  }
+  const nextCham = DEFAULT.pages.dev.sections.sites.items.find(item => item.id === V13_CHAM_ROW.id);
+  const lists = [pages.dev && pages.dev.sections && pages.dev.sections.sites, pages.home && pages.home.sections && pages.home.sections.selected];
+  lists.forEach((owner, i) => {
+    const key = i === 0 ? 'items' : 'sites';
+    if (owner && Array.isArray(owner[key])) owner[key] = owner[key].map(row => matchesLegacy(row, V13_CHAM_ROW) ? clone(nextCham) : row);
+  });
+  // Add the BP Media row once, right after Korea Dream Path, unless the owner already listed it.
+  const sites = lists[0];
+  if (sites && Array.isArray(sites.items)) {
+    const bp = DEFAULT.pages.dev.sections.sites.items.find(item => item.id === 'bp-media');
+    const listed = sites.items.some(row => row && (row.id === bp.id || /(^|\/\/)bpmedia\.net/.test(row.href || '')));
+    if (!listed) {
+      const kdp = sites.items.findIndex(row => row && row.id === 'korea-dream-path');
+      sites.items.splice(kdp < 0 ? 0 : kdp + 1, 0, clone(bp));
+    }
+  }
+  doc.version = 13;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -2561,7 +2625,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2570,7 +2634,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2578,7 +2642,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2589,6 +2653,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 10) doc = migrateTo10(doc);
   if ((doc.version || 0) < 11) doc = migrateTo11(doc);
   if ((doc.version || 0) < 12) doc = migrateTo12(doc);
+  if ((doc.version || 0) < 13) doc = migrateTo13(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2621,12 +2686,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 10) migrateTo10(incoming);
   if (incoming.version < 11) migrateTo11(incoming);
   if (incoming.version < 12) migrateTo12(incoming);
+  if (incoming.version < 13) migrateTo13(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 12;
+  doc.version = 13;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

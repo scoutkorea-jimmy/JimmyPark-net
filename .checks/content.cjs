@@ -6,7 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
-const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW });', sandbox);
+const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW, v13Seeds: V13_SEEDS, v12HomeSites: V13_HOME_SITES, v12ChamRow: V13_CHAM_ROW });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
 // Documents saved before v9 kept the AI practice and AX workshop sections on Work.
 const MOVED = ['vibecoding', 'lecture'];
@@ -15,8 +15,17 @@ const MOVED = ['vibecoding', 'lecture'];
 function applySeeds(legacy, seeds) {
   for (const [path, previous] of seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
 }
-function asV11(doc) {
+// Documents saved before v13: no BP Media row, the cooperative without the AI detail-page story.
+function asV12(doc) {
   const legacy = copy(doc);
+  applySeeds(legacy, api.v13Seeds);
+  legacy.pages.home.sections.selected.sites = copy(api.v12HomeSites);
+  legacy.pages.dev.sections.sites.items = legacy.pages.dev.sections.sites.items.filter(row => row.id !== 'bp-media').map(row => row.id === api.v12ChamRow.id ? copy(api.v12ChamRow) : row);
+  legacy.version = 12;
+  return legacy;
+}
+function asV11(doc) {
+  const legacy = asV12(doc);
   applySeeds(legacy, api.v12Seeds);
   for (const rows of [legacy.pages.dev.sections.sites.items, legacy.pages.home.sections.selected.sites]) {
     rows.forEach((row, i) => { if (row.id === api.v11KdpRow.id) rows[i] = copy(api.v11KdpRow); });
@@ -76,7 +85,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 12);
+    assert.equal(result.version, 13);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -401,7 +410,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 12);
+  assert.equal(refreshed.version, 13);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
@@ -499,9 +508,9 @@ async function get(value) {
   custom9.pages.home.sections.hero.title = 'Custom headline';
   custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
   const upgraded = await get(custom9);
-  assert.equal(upgraded.version, 12);
+  assert.equal(upgraded.version, 13);
   assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
-  const customRow = upgraded.pages.dev.sections.sites.items[1];
+  const customRow = upgraded.pages.dev.sections.sites.items.find(row => row.id === 'charmjt');
   assert.equal(customRow.backend, '', 'Custom rows must not inherit another site’s back-end list');
   assert.equal(customRow.summary, 'Custom site description');
   assert.equal(customRow.need, '');
@@ -523,14 +532,15 @@ async function get(value) {
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
   const backed = await get(custom10);
-  assert.equal(backed.version, 12);
-  assert.equal(backed.pages.dev.sections.sites.items[2].summary, 'Custom nfee summary');
-  assert.equal(backed.pages.dev.sections.sites.items[2].backend, '');
-  assert.equal(backed.pages.dev.sections.sites.items[2].adminImage, '');
+  assert.equal(backed.version, 13);
+  const nfee = backed.pages.dev.sections.sites.items.find(row => row.id === 'nfee');
+  assert.equal(nfee.summary, 'Custom nfee summary');
+  assert.equal(nfee.backend, '');
+  assert.equal(nfee.adminImage, '');
   assert.deepEqual(backed.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0]);
   assert.equal(backed.pages.home.sections.selected.sites[0].title, 'Custom home card');
   assert.equal(backed.pages.home.sections.selected.sites[0].backend, '');
-  assert.deepEqual(backed.pages.home.sections.selected.sites[1], defaults.pages.home.sections.selected.sites[1]);
+  assert.deepEqual(backed.pages.home.sections.selected.sites.find(row => row.id === 'charmjt'), defaults.pages.dev.sections.sites.items.find(row => row.id === 'charmjt'), 'Unchanged home rows gain the current details');
   assert.match(defaults.pages.dev.sections.sites.items[0].backend, /\n/);
   assert.deepEqual(await get(backed), backed, 'v11 normalization must be idempotent');
 
@@ -544,7 +554,7 @@ async function get(value) {
   custom11.pages.home.sections.selected.cases = custom11.pages.home.sections.selected.cases.slice(0, 1);
   custom11.pages.dev.sections.sites.items[0] = { ...custom11.pages.dev.sections.sites.items[0], summary: 'Custom KDP summary' };
   const owned = await get(custom11);
-  assert.equal(owned.version, 12);
+  assert.equal(owned.version, 13);
   assert.equal(owned.pages.dev.sections.vibecoding.sub, 'Custom tools subtitle');
   assert.equal(owned.pages.work.meta.desc, 'Custom work description');
   assert.equal(owned.pages.home.sections.selected.cases.length, 1);
@@ -553,5 +563,23 @@ async function get(value) {
   assert.ok(!JSON.stringify(defaults.pages.home.sections.projects.items).includes('/insights'), 'Insights leaves the home cards until it has posts');
   assert.deepEqual(defaults.pages.home.sections.selected.cases.map(item => item.id), ['samsung-keynote', 'ai2re', 'daekyo']);
   assert.deepEqual(await get(owned), owned, 'v12 normalization must be idempotent');
-  console.log('PASS: v2/v5/v6/v8/v9/v10/v11 to v12 migrations, own-platform KDP, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
+
+  // v12 → v13: BP Media joins the showcase; the cooperative row gains the AI detail-page story.
+  assert.deepEqual(await get(asV12(defaults)), defaults, 'An unchanged v12 document must upgrade to the v13 defaults');
+  const custom12 = asV12(defaults);
+  custom12.pages.dev.sections.sites.items.push({ ...custom12.pages.dev.sections.sites.items[0], id: 'mine', title: 'Mine', href: 'https://example.test/' });
+  custom12.pages.dev.sections.sites.items.reverse();
+  custom12.pages.home.sections.selected.sites = custom12.pages.home.sections.selected.sites.slice(0, 2);
+  const media = await get(custom12);
+  assert.equal(media.version, 13);
+  const ids = media.pages.dev.sections.sites.items.map(row => row.id);
+  assert.equal(ids.filter(id => id === 'bp-media').length, 1, 'BP Media is added exactly once');
+  assert.equal(ids.indexOf('bp-media'), ids.indexOf('korea-dream-path') + 1, 'BP Media follows Korea Dream Path in a custom order');
+  assert.equal(media.pages.home.sections.selected.sites.length, 2, 'A curated home list is left alone');
+  assert.match(media.pages.dev.sections.sites.items.find(row => row.id === 'charmjt').summary, /AI/);
+  assert.deepEqual(await get(media), media, 'v13 normalization must be idempotent');
+  const listedAlready = asV12(defaults);
+  listedAlready.pages.dev.sections.sites.items.push({ ...listedAlready.pages.dev.sections.sites.items[0], id: 'my-bp', title: 'My BP', href: 'https://bpmedia.net/' });
+  assert.equal((await get(listedAlready)).pages.dev.sections.sites.items.filter(row => /bpmedia\.net/.test(row.href)).length, 1, 'An owner-listed BP Media row is not duplicated');
+  console.log('PASS: v2/v5/v6/v8/v9/v10/v11/v12 to v13 migrations, BP Media showcase, own-platform KDP, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });
