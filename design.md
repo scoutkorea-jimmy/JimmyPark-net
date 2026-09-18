@@ -437,6 +437,9 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
   the visit action is a primary `.site-button`.
 - Contact `.contact-layout`: channels card (uppercase 14px labels, 44px copy buttons, full-width brief
   button) beside a numbered `.brief-list`; 1 column at 840px. No introduction button.
+- **Side-by-side cards share one height** (owner request, v0.14.1): rows of cards stretch to the tallest
+  card and each card’s last block sits on the common bottom line (flex column + `margin-top: auto`).
+  Never top-align cards in the same row. Measured check: no row of `.card`s differs by more than 2px.
 
 ## 16. Behind the site (v0.13.0)
 - `.showcase-backend` spans the whole showcase panel below a `#ece8e1` rule and always comes last

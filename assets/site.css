@@ -351,8 +351,12 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio .selected-group-head + .collection-grid { margin-top: var(--space-16); }
 
 /* Contact: direct channels beside what to include. */
-.portfolio .contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--split-gap); align-items: start; margin-top: var(--space-32); }
+.portfolio .contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--split-gap); align-items: stretch; margin-top: var(--space-32); }
 .portfolio .contact-card { background: #fdfcfa; }
+/* Side-by-side cards share one height; the last block of each card sits on the common bottom line. */
+.portfolio .contact-layout > .card { display: flex; flex-direction: column; }
+.portfolio .contact-layout .help-list { margin-top: auto; }
+.portfolio .contact-layout .brief-list { margin-bottom: var(--space-24); }
 .portfolio .contact-label { font-size: .875rem; font-weight: 700; line-height: 1.5; letter-spacing: .06em; text-transform: uppercase; color: #66615c; }
 .portfolio .contact-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); margin: var(--space-8) 0 var(--space-16); }
 .portfolio .contact-row a { display: flex; align-items: center; gap: var(--space-12); min-width: 0; }
