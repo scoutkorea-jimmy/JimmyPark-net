@@ -326,6 +326,22 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio .showcase-facts dd { margin: var(--space-4) 0 0; font-size: 1rem; line-height: 1.65; color: #4a463f; }
 .portfolio .showcase-body .tag-list { margin-top: var(--space-16); }
 .portfolio .showcase-body .site-button { margin-top: var(--space-24); }
+.portfolio .showcase-backend { order: 3; grid-column: 1 / -1; min-width: 0; padding-top: var(--space-32); border-top: 1px solid #ece8e1; }
+.portfolio .backend-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-8) var(--space-16); }
+.portfolio .backend-title { margin: 0; flex: 1 1 auto; font-size: 1.25rem; line-height: 1.4; }
+.portfolio .stat-chips { display: flex; flex-wrap: wrap; gap: var(--space-8); flex-basis: 100%; }
+.portfolio .stat-chip { display: inline-flex; align-items: center; padding: var(--space-4) var(--space-12); border: 1px solid #e0dacf; border-radius: var(--radius-pill); background: #f7f6f3; color: #2c2925; font-size: .875rem; font-weight: 600; line-height: 1.5; }
+.portfolio .backend-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--split-gap); align-items: start; margin-top: var(--space-24); }
+.portfolio .backend-grid.has-shot { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
+.portfolio .site-showcase:nth-child(even) .backend-grid.has-shot { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+.portfolio .site-showcase:nth-child(even) .backend-shot { order: 2; }
+.portfolio .backend-shot { margin: 0; min-width: 0; }
+.portfolio .backend-shot figcaption { margin-top: var(--space-8); font-size: .875rem; color: #6b665f; }
+.portfolio .browser-screen--admin { aspect-ratio: 16 / 10; }
+.portfolio .backend-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12) var(--space-24); margin: 0; padding: 0; list-style: none; }
+.portfolio .backend-grid.has-shot .backend-list { grid-template-columns: minmax(0, 1fr); }
+.portfolio .backend-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: var(--space-8); align-items: start; font-size: 1rem; line-height: 1.6; color: #4a463f; }
+.portfolio .backend-list .msym { margin-top: var(--space-2); font-size: 20px; color: var(--accent); }
 
 /* Home selected work: websites and films as two labelled groups. */
 .portfolio .selected-group-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-top: var(--space-32); }
@@ -389,6 +405,8 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
   .portfolio .travel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portfolio :is(.project-grid, .selected-work-grid, .principle-grid, .contact-layout) { grid-template-columns: 1fr; }
   .portfolio .site-showcase, .portfolio .site-showcase:nth-child(even) { grid-template-columns: 1fr; }
+  .portfolio .backend-grid.has-shot, .portfolio .site-showcase:nth-child(even) .backend-grid.has-shot, .portfolio .backend-list { grid-template-columns: minmax(0, 1fr); }
+  .portfolio .site-showcase:nth-child(even) .backend-shot { order: 0; }
   .portfolio .site-showcase:nth-child(even) .showcase-stage { order: 0; }
   .portfolio .cta-grid { grid-template-columns: 1fr; }
   .split { grid-template-columns: 1fr !important; }

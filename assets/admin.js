@@ -40,9 +40,9 @@
   var STATUS = [{ v: "Live", t: "Live" }, { v: "Prototype", t: "Prototype" }, { v: "Beta", t: "Beta" }, { v: "In Progress", t: "In Progress" }];
   var TRACK = [{ v: "Scout", t: "Scout" }, { v: "Leader", t: "Leader" }];
   var F = function (k, label, type, options) { return { k: k, label: label, type: type || "text", options: options }; };
-  var WEBSITE_FIELDS = [F("id", "ID"), F("title", "Title"), F("format", "Sector · type"), F("year", "Year (optional)"), F("role", "Your role"), F("summary", "One-line summary", "textarea"), F("need", "The need", "textarea"), F("built", "What I built", "textarea"), F("stack", "Stack (optional, separate with ·)"), F("href", "Live site HTTPS URL"), F("linkLabel", "Link label")];
-  var WEBSITE_IMAGES = [["image", "Desktop screenshot (16:9)"], ["mobileImage", "Mobile screenshot (optional)"]];
-  var WEBSITE_TMPL = { id: "", title: "", format: "", year: "", role: "Planning & development", summary: "", need: "", built: "", stack: "", href: "", linkLabel: "Visit site", image: "", mobileImage: "" };
+  var WEBSITE_FIELDS = [F("id", "ID"), F("title", "Title"), F("format", "Sector · type"), F("year", "Year (optional)"), F("role", "Your role"), F("summary", "One-line summary", "textarea"), F("need", "The need", "textarea"), F("built", "What I built", "textarea"), F("stack", "Stack (optional, separate with ·)"), F("backend", "Admin & back-end features (one per line)", "textarea"), F("stats", "Back-end facts (separate with ·)"), F("adminCaption", "Admin screenshot caption"), F("href", "Live site HTTPS URL"), F("linkLabel", "Link label")];
+  var WEBSITE_IMAGES = [["image", "Desktop screenshot (16:9)"], ["mobileImage", "Mobile screenshot (optional)"], ["adminImage", "Admin screenshot (16:10, no personal data)"]];
+  var WEBSITE_TMPL = { id: "", title: "", format: "", year: "", role: "Planning & development", summary: "", need: "", built: "", stack: "", backend: "", stats: "", href: "", linkLabel: "Visit site", image: "", mobileImage: "", adminImage: "", adminCaption: "" };
 
   var SCHEMA = {
     global: {

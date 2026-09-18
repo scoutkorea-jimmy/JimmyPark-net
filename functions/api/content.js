@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 10,
+  "version": 11,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -230,10 +230,14 @@ const DEFAULT = {
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
+              "backend": "Edit every page of the site without code, with a live preview\nMove applicants through admission stages, with every change logged\nHandle company email, including attachments, inside the admin\nManage members, groups and role-based permissions, with two-factor sign-in for sensitive sections\nAnswer student inquiries and send notification campaigns\nFollow visitor journeys and catch errors on a monitoring dashboard",
+              "stats": "50 admin tabs · 95 API routes · Encrypted personal data · Automatic data-retention clean-up",
               "href": "https://koreadreampath.com",
               "linkLabel": "Visit koreadreampath.com",
               "image": "/assets/img/dev/korea-dream-path.jpg",
-              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg"
+              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
             },
             {
               "id": "charmjt",
@@ -245,10 +249,14 @@ const DEFAULT = {
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
               "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
               "stack": "Cloudflare Pages Functions · D1 · R2",
+              "backend": "Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual",
+              "stats": "Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot",
               "href": "https://charmjt.org",
               "linkLabel": "Visit charmjt.org",
               "image": "/assets/img/dev/charmjt.jpg",
-              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg"
+              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg",
+              "adminImage": "/assets/img/dev/charmjt-admin.jpg",
+              "adminCaption": "Admin dashboard in local demo mode, with no customer data."
             },
             {
               "id": "banginoja",
@@ -260,10 +268,14 @@ const DEFAULT = {
               "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
               "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
               "stack": "React · Cloudflare Workers · D1 · R2",
+              "backend": "Publish history columns as drafts, scheduled or live posts\nRun lectures and tours with sign-ups, payment checks and reviews\nSell books with order, shipping and refund handling\nManage a guesthouse booking system: rooms, rates, availability and coupons\nModerate the community with a report queue and automatic member grades\nWatch analytics, audit and error logs, and manage search-engine settings",
+              "stats": "143 API handlers · About 40 database tables · 368 recorded releases",
               "href": "https://bgnj.net",
               "linkLabel": "Visit bgnj.net",
               "image": "/assets/img/dev/banginoja.jpg",
-              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg"
+              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
             }
           ],
           "casesTitle": "Films",
@@ -565,7 +577,7 @@ const DEFAULT = {
           "kicker": "01 / Websites",
           "title": "Live Websites",
           "sub": "Built around each client’s need",
-          "desc": "Each site began with what its users and team needed to do. Every one is live and in use.",
+          "desc": "Each site began with what its users and team needed to do, and each runs on its own admin console and back end. Every one is live and in use.",
           "items": [
             {
               "id": "korea-dream-path",
@@ -577,10 +589,14 @@ const DEFAULT = {
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
+              "backend": "Edit every page of the site without code, with a live preview\nMove applicants through admission stages, with every change logged\nHandle company email, including attachments, inside the admin\nManage members, groups and role-based permissions, with two-factor sign-in for sensitive sections\nAnswer student inquiries and send notification campaigns\nFollow visitor journeys and catch errors on a monitoring dashboard",
+              "stats": "50 admin tabs · 95 API routes · Encrypted personal data · Automatic data-retention clean-up",
               "href": "https://koreadreampath.com",
               "linkLabel": "Visit koreadreampath.com",
               "image": "/assets/img/dev/korea-dream-path.jpg",
-              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg"
+              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
             },
             {
               "id": "charmjt",
@@ -592,10 +608,14 @@ const DEFAULT = {
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
               "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
               "stack": "Cloudflare Pages Functions · D1 · R2",
+              "backend": "Manage products, stock and orders from payment to shipping with tracking numbers\nHandle cancellations, returns and exchanges, with sales reports and CSV export\nRun course intakes, applicants and inquiries from one dashboard\nEdit page text and photos in place, with PC and mobile previews\nGive staff accounts role-based permissions\nKeep automatic daily backups and ask a help chatbot that answers from the manual",
+              "stats": "Server-checked order totals · Guest order lookup · Locked-down admin sign-in · AI help chatbot",
               "href": "https://charmjt.org",
               "linkLabel": "Visit charmjt.org",
               "image": "/assets/img/dev/charmjt.jpg",
-              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg"
+              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg",
+              "adminImage": "/assets/img/dev/charmjt-admin.jpg",
+              "adminCaption": "Admin dashboard in local demo mode, with no customer data."
             },
             {
               "id": "nfee",
@@ -607,10 +627,14 @@ const DEFAULT = {
               "need": "Instructors who are not used to computers had to file program reports and fee claims in fixed A4 formats, and administrators had to review them.",
               "built": "A step-by-step writing flow, print-ready A4 forms, school confirmation links with signatures and an administrator review console.",
               "stack": "Cloudflare Pages Functions · D1",
+              "backend": "Review submitted reports in their original A4 form and request fixes one by one or in bulk\nApprove monthly fee claims\nDownload the month’s results as CSV or print every submission to PDF in one click\nApprove sign-ups and search members with masked contact details\nReview access logs and handle personal-data requests\nRestore from a full change history, see yearly statistics and read anonymous feedback",
+              "stats": "One security gate for every request · Tamper-proof, encrypted access logs · 300+ automated tests",
               "href": "https://nfee.app",
               "linkLabel": "Visit nfee.app",
               "image": "/assets/img/dev/nfee.jpg",
-              "mobileImage": "/assets/img/dev/nfee-mobile.jpg"
+              "mobileImage": "/assets/img/dev/nfee-mobile.jpg",
+              "adminImage": "/assets/img/dev/nfee-admin.jpg",
+              "adminCaption": "Admin console in the demo build, with sample data only."
             },
             {
               "id": "banginoja",
@@ -622,10 +646,14 @@ const DEFAULT = {
               "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
               "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
               "stack": "React · Cloudflare Workers · D1 · R2",
+              "backend": "Publish history columns as drafts, scheduled or live posts\nRun lectures and tours with sign-ups, payment checks and reviews\nSell books with order, shipping and refund handling\nManage a guesthouse booking system: rooms, rates, availability and coupons\nModerate the community with a report queue and automatic member grades\nWatch analytics, audit and error logs, and manage search-engine settings",
+              "stats": "143 API handlers · About 40 database tables · 368 recorded releases",
               "href": "https://bgnj.net",
               "linkLabel": "Visit bgnj.net",
               "image": "/assets/img/dev/banginoja.jpg",
-              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg"
+              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
             }
           ]
         },
@@ -2419,6 +2447,39 @@ function migrateTo10(doc) {
   return doc;
 }
 
+// v11: each website row shows what runs behind it — admin features, key back-end facts and,
+// where a demo without personal data exists, an admin screenshot.
+const V11_SEEDS = [
+  [["pages","dev","sections","sites","desc"],"Each site began with what its users and team needed to do. Every one is live and in use."]
+];
+const V11_SITE_ROWS = [{"id":"korea-dream-path","title":"Korea Dream Path","format":"Education · Global learning platform","year":"2026","role":"Planning & development","summary":"A global learning platform connecting young people worldwide with Korean higher education.","need":"One place where young people around the world can discover programs and scholarships and apply online.","built":"Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.","stack":"Cloudflare Workers · KV · D1 · R2","href":"https://koreadreampath.com","linkLabel":"Visit koreadreampath.com","image":"/assets/img/dev/korea-dream-path.jpg","mobileImage":"/assets/img/dev/korea-dream-path-mobile.jpg"},{"id":"charmjt","title":"Authentic Korean Traditional Fermented Foods Cooperative","format":"Food cooperative · Official website","year":"2026","role":"Planning & development","summary":"The official website of a traditional fermented-foods cooperative.","need":"One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.","built":"Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.","stack":"Cloudflare Pages Functions · D1 · R2","href":"https://charmjt.org","linkLabel":"Visit charmjt.org","image":"/assets/img/dev/charmjt.jpg","mobileImage":"/assets/img/dev/charmjt-mobile.jpg"},{"id":"nfee","title":"nfee","format":"Education administration · Web service","year":"2026","role":"Planning & development","summary":"A reporting service for after-school program instructors.","need":"Instructors who are not used to computers had to file program reports and fee claims in fixed A4 formats, and administrators had to review them.","built":"A step-by-step writing flow, print-ready A4 forms, school confirmation links with signatures and an administrator review console.","stack":"Cloudflare Pages Functions · D1","href":"https://nfee.app","linkLabel":"Visit nfee.app","image":"/assets/img/dev/nfee.jpg","mobileImage":"/assets/img/dev/nfee-mobile.jpg"},{"id":"banginoja","title":"BANGINOJA","format":"Travel community · Korean history & culture","year":"2026","role":"Planning & development","summary":"A travel community for exploring Korea’s history, culture and nature.","need":"A home for a travel community’s tours, lectures and history writing, where members can join in and talk.","built":"Tour and lecture pages, history columns, a members’ community board and an admin console.","stack":"React · Cloudflare Workers · D1 · R2","href":"https://bgnj.net","linkLabel":"Visit bgnj.net","image":"/assets/img/dev/banginoja.jpg","mobileImage":"/assets/img/dev/banginoja-mobile.jpg"}];
+function upgradeSiteRows(items, nextRows) {
+  if (!Array.isArray(items)) return items;
+  return items.map(row => {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) return row;
+    const seed = V11_SITE_ROWS.find(previous => matchesLegacy(row, previous));
+    const next = seed && (nextRows.find(item => item.id === seed.id) || DEFAULT.pages.dev.sections.sites.items.find(item => item.id === seed.id));
+    if (next) return JSON.parse(JSON.stringify(next));
+    // Custom rows start without back-end details instead of inheriting the first default row.
+    return { ...row, backend: row.backend || '', stats: row.stats || '', adminImage: row.adminImage || '', adminCaption: row.adminCaption || '' };
+  });
+}
+function migrateTo11(doc) {
+  for (const [path, previous] of V11_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  const pages = doc.pages || {};
+  const sites = pages.dev && pages.dev.sections && pages.dev.sections.sites;
+  if (sites) sites.items = upgradeSiteRows(sites.items, DEFAULT.pages.dev.sections.sites.items);
+  const selected = pages.home && pages.home.sections && pages.home.sections.selected;
+  if (selected) selected.sites = upgradeSiteRows(selected.sites, DEFAULT.pages.home.sections.selected.sites);
+  doc.version = 11;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -2456,7 +2517,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2465,7 +2526,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2473,7 +2534,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2482,6 +2543,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 8) doc = migrateTo8(doc);
   if ((doc.version || 0) < 9) doc = migrateTo9(doc);
   if ((doc.version || 0) < 10) doc = migrateTo10(doc);
+  if ((doc.version || 0) < 11) doc = migrateTo11(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2512,12 +2574,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 8) migrateTo8(incoming);
   if (incoming.version < 9) migrateTo9(incoming);
   if (incoming.version < 10) migrateTo10(incoming);
+  if (incoming.version < 11) migrateTo11(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 10;
+  doc.version = 11;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

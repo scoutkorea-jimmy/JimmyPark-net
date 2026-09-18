@@ -144,13 +144,22 @@
         .map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('');
       var stack = String(s.stack || '').split('·').map(function (t) { return t.trim(); }).filter(Boolean)
         .map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+      var backendItems = String(s.backend || '').split('\n').map(function (t) { return t.trim(); }).filter(Boolean);
+      var stats = String(s.stats || '').split('·').map(function (t) { return t.trim(); }).filter(Boolean)
+        .map(function (t) { return '<span class="stat-chip">' + esc(t) + '</span>'; }).join('');
+      var adminShot = s.adminImage ? '<figure class="backend-shot"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><span class="browser-url">Admin console</span></div>' +
+        '<div class="browser-screen browser-screen--admin"><img src="' + esc(s.adminImage) + '" alt="Admin console of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="800"></div></div>' +
+        (s.adminCaption ? '<figcaption>' + esc(s.adminCaption) + '</figcaption>' : '') + '</figure>' : '';
+      var backend = backendItems.length || adminShot ? '<div class="showcase-backend"><div class="backend-head"><span class="eyebrow">Behind the site</span><h4 class="backend-title">Admin console &amp; back end</h4>' +
+        (stats ? '<div class="stat-chips">' + stats + '</div>' : '') + '</div><div class="backend-grid' + (adminShot ? ' has-shot' : '') + '">' + adminShot +
+        (backendItems.length ? '<ul class="backend-list">' + backendItems.map(function (t) { return '<li><span class="msym" aria-hidden="true">check_circle</span><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' : '') + '</div></div>' : '';
       return '<article class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
         (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen">' + screen + '</div></div>' + phone + '</div>' +
         '<div class="showcase-body"><div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(s.title) + '</h3>' + (s.summary ? '<p class="showcase-summary">' + esc(s.summary) + '</p>' : '') +
         (facts ? '<dl class="showcase-facts">' + facts + '</dl>' : '') + (stack ? '<div class="tag-list">' + stack + '</div>' : '') +
         (href ? '<a class="btn btn-primary site-button" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') +
-        '</div></article>';
+        '</div>' + backend + '</article>';
     },
     snapshotRows: function (r) {
       return '<div class="snapshot-row"><dt>' + esc(r.label) + '</dt><dd>' + esc(r.value) + '</dd></div>';
