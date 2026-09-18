@@ -15,9 +15,16 @@ const MOVED = ['vibecoding', 'lecture'];
 function applySeeds(legacy, seeds) {
   for (const [path, previous] of seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
 }
+// Documents saved before v14: the Samsung keynote card had no still.
+function asV13(doc) {
+  const legacy = copy(doc);
+  for (const rows of [legacy.pages.work.sections.video.cases, legacy.pages.home.sections.selected.cases]) rows.forEach(row => { if (row.id === 'samsung-keynote') row.image = ''; });
+  legacy.version = 13;
+  return legacy;
+}
 // Documents saved before v13: no BP Media row, the cooperative without the AI detail-page story.
 function asV12(doc) {
-  const legacy = copy(doc);
+  const legacy = asV13(doc);
   applySeeds(legacy, api.v13Seeds);
   legacy.pages.home.sections.selected.sites = copy(api.v12HomeSites);
   legacy.pages.dev.sections.sites.items = legacy.pages.dev.sections.sites.items.filter(row => row.id !== 'bp-media').map(row => row.id === api.v12ChamRow.id ? copy(api.v12ChamRow) : row);
@@ -85,7 +92,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 13);
+    assert.equal(result.version, 14);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -410,7 +417,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 13);
+  assert.equal(refreshed.version, 14);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
@@ -508,7 +515,7 @@ async function get(value) {
   custom9.pages.home.sections.hero.title = 'Custom headline';
   custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
   const upgraded = await get(custom9);
-  assert.equal(upgraded.version, 13);
+  assert.equal(upgraded.version, 14);
   assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
   const customRow = upgraded.pages.dev.sections.sites.items.find(row => row.id === 'charmjt');
   assert.equal(customRow.backend, '', 'Custom rows must not inherit another site’s back-end list');
@@ -532,7 +539,7 @@ async function get(value) {
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
   const backed = await get(custom10);
-  assert.equal(backed.version, 13);
+  assert.equal(backed.version, 14);
   const nfee = backed.pages.dev.sections.sites.items.find(row => row.id === 'nfee');
   assert.equal(nfee.summary, 'Custom nfee summary');
   assert.equal(nfee.backend, '');
@@ -554,7 +561,7 @@ async function get(value) {
   custom11.pages.home.sections.selected.cases = custom11.pages.home.sections.selected.cases.slice(0, 1);
   custom11.pages.dev.sections.sites.items[0] = { ...custom11.pages.dev.sections.sites.items[0], summary: 'Custom KDP summary' };
   const owned = await get(custom11);
-  assert.equal(owned.version, 13);
+  assert.equal(owned.version, 14);
   assert.equal(owned.pages.dev.sections.vibecoding.sub, 'Custom tools subtitle');
   assert.equal(owned.pages.work.meta.desc, 'Custom work description');
   assert.equal(owned.pages.home.sections.selected.cases.length, 1);
@@ -571,7 +578,7 @@ async function get(value) {
   custom12.pages.dev.sections.sites.items.reverse();
   custom12.pages.home.sections.selected.sites = custom12.pages.home.sections.selected.sites.slice(0, 2);
   const media = await get(custom12);
-  assert.equal(media.version, 13);
+  assert.equal(media.version, 14);
   const ids = media.pages.dev.sections.sites.items.map(row => row.id);
   assert.equal(ids.filter(id => id === 'bp-media').length, 1, 'BP Media is added exactly once');
   assert.equal(ids.indexOf('bp-media'), ids.indexOf('korea-dream-path') + 1, 'BP Media follows Korea Dream Path in a custom order');
@@ -581,5 +588,15 @@ async function get(value) {
   const listedAlready = asV12(defaults);
   listedAlready.pages.dev.sections.sites.items.push({ ...listedAlready.pages.dev.sections.sites.items[0], id: 'my-bp', title: 'My BP', href: 'https://bpmedia.net/' });
   assert.equal((await get(listedAlready)).pages.dev.sections.sites.items.filter(row => /bpmedia\.net/.test(row.href)).length, 1, 'An owner-listed BP Media row is not duplicated');
-  console.log('PASS: v2/v5/v6/v8/v9/v10/v11/v12 to v13 migrations, BP Media showcase, own-platform KDP, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
+
+  // v13 → v14: the Samsung card gains its keynote still; an uploaded image stays.
+  assert.deepEqual(await get(asV13(defaults)), defaults, 'An unchanged v13 document must upgrade to the v14 defaults');
+  const uploaded = asV13(defaults);
+  uploaded.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image = '/api/image?id=owner-upload';
+  const stills = await get(uploaded);
+  assert.equal(stills.version, 14);
+  assert.equal(stills.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image, '/api/image?id=owner-upload');
+  assert.equal(stills.pages.home.sections.selected.cases.find(row => row.id === 'samsung-keynote').image, '/assets/img/video/samsung-keynote.jpg');
+  assert.deepEqual(await get(stills), stills, 'v14 normalization must be idempotent');
+  console.log('PASS: v2/v5/v6/v8/v9/v10/v11/v12/v13 to v14 migrations, Samsung still, BP Media showcase, own-platform KDP, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

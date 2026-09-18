@@ -151,8 +151,8 @@
         '<div class="browser-screen browser-screen--admin"><img src="' + esc(s.adminImage) + '" alt="Admin console of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="800"></div></div>' +
         (s.adminCaption ? '<figcaption>' + esc(s.adminCaption) + '</figcaption>' : '') + '</figure>' : '';
       var backend = backendItems.length || adminShot ? '<div class="showcase-backend"><div class="backend-head"><span class="eyebrow">Behind the site</span><h4 class="backend-title">Admin console &amp; back end</h4>' +
-        (stats ? '<div class="stat-chips">' + stats + '</div>' : '') + '</div><div class="backend-grid' + (adminShot ? ' has-shot' : '') + '">' + adminShot +
-        (backendItems.length ? '<ul class="backend-list">' + backendItems.map(function (t) { return '<li><span class="msym" aria-hidden="true">check_circle</span><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' : '') + '</div></div>' : '';
+        (stats ? '<div class="stat-chips">' + stats + '</div>' : '') + '</div><details class="backend-details" open><summary class="backend-toggle"><span class="backend-toggle-show">Show admin features' + (adminShot ? ' &amp; screenshot' : '') + '</span><span class="backend-toggle-hide">Hide admin features</span><span class="msym" aria-hidden="true">expand_more</span></summary><div class="backend-grid' + (adminShot ? ' has-shot' : '') + '">' + adminShot +
+        (backendItems.length ? '<ul class="backend-list">' + backendItems.map(function (t) { return '<li><span class="msym" aria-hidden="true">check_circle</span><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' : '') + '</div></details></div>' : '';
       return '<article class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
         (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen">' + screen + '</div></div>' + phone + '</div>' +
         '<div class="showcase-body"><div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
@@ -377,7 +377,15 @@
       n.style.display = hidden.indexOf(n.getAttribute("data-section")) >= 0 ? "none" : "";
       if (n.getAttribute('data-section') === 'gallery') n.hidden = !(get(sd, 'gallery.figs') || []).some(function (fig) { return !!fig.image; });
     });
+    compactDetails();
   }
+
+  // Phones: long back-end lists start collapsed; the facts (chips) stay visible. Without JS they stay open.
+  function compactDetails() {
+    if (!window.matchMedia || !window.matchMedia('(max-width: 520px)').matches) return;
+    document.querySelectorAll('.backend-details[open]').forEach(function (d) { d.open = false; });
+  }
+  compactDetails();
 
   // Shuffle the supplied portfolio selection once per visit; keep every image visible.
   document.querySelectorAll('[data-photo-shuffle]').forEach(function (grid) {

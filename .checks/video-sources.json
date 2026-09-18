@@ -75,5 +75,21 @@
       "size": 84247,
       "path": "assets/img/video/siheung.jpg"
     }
-  ]
+  ],
+  "samsungStill": {
+    "file": "assets/img/video/samsung-keynote.jpg",
+    "requested": "2026-09-19 (owner: capture a few frames from the keynote videos)",
+    "frames": [
+      {
+        "source": "Keynote 5 Jim Jemlin_Edit3(1119).mov — Drive thumbnail (title card)",
+        "id": "1jUlMFma_y42eoSRXO6R6iIQEpnKHKmph"
+      },
+      {
+        "source": "Keynote 5 Jim Jemlin_Edit3(1119).mov at 193s, 837s and 966s (AVFoundation frame extraction)",
+        "id": "1jUlMFma_y42eoSRXO6R6iIQEpnKHKmph"
+      }
+    ],
+    "folder": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
+    "note": "2x2 collage, 1280x720. The downloaded video was deleted after extraction."
+  }
 }
