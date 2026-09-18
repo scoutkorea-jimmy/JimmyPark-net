@@ -227,7 +227,7 @@ these rules do not style the standalone app or the admin layout.
 
 | Width | Change |
 |-------|--------|
-| `≤ 880px` | Desktop nav hidden; 44px menu button shown |
+| `≤ 960px` | Desktop nav hidden; 44px menu button shown (six destinations since v0.11.0) |
 | `≤ 840px` | Split/feature/CTA/video/roles/project grids → 1 column; process/gallery → 2 columns; home portrait follows text |
 | `≤ 520px` | Capability/process/snapshot-row/format/gallery grids → 1 column; stats → 2 columns |
 
@@ -248,7 +248,7 @@ Sticky, `z-index:60`, translucent white with the existing blur and divider. Left
 **Jimmy Park.** in Wanted Sans with a small burgundy terminal square. No initials, serif monogram
 or repeated name. The SVG embeds the approved font, so the logo needs no font-network request.
 Use 190×38px in the header and 170×34px in the footer, with accessible `alt="Jimmy Park"`.
-Right: Home, Work, Global & Scouting, Insights and Contact; hamburger below 880px.
+Right: Home, Media Work, Dev Work, Global & Scouting, Insights and Contact; hamburger at 960px and below.
 The matching favicon uses an abstract open frame and terminal square with no lettering.
 
 ### Footer (identical on every page)
@@ -353,7 +353,7 @@ verifies section/container/CTA ownership, token use, heading scales, matching he
 valid routes and assets, and exact static/runtime collection parity. `.checks/` is development-only
 and blocked from public access by the `.checks` rule in `functions/_middleware.js`. It does not read/write live KV.
 
-After changes to geometry, visually review all four pages at desktop, tablet and narrow mobile
+After changes to geometry, visually review all five portfolio pages at desktop, tablet and narrow mobile
 widths, especially CTA boundaries, contact topics, timeline, gallery and the portrait crop.
 Check a reordered/hidden neighboring section when changing CMS section structure. Static checks
 protect the documented contract; they do not replace visual review of real content.
@@ -412,6 +412,17 @@ international dial target (`tel:+821054186124`) for the link. The renderer conve
 - Card News Generator and BP Media Tools are removed. Scout Tour Assistant has its actual URL.
 - Author bylines and BlogPosting JSON-LD share the homepage Person identity. These improve
   clarity and machine-readable attribution; they are not claims of search inclusion or ranking.
+
+## 14. Media Work and Dev Work (v0.11.0)
+- Work is two tabs. Media Work (`/work`): video credits then field photography. Dev Work (`/dev`):
+  live websites first, then Applied AI tools and AI workflow workshops. Both reuse the shared
+  intro, alternating section bands, card and CTA blocks; no new colors or fonts.
+- Website cards (`.site-case`) mirror the video case card: 16:9 screenshot with a `#ece8e1` bottom
+  divider, sector eyebrow and year tag, title, role line, description, a muted stack line
+  (`.case-stack`, 14px, `#6b665f`) and a "Visit <domain>" external link. `.site-case-grid` is two
+  columns, one at 520px. Missing images fall back to the text cover. Korea Dream Path leads.
+- Screenshots are real first screens of the owner's live sites, stored locally at 960×540.
+- Six header destinations need the desktop row above 960px; the hamburger takes over below.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

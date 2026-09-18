@@ -131,6 +131,33 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   storage failure, stale saves, unsafe URLs, raster uploads and admin recovery, with isolated KV.
   Existing auth, article, content, layout and HTTP checks remain required. No production test writes.
 
+### Media Work / Dev Work split (v0.11.0, 2026-09-19)
+- Owner request: split Work into **Media Work** and **Dev Work** as separate navigation tabs, link
+  the sites the owner actually developed, and put **Korea Dream Path** at the top of the website
+  portfolio. Nav order: Home · Media Work · Dev Work · Global & Scouting · Insights · Contact.
+- `/work` (`work.html`, `data-page="work"`) is now Media Work: intro → `#video` → `#photography`
+  (kicker `02`) → CTA. `/dev` (`dev.html`, `data-page="dev"`, CMS page key `dev`) is Dev Work:
+  intro → `#sites` → `#vibecoding` → `#lecture` → CTA. Section keys/anchors were kept; only the page changed.
+- `#sites` uses collection `sites.items` + template `siteCases` (`.site-case-grid`, 2 → 1 column at
+  520px): Korea Dream Path (koreadreampath.com), Authentic Korean Traditional Fermented Foods
+  Cooperative (charmjt.org; the site's own English alternateName), nfee (nfee.app) and BANGINOJA
+  (bgnj.net). Each card: sector, year, role, description, stack line and "Visit <domain>" link.
+  Role "Web development" rests on the owner's statement that they developed these sites; do not
+  add clients, traffic, revenue or awards. Descriptions describe features visible on the live sites.
+- Card images are local 960×540 JPEGs in `assets/img/dev/`, captured 2026-09-19 from the live
+  homepages with headless Chrome after dismissing consent banners/popups (visitor actions in a
+  temporary profile). They do not auto-refresh; replace them from Admin or by recapturing.
+- Schema v9 (`migrateTo9`) moves `vibecoding`/`lecture` from `pages.work` to `pages.dev` with their
+  custom copy, hidden state and relative order; upgrades only unchanged v8 seeds (`V9_SEEDS`);
+  retargets `/work#vibecoding|#lecture` links. Earlier seed tables resolve moved paths via
+  `currentDefault()`; the v6 K-TrainRadar24 row is frozen as `V6_TRAIN_PROJECT`. GET still never writes KV.
+- Home capability 02 is "Web Development & Applied AI" → `/dev`; 03 → `/dev#lecture`.
+- Desktop nav collapses at **960px** (was 880px) so six destinations fit; measured 68px clear of the
+  logo at 961px. Admin has a Dev Work tab; the Work tab is labelled Media Work.
+- Verified: all `.checks` pass (5 pages), local HTTP routes, desktop/961/960/390px screenshots,
+  live routes and live v9 GET of the saved CMS document. The K-TrainRadar24 card still uses its
+  old name; its URL redirects to K-TransportRadar24 — rename only on the owner's request.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
@@ -149,7 +176,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
    app (오행 캐릭터 추천). Korean is allowed only in `saju.html`, `saju-result.html`,
    `saju-detail.html`, `assets/saju.js`, `assets/saju.css`; the shared shell and all other
    pages stay English-only.
-5. **Don't break the four canonical routes:** `/` `/work` `/scouting` `/contact`
+5. **Don't break the canonical routes:** `/` `/work` `/dev` `/scouting` `/contact` (+ `/insights`)
    (+ hidden `/admin`, `/saju`, `/saju-result`, `/saju-detail`). Update `sitemap.xml` if routes change. Hidden
    routes stay out of nav, sitemap, and search (noindex meta + robots.txt Disallow).
 6. **Always ship + keep docs current (standing owner policy).** After ANY change, commit
@@ -159,8 +186,9 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 
 ## File map
 ```
-index.html      Home (/)            work.html      Work (/work)
-scouting.html   Scouting (/scouting) contact.html   Contact (/contact)
+index.html      Home (/)            work.html      Media Work (/work)
+dev.html        Dev Work (/dev)     scouting.html  Scouting (/scouting)
+contact.html    Contact (/contact)
 admin.html      Admin (/admin, noindex) + assets/admin.js
 saju.html       오행 캐릭터 추천 입력 페이지 (/saju, noindex, Korean-UI exception)
 saju-result.html 결과 페이지 (/saju-result, noindex) — 입력값을 쿼리스트링으로 받아 렌더
@@ -272,7 +300,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 ## Conventions when editing pages
 - **Every page** repeats: `<head>` SEO block → sticky header → sections → footer →
   `.copy-toast` → `<script src="/assets/site.js?v=...">`. Copy from an existing page.
-- `<body data-page="home|work|scouting|contact">` drives the active-nav highlight
+- `<body data-page="home|work|dev|scouting|contact">` drives the active-nav highlight
   (`site.js` matches `data-nav` against it). Set it correctly on new pages.
 - **SEO is mandatory per page:** `<title>`, `meta description`, `link canonical`, full
   `og:*` + `twitter:*`, favicon. `index.html` also carries JSON-LD `Person` schema.
@@ -291,7 +319,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 8`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 9`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
