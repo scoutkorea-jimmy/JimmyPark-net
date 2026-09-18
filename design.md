@@ -14,7 +14,7 @@ same header, footer, eyebrow, button, and card patterns by design.
   selected projects, working process, and contact. Lead with text on mobile; the portrait follows.
 - Portrait v0.5.1 uses the supplied `IMG_2902.jpeg` unchanged; since v0.14.0 the hero shows a 960px display derivative (`jimmy-park-portrait-960.jpg`) and keeps the original file. Use `center 10%` for its
   background position in both static HTML and CMS hydration to retain the top of the head.
-- `.capability-grid`: two equal columns, one below 520px. Capability descriptions and tags are
+- `.capability-grid`: two equal columns, one below 600px. Capability descriptions and tags are
   always visible; keyboard and touch users do not depend on hover to discover the offer.
 - `.project-grid`: three equal columns, one below 840px. Cards with no uploaded image render as
   complete text cards instead of empty image placeholders. AI maturity labels remain visible.
@@ -29,7 +29,7 @@ same header, footer, eyebrow, button, and card patterns by design.
 
 ### Insights and real photography (v0.8.0)
 - Add Insights consistently to desktop, mobile and footer navigation. Its list uses the
-  shared container, burgundy identity and a two-column article grid (one below 520px).
+  shared container, burgundy identity and a two-column article grid (one below 600px).
   The article view has an 850px maximum container, 17px body text at 1.85 leading, and the
   existing heading scale. Long titles/URLs wrap; date and category remain readable at 14px.
 - Show an honest empty state until the owner publishes a first article. Public list/detail
@@ -38,7 +38,7 @@ same header, footer, eyebrow, button, and card patterns by design.
   Hide the unrelated page preview. Unsaved-change prompts, disabled pending controls and
   live save/error messages support draft → publish → unpublish transitions.
 - Work photography: a supplied-photo hero fallback plus six real event photographs in a
-  three-column grid, two below 840px and one below 520px. Preserve original proportions in
+  three-column grid, two below 840px and one below 600px. Preserve original proportions in
   source files; CSS uses 3:2 crops. Shuffle ordering once per visit; no automatic carousel.
   Each image links to its original in Drive. CMS hero replacement remains available.
 - Scouting gallery placeholders are hidden until populated. Real uploads use labelled
@@ -138,42 +138,41 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 
 ## 2. Typography
 
-- **Primary font:** **Wanted Sans Variable** (KR/EN), the owner-selected v1.0.1 split webfont.
-  Import it once at the very start of `site.css` from
-  `https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css`.
-  Its CSS family is `'Wanted Sans Variable'`, weight range **400–1000**, `font-display:swap`.
-  Public pages and Admin use the same primary family; native text controls inherit it.
+- **Primary font (v0.17.0):** **Google Sans Flex** (Google Fonts, `opsz,wght@6..144,1..1000`,
+  `display=swap`), loaded by a `<link>` in every page head after a `preconnect` to
+  `fonts.googleapis.com` / `fonts.gstatic.com`. `body` sets `font-optical-sizing: auto`.
+  Public pages and Admin use the same family; native text controls inherit it.
+  Wanted Sans Variable (v0.7.1–v0.16.1) is retired and no longer imported.
 - **Fallback font:** Pretendard, loaded from jsDelivr CDN
   (`pretendard@v1.3.9/dist/web/static/pretendard.min.css`), then
   `-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`.
-- **Icons:** Material Symbols Outlined (Google Fonts), class `.msym`, axis `opsz 24, wght 300,
-  FILL 0, GRAD 0`. Always add `aria-hidden="true"` to decorative icons.
-- **Base:** `line-height: 1.65`, antialiased.
+- **Icons:** Material Symbols Outlined (Google Fonts, `opsz,wght,FILL,GRAD@20..48,400,0..1,0`),
+  class `.msym`, weight **400**, FILL 0 by default. Always add `aria-hidden="true"` to decorative icons.
+- **Base:** body-large 16px, `line-height: 1.5`, `letter-spacing: .031em` on paragraphs, antialiased.
 
-### Shared portfolio scale
-| Role | Token / size | Line height |
-|------|--------------|-------------|
-| Home H1 | `--title-hero`: 40–62px | 1.12 |
-| Page H1 | `--title-page`: 36–52px | 1.15 |
-| Section H2 | `--title-section`: 28–36px | 1.2 |
-| Card H3 | `--title-card`: 22–26px | 1.3 |
-| Lead paragraph | `.hero-lead`: 18–22px | 1.65 |
-| Body | 16px | 1.75 |
-| Labels / tags / eyebrow | 14px | 1.5 |
-| Footer metadata | 12px | 1.6 |
+### Shared portfolio scale (M3 type roles)
+| Role | M3 token | Size | Line height / weight |
+|------|----------|------|----------------------|
+| Home H1 | `--title-hero` → `--md-display-large` | 36–57px | 1.12 / 400 |
+| Page H1 | `--title-page` → `--md-display-medium` | 32–45px | 1.16 / 400 |
+| Section H2 | `--title-section` → `--md-headline-large` | 28–32px | 1.25 / 400 |
+| Showcase H3 | `--md-headline-small` | 24px | 1.33 / 400 |
+| Card H3 | `--title-card` → `--md-title-large` | 22px | 1.27 / 400 |
+| Compact headings (process, format, snapshot) | `--md-title-medium` | 16px | 24px / 500 |
+| Body | `--md-body-large` | 16px | 1.5 / 400 |
+| Labels, buttons, tags, role lines | `--md-label-large` | 14px | 20px / 500 |
+| Small labels | `--md-label-medium` | 12px | 16px / 500 |
 
 All H1/H2/H3 sizes and leading belong in `site.css`, never in inline page styles.
 Use `.hero-title`, `.page-heading`, `.section-title` and `.hero-lead` for their named roles.
-Compact process/topic/role headings have explicit shared component rules (18–20px).
 
 ### Weight conventions
-- Headings: **700**, matching the available font weight.
-- Eyebrows / labels / buttons: **600–700**.
-- Body: **400–500**.
+- Display, headline and title-large: **400** (M3). Title-medium and labels: **500**.
+- Active navigation and emphasised numbers may use 600. Body: **400**.
 
 ### Letter-spacing
-- Tighten large type (`-.01em` → `-.03em`).
-- Open up small uppercase labels (`.08em` → `.16em`).
+- M3 tracking: display/headline 0, title-medium .009em, body .031em, labels .007–.031em.
+- No uppercase eyebrows; eyebrows are label-large in `--md-primary`.
 
 ---
 
@@ -208,35 +207,35 @@ these rules do not style the standalone app or the admin layout.
   and `min-width:0`; auto-fit minimums use `min(100%, minimum)` to avoid horizontal overflow.
 - `* { box-sizing: border-box }`, smooth scroll on `html`.
 
-### Border radius
-| Element | Token / radius |
-|---------|----------------|
-| Large panels / CTA / hero image | `--radius-panel`: 28px |
-| Cards / gallery images | `--radius-card`: 24px |
-| Buttons / controls | `--radius-control`: 12px |
-| Pills / tags | `--radius-pill`: 999px |
+### Border radius (M3 shape scale)
+| Element | Token | Radius |
+|---------|-------|--------|
+| Tags, chips, badges | `--radius-chip` → `--md-shape-sm` | 8px |
+| Cards, gallery images, controls | `--radius-card` / `--radius-control` → `--md-shape-md` | 12px |
+| Drawer edge | `--md-shape-lg` | 16px |
+| Panels, CTA, hero image, dialog | `--radius-panel` → `--md-shape-xl` | 28px |
+| Buttons, nav pills, stat chips | `--radius-pill` → `--md-shape-full` | full |
 
-### Shadows
-- Card hover only: `box-shadow: 0 20px 44px -28px rgba(23,23,23,.32)` (`.soft:hover`).
-- Toast: `0 14px 30px -12px rgba(0,0,0,.5)`.
-- Device mockups on Dev Work (`.browser-frame`, `.phone-frame`) reuse the same card-hover shadow statically (v0.12.0 exception).
-- Otherwise **flat** — depth comes from borders, not shadows.
+### Elevation
+- Cards are **outlined** (1px `--md-outline-variant`), flat at rest.
+- `--md-elevation-1` on filled-button hover and hovered showcases; `--md-elevation-2` on lifted
+  card hover; `--md-elevation-3` reserved for floating surfaces. Device mockups keep their static shadow.
+- The app bar has no shadow; it changes to `--md-surface-container` once the page scrolls.
 
 ---
 
-## 4. Responsive breakpoints
+## 4. Responsive breakpoints (M3 window classes, v0.17.0)
 
-| Width | Change |
-|-------|--------|
-| `≤ 960px` | Desktop nav hidden; 44px menu button shown (six destinations since v0.11.0) |
-| `≤ 840px` | Split/feature/CTA/video/roles/project grids → 1 column; process/gallery → 2 columns; home portrait follows text |
-| `≤ 520px` | Capability/process/snapshot-row/format/gallery grids → 1 column; stats → 2 columns |
+| Window class | Width | Change |
+|--------------|-------|--------|
+| Expanded | `≥ 840px` | Full app bar navigation, multi-column grids |
+| Medium | `600–839px` | Navigation moves into the modal drawer; split/feature/CTA/video/roles/project/showcase grids → 1 column; process/gallery → 2 columns; home portrait follows text |
+| Compact | `≤ 599px` | Capability/process/snapshot-row/format/timeline grids → 1 column; card lists become swipe rows (§17); 16px gutter (24px from 600px) |
 
-Contact topics use auto-fit columns with a 190px minimum, allowing a single column
-inside a narrow desktop split. The first gallery image stops spanning rows on mobile. Gallery media always has `width:100%`;
-its spanning variant uses `aspect-ratio:auto` and returns to 4:3/auto height on mobile,
-so the two-row height cannot force its image across a neighboring column.
-Mobile role cards stack the date below the role text consistently. Timeline entries stack the year above their title and context.
+Write the queries as `max-width: 839px` and `max-width: 599px`; don't reintroduce 960/840/520.
+Contact topics use auto-fit columns with a 190px minimum. Gallery media always has `width:100%`;
+its spanning variant uses `aspect-ratio:auto` and returns to 4:3 on phones.
+Mobile role cards stack the date below the role text. Timeline entries stack the year above their title and context.
 Put reusable grid geometry and breakpoint rules in `site.css`. Page-specific composition
 may use inline columns only with a named responsive class; never inline gaps or section padding.
 
@@ -245,15 +244,20 @@ may use inline columns only with a named responsive class; never inline gaps or 
 ## 5. Core components
 
 ### Header (identical on every page)
-Sticky, `z-index:60`, translucent white with the existing blur and divider. Left:
-**Jimmy Park.** in Wanted Sans with a small burgundy terminal square. No initials, serif monogram
-or repeated name. The SVG embeds the approved font, so the logo needs no font-network request.
+M3 top app bar: sticky, `z-index:60`, 64px, `--md-surface` with no divider; it tones up to
+`--md-surface-container` after scrolling and carries a 3px scroll-progress bar on its lower edge.
+Left: **Jimmy Park.** with a small burgundy terminal square. No initials, serif monogram
+or repeated name. The SVG embeds its own Wanted Sans subset, so the logo needs no font-network request.
 Use 190×38px in the header and 170×34px in the footer, with accessible `alt="Jimmy Park"`.
-Right: Home, Media Work, Dev Work, Global & Scouting and Contact (Insights hidden until it has posts, v0.14.0); hamburger at 960px and below.
+Right: Home, Media Work, Dev Work, Global & Scouting and Contact (Insights hidden until it has posts, v0.14.0),
+as 40px pill links; the current page gets a `--md-secondary-container` pill. Below 840px a 40px icon
+button opens the **modal navigation drawer**: `--md-scrim` over the page, a 360px (max 86vw)
+`--md-surface-container-low` panel with a 16px trailing radius, 56px pill items. It locks page
+scroll, focuses the first link and closes on scrim click, link click or Escape.
 The matching favicon uses an abstract open frame and terminal square with no lettering.
 
 ### Footer (identical on every page)
-`#f7f6f3` band, the same wordmark and role line, nav links, tagline and copyright.
+`--md-surface-container` band, the same wordmark and role line, nav links, tagline and copyright.
 
 ### Eyebrow + heading pattern
 ```html
@@ -263,19 +267,22 @@ The matching favicon uses an abstract open frame and terminal square with no let
 ```
 Use `var(--scout-accent)` for Scouting eyebrows; it resolves to purple on the Scouting page.
 
-### Buttons
-| Class | Look |
-|-------|------|
-| `.btn-primary` | Burgundy `#7a1e2c` bg, white text, hover → `#651825` + lift |
-| `.btn-ghost` | White bg, `#171717` text, `1px #ddd6cc` border, hover → border `#171717` |
-| `.btn-white` | White bg, burgundy text (used on dark CTA), hover → `#f3ece9` |
+### Buttons (M3 common buttons)
+| Class | M3 type | Look |
+|-------|---------|------|
+| `.btn-primary` | Filled | `--md-primary` fill, `--md-on-primary` label; hover adds elevation 1 |
+| `.btn-ghost` | Outlined | Transparent, `--md-outline` 1px border, primary label |
+| `.btn-white` | Filled tonal on dark CTA | White fill, primary label |
+| `a.card-link` | Text button | Primary label, no container |
 
-All public buttons use `.site-button` plus their color variant and `.btn` hover behavior.
-Minimum height is **44px**; regular padding is **12px 24px**, navigation **8px 24px**.
-Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are decorative.
+All public buttons use `.site-button` plus a variant: **40px** tall (`--control-size`), full radius,
+label-large 14px/500, 24px side padding (16px with a trailing icon). Hover/focus/press use M3
+state layers (`::before` at 8% / 10% / 10% of the label colour) plus a ripple on press.
+Trailing `arrow_forward` / `arrow_outward` icons are decorative and nudge on hover.
+Icon buttons (menu, copy) are 40px circles.
 
 ### Cards
-- `.card` owns shared border, radius and 24–32px padding. `.card--compact` uses 24px;
+- `.card` is an M3 outlined card: `--md-outline-variant` border, 12px radius, 16–24px padding. `.card--compact` uses 24px;
   `.card--scouting` adds the page-aware Scouting surface and border.
 - `.capability` uses a vertical flex layout with visible tags and a bottom action link.
 - `.project-card` owns clipping; `.card-body` owns padding. Missing images leave a complete
@@ -285,13 +292,14 @@ Copy and mobile-menu controls are also 44px. Trailing `arrow_forward` icons are 
 - Collection HTML in `site.js` **must match the static seed**; both use these same classes.
 
 ### Feedback
-- **Copy toast** `.copy-toast` — dark pill, bottom-center, shows ~1.7s after a `[data-copy]`
-  click. Markup lives once per page near `</body>`.
-- **Gallery modal** `.gal-modal` — dark blurred overlay; opened by `.galfig` clicks, closed by
-  backdrop / `[data-gal-close]` / `Escape`.
+- **Copy toast** `.copy-toast` — M3 snackbar: `--md-inverse-surface`, 4px radius, 14px text,
+  bottom-center, ~1.7s after a `[data-copy]` click. Markup lives once per page near `</body>`.
+- **Gallery modal** `.gal-modal` — M3 dialog on `--md-surface-container-high`, 28px radius, scales in;
+  opened by `.galfig` clicks, closed by backdrop / `[data-gal-close]` / `Escape`.
 
 ### Tags / pills
-`.tag`: 14px text, pill radius, **4px 12px** padding and a neutral border.
+`.tag`: M3 chip — 14px/500 label, 8px radius, 32px tall, `--md-outline-variant` border.
+`.status-tag` (e.g. Live) uses the tertiary container; `.stat-chip` uses the secondary container.
 `.tag--scouting`: page-aware Scouting text/border. `.tag--large`: **12px 16px** padding and control radius.
 
 ---
@@ -321,12 +329,36 @@ Korean from older saved docs on read.)
 
 ---
 
-## 8. Motion
+## 8. Motion (M3, v0.17.0)
 
-- Durations `.15s`–`.3s`, easing `ease`.
-- Hover affordances: button lift, card lift+shadow, arrow nudge (`translateX(5px)`),
-  reveal-on-hover expansions, link color → burgundy.
-- Keep it subtle; respect reduced-motion.
+Tokens: `--md-ease-standard` `cubic-bezier(.2,0,0,1)`, `--md-ease-emphasized-decelerate`
+`cubic-bezier(.05,.7,.1,1)`; durations 150 / 300 / 500ms (`--md-duration-short|medium|long`).
+`site.js` adds `html.motion` only when IntersectionObserver exists and the visitor has no
+reduced-motion preference. Every rule below is scoped to `.motion`, so without JS, with reduced
+motion and in print all content is static and fully visible.
+
+| Effect | Where | Behaviour |
+|--------|-------|-----------|
+| Scroll reveal `rise` | eyebrows, titles, intros, disclosures, showcase bodies | fade + 28px rise |
+| `card` | `.collection-grid > *` | fade + 40px rise + scale .96, staggered 70ms per item (max 6) |
+| `zoom` | photos, `[data-img]`, Scouting hero photo | fade, scale 1.06 → 1, desaturated → full colour |
+| `wipe` | `.cta-panel`, `.info-panel`, `.feature-card` | top-to-bottom clip-path wipe (800ms); reveals its nested items with it |
+| `slide` | timeline entries, snapshot rows, back-end and brief lists, showcase facts, browser mockups | fade + 36px slide from the left |
+| `pop` | phone mockups | rise + tilt + scale, then a gentle 6s float |
+| Hero entrance | home hero, page intros, app bar | staggered rise; headline unmasks upward; portrait unmasks from a smaller rounded frame |
+| Hover | cards, media, icons, chips, showcases | card lift −4px + elevation 2; media scale 1.05; trailing icons nudge 4px; phone tilts |
+| Press | buttons, nav, cards, disclosures | M3 ripple (550ms) + button scale .97 |
+| Numbers | `.stat-value`, travel count | count up over 1.1s when revealed |
+| Navigation | active pill, drawer | pill fills in; drawer slides in, scrim fades, links stagger |
+| Scroll progress | app bar lower edge | primary 3px bar scaled to scroll position |
+
+Rules learned in QA — keep them:
+- Never give a reveal target a pre-reveal `clip-path` that hides all of it; IntersectionObserver
+  counts clipped area, so it would never be revealed. Clip only inside the reveal animation.
+- The observer uses threshold 0 (tall targets still reveal); anything hydrated above the viewport
+  is shown immediately.
+- Page-load animations on containers use `animation-fill-mode: backwards`. A transform animation
+  held with `both` keeps the app bar a containing block, and the fixed drawer scrim shrinks to 64px.
 
 ---
 
@@ -341,10 +373,11 @@ Korean from older saved docs on read.)
 
 **Don't**
 - Don't add a CSS framework, a build step, or web fonts beyond the approved set
-  (Wanted Sans Variable primary, Pretendard fallback, Material Symbols icons).
+  (Google Sans Flex primary, Pretendard fallback, Material Symbols Outlined icons).
 - Don't introduce new accent colors — use the tokens above.
 - Don't rely on JS for primary content (JS only *enhances* and applies admin overrides).
-- Don't use shadows for separation where a border will do.
+- Don't use shadows for separation where an outline or tonal surface will do.
+- Don't add motion outside `.motion`, or motion that hides content when JS or motion is unavailable.
 
 
 ## 10. Keeping the rules consistent
@@ -365,7 +398,7 @@ protect the documented contract; they do not replace visual review of real conte
 - Work shows ten owner-supplied video projects before the expandable format list. Each case
   has format, optional year, title, explicit production credit, context and a direct video/playlist
   link. Use a 16:9 thumbnail or a complete text cover, never an empty image slot. Two columns
-  become one at 520px. Keep actual roles separate from project/client context; do not imply
+  become one at 600px. Keep actual roles separate from project/client context; do not imply
   a personal award, independent credit verification, or travel to an exhibition location.
 - The photography CTA links to the ongoing Drive folder. Keep its stable folder URL; do not
   import a one-time snapshot of the folder. Admin supports label/URL/note edits; a blank or
@@ -375,7 +408,7 @@ protect the documented contract; they do not replace visual review of real conte
   Hong Kong/Macau are separate region entries. Do not relabel the count as countries alone,
   network partners, clients, or professional engagements. Do not claim a distinct-city count.
 - The travel summary and expandable destination grid use the shared section/card/gap tokens.
-  The grid is 3 / 2 / 1 columns at desktop / 840px / 520px; mobile keeps the large number above
+  The grid is 3 / 2 / 1 columns at desktop / 840px / 600px; mobile keeps the large number above
   its introduction. Native details/summary supports mouse, touch and keyboard.
 - K-TrainRadar24 replaces the retired countdown project. Describe positions as timetable-based
   **estimates**, never GPS or live operational tracking. Its URL is editable in Admin.
@@ -432,7 +465,7 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
 - `.site-showcase`: white panel (`--radius-panel`, `#e6e1da` border, card padding), grid 1.2fr / .8fr
   (reversed and swapped on even rows), 1 column at 840px with the stage first. `.showcase-stage` uses
   the neutral card gradient; browser frame = control radius, `#f7f6f3` bar with three `#e0dacf` dots
-  and a pill URL; phone frame = 24% width (30% at 520px), 5px `#171717` bezel, card radius, anchored
+  and a pill URL; phone frame = 24% width (30% below 600px), 5px `#171717` bezel, card radius, anchored
   bottom-right over the browser. Facts use eyebrow-red 14px labels and 16px text; stack as `.tag`s;
   the visit action is a primary `.site-button`.
 - Contact `.contact-layout`: channels card (uppercase 14px labels, 44px copy buttons, full-width brief
@@ -447,16 +480,34 @@ dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds
   `.stat-chip`s (`#f7f6f3` fill, `#e0dacf` border, 14px/600).
 - `.backend-list`: accent `check_circle` icons, 16px text; two columns without a screenshot, one
   column beside a screenshot. With a screenshot the grid is 1.2fr / .8fr, mirrored on even rows;
-  everything is one column at 840px. Admin screenshots sit in the browser frame with the URL pill
+  everything is one column below 840px. Admin screenshots sit in the browser frame with the URL pill
   reading "Admin console", a 16:10 screen and a 14px caption stating the demo/sample-data source.
 
 ## 17. Phones (v0.16.0)
-- At 520px and below, card collections scroll sideways instead of stacking: one row, `scroll-snap`,
+- Below 600px (v0.17.0; 520px before), card collections scroll sideways instead of stacking: one row, `scroll-snap`,
   cards 84% wide so the next one peeks in, full-bleed to the viewport edges, no visible scrollbar,
   equal card heights. Keyboard users reach every card through its link.
 - Dev Work showcases have no outer panel on phones; items are separated by a `#e0dacf` rule. The
   back-end list sits behind a 44px "Show admin features" disclosure; stat chips stay visible.
 - Work photos: two columns with an 8px gap; every photo has a 14px `#6b665f` project caption.
+
+## 18. Material 3 colour roles (v0.17.0)
+The palette is unchanged; its colours are mapped onto M3 roles in `site.css` `:root`.
+| Role | Value | Use |
+|------|-------|-----|
+| `--md-primary` / `--md-on-primary` | `#7a1e2c` / `#fff` | filled buttons, links, eyebrows, focus ring |
+| `--md-primary-container` / on | `#f5e4e3` / `#4b0f1a` | tonal highlights |
+| `--md-secondary-container` / on | `#f3ece9` / `#2c2925` | active nav pill, stat chips |
+| `--md-tertiary` / container / on | `#2f5a45` / `#eef4ef` / `#173527` | Live status, Scouting green accents |
+| `--md-surface` → `-container-highest` | `#fff`, `#fdfcfa`, `#f7f6f3`, `#f1eee8`, `#ece8e1` | page, drawer, bands, dialog |
+| `--md-on-surface` / `-variant` | `#171717` / `#66615c` | text / secondary text |
+| `--md-outline` / `-variant` | `#8a847c` / `#e6e1da` | outlined button / card and chip borders |
+| `--md-inverse-surface` / on | `#2c2925` / `#f7f6f3` | snackbar |
+| `--md-scrim` | `rgba(0,0,0,.32)` | drawer and dialog backdrop |
+
+Global & Scouting (`body[data-page="scouting"]`) remaps primary, containers and tertiary to its
+purple palette. Legacy tokens (`--accent`, `--radius-*`, `--title-*`, `--scout-*`) are aliases of
+these roles; new rules should use the `--md-*` names directly.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

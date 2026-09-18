@@ -1,7 +1,7 @@
 
 /* Jimmy Park / 박지민 — shared design system
    Burgundy var(--accent) accent · scouting green var(--scout-accent) sub-accent · off-white canvas
-   Primary font Wanted Sans Variable (KR/EN), Pretendard fallback. Warm-minimal, soft rounded corners. */
+   Material 3 (v0.17.0): Google Sans Flex primary, Pretendard fallback, M3 colour roles, shape and motion. */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }

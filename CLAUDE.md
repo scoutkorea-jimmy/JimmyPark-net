@@ -32,8 +32,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - One container/gutter, a shared spacing scale, explicit heading leading and reusable card rules
   apply across Home, Work, Global & Scouting and Contact.
 - Regular/CTA section padding is 48–80px on both ends; only snapshot/stats use compact padding.
-- Wanted Sans Variable is the default for public pages and Admin (v0.7.1); load the owner-provided
-  version-pinned import once in `assets/site.css`. Keep Material Symbols for icons.
+- Google Sans Flex is the default for public pages and Admin since v0.17.0 (Wanted Sans Variable,
+  v0.7.1–v0.16.1, is retired); each page `<head>` loads it from Google Fonts. Keep Material Symbols for icons.
 - Keep this contract in [design.md](design.md) and validate it with `.checks/design.py`.
 
 ### Insights and portfolio completion (v0.8.0)
@@ -262,10 +262,44 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Day concert 2024; Mokpo High School alumni golf tournament 2026). Korean originals are recorded in
   `.checks/photo-sources.json` only — the public site stays English.
 
+### Stills for KB Life and the Jamboree opening (v0.16.1, 2026-09-19)
+- Owner: each Samsung keynote speaker appears only once; every other video without a thumbnail gets
+  its own captured still. `samsung-keynote.jpg` = Opening (Paul Cheun), Keynote 1, Keynote 2 and
+  Jim Zemlin, one tile each. `kb-life.jpg` = published YouTube thumbnails of EP1/EP3/EP4/EP7 (each
+  interviewee once). `korean-jamboree-opening.jpg` = four frames of the opening film. Provenance
+  (file IDs, timestamps) in `.checks/video-sources.json`; downloaded videos were deleted.
+- Schema v15 (`migrateTo15`) fills these two images only where the card image is still empty, in
+  both `work.video.cases` and `home.selected.cases`. Custom images are never replaced.
+
+### Material 3, Google Sans Flex and motion (v0.17.0, 2026-09-19)
+- Owner: follow Material Design 3 (m3.material.io) for all site design — icons, motion, spacing and
+  shape — keep the current colours, and use Google Sans Flex. Then: add site-wide animation,
+  transitions and transforms so the site looks livelier and more varied.
+- Colours are the existing palette mapped to M3 roles (`--md-primary` = burgundy `#7a1e2c`, tonal
+  containers from the warm neutrals; Scouting remaps the roles to its purple). No new hues.
+  Legacy tokens (`--accent`, `--radius-*`, `--title-*`) now resolve to M3 tokens. See design.md §18.
+- Fonts: Google Sans Flex (`opsz,wght@6..144,1..1000`) + Material Symbols Outlined
+  (`opsz,wght,FILL,GRAD@20..48,400,0..1,0`) from Google Fonts in every page head, including
+  `functions/_insights-shell.js`, `404.html` and Admin. The `Jimmy Park.` logo SVG still embeds its own
+  Wanted Sans subset via `@font-face` inside the image (no page font request); it was not redrawn. `/saju` keeps its own look.
+- Motion lives at the end of `site.css` and in `site.js` (`html.motion`, `REVEALS`, ripple,
+  `countUp`, scroll progress). Everything is gated: no motion for `prefers-reduced-motion`, no JS
+  or print, so static content is never hidden. Two traps found in QA, keep them fixed:
+  1. a pre-reveal `clip-path` gives the target zero visible area, so IntersectionObserver never
+     reveals it — wipe clips only inside its animation, and a wipe panel reveals its children;
+  2. an animation with `fill-mode: both` on a transform keeps the element a containing block for
+     fixed children — the app bar's entrance uses `backwards`, or the drawer scrim shrinks to 64px.
+- QA (local + live): every `[data-reveal]` element ends visible after a gradual scroll on Home,
+  Media Work, Dev Work, Global & Scouting and Contact at 1440 and 390px; no horizontal overflow;
+  equal card rows; drawer scrim covers the viewport, closes on scrim/Escape and returns focus.
+  Hover states were not screenshot-tested.
+- v0.17.1: documentation (this section, Golden rule 1, design.md §2–5, §8, §17–18), the `site.css`
+  header comment and the `?v=` bump only; no visual or behaviour change.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
-   approved set only — **Wanted Sans Variable** (primary, owner-selected v1.0.1 split webfont, weights 400–1000),
-   **Pretendard** (fallback), Material Symbols (icons); don't add others. Everything ships as
+   approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,
+   weights 1–1000), **Pretendard** (fallback), Material Symbols Outlined (icons, weight 400); don't add others. Everything ships as
    static files served as-is.
 2. **Pages render full static content.** SEO and no-JS users must see the real content.
    `site.js` only *enhances* (nav, copy, modal) and applies admin overrides — never gate
@@ -387,7 +421,7 @@ assets/
                 본문 카피 ≈50%↓). 마지막 입력은 localStorage
                 (`saju:last:v1`, 7일 TTL)에 저장해 재방문 시 폼 자동 채움 — 쿠키 아님
                 (서버 미전송). Fully client-side; birth data never leaves the browser.
-  img/          favicon.svg + logo.svg (open-frame favicon, Wanted Sans wordmark), og.png (1200×630),
+  img/          favicon.svg + logo.svg (open-frame favicon, wordmark with an embedded Wanted Sans subset), og.png (1200×630),
                 saju-icon.svg (/saju's own tab icon: violet→pink 오행 pentagon mark),
                 saju-el-{wood,fire,earth,metal,water}.png (결과 상단 원형 엠블럼 배지),
                 saju-ch-{wood,fire,earth,metal,water}.png (캐릭터 프로필 컷아웃,
