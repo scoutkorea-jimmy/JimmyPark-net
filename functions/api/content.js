@@ -13,11 +13,11 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 9,
+  "version": 10,
   "global": {
     "brand": {
       "name": "Jimmy Park",
-      "roleline": "Content strategy · Video production · Applied AI · Global Scouting"
+      "roleline": "Solutions through content, web & AI · Global Scouting"
     },
     "footer": {
       "tagline": "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.",
@@ -25,20 +25,20 @@ const DEFAULT = {
     },
     "contact": {
       "email": "scoutkorea@kakao.com",
-      "phone": "010.5418.6124",
+      "phone": "+82 10.5418.6124",
       "linkedin": "https://www.linkedin.com/in/jimmy1420",
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park (박지민) | Content Strategy, Video & AI",
-      "desc": "Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."
+      "title": "Jimmy Park (박지민) | Solutions Through Content, Web & AI",
+      "desc": "Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park (박지민) | Content Strategy, Video & AI",
-        "desc": "Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."
+        "title": "Jimmy Park (박지민) | Solutions Through Content, Web & AI",
+        "desc": "Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."
       },
       "order": [
         "hero",
@@ -52,11 +52,11 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Content strategy · Video production · Applied AI",
-          "title": "Content strategy.\nVideo production.\nApplied AI.",
-          "lead": "I’m Jimmy Park, a Korea-based content strategist and video producer. I develop content from brief to delivery, build AI-assisted web tools, and help teams explore practical AI workflows.",
+          "eyebrow": "Solution maker · Content · Web · AI",
+          "title": "Your goal.\nThe right way to reach it.",
+          "lead": "I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly.",
           "ctaPrimary": {
-            "label": "Start a project",
+            "label": "Tell me your goal",
             "href": "/contact"
           },
           "ctaGhost": {
@@ -65,7 +65,7 @@ const DEFAULT = {
           },
           "image": "/assets/img/jimmy-park-portrait.jpg?v=0.5.1",
           "badge": "Jimmy Park",
-          "caption": "Content, technology, and people.",
+          "caption": "The need first, then the right tool.",
           "captionRight": "Based in Korea"
         },
         "snapshot": {
@@ -89,53 +89,53 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. He founded BP Media and works across content production, practical AI tools and international Scouting collaboration.",
-          "detail": "His portfolio includes technology films, educational web series, institutional communication and event media. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media.",
+          "detail": "His work includes technology films, educational web series and event media, as well as live websites for global education, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
         },
         "activities": {
-          "eyebrow": "What you can bring me in for",
-          "title": "Expertise for your next project.",
+          "eyebrow": "How I can help",
+          "title": "What do you need to achieve?",
           "items": [
             {
-              "kicker": "01 / Content",
-              "title": "Content Strategy & Video Production",
-              "desc": "Turn a communication brief into a clear concept, script and production plan. My project work spans branded films, keynote videos, interviews and event media.",
+              "kicker": "01 / Be understood",
+              "title": "Content & Video Production",
+              "desc": "When people need to understand, remember or act on your message: concept, script, filming and editing, delivered as a film or series.",
               "tags": [
-                "Concept & script",
-                "Direction & production",
-                "Editing & delivery"
+                "Promotional films",
+                "Keynotes",
+                "Interviews & series"
               ],
-              "href": "/work#video",
+              "href": "/work",
               "accent": "burgundy"
             },
             {
-              "kicker": "02 / AI",
-              "title": "Web Development & Applied AI",
-              "desc": "Build websites and focused web tools with AI-assisted development, from public pages to the forms and admin consoles behind them. Explore the live sites.",
+              "kicker": "02 / Launch online",
+              "title": "Websites & Web Tools",
+              "desc": "When you need a website or tool people will actually use: public pages, forms, member accounts and admin consoles, built quickly with AI.",
               "tags": [
                 "Websites",
-                "Web tools",
-                "AI workflows"
+                "Admin tools",
+                "Built with AI"
               ],
               "href": "/dev",
               "accent": "burgundy"
             },
             {
-              "kicker": "03 / AX",
-              "title": "AI Workflow Consulting & Workshops",
-              "desc": "Review recurring content tasks, define a focused AI pilot and give your team hands-on practice with a real workflow.",
+              "kicker": "03 / Work smarter",
+              "title": "AI Workflows & Workshops",
+              "desc": "When your team wants AI in everyday work: review the workflow, pilot one use case and practice it hands-on together.",
               "tags": [
                 "Workflow review",
-                "Pilot design",
+                "Pilot",
                 "Workshops"
               ],
               "href": "/dev#lecture",
               "accent": "burgundy"
             },
             {
-              "kicker": "04 / Global",
+              "kicker": "04 / Reach further",
               "title": "Global Scouting & Collaboration",
-              "desc": "Connect content and field media with international Scouting experience, Asia-Pacific communications and cross-cultural collaboration.",
+              "desc": "When your project crosses borders: international Scouting experience, Asia-Pacific communications and cross-cultural partnerships.",
               "tags": [
                 "Asia-Pacific",
                 "Scouting",
@@ -147,28 +147,28 @@ const DEFAULT = {
           ]
         },
         "approach": {
-          "eyebrow": "How we can work together",
-          "title": "Start with the work. Build a useful next step.",
+          "eyebrow": "How I work",
+          "title": "Understand the need. Choose the fitting way. Deliver it fast.",
           "steps": [
             {
               "num": "01",
-              "title": "Understand",
-              "desc": "Clarify the audience, the goal, and the way work happens today."
+              "title": "Listen",
+              "desc": "Clarify your goal, the people involved and what a good result looks like."
             },
             {
               "num": "02",
-              "title": "Design",
-              "desc": "Choose the message, format, or AI use case that fits the need."
+              "title": "Choose",
+              "desc": "Pick the most fitting form, whether a film, a website, an AI workflow or a partnership."
             },
             {
               "num": "03",
-              "title": "Make & test",
-              "desc": "Produce the content or build a small pilot, then review it with the people who will use it."
+              "title": "Build with AI",
+              "desc": "Make it quickly with AI, then test it with the people who will use it."
             },
             {
               "num": "04",
-              "title": "Put it to use",
-              "desc": "Prepare the output, guidance, and next steps for the team."
+              "title": "Hand over",
+              "desc": "Deliver the result with the guidance your team needs to keep using it."
             }
           ]
         },
@@ -208,16 +208,65 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "Have a brief in mind?",
-          "body": "Tell me the audience, deliverables and timing. For introductions or Scouting collaboration, a short hello is welcome too.",
+          "title": "Have a goal in mind?",
+          "body": "Tell me what you want to achieve, who it is for and when you need it. I’ll suggest the most fitting way to get there.",
           "button": {
-            "label": "Start a conversation",
+            "label": "Tell me your goal",
             "href": "/contact"
           }
         },
         "selected": {
-          "eyebrow": "Selected production work",
-          "title": "The brief. The role. The work.",
+          "eyebrow": "Selected work",
+          "title": "Different goals. Different solutions.",
+          "sitesTitle": "Websites",
+          "sites": [
+            {
+              "id": "korea-dream-path",
+              "title": "Korea Dream Path",
+              "format": "Education · Global learning platform",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "A global learning platform connecting young people worldwide with Korean higher education.",
+              "need": "One place where young people around the world can discover programs and scholarships and apply online.",
+              "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
+              "stack": "Cloudflare Workers · KV · D1 · R2",
+              "href": "https://koreadreampath.com",
+              "linkLabel": "Visit koreadreampath.com",
+              "image": "/assets/img/dev/korea-dream-path.jpg",
+              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg"
+            },
+            {
+              "id": "charmjt",
+              "title": "Authentic Korean Traditional Fermented Foods Cooperative",
+              "format": "Food cooperative · Official website",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "The official website of a traditional fermented-foods cooperative.",
+              "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
+              "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
+              "stack": "Cloudflare Pages Functions · D1 · R2",
+              "href": "https://charmjt.org",
+              "linkLabel": "Visit charmjt.org",
+              "image": "/assets/img/dev/charmjt.jpg",
+              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg"
+            },
+            {
+              "id": "banginoja",
+              "title": "BANGINOJA",
+              "format": "Travel community · Korean history & culture",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "A travel community for exploring Korea’s history, culture and nature.",
+              "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
+              "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
+              "stack": "React · Cloudflare Workers · D1 · R2",
+              "href": "https://bgnj.net",
+              "linkLabel": "Visit bgnj.net",
+              "image": "/assets/img/dev/banginoja.jpg",
+              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg"
+            }
+          ],
+          "casesTitle": "Films",
           "cases": [
             {
               "id": "ai2re",
@@ -478,8 +527,8 @@ const DEFAULT = {
     },
     "dev": {
       "meta": {
-        "title": "Dev Work: Websites & Applied AI | Jimmy Park",
-        "desc": "Live websites developed by Jimmy Park, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community, plus applied AI tools and AX workshops."
+        "title": "Dev Work: Websites Built Fast with AI | Jimmy Park",
+        "desc": "Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community."
       },
       "order": [
         "intro",
@@ -492,62 +541,91 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Dev work",
-          "title": "Websites and web tools,\nbuilt for real use.",
-          "lead": "Live websites I have developed for education, a food cooperative, after-school program administration and a travel community, alongside applied AI tools and practical AI workflow workshops."
+          "title": "Understand the need fast.\nBuild it with AI.",
+          "lead": "What matters most in development is not flashy technique. It is quickly understanding what you actually need and building exactly that. AI is what makes this possible: I work with it at every step, from shaping the idea to launching and running the site.",
+          "principles": [
+            {
+              "num": "01",
+              "title": "Needs before technique",
+              "desc": "Start from what users and the team must be able to do, not from features that only look impressive."
+            },
+            {
+              "num": "02",
+              "title": "Fast judgement",
+              "desc": "Turn a first conversation into a clear scope and a working first version quickly."
+            },
+            {
+              "num": "03",
+              "title": "AI at every step",
+              "desc": "Planning, design, code, content and operations all run with AI, so a small team can launch a complete, working site."
+            }
+          ]
         },
         "sites": {
           "kicker": "01 / Websites",
           "title": "Live Websites",
-          "sub": "Developed, launched and in use",
-          "desc": "Websites I have developed and launched, from public pages to the forms, member accounts and admin consoles behind them. Each link opens the live site.",
+          "sub": "Built around each client’s need",
+          "desc": "Each site began with what its users and team needed to do. Every one is live and in use.",
           "items": [
             {
               "id": "korea-dream-path",
               "title": "Korea Dream Path",
-              "year": "2026",
-              "role": "Web development",
-              "desc": "A global learning platform connecting young people worldwide with Korean higher education, with program, scholarship and online application pages.",
-              "stack": "Cloudflare Workers · KV · D1 · R2",
               "format": "Education · Global learning platform",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "A global learning platform connecting young people worldwide with Korean higher education.",
+              "need": "One place where young people around the world can discover programs and scholarships and apply online.",
+              "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
+              "stack": "Cloudflare Workers · KV · D1 · R2",
               "href": "https://koreadreampath.com",
               "linkLabel": "Visit koreadreampath.com",
-              "image": "/assets/img/dev/korea-dream-path.jpg"
+              "image": "/assets/img/dev/korea-dream-path.jpg",
+              "mobileImage": "/assets/img/dev/korea-dream-path-mobile.jpg"
             },
             {
               "id": "charmjt",
               "title": "Authentic Korean Traditional Fermented Foods Cooperative",
-              "year": "2026",
-              "role": "Web development",
-              "desc": "The cooperative’s official website for fermentation education, instructor-course applications, a product shop with order lookup, news and an admin console.",
-              "stack": "Cloudflare Pages Functions · D1 · R2",
               "format": "Food cooperative · Official website",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "The official website of a traditional fermented-foods cooperative.",
+              "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
+              "built": "Education and course-application pages, a product shop with guest order lookup, member accounts, a news board and an admin console.",
+              "stack": "Cloudflare Pages Functions · D1 · R2",
               "href": "https://charmjt.org",
               "linkLabel": "Visit charmjt.org",
-              "image": "/assets/img/dev/charmjt.jpg"
+              "image": "/assets/img/dev/charmjt.jpg",
+              "mobileImage": "/assets/img/dev/charmjt-mobile.jpg"
             },
             {
               "id": "nfee",
               "title": "nfee",
-              "year": "2026",
-              "role": "Web development",
-              "desc": "A web service for after-school program instructors to write result reports and fee claims, print them in the original A4 forms and submit them for administrator review.",
-              "stack": "Cloudflare Pages Functions · D1",
               "format": "Education administration · Web service",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "A reporting service for after-school program instructors.",
+              "need": "Instructors who are not used to computers had to file program reports and fee claims in fixed A4 formats, and administrators had to review them.",
+              "built": "A step-by-step writing flow, print-ready A4 forms, school confirmation links with signatures and an administrator review console.",
+              "stack": "Cloudflare Pages Functions · D1",
               "href": "https://nfee.app",
               "linkLabel": "Visit nfee.app",
-              "image": "/assets/img/dev/nfee.jpg"
+              "image": "/assets/img/dev/nfee.jpg",
+              "mobileImage": "/assets/img/dev/nfee-mobile.jpg"
             },
             {
               "id": "banginoja",
               "title": "BANGINOJA",
-              "year": "2026",
-              "role": "Web development",
-              "desc": "A community for exploring Korea’s history, culture and nature through palace and regional tours, lectures, history columns and a members’ community.",
-              "stack": "React · Cloudflare Workers · D1 · R2",
               "format": "Travel community · Korean history & culture",
+              "year": "2026",
+              "role": "Planning & development",
+              "summary": "A travel community for exploring Korea’s history, culture and nature.",
+              "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
+              "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
+              "stack": "React · Cloudflare Workers · D1 · R2",
               "href": "https://bgnj.net",
               "linkLabel": "Visit bgnj.net",
-              "image": "/assets/img/dev/banginoja.jpg"
+              "image": "/assets/img/dev/banginoja.jpg",
+              "mobileImage": "/assets/img/dev/banginoja-mobile.jpg"
             }
           ]
         },
@@ -927,8 +1005,8 @@ const DEFAULT = {
     },
     "contact": {
       "meta": {
-        "title": "Contact Jimmy Park | Video, AI & Project Collaboration",
-        "desc": "Contact Jimmy Park for content strategy, video production, AI-assisted web projects, practical workshops and international Scouting collaboration."
+        "title": "Contact Jimmy Park | Tell Me Your Goal",
+        "desc": "Contact Jimmy Park by email or phone (+82). Share your goal, audience, timing and budget, and get the most fitting approach: video, website, AI workflow or global collaboration."
       },
       "order": [
         "intro"
@@ -936,9 +1014,9 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "intro": {
-          "eyebrow": "Let’s collaborate",
-          "title": "Discuss a video, AI\nor collaboration project.",
-          "lead": "Share your goal, audience, timeline and expected deliverables. Contact me about content strategy and video production, AI prototypes, practical workshops or Scouting collaboration."
+          "eyebrow": "Contact",
+          "title": "Tell me what you need\nto achieve.",
+          "lead": "Email is the fastest way to reach me. Share your goal and I’ll suggest the most fitting way to get there, whether that is a film, a website, an AI workflow or an international connection."
         }
       }
     }
@@ -2279,6 +2357,68 @@ function migrateTo9(doc) {
   return doc;
 }
 
+// v10: solution-maker positioning, need-first Dev Work showcase and a clearer Contact page.
+// Only unchanged v9 seed values move; website rows gain summary/need/built/mobileImage.
+const V10_SEEDS = [
+  [["global","brand","roleline"],"Content strategy · Video production · Applied AI · Global Scouting"],
+  [["global","seo","title"],"Jimmy Park (박지민) | Content Strategy, Video & AI"],
+  [["global","seo","desc"],"Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."],
+  [["global","contact","phone"],"010.5418.6124"],
+  [["pages","home","meta","title"],"Jimmy Park (박지민) | Content Strategy, Video & AI"],
+  [["pages","home","meta","desc"],"Jimmy Park (박지민) is a Korea-based content strategist and video producer working across branded content, applied AI, AX workshops and global Scouting."],
+  [["pages","home","sections","hero","eyebrow"],"Content strategy · Video production · Applied AI"],
+  [["pages","home","sections","hero","title"],"Content strategy.\nVideo production.\nApplied AI."],
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park, a Korea-based content strategist and video producer. I develop content from brief to delivery, build AI-assisted web tools, and help teams explore practical AI workflows."],
+  [["pages","home","sections","hero","ctaPrimary"],{"label":"Start a project","href":"/contact"}],
+  [["pages","home","sections","hero","caption"],"Content, technology, and people."],
+  [["pages","home","sections","selected","eyebrow"],"Selected production work"],
+  [["pages","home","sections","selected","title"],"The brief. The role. The work."],
+  [["pages","home","sections","activities","eyebrow"],"What you can bring me in for"],
+  [["pages","home","sections","activities","title"],"Expertise for your next project."],
+  [["pages","home","sections","activities","items"],[{"kicker":"01 / Content","title":"Content Strategy & Video Production","desc":"Turn a communication brief into a clear concept, script and production plan. My project work spans branded films, keynote videos, interviews and event media.","tags":["Concept & script","Direction & production","Editing & delivery"],"href":"/work#video","accent":"burgundy"},{"kicker":"02 / AI","title":"Web Development & Applied AI","desc":"Build websites and focused web tools with AI-assisted development, from public pages to the forms and admin consoles behind them. Explore the live sites.","tags":["Websites","Web tools","AI workflows"],"href":"/dev","accent":"burgundy"},{"kicker":"03 / AX","title":"AI Workflow Consulting & Workshops","desc":"Review recurring content tasks, define a focused AI pilot and give your team hands-on practice with a real workflow.","tags":["Workflow review","Pilot design","Workshops"],"href":"/dev#lecture","accent":"burgundy"},{"kicker":"04 / Global","title":"Global Scouting & Collaboration","desc":"Connect content and field media with international Scouting experience, Asia-Pacific communications and cross-cultural collaboration.","tags":["Asia-Pacific","Scouting","Partnerships"],"href":"/scouting#roles","accent":"green"}]],
+  [["pages","home","sections","snapshot","body"],"Jimmy Park (박지민, Park Jimin) is a Korea-based content strategist, video producer and AI practitioner. He founded BP Media and works across content production, practical AI tools and international Scouting collaboration."],
+  [["pages","home","sections","snapshot","detail"],"His portfolio includes technology films, educational web series, institutional communication and event media. He works in Korean and English; project credits and dated Scouting roles are listed on this site."],
+  [["pages","home","sections","approach","eyebrow"],"How we can work together"],
+  [["pages","home","sections","approach","title"],"Start with the work. Build a useful next step."],
+  [["pages","home","sections","approach","steps"],[{"num":"01","title":"Understand","desc":"Clarify the audience, the goal, and the way work happens today."},{"num":"02","title":"Design","desc":"Choose the message, format, or AI use case that fits the need."},{"num":"03","title":"Make & test","desc":"Produce the content or build a small pilot, then review it with the people who will use it."},{"num":"04","title":"Put it to use","desc":"Prepare the output, guidance, and next steps for the team."}]],
+  [["pages","home","sections","cta","title"],"Have a brief in mind?"],
+  [["pages","home","sections","cta","body"],"Tell me the audience, deliverables and timing. For introductions or Scouting collaboration, a short hello is welcome too."],
+  [["pages","home","sections","cta","button"],{"label":"Start a conversation","href":"/contact"}],
+  [["pages","dev","meta","title"],"Dev Work: Websites & Applied AI | Jimmy Park"],
+  [["pages","dev","meta","desc"],"Live websites developed by Jimmy Park, including Korea Dream Path, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community, plus applied AI tools and AX workshops."],
+  [["pages","dev","sections","intro","title"],"Websites and web tools,\nbuilt for real use."],
+  [["pages","dev","sections","intro","lead"],"Live websites I have developed for education, a food cooperative, after-school program administration and a travel community, alongside applied AI tools and practical AI workflow workshops."],
+  [["pages","dev","sections","sites","sub"],"Developed, launched and in use"],
+  [["pages","dev","sections","sites","desc"],"Websites I have developed and launched, from public pages to the forms, member accounts and admin consoles behind them. Each link opens the live site."],
+  [["pages","contact","meta","title"],"Contact Jimmy Park | Video, AI & Project Collaboration"],
+  [["pages","contact","meta","desc"],"Contact Jimmy Park for content strategy, video production, AI-assisted web projects, practical workshops and international Scouting collaboration."],
+  [["pages","contact","sections","intro","eyebrow"],"Let’s collaborate"],
+  [["pages","contact","sections","intro","title"],"Discuss a video, AI\nor collaboration project."],
+  [["pages","contact","sections","intro","lead"],"Share your goal, audience, timeline and expected deliverables. Contact me about content strategy and video production, AI prototypes, practical workshops or Scouting collaboration."]
+];
+const V10_SITE_ROWS = [{"id":"korea-dream-path","title":"Korea Dream Path","year":"2026","role":"Web development","desc":"A global learning platform connecting young people worldwide with Korean higher education, with program, scholarship and online application pages.","stack":"Cloudflare Workers · KV · D1 · R2","format":"Education · Global learning platform","href":"https://koreadreampath.com","linkLabel":"Visit koreadreampath.com","image":"/assets/img/dev/korea-dream-path.jpg"},{"id":"charmjt","title":"Authentic Korean Traditional Fermented Foods Cooperative","year":"2026","role":"Web development","desc":"The cooperative’s official website for fermentation education, instructor-course applications, a product shop with order lookup, news and an admin console.","stack":"Cloudflare Pages Functions · D1 · R2","format":"Food cooperative · Official website","href":"https://charmjt.org","linkLabel":"Visit charmjt.org","image":"/assets/img/dev/charmjt.jpg"},{"id":"nfee","title":"nfee","year":"2026","role":"Web development","desc":"A web service for after-school program instructors to write result reports and fee claims, print them in the original A4 forms and submit them for administrator review.","stack":"Cloudflare Pages Functions · D1","format":"Education administration · Web service","href":"https://nfee.app","linkLabel":"Visit nfee.app","image":"/assets/img/dev/nfee.jpg"},{"id":"banginoja","title":"BANGINOJA","year":"2026","role":"Web development","desc":"A community for exploring Korea’s history, culture and nature through palace and regional tours, lectures, history columns and a members’ community.","stack":"React · Cloudflare Workers · D1 · R2","format":"Travel community · Korean history & culture","href":"https://bgnj.net","linkLabel":"Visit bgnj.net","image":"/assets/img/dev/banginoja.jpg"}];
+function migrateTo10(doc) {
+  for (const [path, previous] of V10_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  const sites = doc.pages && doc.pages.dev && doc.pages.dev.sections && doc.pages.dev.sections.sites;
+  if (sites && Array.isArray(sites.items)) {
+    sites.items = sites.items.map(row => {
+      if (!row || typeof row !== 'object' || Array.isArray(row)) return row;
+      const seed = V10_SITE_ROWS.find(previous => matchesLegacy(row, previous));
+      const next = seed && DEFAULT.pages.dev.sections.sites.items.find(item => item.id === seed.id);
+      if (next) return JSON.parse(JSON.stringify(next));
+      // Custom rows keep their text; new fields start empty rather than inheriting the first default row.
+      return { ...row, summary: row.summary !== undefined ? row.summary : (row.desc || ''), need: row.need || '', built: row.built || '', mobileImage: row.mobileImage || '' };
+    });
+  }
+  doc.version = 10;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -2316,7 +2456,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2325,7 +2465,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2333,7 +2473,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2341,6 +2481,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 7) doc = migrateTo7(doc);
   if ((doc.version || 0) < 8) doc = migrateTo8(doc);
   if ((doc.version || 0) < 9) doc = migrateTo9(doc);
+  if ((doc.version || 0) < 10) doc = migrateTo10(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2370,12 +2511,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 7) migrateTo7(incoming);
   if (incoming.version < 8) migrateTo8(incoming);
   if (incoming.version < 9) migrateTo9(incoming);
+  if (incoming.version < 10) migrateTo10(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 9;
+  doc.version = 10;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

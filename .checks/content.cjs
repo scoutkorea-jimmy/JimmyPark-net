@@ -6,10 +6,20 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
-const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS });', sandbox);
+const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
 // Documents saved before v9 kept the AI practice and AX workshop sections on Work.
 const MOVED = ['vibecoding', 'lecture'];
+// Documents saved before v10 lacked the website showcase fields and used v9 copy.
+function asV9(doc) {
+  const legacy = copy(doc);
+  for (const [path, previous] of api.v10Seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
+  legacy.pages.dev.sections.sites.items = copy(api.v9SiteRows);
+  delete legacy.pages.dev.sections.intro.principles;
+  for (const key of ['sites', 'sitesTitle', 'casesTitle']) delete legacy.pages.home.sections.selected[key];
+  legacy.version = 9;
+  return legacy;
+}
 function preV9(doc) {
   const legacy = copy(doc);
   for (const id of MOVED) legacy.pages.work.sections[id] = legacy.pages.dev.sections[id];
@@ -43,7 +53,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 9);
+    assert.equal(result.version, 10);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -368,7 +378,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 9);
+  assert.equal(refreshed.version, 10);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
@@ -427,9 +437,9 @@ async function get(value) {
   assert.deepEqual(await get(edited), edited, 'Explicit current-schema empty values must remain editable');
 
   // v8 → v9: Work splits into Media Work (/work) and Dev Work (/dev).
-  const v8 = preV9(defaults); v8.version = 8;
+  const v8 = preV9(asV9(defaults)); v8.version = 8;
   for (const [path, previous] of api.v9Seeds) { let target = v8; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
-  assert.deepEqual(await get(v8), defaults, 'An unchanged v8 document must upgrade to the v9 defaults');
+  assert.deepEqual(await get(v8), defaults, 'An unchanged v8 document must upgrade to the current defaults');
   const custom8 = copy(v8);
   custom8.pages.work.sections.vibecoding.title = 'Custom AI title';
   custom8.pages.work.sections.vibecoding.items.push({ slug: 'custom-tool', title: 'Custom tool', desc: 'Mine', status: 'Beta', accent: 'neutral', image: '', href: 'https://example.test/' });
@@ -455,5 +465,32 @@ async function get(value) {
   assert.deepEqual(split.pages.dev.sections.sites, defaults.pages.dev.sections.sites);
   assert.equal(split.pages.dev.sections.sites.items[0].title, 'Korea Dream Path', 'Korea Dream Path leads the website portfolio');
   assert.deepEqual(await get(split), split, 'v9 normalization must be idempotent');
-  console.log('PASS: v2/v5/v6/v8 to v9 migrations, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
+
+  // v9 → v10: solution-maker copy, website showcase fields and +82 phone.
+  const v9 = asV9(defaults);
+  assert.deepEqual(await get(v9), defaults, 'An unchanged v9 document must upgrade to the v10 defaults');
+  const custom9 = asV9(defaults);
+  custom9.pages.dev.sections.sites.items[1] = { ...custom9.pages.dev.sections.sites.items[1], desc: 'Custom site description' };
+  custom9.pages.dev.sections.sites.items.push({ id: 'mine', title: 'My site', format: 'Custom', year: '', role: 'Build', desc: 'Mine', stack: '', href: 'https://example.test/', linkLabel: 'Visit', image: '' });
+  custom9.global.contact.phone = '010.1234.5678';
+  custom9.pages.home.sections.hero.title = 'Custom headline';
+  custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
+  const upgraded = await get(custom9);
+  assert.equal(upgraded.version, 10);
+  assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
+  const customRow = upgraded.pages.dev.sections.sites.items[1];
+  assert.equal(customRow.summary, 'Custom site description');
+  assert.equal(customRow.need, '');
+  assert.equal(customRow.built, '');
+  assert.equal(customRow.mobileImage, '');
+  assert.equal(customRow.image, custom9.pages.dev.sections.sites.items[1].image);
+  assert.deepEqual(upgraded.pages.dev.sections.sites.items.at(-1), { id: 'mine', title: 'My site', format: 'Custom', year: '', role: 'Build', summary: 'Mine', need: '', built: '', stack: '', href: 'https://example.test/', linkLabel: 'Visit', image: '', mobileImage: '' });
+  assert.equal(upgraded.global.contact.phone, '010.1234.5678');
+  assert.equal(upgraded.pages.home.sections.hero.title, 'Custom headline');
+  assert.equal(upgraded.pages.contact.sections.intro.lead, 'Custom contact lead');
+  assert.equal(upgraded.pages.home.sections.hero.lead, defaults.pages.home.sections.hero.lead);
+  assert.deepEqual(upgraded.pages.home.sections.selected.sites, defaults.pages.home.sections.selected.sites);
+  assert.deepEqual(await get(upgraded), upgraded, 'v10 normalization must be idempotent');
+  assert.equal(defaults.global.contact.phone, '+82 10.5418.6124');
+  console.log('PASS: v2/v5/v6/v8/v9 to v10 migrations, website showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

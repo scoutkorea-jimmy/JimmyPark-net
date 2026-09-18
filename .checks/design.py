@@ -94,7 +94,7 @@ def check():
                 assert ''.join(c for c in node.children if isinstance(c,str)).strip() == str(rendered['travelCount']), f'{file}: static travel count must match destinations'
             if node.tag == 'img':
                 assert 'alt' in node.attrs, f'{file}: image needs alt text'
-            container_classes = {'pills': 'tag-list', 'intlTags': 'tag-list', 'photoDeliverables': 'deliverable-list', 'siteCases': 'site-case-grid'}
+            container_classes = {'pills': 'tag-list', 'intlTags': 'tag-list', 'photoDeliverables': 'deliverable-list', 'siteShowcase': 'site-showcase-list', 'siteCases': 'selected-work-grid'}
             expected_class = container_classes.get(node.attrs.get('data-template'))
             if expected_class:
                 assert expected_class in node.classes(), f'{file}: missing collection spacing class {expected_class}'

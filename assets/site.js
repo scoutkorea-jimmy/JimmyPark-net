@@ -129,11 +129,28 @@
     },
     siteCases: function (s) {
       var href = /^https:\/\//.test(s.href || "") ? s.href : "";
-      var media = s.image ? '<img src="' + esc(s.image) + '" alt="Homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="960" height="540">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
+      var media = s.image ? '<img src="' + esc(s.image) + '" alt="Homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="720">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
       return '<article class="card project-card site-case"><div class="case-media">' + media + '</div><div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
-        '<h3>' + esc(s.title) + '</h3><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.desc) + '</p>' + (s.stack ? '<p class="case-stack">' + esc(s.stack) + '</p>' : '') +
+        '<h3>' + esc(s.title) + '</h3><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.summary) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
+    },
+    siteShowcase: function (s) {
+      var href = /^https:\/\//.test(s.href || "") ? s.href : "";
+      var domain = href.replace(/^https:\/\//, "").replace(/\/$/, "");
+      var screen = s.image ? '<img src="' + esc(s.image) + '" alt="Desktop homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="720">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
+      var phone = s.mobileImage ? '<div class="phone-frame"><img src="' + esc(s.mobileImage) + '" alt="Mobile homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="360" height="780"></div>' : '';
+      var facts = [['The need', s.need], ['What I built', s.built], ['Role', s.role]].filter(function (f) { return f[1]; })
+        .map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('');
+      var stack = String(s.stack || '').split('·').map(function (t) { return t.trim(); }).filter(Boolean)
+        .map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+      return '<article class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
+        (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen">' + screen + '</div></div>' + phone + '</div>' +
+        '<div class="showcase-body"><div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
+        '<h3>' + esc(s.title) + '</h3>' + (s.summary ? '<p class="showcase-summary">' + esc(s.summary) + '</p>' : '') +
+        (facts ? '<dl class="showcase-facts">' + facts + '</dl>' : '') + (stack ? '<div class="tag-list">' + stack + '</div>' : '') +
+        (href ? '<a class="btn btn-primary site-button" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') +
+        '</div></article>';
     },
     snapshotRows: function (r) {
       return '<div class="snapshot-row"><dt>' + esc(r.label) + '</dt><dd>' + esc(r.value) + '</dd></div>';
