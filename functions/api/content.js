@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 11,
+  "version": 12,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -52,7 +52,7 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Solution maker · Content · Web · AI",
+          "eyebrow": "Solution maker · Video producer & web developer",
           "title": "Your goal.\nThe right way to reach it.",
           "lead": "I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly.",
           "ctaPrimary": {
@@ -63,7 +63,7 @@ const DEFAULT = {
             "label": "See selected work",
             "href": "#selected"
           },
-          "image": "/assets/img/jimmy-park-portrait.jpg?v=0.5.1",
+          "image": "/assets/img/jimmy-park-portrait-960.jpg?v=0.14.0",
           "badge": "Jimmy Park",
           "caption": "The need first, then the right tool.",
           "captionRight": "Based in Korea"
@@ -73,6 +73,10 @@ const DEFAULT = {
             {
               "label": "Content & media",
               "value": "BP Media · Founder, 2026–"
+            },
+            {
+              "label": "Education",
+              "value": "Korea Dream Path · CEO"
             },
             {
               "label": "Asia-Pacific",
@@ -89,7 +93,7 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media.",
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media and leads Korea Dream Path as CEO.",
           "detail": "His work includes technology films, educational web series and event media, as well as live websites for global education, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
         },
         "activities": {
@@ -174,7 +178,7 @@ const DEFAULT = {
         },
         "projects": {
           "eyebrow": "Stay connected",
-          "title": "Projects, writing and professional connections.",
+          "title": "Network, background and hiring.",
           "feature": {
             "badge": "Content strategy · Global Scouting",
             "sub": "Founder · Scouting media",
@@ -199,10 +203,10 @@ const DEFAULT = {
               "image": ""
             },
             {
-              "tag": "Writing & ideas",
-              "title": "Insights",
-              "desc": "A home for notes on content, AI and working across cultures.",
-              "href": "/insights",
+              "tag": "Roles & hiring",
+              "title": "Hiring enquiries",
+              "desc": "For employment or role discussions. I can share my CV and dated work history on request.",
+              "href": "/contact#hiring",
               "image": ""
             }
           ]
@@ -223,10 +227,10 @@ const DEFAULT = {
             {
               "id": "korea-dream-path",
               "title": "Korea Dream Path",
-              "format": "Education · Global learning platform",
+              "format": "Own platform · Global education",
               "year": "2026",
-              "role": "Planning & development",
-              "summary": "A global learning platform connecting young people worldwide with Korean higher education.",
+              "role": "CEO · Planning & development",
+              "summary": "The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.",
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
@@ -281,6 +285,17 @@ const DEFAULT = {
           "casesTitle": "Films",
           "cases": [
             {
+              "id": "samsung-keynote",
+              "title": "Samsung Tech Conference 2025",
+              "year": "2025",
+              "role": "Planning, Direction, Filming & Editing",
+              "desc": "Keynote presentation videos combining presenter footage, chroma key and presentation graphics.",
+              "href": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
+              "image": "",
+              "format": "Technology · Keynote videos",
+              "linkLabel": "View video collection"
+            },
+            {
               "id": "ai2re",
               "title": "AI2RE by SPAID",
               "year": "2025",
@@ -292,26 +307,15 @@ const DEFAULT = {
               "linkLabel": "Watch film"
             },
             {
-              "id": "d-hack",
-              "title": "D-Hack × Sisa Japanese",
-              "year": "2021",
-              "role": "Planning & Direction",
-              "desc": "A Japanese-learning web entertainment series featuring D-Hack.",
-              "href": "https://drive.google.com/drive/folders/1oss4rQepxf1_Bi1ryEBJyThOrAzhZeIh",
-              "image": "/assets/img/video/d-hack.jpg",
-              "format": "Education · Web series",
-              "linkLabel": "View series"
-            },
-            {
-              "id": "siheung",
-              "title": "Siheung Policy EZ",
-              "year": "2021",
-              "role": "Planning, Direction, Filming & Editing",
-              "desc": "A policy information series using presenter footage, chroma key and motion graphics.",
-              "href": "https://drive.google.com/drive/folders/14K3KOWnmX50TZKDFmjr4isRzpRZs6SmO",
-              "image": "/assets/img/video/siheung.jpg",
-              "format": "Public communication · Video series",
-              "linkLabel": "View series"
+              "id": "daekyo",
+              "title": "Daekyo Newif · Jangsuhae",
+              "year": "2024",
+              "role": "Direction, Production & Editing Lead",
+              "desc": "TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
+              "href": "https://www.youtube.com/watch?v=DJcwT3V79B0",
+              "image": "https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg",
+              "format": "Brand · TV commercial",
+              "linkLabel": "Watch film"
             }
           ]
         }
@@ -576,16 +580,16 @@ const DEFAULT = {
         "sites": {
           "kicker": "01 / Websites",
           "title": "Live Websites",
-          "sub": "Built around each client’s need",
+          "sub": "Built around each organization’s need",
           "desc": "Each site began with what its users and team needed to do, and each runs on its own admin console and back end. Every one is live and in use.",
           "items": [
             {
               "id": "korea-dream-path",
               "title": "Korea Dream Path",
-              "format": "Education · Global learning platform",
+              "format": "Own platform · Global education",
               "year": "2026",
-              "role": "Planning & development",
-              "summary": "A global learning platform connecting young people worldwide with Korean higher education.",
+              "role": "CEO · Planning & development",
+              "summary": "The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.",
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
@@ -2480,6 +2484,46 @@ function migrateTo11(doc) {
   return doc;
 }
 
+// v12: the owner's goal is winning projects. Korea Dream Path is shown as the owner's own
+// platform (CEO), home features the strongest recent films, Insights leaves the navigation
+// until it has posts, and early seed values that older migrations missed are refreshed.
+const V12_SEEDS = [
+  [["pages","home","sections","hero","eyebrow"],"Solution maker · Content · Web · AI"],
+  [["pages","home","sections","hero","image"],"/assets/img/jimmy-park-portrait.jpg?v=0.5.1"],
+  [["pages","home","sections","selected","cases"],[{"id":"ai2re","title":"AI2RE by SPAID","year":"2025","role":"Planning & Direction Lead","desc":"CES Innovation Award promotional film for AI2RE.","href":"https://www.youtube.com/watch?v=OmnvbFs-6Ws","image":"https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg","format":"Technology · Promotional film","linkLabel":"Watch film"},{"id":"d-hack","title":"D-Hack × Sisa Japanese","year":"2021","role":"Planning & Direction","desc":"A Japanese-learning web entertainment series featuring D-Hack.","href":"https://drive.google.com/drive/folders/1oss4rQepxf1_Bi1ryEBJyThOrAzhZeIh","image":"/assets/img/video/d-hack.jpg","format":"Education · Web series","linkLabel":"View series"},{"id":"siheung","title":"Siheung Policy EZ","year":"2021","role":"Planning, Direction, Filming & Editing","desc":"A policy information series using presenter footage, chroma key and motion graphics.","href":"https://drive.google.com/drive/folders/14K3KOWnmX50TZKDFmjr4isRzpRZs6SmO","image":"/assets/img/video/siheung.jpg","format":"Public communication · Video series","linkLabel":"View series"}]],
+  [["pages","home","sections","snapshot","body"],"Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media."],
+  [["pages","home","sections","snapshot","rows"],[{"label":"Content & media","value":"BP Media · Founder, 2026–"},{"label":"Asia-Pacific","value":"Communications & Partnerships · 2nd Vice Chair, 2025–2028"},{"label":"International fieldwork","value":"25th World Scout Jamboree · Korean Contingent Media, 2023"},{"label":"Based in","value":"Korea · Korean / English"}]],
+  [["pages","home","sections","projects","title"],"Projects, writing and professional connections."],
+  [["pages","home","sections","projects","items"],[{"tag":"Professional network","title":"Connect on LinkedIn","desc":"For professional introductions, shared interests and future collaboration.","href":"https://www.linkedin.com/in/jimmy1420","image":""},{"tag":"International collaboration","title":"Global & Scouting","desc":"My dated roles, international experience and Scouting media work.","href":"/scouting","image":""},{"tag":"Writing & ideas","title":"Insights","desc":"A home for notes on content, AI and working across cultures.","href":"/insights","image":""}]],
+  [["pages","dev","sections","sites","sub"],"Built around each client’s need"],
+  [["pages","home","sections","snapshot","rows"],[{"label":"Content & media","value":"BP Media · Founder, 2026–"},{"label":"Asia-Pacific","value":"Communications & Partnerships · 2nd Vice Chair, 2025–2028"},{"label":"International fieldwork","value":"25th World Scout Jamboree · Korean Contingent Media, 2023"},{"label":"Base","value":"Korea · Korean / English"}]],
+  [["pages","work","meta","desc"],"Field documentation, purpose-based video, and small web prototypes — Jimmy Park combines photography, video, and digital tools depending on what the project needs."],
+  [["pages","contact","meta","desc"],"Contact Jimmy Park for collaboration, event documentation, video production, Scouting projects, or small web prototypes. Email, phone, Korean / English."],
+  [["pages","home","sections","projects","feature","desc"],"A Scouting-specialized media platform documenting stories, events, people, and international movement in Korean."],
+  [["pages","scouting","sections","mediaprojects","feature","desc"],"A Scouting-specialized media platform documenting stories, events, people, and international movement in Korean."],
+  [["pages","dev","sections","vibecoding","sub"],"Small systems that make ideas work · 아이디어를 작동하게"]
+];
+const V12_KDP_ROW = {"id":"korea-dream-path","title":"Korea Dream Path","format":"Education · Global learning platform","year":"2026","role":"Planning & development","summary":"A global learning platform connecting young people worldwide with Korean higher education.","need":"One place where young people around the world can discover programs and scholarships and apply online.","built":"Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.","stack":"Cloudflare Workers · KV · D1 · R2","backend":"Edit every page of the site without code, with a live preview\nMove applicants through admission stages, with every change logged\nHandle company email, including attachments, inside the admin\nManage members, groups and role-based permissions, with two-factor sign-in for sensitive sections\nAnswer student inquiries and send notification campaigns\nFollow visitor journeys and catch errors on a monitoring dashboard","stats":"50 admin tabs · 95 API routes · Encrypted personal data · Automatic data-retention clean-up","href":"https://koreadreampath.com","linkLabel":"Visit koreadreampath.com","image":"/assets/img/dev/korea-dream-path.jpg","mobileImage":"/assets/img/dev/korea-dream-path-mobile.jpg","adminImage":"","adminCaption":""};
+function migrateTo12(doc) {
+  for (const [path, previous] of V12_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  const pages = doc.pages || {};
+  const lists = [
+    [pages.dev && pages.dev.sections && pages.dev.sections.sites, 'items', DEFAULT.pages.dev.sections.sites.items],
+    [pages.home && pages.home.sections && pages.home.sections.selected, 'sites', DEFAULT.pages.home.sections.selected.sites],
+  ];
+  for (const [owner, key, next] of lists) {
+    if (!owner || !Array.isArray(owner[key])) continue;
+    owner[key] = owner[key].map(row => matchesLegacy(row, V12_KDP_ROW) ? JSON.parse(JSON.stringify(next.find(item => item.id === V12_KDP_ROW.id))) : row);
+  }
+  doc.version = 12;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -2517,7 +2561,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2526,7 +2570,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2534,7 +2578,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2544,6 +2588,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 9) doc = migrateTo9(doc);
   if ((doc.version || 0) < 10) doc = migrateTo10(doc);
   if ((doc.version || 0) < 11) doc = migrateTo11(doc);
+  if ((doc.version || 0) < 12) doc = migrateTo12(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2575,12 +2620,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 9) migrateTo9(incoming);
   if (incoming.version < 10) migrateTo10(incoming);
   if (incoming.version < 11) migrateTo11(incoming);
+  if (incoming.version < 12) migrateTo12(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 11;
+  doc.version = 12;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

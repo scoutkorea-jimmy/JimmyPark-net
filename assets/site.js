@@ -179,7 +179,7 @@
       var media = p.image ? '<div class="project-image" role="img" aria-label="' + esc(p.title) + '" style="background-image:url(&quot;' + esc(p.image) + '&quot;)"></div>' : '';
       return '<a href="' + esc(p.href || "/work") + '" class="card project-card soft">' + media + '<div class="card-body">' +
         '<span class="eyebrow">' + esc(p.tag) + '</span><h3>' + esc(p.title) + '</h3><p>' + esc(p.desc) + '</p>' +
-        '<span class="card-link">Explore project context <span class="msym" aria-hidden="true">arrow_forward</span></span></div></a>';
+        '<span class="card-link">Learn more <span class="msym" aria-hidden="true">arrow_forward</span></span></div></a>';
     },
     photoDeliverables: function (d) {
       return '<li class="deliverable"><span class="msym" aria-hidden="true">check_small</span>' + esc(d.text) + '</li>';

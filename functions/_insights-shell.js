@@ -2,10 +2,11 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>__TITLE__</title><meta name="description" content="__DESC__"><link rel="canonical" href="__URL__">
 <meta property="og:type" content="__TYPE__"><meta property="og:site_name" content="Jimmy Park"><meta property="og:title" content="__TITLE__"><meta property="og:description" content="__DESC__"><meta property="og:url" content="__URL__">
-<meta name="twitter:card" content="summary"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
+<meta property="og:image" content="https://jimmypark.net/assets/img/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://jimmypark.net/assets/img/og.png"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.13.0"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.14.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -15,7 +16,6 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
       <a href="/work" data-nav="work" class="lnk nav-link">Media Work</a>
       <a href="/dev" data-nav="dev" class="lnk nav-link">Dev Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk nav-link">Global &amp; Scouting</a>
-      <a href="/insights" data-nav="insights" class="lnk nav-link">Insights</a>
       <a href="/contact" data-nav="contact" class="btn btn-primary site-button">Contact</a>
     </nav>
     <button class="nav-toggle btn" aria-label="Menu" aria-controls="mobile-navigation" aria-expanded="false"><span class="msym" aria-hidden="true">menu</span></button>
@@ -26,7 +26,6 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
       <a href="/work" data-nav="work" class="lnk">Media Work</a>
       <a href="/dev" data-nav="dev" class="lnk">Dev Work</a>
       <a href="/scouting" data-nav="scouting" class="lnk">Global &amp; Scouting</a>
-      <a href="/insights" data-nav="insights" class="lnk">Insights</a>
       <a href="/contact" data-nav="contact" class="lnk">Contact</a>
     </div>
   </nav>
@@ -44,7 +43,6 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
         <a href="/work" class="lnk">Media Work</a>
         <a href="/dev" class="lnk">Dev Work</a>
         <a href="/scouting" class="lnk">Global &amp; Scouting</a>
-        <a href="/insights" class="lnk">Insights</a>
         <a href="/contact" class="lnk">Contact</a>
       </nav>
     </div>
@@ -54,4 +52,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.13.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.14.0" defer></script></body></html>`;

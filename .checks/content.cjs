@@ -6,13 +6,27 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
-const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS });', sandbox);
+const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
 // Documents saved before v9 kept the AI practice and AX workshop sections on Work.
 const MOVED = ['vibecoding', 'lecture'];
+// Documents saved before v12: v11 copy, Korea Dream Path as a client row, Insights card, and the
+// early seed values (including a Korean subtitle) that were still live on 2026-09-19.
+function applySeeds(legacy, seeds) {
+  for (const [path, previous] of seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
+}
+function asV11(doc) {
+  const legacy = copy(doc);
+  applySeeds(legacy, api.v12Seeds);
+  for (const rows of [legacy.pages.dev.sections.sites.items, legacy.pages.home.sections.selected.sites]) {
+    rows.forEach((row, i) => { if (row.id === api.v11KdpRow.id) rows[i] = copy(api.v11KdpRow); });
+  }
+  legacy.version = 11;
+  return legacy;
+}
 // Documents saved before v11 had no back-end details on website rows.
 function asV10(doc) {
-  const legacy = copy(doc);
+  const legacy = asV11(doc);
   for (const [path, previous] of api.v11Seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
   legacy.pages.dev.sections.sites.items = copy(api.v10SiteRows);
   legacy.pages.home.sections.selected.sites = legacy.pages.home.sections.selected.sites.map(row => copy(api.v10SiteRows.find(old => old.id === row.id)));
@@ -21,7 +35,7 @@ function asV10(doc) {
 }
 // Documents saved before v10 lacked the website showcase fields and used v9 copy.
 function asV9(doc) {
-  const legacy = copy(doc);
+  const legacy = asV10(doc);
   for (const [path, previous] of api.v10Seeds) { let target = legacy; for (const key of path.slice(0, -1)) target = target[key]; target[path[path.length - 1]] = copy(previous); }
   legacy.pages.dev.sections.sites.items = copy(api.v9SiteRows);
   delete legacy.pages.dev.sections.intro.principles;
@@ -62,7 +76,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 11);
+    assert.equal(result.version, 12);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -387,7 +401,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 11);
+  assert.equal(refreshed.version, 12);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
@@ -485,7 +499,7 @@ async function get(value) {
   custom9.pages.home.sections.hero.title = 'Custom headline';
   custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
   const upgraded = await get(custom9);
-  assert.equal(upgraded.version, 11);
+  assert.equal(upgraded.version, 12);
   assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
   const customRow = upgraded.pages.dev.sections.sites.items[1];
   assert.equal(customRow.backend, '', 'Custom rows must not inherit another site’s back-end list');
@@ -509,7 +523,7 @@ async function get(value) {
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
   const backed = await get(custom10);
-  assert.equal(backed.version, 11);
+  assert.equal(backed.version, 12);
   assert.equal(backed.pages.dev.sections.sites.items[2].summary, 'Custom nfee summary');
   assert.equal(backed.pages.dev.sections.sites.items[2].backend, '');
   assert.equal(backed.pages.dev.sections.sites.items[2].adminImage, '');
@@ -519,5 +533,25 @@ async function get(value) {
   assert.deepEqual(backed.pages.home.sections.selected.sites[1], defaults.pages.home.sections.selected.sites[1]);
   assert.match(defaults.pages.dev.sections.sites.items[0].backend, /\n/);
   assert.deepEqual(await get(backed), backed, 'v11 normalization must be idempotent');
-  console.log('PASS: v2/v5/v6/v8/v9/v10 to v11 migrations, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
+
+  // v11 → v12: own-platform Korea Dream Path, recent films on Home, no Insights card, stale early seeds.
+  const v11 = asV11(defaults);
+  assert.match(v11.pages.dev.sections.vibecoding.sub, /[가-힣]/, 'Fixture reproduces the live Korean subtitle');
+  assert.deepEqual(await get(v11), defaults, 'An unchanged or early-seed v11 document must upgrade to the v12 defaults');
+  const custom11 = asV11(defaults);
+  custom11.pages.dev.sections.vibecoding.sub = 'Custom tools subtitle';
+  custom11.pages.work.meta.desc = 'Custom work description';
+  custom11.pages.home.sections.selected.cases = custom11.pages.home.sections.selected.cases.slice(0, 1);
+  custom11.pages.dev.sections.sites.items[0] = { ...custom11.pages.dev.sections.sites.items[0], summary: 'Custom KDP summary' };
+  const owned = await get(custom11);
+  assert.equal(owned.version, 12);
+  assert.equal(owned.pages.dev.sections.vibecoding.sub, 'Custom tools subtitle');
+  assert.equal(owned.pages.work.meta.desc, 'Custom work description');
+  assert.equal(owned.pages.home.sections.selected.cases.length, 1);
+  assert.equal(owned.pages.dev.sections.sites.items[0].summary, 'Custom KDP summary');
+  assert.equal(owned.pages.home.sections.selected.sites[0].role, defaults.pages.home.sections.selected.sites[0].role, 'Unchanged home KDP card becomes the own-platform row');
+  assert.ok(!JSON.stringify(defaults.pages.home.sections.projects.items).includes('/insights'), 'Insights leaves the home cards until it has posts');
+  assert.deepEqual(defaults.pages.home.sections.selected.cases.map(item => item.id), ['samsung-keynote', 'ai2re', 'daekyo']);
+  assert.deepEqual(await get(owned), owned, 'v12 normalization must be idempotent');
+  console.log('PASS: v2/v5/v6/v8/v9/v10/v11 to v12 migrations, own-platform KDP, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

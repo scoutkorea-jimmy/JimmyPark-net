@@ -45,6 +45,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .roles2 > div > div { flex-wrap: wrap; }
 .roles2 > div > div > div { min-width: 0; }
 [data-image-fallback][hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* Material Symbols */
 .msym {
@@ -361,6 +362,9 @@ details.tl[open] .tlchev { transform: rotate(90deg); }
 .portfolio .contact-meta { padding-top: var(--space-16); border-top: 1px solid #e6e1da; font-size: .875rem; color: #66615c; }
 .portfolio .contact-card .site-button { width: 100%; margin-top: var(--space-24); }
 .portfolio .contact-card .contact-note { margin: var(--space-12) 0 0; font-size: .875rem; color: #66615c; }
+.portfolio .hiring-block { margin-top: var(--space-24); padding-top: var(--space-16); border-top: 1px solid #e6e1da; scroll-margin-top: 92px; }
+.portfolio .hiring-block .site-button { margin-top: var(--space-16); background: #fff; color: #171717; border: 1px solid #ddd6cc; }
+.portfolio .hiring-block .site-button:hover { border-color: #171717; }
 .portfolio .brief-list { counter-reset: brief; display: flex; flex-direction: column; gap: var(--space-16); margin: var(--space-16) 0 0; padding: 0; list-style: none; }
 .portfolio .brief-list li { counter-increment: brief; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--space-12); align-items: baseline; }
 .portfolio .brief-list li::before { content: counter(brief, decimal-leading-zero); font-size: .875rem; font-weight: 700; color: var(--eyebrow-color); }
