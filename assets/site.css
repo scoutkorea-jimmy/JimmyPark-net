@@ -1026,3 +1026,37 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 body.portfolio[data-page="home"] .body-copy {
   color: var(--md-on-surface-variant);
 }
+
+
+/* Homepage mobile hero parity — keep carousels; align hero type/rhythm with desktop. */
+@media (max-width: 839px) {
+  .portfolio .portfolio-hero {
+    align-items: start;
+    gap: var(--space-32);
+  }
+  .portfolio .portfolio-hero .hero-title {
+    font-size: clamp(2rem, 8vw, var(--md-display-medium));
+    line-height: 1.14;
+    letter-spacing: -.004em;
+  }
+  .portfolio .portfolio-hero .hero-lead {
+    font-size: var(--md-title-medium);
+    line-height: 1.45;
+    letter-spacing: .009em;
+    max-width: 40ch;
+  }
+  .portfolio .portfolio-hero [data-hero-image] {
+    aspect-ratio: 4 / 5;
+    max-width: min(440px, 100%);
+    margin-inline: auto;
+    border-radius: var(--md-shape-xl);
+  }
+}
+@media (max-width: 599px) {
+  /* Override earlier body-large downgrade for homepage hero lead only */
+  .portfolio[data-page="home"] .hero-lead,
+  .portfolio .portfolio-hero .hero-lead {
+    font-size: var(--md-title-medium);
+    line-height: 1.45;
+  }
+}
