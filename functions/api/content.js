@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 24,
+  "version": 25,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -744,7 +744,7 @@ const DEFAULT = {
     "lecture": {
       "meta": {
         "title": "Lectures & Workshops | Jimmy Park",
-        "desc": "Lectures and workshops by Jimmy Park on branded film, education, applied AI and Scouting communication — book a session for your team or event."
+        "desc": "Korean-language lectures and workshops by Jimmy Park on branded film, youth media, applied AI and Scouting — plus 1:1 and small-group sessions. English available on request."
       },
       "order": [
         "intro",
@@ -757,16 +757,17 @@ const DEFAULT = {
         "intro": {
           "eyebrow": "Lecture",
           "title": "Lectures and workshops\nthat travel.",
-          "lead": "Talks and hands-on sessions on branded film, education, applied AI and Scouting communication — shaped for the people in the room."
+          "lead": "I teach branded film, youth media, applied AI and Scouting communication — in classrooms, centers and conferences, and also in 1:1 and small-group formats. Sessions are shaped for the people in the room.\n\nAll lectures to date have been delivered in Korean. Korean is the default; English-language sessions can be arranged when requested in advance."
         },
         "talks": {
           "kicker": "01 / History",
           "title": "Lecture history",
-          "sub": "Past talks and workshops",
-          "desc": "Selected lectures, workshops and teaching engagements \u2014 from youth media programs to university courses and adult training.",
-          "items":                     [
+          "sub": "Selected public and institutional engagements",
+          "desc": "A selection of institutional lectures and workshops. Beyond these, I have also run many 1:1 tutorials and small-group sessions for individuals and teams.",
+          "items": [
             {
-              "year": "2026",
+              "year": "2026.09",
+              "category": "Youth media",
               "title": "Media Career One-Day: Film Director Experience",
               "org": "Mapo Youth Center (시립마포청소년센터)",
               "role": "Instructor",
@@ -774,7 +775,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2025",
+              "year": "2025.11",
+              "category": "Youth media",
               "title": "Dream Collaboration — Video Production Project with Media Professionals",
               "org": "Mapo Youth Center (시립마포청소년센터)",
               "role": "Instructor / Project lead",
@@ -782,7 +784,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2025",
+              "year": "2025.11",
+              "category": "Youth media",
               "title": "Media Career One-Day: Film Director Experience",
               "org": "Mapo Youth Center (시립마포청소년센터)",
               "role": "Instructor",
@@ -790,7 +793,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2025",
+              "year": "2025.10",
+              "category": "Youth media",
               "title": "Media Career One-Day: Film Director Experience",
               "org": "Mapo Youth Center (시립마포청소년센터)",
               "role": "Instructor",
@@ -798,7 +802,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2025",
+              "year": "2025.08",
+              "category": "Scouting × AI",
               "title": "From Analog to AI Native: The Scout Path Built Across Generations",
               "org": "Korea Scout Association (한국스카우트연맹) — National Training Leaders Conference",
               "role": "Session lead",
@@ -806,7 +811,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2025",
+              "year": "2025.07",
+              "category": "Youth media",
               "title": "Media Career One-Day: Film Director Experience",
               "org": "Mapo Youth Center (시립마포청소년센터)",
               "role": "Instructor",
@@ -814,7 +820,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2022",
+              "year": "2022.08",
+              "category": "Scout media",
               "title": "Video Content Planning",
               "org": "Korea Scout Association (한국스카우트연맹) — 15th Scout Journalism School",
               "role": "Instructor",
@@ -822,15 +829,17 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2021",
-              "title": "Virtual Company Co-Teaching (Hello Peace Lab)",
+              "year": "2021.03",
+              "category": "University",
+              "title": "Virtual Company — University Course (Co-taught)",
               "org": "Halla University (한라대학교) — Department of Media Advertising Content",
-              "role": "Co-instructor",
-              "summary": "Spring semester 2021 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.",
+              "role": "University co-instructor (Hello Peace Lab)",
+              "summary": "Spring semester 2021 · Semester-long university course for Halla University students (course name: Virtual Company; formerly Dept. of Advertising & Visual Media).",
               "href": ""
             },
             {
               "year": "2021",
+              "category": "Publication",
               "title": "Influencer, Becoming the Trend of the Era (1): Lecture Edition",
               "org": "Publication",
               "role": "Author",
@@ -838,15 +847,17 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2020",
-              "title": "Virtual Company Co-Teaching (Hello Peace Lab)",
+              "year": "2020.09",
+              "category": "University",
+              "title": "Virtual Company — University Course (Co-taught)",
               "org": "Halla University (한라대학교) — Department of Media Advertising Content",
-              "role": "Co-instructor",
-              "summary": "Fall semester 2020 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.",
+              "role": "University co-instructor (Hello Peace Lab)",
+              "summary": "Fall semester 2020 · Semester-long university course for Halla University students (course name: Virtual Company; formerly Dept. of Advertising & Visual Media).",
               "href": ""
             },
             {
-              "year": "2020",
+              "year": "2020.11",
+              "category": "Small business",
               "title": "Mobile Video Editing for Small Business Owners",
               "org": "Jungnang Dongbu Market (중랑동부시장), Seoul",
               "role": "Instructor",
@@ -854,7 +865,8 @@ const DEFAULT = {
               "href": ""
             },
             {
-              "year": "2018",
+              "year": "2018.12",
+              "category": "Staff training",
               "title": "Photoshop for Educational Materials Development",
               "org": "Bucheon Children's & Social Welfare Foodservice Management Support Center (부천시어린이·사회복지급식관리지원센터)",
               "role": "Instructor",
@@ -864,34 +876,46 @@ const DEFAULT = {
           ]
         },
         "topics": {
-          "kicker": "02 / Themes",
-          "title": "Topics I speak on",
-          "sub": "Themes that fit a lecture or workshop",
-          "desc": "These are the themes I return to — not a schedule, just the ground I cover well.",
+          "kicker": "02 / Topics",
+          "title": "Topics I can cover",
+          "sub": "Formats from keynotes to hands-on labs",
+          "desc": "Pick a theme below — or tell me what your audience needs. Public talks, workshops, university courses, and private coaching are all possible.",
           "items": [
             {
-              "name": "Branded film",
-              "desc": "Story, craft and production for films people remember."
+              "name": "Branded film & directing",
+              "desc": "Story, craft and production for films and director-led sessions."
             },
             {
-              "name": "Education",
-              "desc": "Learning platforms and teaching formats that travel."
+              "name": "Youth media careers",
+              "desc": "One-day and project-based programs for students exploring film and media work."
             },
             {
-              "name": "Applied AI",
-              "desc": "Practical AI workflows and hands-on AX practice."
+              "name": "Applied AI / AI Native",
+              "desc": "Practical AI for teams and organizations — including Scouting leadership contexts."
             },
             {
-              "name": "Scouting communication",
-              "desc": "Field media, youth engagement and international messaging."
+              "name": "Scout media & communication",
+              "desc": "Journalism school sessions and content planning for Scout communicators."
+            },
+            {
+              "name": "University media courses",
+              "desc": "Semester teaching in advertising, media and content programs."
+            },
+            {
+              "name": "1:1 & small-group coaching",
+              "desc": "Private and small-group sessions tailored to a brief, skill gap or project."
+            },
+            {
+              "name": "Creative tools for work",
+              "desc": "Photoshop, mobile editing and production tools for educators and small business."
             }
           ]
         },
         "cta": {
-          "title": "Invite a lecture or workshop",
-          "body": "Share the audience, the theme and the format you have in mind. We can shape a talk or a hands-on session that fits.",
+          "title": "Want to invite a lecture or workshop?",
+          "body": "Feel free to reach out with a rough idea — audience, date, language and format. I'll suggest a clear session shape and we can refine it together. Korean is standard; English is available with advance notice.",
           "button": {
-            "label": "Book a lecture",
+            "label": "Ask about a lecture",
             "href": "/contact"
           }
         }
@@ -2942,6 +2966,23 @@ function migrateTo24(doc) {
   doc.version = 24;
   return doc;
 }
+// v25: lecture refresh — language note, topics, 1:1 note, year-month, categories, university clarity.
+const V25_LECTURE_PAGE = {"meta": {"title": "Lectures & Workshops | Jimmy Park", "desc": "Korean-language lectures and workshops by Jimmy Park on branded film, youth media, applied AI and Scouting — plus 1:1 and small-group sessions. English available on request."}, "intro": {"eyebrow": "Lecture", "title": "Lectures and workshops\nthat travel.", "lead": "I teach branded film, youth media, applied AI and Scouting communication — in classrooms, centers and conferences, and also in 1:1 and small-group formats. Sessions are shaped for the people in the room.\n\nAll lectures to date have been delivered in Korean. Korean is the default; English-language sessions can be arranged when requested in advance."}, "talks": {"kicker": "01 / History", "title": "Lecture history", "sub": "Selected public and institutional engagements", "desc": "A selection of institutional lectures and workshops. Beyond these, I have also run many 1:1 tutorials and small-group sessions for individuals and teams.", "items": [{"year": "2026.09", "category": "Youth media", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "23 Sep 2026 · Hands-on media career session for upper-elementary students, focused on the role of a film director.", "href": ""}, {"year": "2025.11", "category": "Youth media", "title": "Dream Collaboration — Video Production Project with Media Professionals", "org": "Mapo Youth Center (시립마포청소년센터)", "role": "Instructor / Project lead", "summary": "27 Nov – 18 Dec 2025 · Multi-week video production project for middle and high school students.", "href": ""}, {"year": "2025.11", "category": "Youth media", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "4 Nov 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2025.10", "category": "Youth media", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "28 Oct 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2025.08", "category": "Scouting × AI", "title": "From Analog to AI Native: The Scout Path Built Across Generations", "org": "Korea Scout Association (한국스카우트연맹) — National Training Leaders Conference", "role": "Session lead", "summary": "30 Aug 2025 · Session lead at the National Training Leaders Conference (전국훈육지도자대회).", "href": ""}, {"year": "2025.07", "category": "Youth media", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "2 Jul 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2022.08", "category": "Scout media", "title": "Video Content Planning", "org": "Korea Scout Association (한국스카우트연맹) — 15th Scout Journalism School", "role": "Instructor", "summary": "20 Aug 2022 · Lecture on planning video content for middle and high school Scout journalists.", "href": ""}, {"year": "2021.03", "category": "University", "title": "Virtual Company — University Course (Co-taught)", "org": "Halla University (한라대학교) — Department of Media Advertising Content", "role": "University co-instructor (Hello Peace Lab)", "summary": "Spring semester 2021 · Semester-long university course for Halla University students (course name: Virtual Company; formerly Dept. of Advertising & Visual Media).", "href": ""}, {"year": "2021", "category": "Publication", "title": "Influencer, Becoming the Trend of the Era (1): Lecture Edition", "org": "Publication", "role": "Author", "summary": "2021 · Authored the lecture edition of the book on influencers and contemporary media trends.", "href": ""}, {"year": "2020.09", "category": "University", "title": "Virtual Company — University Course (Co-taught)", "org": "Halla University (한라대학교) — Department of Media Advertising Content", "role": "University co-instructor (Hello Peace Lab)", "summary": "Fall semester 2020 · Semester-long university course for Halla University students (course name: Virtual Company; formerly Dept. of Advertising & Visual Media).", "href": ""}, {"year": "2020.11", "category": "Small business", "title": "Mobile Video Editing for Small Business Owners", "org": "Jungnang Dongbu Market (중랑동부시장), Seoul", "role": "Instructor", "summary": "3–12 Nov 2020 · Mobile video editing training for market merchants and small business owners.", "href": ""}, {"year": "2018.12", "category": "Staff training", "title": "Photoshop for Educational Materials Development", "org": "Bucheon Children's & Social Welfare Foodservice Management Support Center (부천시어린이·사회복지급식관리지원센터)", "role": "Instructor", "summary": "20 Dec 2018 · Internal staff training on Photoshop for producing and developing educational materials (adult learners). Historical reference: Bucheon 2nd Children's Meal Support Center.", "href": ""}]}, "topics": {"kicker": "02 / Topics", "title": "Topics I can cover", "sub": "Formats from keynotes to hands-on labs", "desc": "Pick a theme below — or tell me what your audience needs. Public talks, workshops, university courses, and private coaching are all possible.", "items": [{"name": "Branded film & directing", "desc": "Story, craft and production for films and director-led sessions."}, {"name": "Youth media careers", "desc": "One-day and project-based programs for students exploring film and media work."}, {"name": "Applied AI / AI Native", "desc": "Practical AI for teams and organizations — including Scouting leadership contexts."}, {"name": "Scout media & communication", "desc": "Journalism school sessions and content planning for Scout communicators."}, {"name": "University media courses", "desc": "Semester teaching in advertising, media and content programs."}, {"name": "1:1 & small-group coaching", "desc": "Private and small-group sessions tailored to a brief, skill gap or project."}, {"name": "Creative tools for work", "desc": "Photoshop, mobile editing and production tools for educators and small business."}]}, "cta": {"title": "Want to invite a lecture or workshop?", "body": "Feel free to reach out with a rough idea — audience, date, language and format. I'll suggest a clear session shape and we can refine it together. Korean is standard; English is available with advance notice.", "button": {"label": "Ask about a lecture", "href": "/contact"}}};
+function migrateTo25(doc) {
+  if (!doc.pages) doc.pages = {};
+  if (!doc.pages.lecture) doc.pages.lecture = JSON.parse(JSON.stringify(DEFAULT.pages.lecture));
+  const lec = doc.pages.lecture;
+  lec.meta = JSON.parse(JSON.stringify(V25_LECTURE_PAGE.meta));
+  if (!lec.sections) lec.sections = {};
+  lec.sections.intro = JSON.parse(JSON.stringify(V25_LECTURE_PAGE.intro));
+  lec.sections.talks = JSON.parse(JSON.stringify(V25_LECTURE_PAGE.talks));
+  lec.sections.topics = JSON.parse(JSON.stringify(V25_LECTURE_PAGE.topics));
+  lec.sections.cta = JSON.parse(JSON.stringify(V25_LECTURE_PAGE.cta));
+  doc.version = 25;
+  return doc;
+}
+
+
 
 
 
@@ -2991,7 +3032,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3000,7 +3041,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3008,7 +3049,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3031,6 +3072,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 22) doc = migrateTo22(doc);
   if ((doc.version || 0) < 23) doc = migrateTo23(doc);
   if ((doc.version || 0) < 24) doc = migrateTo24(doc);
+  if ((doc.version || 0) < 25) doc = migrateTo25(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3075,12 +3117,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 22) migrateTo22(incoming);
   if (incoming.version < 23) migrateTo23(incoming);
   if (incoming.version < 24) migrateTo24(incoming);
+  if (incoming.version < 25) migrateTo25(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 24;
+  doc.version = 25;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

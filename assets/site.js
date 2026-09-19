@@ -296,11 +296,12 @@
       var external = /^https:\/\//.test(href);
       var internal = href.charAt(0) === "/" && href.charAt(1) !== "/";
       var link = external || internal;
+      var eyebrow = t.category || t.org || "";
       return '<article class="card project-card lecture-talk"><div class="card-body">' +
-        '<div class="case-meta">' + (t.org ? '<span class="eyebrow">' + esc(t.org) + '</span>' : '') +
+        '<div class="case-meta">' + (eyebrow ? '<span class="eyebrow">' + esc(eyebrow) + '</span>' : '') +
         (t.year ? '<span class="tag">' + esc(t.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(t.title) + '</h3>' +
-        (t.role ? '<p class="case-role">' + esc(t.role) + '</p>' : '') +
+        (t.org ? '<p class="case-role">' + esc(t.org) + (t.role ? ' · ' + esc(t.role) : '') + '</p>' : (t.role ? '<p class="case-role">' + esc(t.role) + '</p>' : '')) +
         (t.summary ? '<p>' + esc(t.summary) + '</p>' : '') +
         (link ? '<a class="card-link" href="' + esc(href) + '"' + (external ? ' target="_blank" rel="noopener noreferrer"' : '') +
           '>Details<span class="msym" aria-hidden="true">north_east</span></a>' : '') +

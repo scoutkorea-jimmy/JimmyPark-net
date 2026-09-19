@@ -78,7 +78,7 @@
     ] },
     lecture: { title: "Lecture", kind: "page", page: "lecture", sections: [
       { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
-      { id: "talks", title: "Lecture history", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Talks (empty until you add some)", fields: [F("year", "Year"), F("title", "Title"), F("org", "Organization"), F("role", "Your role"), F("summary", "Summary", "textarea"), F("href", "Link (optional HTTPS or /path)")], tmpl: { year: "", title: "", org: "", role: "", summary: "", href: "" } }] },
+      { id: "talks", title: "Lecture history", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Talks (empty until you add some)", fields: [F("year", "Year · month (e.g. 2025.08)"), F("category", "Category / topic"), F("title", "Title"), F("org", "Organization"), F("role", "Your role"), F("summary", "Summary", "textarea"), F("href", "Link (optional HTTPS or /path)")], tmpl: { year: "", category: "", title: "", org: "", role: "", summary: "", href: "" } }] },
       { id: "topics", title: "Topics", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Topic cards", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
