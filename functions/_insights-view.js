@@ -5,23 +5,44 @@ export function escapeHTML(value) {
   return String(value || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 }
 export function articleBody(value) {
-  let headingIndex = 0;
+  let sectionIndex = 0;
+  let subsectionIndex = 0;
   return value.split(/\n\s*\n/).filter(p => p.trim()).map(paragraph => {
-    if (/^### /u.test(paragraph)) return '<h3>' + escapeHTML(paragraph.slice(4)) + '</h3>';
+    if (/^### /u.test(paragraph)) {
+      subsectionIndex += 1;
+      return '<h3 id="section-' + sectionIndex + '-' + subsectionIndex + '">' + escapeHTML(paragraph.slice(4)) + '</h3>';
+    }
     if (/^## /u.test(paragraph)) {
-      headingIndex += 1;
-      return '<h2 id="section-' + headingIndex + '">' + escapeHTML(paragraph.slice(3)) + '</h2>';
+      sectionIndex += 1;
+      subsectionIndex = 0;
+      return '<h2 id="section-' + sectionIndex + '">' + escapeHTML(paragraph.slice(3)) + '</h2>';
     }
     return '<p>' + escapeHTML(paragraph) + '</p>';
   }).join('\n');
 }
 
 function articleToc(value) {
-  let headingIndex = 0;
-  const items = value.split(/\n\s*\n/).filter(p => p.trim()).filter(paragraph => /^## /u.test(paragraph)).map(paragraph => {
-    headingIndex += 1;
-    return '<li><a href="#section-' + headingIndex + '">' + escapeHTML(paragraph.slice(3)) + '</a></li>';
-  }).join('');
+  let sectionIndex = 0;
+  let subsectionIndex = 0;
+  let items = '';
+  let subitems = '';
+  function closeSection() {
+    if (!items) return;
+    items += (subitems ? '<ol class="insight-toc-sublist">' + subitems + '</ol>' : '') + '</li>';
+    subitems = '';
+  }
+  for (const paragraph of value.split(/\n\s*\n/).filter(p => p.trim())) {
+    if (/^## /u.test(paragraph)) {
+      closeSection();
+      sectionIndex += 1;
+      subsectionIndex = 0;
+      items += '<li><a href="#section-' + sectionIndex + '">' + escapeHTML(paragraph.slice(3)) + '</a>';
+    } else if (/^### /u.test(paragraph) && items) {
+      subsectionIndex += 1;
+      subitems += '<li><a href="#section-' + sectionIndex + '-' + subsectionIndex + '">' + escapeHTML(paragraph.slice(4)) + '</a></li>';
+    }
+  }
+  closeSection();
   return items ? '<aside class="insight-toc" aria-label="On this page"><p class="eyebrow">On this page</p><nav><ol>' + items + '</ol></nav></aside>' : '';
 }
 

@@ -539,7 +539,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .insight-list-content .card-link { margin-top: var(--space-16); }
 .insight-reading { max-width: 850px; }
 .insight-reading h1 { overflow-wrap: anywhere; }
-.insight-body h2 { scroll-margin-top: 96px; }
+.insight-body :is(h2, h3) { scroll-margin-top: 96px; }
 .insight-toc { display: none; }
 .insight-body { margin-top: var(--space-48); font-size: 1.0625rem; line-height: 1.85; overflow-wrap: anywhere; }
 .insight-body p { white-space: pre-line; margin: 0 0 var(--space-24); }
@@ -569,6 +569,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .insight-toc .eyebrow { margin: 0 0 var(--space-12); }
   .insight-toc ol { display: flex; flex-direction: column; gap: var(--space-8); margin: 0; padding: 0; list-style: none; }
   .insight-toc a { display: block; color: var(--md-on-surface-variant); font-size: var(--md-label-medium); line-height: 1.45; }
+  .insight-toc-sublist { gap: var(--space-4) !important; margin: var(--space-8) 0 0 var(--space-12) !important; padding-left: var(--space-12) !important; border-left: 2px solid var(--md-outline-variant); }
+  .insight-toc-sublist a { font-size: 12px; color: var(--md-on-surface-variant); }
   .insight-toc a:hover, .insight-toc a:focus-visible { color: var(--md-primary); }
 }
 
