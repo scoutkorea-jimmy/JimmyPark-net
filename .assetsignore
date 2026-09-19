@@ -1,0 +1,15 @@
+# Do not upload internal/dev files to Cloudflare Pages (defense in depth with
+# functions/_middleware.js BLOCK). Tracked in git; excluded from the deploy.
+.env*
+scripts/
+VERSION
+*.md
+wrangler.toml
+package.json
+package-lock.json
+.gitignore
+.assetsignore
+CNAME
+.claude/
+.checks/
+.impeccable/

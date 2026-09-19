@@ -330,10 +330,15 @@
   function safeSiteUrl(value, externalOnly) {
     if (typeof value !== 'string') return '';
     var url = value.trim();
-    if (!url || /[\u0000-\u0020\\]/.test(url)) return '';
+    // Reject control chars, backslash, and CSS url() breakers (quotes/parens).
+    if (!url || /[\u0000-\u0020\\'"()]/.test(url)) return '';
     if (!externalOnly && (url.charAt(0) === '#' || (url.charAt(0) === '/' && url.slice(0,2) !== '//'))) return url;
     if (url.slice(0,8) !== 'https://') return '';
     try { var parsed = new URL(url); return parsed.hostname && !parsed.username && !parsed.password ? url : ''; } catch (_) { return ''; }
+  }
+  function cssUrl(value) {
+    if (!value || /[\u0000-\u0020\\'"()]/.test(value)) return '';
+    return 'url(' + JSON.stringify(value) + ')';
   }
   function cleanPreviewUrls(value) {
     if (!value || typeof value !== 'object') return value;
@@ -392,7 +397,7 @@
     document.querySelectorAll("[data-img]").forEach(function (el) {
       var path = el.getAttribute("data-img");
       var v = (path.charAt(0) === "@" ? get(g, path.slice(1)) : get(sd, path)) || el.getAttribute('data-default-image');
-      if (v) { el.style.backgroundImage = "url('" + v + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = "center"; }
+      if (v) { el.style.backgroundImage = cssUrl(v); el.style.backgroundSize = "cover"; el.style.backgroundPosition = "center"; }
       else { el.style.backgroundImage = ""; }
       var fallback = el.querySelector("[data-image-fallback]");
       if (fallback) fallback.hidden = !!v;
@@ -400,7 +405,7 @@
     // hero image back-compat
     document.querySelectorAll("[data-hero-image]").forEach(function (el) {
       var hero = sd.hero || {};
-      if (hero.image) { el.style.backgroundImage = "url('" + hero.image + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = el.getAttribute("data-image-position") || "center"; }
+      if (hero.image) { el.style.backgroundImage = cssUrl(hero.image); el.style.backgroundSize = "cover"; el.style.backgroundPosition = el.getAttribute("data-image-position") || "center"; }
       else { el.style.backgroundImage = ""; }
     });
 
