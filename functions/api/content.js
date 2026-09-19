@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 17,
+  "version": 18,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -54,7 +54,7 @@ const DEFAULT = {
         "hero": {
           "eyebrow": "Video · Education · AI",
           "title": "Video that lands.\nLearning that scales.\nAI that works.",
-          "lead": "I’m Jimmy Park — a Korea-based video producer, education platform builder, and AI practitioner. From branded films and storytelling to learning platforms, workshops, and AI-assisted creation, I help teams turn ideas into work people can watch, use, and teach from.",
+          "lead": "I’m Jimmy Park — Korea-based video producer, education builder, and AI practitioner. I make films people remember, learning platforms people use, and AI workflows teams can actually run.",
           "ctaPrimary": {
             "label": "Start a conversation",
             "href": "/contact"
@@ -2641,6 +2641,7 @@ const V17_SEEDS = [
   [["pages","home","sections","hero","eyebrow"],"Solution maker · Video producer & web developer"],
   [["pages","home","sections","hero","title"],"Your goal.\nThe right way to reach it."],
   [["pages","home","sections","hero","title"],"I make video.\nBuild learning experiences.\nApply AI."],
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park — a Korea-based video producer, education platform builder, and AI practitioner. From branded films and storytelling to learning platforms, workshops, and AI-assisted creation, I help teams turn ideas into work people can watch, use, and teach from."],
 
   [["pages","home","sections","hero","lead"],"I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly."],
   [["pages","home","sections","hero","ctaPrimary"],{"label":"Tell me your goal","href":"/contact"}],
@@ -2669,6 +2670,23 @@ function migrateTo17(doc) {
   doc.version = 17;
   return doc;
 }
+
+// v18: tighten homepage hero lead only.
+const V18_SEEDS = [
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park — a Korea-based video producer, education platform builder, and AI practitioner. From branded films and storytelling to learning platforms, workshops, and AI-assisted creation, I help teams turn ideas into work people can watch, use, and teach from."],
+];
+function migrateTo18(doc) {
+  for (const [path, previous] of V18_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  doc.version = 18;
+  return doc;
+}
+
+
 
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
@@ -2707,7 +2725,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2716,7 +2734,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2724,7 +2742,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2740,6 +2758,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 15) doc = migrateTo15(doc);
   if ((doc.version || 0) < 16) doc = migrateTo16(doc);
   if ((doc.version || 0) < 17) doc = migrateTo17(doc);
+  if ((doc.version || 0) < 18) doc = migrateTo18(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2777,12 +2796,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 15) migrateTo15(incoming);
   if (incoming.version < 16) migrateTo16(incoming);
   if (incoming.version < 17) migrateTo17(incoming);
+  if (incoming.version < 18) migrateTo18(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 17;
+  doc.version = 18;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
