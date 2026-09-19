@@ -854,6 +854,7 @@ const DEFAULT = {
               "href": ""
             }
           ]
+        },
         "topics": {
           "kicker": "02 / Themes",
           "title": "Topics I speak on",
