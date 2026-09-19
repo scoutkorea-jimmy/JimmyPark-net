@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 35,
+  "version": 36,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -963,20 +963,20 @@ const DEFAULT = {
         "stats": {
           "items": [
             {
-              "value": "20+ Years",
-              "label": "Scouting experience"
+              "value": "20+",
+              "label": "Years in Scouting"
             },
             {
-              "value": "Youth Movement",
-              "label": "Growth & social impact"
+              "value": "Youth",
+              "label": "Movement & social impact"
             },
             {
-              "value": "International Exchange",
-              "label": "Global network"
+              "value": "Global",
+              "label": "Exchange & networks"
             },
             {
-              "value": "Media & Documentation",
-              "label": "Records · communication"
+              "value": "Media",
+              "label": "Records & communication"
             }
           ]
         },
@@ -3469,6 +3469,16 @@ function migrateTo35(doc) {
   doc.version = 35;
   return doc;
 }
+// v36: scouting stats — consistent short value / label hierarchy.
+const V36_SCOUTING_STATS = {"items": [{"value": "20+", "label": "Years in Scouting"}, {"value": "Youth", "label": "Movement & social impact"}, {"value": "Global", "label": "Exchange & networks"}, {"value": "Media", "label": "Records & communication"}]};
+function migrateTo36(doc) {
+  const sc = doc.pages && doc.pages.scouting && doc.pages.scouting.sections;
+  if (sc) sc.stats = JSON.parse(JSON.stringify(V36_SCOUTING_STATS));
+  doc.version = 36;
+  return doc;
+}
+
+
 
 
 
@@ -3540,7 +3550,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3549,7 +3559,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3557,7 +3567,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3591,6 +3601,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 33) doc = migrateTo33(doc);
   if ((doc.version || 0) < 34) doc = migrateTo34(doc);
   if ((doc.version || 0) < 35) doc = migrateTo35(doc);
+  if ((doc.version || 0) < 36) doc = migrateTo36(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3646,12 +3657,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 33) migrateTo33(incoming);
   if (incoming.version < 34) migrateTo34(incoming);
   if (incoming.version < 35) migrateTo35(incoming);
+  if (incoming.version < 36) migrateTo36(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 35;
+  doc.version = 36;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

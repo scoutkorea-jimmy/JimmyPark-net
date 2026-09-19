@@ -382,7 +382,7 @@
         '<h3>' + esc(v.title) + '</h3><p>' + esc(v.desc) + '</p>' + (/^https:\/\//.test(v.href || '') ? '<a class="card-link" href="' + esc(v.href) + '" target="_blank" rel="noopener noreferrer">Open project<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
     scoutStats: function (s, i) {
-      return '<div class="stat' + (i === 0 ? ' stat--lead' : '') + '"><div class="stat-value">' + esc(s.value) + '</div><div class="stat-label">' + esc(s.label) + '</div></div>';
+      return '<div class="stat"><div class="stat-value">' + esc(s.value) + '</div><div class="stat-label">' + esc(s.label) + '</div></div>';
     },
     scoutRoles: function (r) {
       return '<div class="card card--compact role-card' + (r.accent === "green" ? ' card--scouting' : '') + '"><div class="role-header"><div class="role-body"><h3>' +

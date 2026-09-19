@@ -857,3 +857,23 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio .timeline-kind--participation { background: #efeaf8; color: #4a3b78; border-color: #d9d0ee; }
 .portfolio .timeline-year-blurb { display: block; }
 .portfolio .timeline-year-group:not([open]) > .timeline-year-summary .timeline-year-blurb { opacity: 1; }
+
+
+/* Scouting snap4 — equal hierarchy across columns */
+.portfolio .snap4 .stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 5.25rem;
+}
+.portfolio .snap4 .stat-value,
+.portfolio .snap4 .stat--lead .stat-value {
+  white-space: nowrap;
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  line-height: 1.2;
+  min-height: 1.35em;
+}
+.portfolio .snap4 .stat-label {
+  margin-top: var(--space-8);
+  line-height: 1.4;
+}
