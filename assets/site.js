@@ -93,6 +93,9 @@
       // A wipe panel clips its children while it opens, so they may never register as visible;
       // reveal them with the panel instead (their own stagger delays still apply).
       if (entry.target.getAttribute("data-reveal") === "wipe") group = group.concat(Array.prototype.slice.call(entry.target.querySelectorAll("[data-reveal]:not(.is-revealed)")));
+      // Phone swipe rows: cards beyond the right edge never meet the viewport, so the row enters as one.
+      var row = entry.target.parentElement;
+      if (row && row.scrollWidth > row.clientWidth + 1) group = group.concat(Array.prototype.slice.call(row.querySelectorAll(":scope > [data-reveal]:not(.is-revealed)")));
       group.forEach(function (el) {
         el.classList.add("is-revealed");
         revealObserver.unobserve(el);
@@ -100,6 +103,17 @@
       });
     });
   }, { rootMargin: "0px 0px -6% 0px", threshold: 0 }) : null;
+  // Opening a disclosure shows its items at once (with their stagger) instead of waiting for scroll.
+  if (revealObserver) document.addEventListener("toggle", function (e) {
+    if (!e.target.open || !e.target.querySelectorAll) return;
+    // Disclosures that start open (desktop) also fire toggle at load; leave off-screen ones to the observer.
+    var box = e.target.getBoundingClientRect();
+    if (box.bottom < 0 || box.top > window.innerHeight) return;
+    e.target.querySelectorAll("[data-reveal]:not(.is-revealed)").forEach(function (el) {
+      el.classList.add("is-revealed");
+      revealObserver.unobserve(el);
+    });
+  }, true);
   function registerReveals() {
     if (!revealObserver) return;
     REVEALS.forEach(function (pair) {
