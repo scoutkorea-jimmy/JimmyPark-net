@@ -254,7 +254,7 @@ M3 top app bar: sticky, `z-index:60`, 64px, `--md-surface` with no divider; it t
 Left: **Jimmy Park.** with a small burgundy terminal square. No initials, serif monogram
 or repeated name. The SVG embeds its own Wanted Sans subset, so the logo needs no font-network request.
 Use 190×38px in the header and 170×34px in the footer, with accessible `alt="Jimmy Park"`.
-Right: Home, Media Work, Dev Work, Global & Scouting and Contact (Insights hidden until it has posts, v0.14.0),
+Right: Home, Media Work, Dev Work, Global & Scouting, Insights and Contact,
 as 40px pill links; the current page gets a `--md-secondary-container` pill. Below 840px a 40px icon
 button opens the **modal navigation drawer**: `--md-scrim` over the page, a 360px (max 86vw)
 `--md-surface-container-low` panel with a 16px trailing radius, 56px pill items. It locks page

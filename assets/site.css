@@ -417,9 +417,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .portfolio .photo-portfolio p { margin: var(--space-12) 0 0; font-size: .875rem; color: var(--md-on-surface-variant); }
 .portfolio [data-optional-link][hidden] { display: none; }
 
-/* Responsive header: navigation drawer below the M3 expanded width (840px). */
+/* The full app bar switches to the M3 navigation drawer before labels collide. */
 .nav-toggle { display: none; }
-@media (max-width: 839px) {
+@media (max-width: 1099px) {
   .desktop-nav { display: none !important; }
   .nav-toggle { display: inline-flex !important; }
 }
@@ -648,9 +648,9 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio .nav-link.is-active { background: var(--md-secondary-container); color: var(--md-on-secondary-container); font-weight: 600; }
 .portfolio .desktop-nav .site-button { margin-inline-start: var(--space-8); }
 
-/* Modal navigation drawer below 840px. */
+/* Modal navigation drawer protects label touch targets on compact widths. */
 .portfolio .nav-toggle { position: relative; z-index: 2; }
-@media (max-width: 839px) {
+@media (max-width: 1099px) {
   .portfolio .mobile-menu { position: fixed; inset: 0; z-index: 1; border-top: 0; background: var(--md-scrim); }
   .portfolio .mobile-menu .mobile-links {
     width: min(360px, 86vw); max-width: none; height: 100dvh; margin: 0; padding: calc(64px + var(--space-12)) var(--space-12) var(--space-24);

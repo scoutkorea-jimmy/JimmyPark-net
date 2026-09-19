@@ -56,7 +56,7 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   assert.ok(!read('assets/site.js').includes('var meta = pd.meta || g.seo'));
   const publicHTML = ['index.html','work.html','dev.html','scouting.html','contact.html','insights.html','404.html'];
   for (const file of publicHTML) {
-    const html=read(file); assert.doesNotMatch(html,/data-nav="insights"/,'Insights stays out of navigation until it has posts'); assert.match(html,/id="main-content"/);
+    const html=read(file); assert.match(html,/data-nav="insights"/,'Insights is visible in navigation after publication'); assert.match(html,/id="main-content"/);
     assert.equal((html.match(/<main\b/g)||[]).length,1);
   }
   const offline = { ...env, JP_KV: { get: async () => { throw new Error('offline'); } } };

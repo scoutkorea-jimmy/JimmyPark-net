@@ -38,7 +38,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 
 ### Insights and portfolio completion (v0.8.0)
 - Add `/insights` and `/insights/:slug` to the portfolio. The existing four routes and all
-  standalone app files stay intact. (v0.14.0: Insights left the navigation until it has 3+ posts; routes stay.)
+  standalone app files stay intact. With four published AX Series posts, Insights is visible in
+  desktop, mobile, and footer navigation.
 - `functions/api/_posts.js` manages separate KV key `insights:v1`; `/api/posts` always requires
   the existing signed admin session. Public server-rendered views and dynamic sitemap select
   published posts only. Draft/unknown slug = 404. Keep `no-store` intact in middleware.
@@ -118,7 +119,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Keep factual role scope: the 2023 Jamboree role is Korean Contingent media. Do not add
   unverified expert rankings, awards, client results or claims of AI-search guarantees.
 - Insights detail has a visible author link and escaped BlogPosting JSON-LD referencing the
-  homepage `#person`; missing pages have accurate noindex metadata. No posts were authored.
+  homepage `#person`; missing pages have accurate noindex metadata. The AX Series posts cover
+  prompting clarity, work division, ownership of sent output, and organization-wide AX.
 - Content GET returns 503 on unavailable/corrupt storage; defaults only for a genuinely missing
   key. PUT requires the complete current schema and rejects malformed/partial documents,
   invalid URLs/email, and stale `updatedAt` before writing. Old editor versions must reload.
@@ -217,8 +219,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Person JSON-LD jobTitle "Video Producer and Web Developer" (image stays the full-resolution original).
 - Hiring: Contact `#hiring` block with a "Role enquiry" mailto; Home "Stay connected" third card is
   "Hiring enquiries" → `/contact#hiring` (replaced the Insights card). Card links read "Learn more".
-- Insights is out of header/mobile/footer nav on every shell (`.checks/insights.cjs` asserts this);
-  `/insights` still works, is in the sitemap and now has og:image/twitter:image. Re-add at 3+ posts.
+- Insights is visible in header, mobile, and footer navigation now that the site has four published
+  AX Series posts. `/insights` remains in the sitemap and has og:image/twitter:image.
 - Fixes: section subtitles and the Scouting timeline note use `#6b665f` (AA); `/dev` has an `.sr-only`
   H2 before the principles; the hero uses `jimmy-park-portrait-960.jpg` (152 KB display derivative,
   original 1.19 MB file kept unchanged).

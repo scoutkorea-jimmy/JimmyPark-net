@@ -69,7 +69,9 @@ wrangler.toml   Pages config + KV binding
   unpublished or deleted. Article controls save independently of the page editor.
 - A blank line separates paragraphs; `## ` starts a heading. HTML is displayed as text.
 - Drafts require the existing admin login. Only published posts enter public HTML and
-  the sitemap. There are no invented starter articles. Content is rendered on the server
+  the sitemap. The published AX Series covers prompt clarity, human-AI work division,
+  accountability for AI-generated work, and AI transformation as a shared operating model.
+  Content is rendered on the server
   for reading without JavaScript and carries article-specific metadata.
 - Posts live in a separate `insights:v1` KV document. One editor is intended; revision
   checks reject observed stale saves but Cloudflare KV is eventually consistent, not a
