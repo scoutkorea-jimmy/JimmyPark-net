@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 22,
+  "version": 23,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -764,11 +764,11 @@ const DEFAULT = {
           "title": "Lecture history",
           "sub": "Past talks and workshops",
           "desc": "Selected lectures, workshops and teaching engagements \u2014 from youth media programs to university courses and adult training.",
-          "items":           [
+          "items":                     [
             {
               "year": "2026",
               "title": "Media Career One-Day: Film Director Experience",
-              "org": "Mapo Municipal Youth Center",
+              "org": "Mapo Municipal Youth Center (시립마포청소년센터)",
               "role": "Instructor",
               "summary": "23 Sep 2026 · Hands-on media career session for upper-elementary students, focused on the role of a film director.",
               "href": ""
@@ -776,7 +776,7 @@ const DEFAULT = {
             {
               "year": "2025",
               "title": "Dream Collaboration — Video Production Project with Media Professionals",
-              "org": "Mapo Municipal Youth Center",
+              "org": "Mapo Municipal Youth Center (시립마포청소년센터)",
               "role": "Instructor / Project lead",
               "summary": "27 Nov – 18 Dec 2025 · Multi-week video production project for middle and high school students.",
               "href": ""
@@ -784,7 +784,7 @@ const DEFAULT = {
             {
               "year": "2025",
               "title": "Media Career One-Day: Film Director Experience",
-              "org": "Mapo Municipal Youth Center",
+              "org": "Mapo Municipal Youth Center (시립마포청소년센터)",
               "role": "Instructor",
               "summary": "4 Nov 2025 · One-day media career workshop for middle school students.",
               "href": ""
@@ -792,15 +792,23 @@ const DEFAULT = {
             {
               "year": "2025",
               "title": "Media Career One-Day: Film Director Experience",
-              "org": "Mapo Municipal Youth Center",
+              "org": "Mapo Municipal Youth Center (시립마포청소년센터)",
               "role": "Instructor",
               "summary": "28 Oct 2025 · One-day media career workshop for middle school students.",
               "href": ""
             },
             {
               "year": "2025",
+              "title": "From Analog to AI Native: The Scout Path Built Across Generations",
+              "org": "Korea Scout Association (한국스카우트연맹) — National Training Leaders Conference",
+              "role": "Session lead",
+              "summary": "30 Aug 2025 · Session lead at the National Training Leaders Conference (전국훈육지도자대회).",
+              "href": ""
+            },
+            {
+              "year": "2025",
               "title": "Media Career One-Day: Film Director Experience",
-              "org": "Mapo Municipal Youth Center",
+              "org": "Mapo Municipal Youth Center (시립마포청소년센터)",
               "role": "Instructor",
               "summary": "2 Jul 2025 · One-day media career workshop for middle school students.",
               "href": ""
@@ -808,7 +816,7 @@ const DEFAULT = {
             {
               "year": "2022",
               "title": "Video Content Planning",
-              "org": "15th Scout Journalism School",
+              "org": "Korea Scout Association (한국스카우트연맹) — 15th Scout Journalism School",
               "role": "Instructor",
               "summary": "20 Aug 2022 · Lecture on planning video content for middle and high school Scout journalists.",
               "href": ""
@@ -816,9 +824,9 @@ const DEFAULT = {
             {
               "year": "2021",
               "title": "Virtual Company Co-Teaching (Hello Peace Lab)",
-              "org": "Halla University — Dept. of Advertising & Visual Media (now Media Advertising Content)",
+              "org": "Halla University (한라대학교) — Department of Media Advertising Content",
               "role": "Co-instructor",
-              "summary": "Spring semester 2021 · University course for Halla University students, delivered with Hello Peace Lab.",
+              "summary": "Spring semester 2021 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.",
               "href": ""
             },
             {
@@ -832,15 +840,15 @@ const DEFAULT = {
             {
               "year": "2020",
               "title": "Virtual Company Co-Teaching (Hello Peace Lab)",
-              "org": "Halla University — Dept. of Advertising & Visual Media (now Media Advertising Content)",
+              "org": "Halla University (한라대학교) — Department of Media Advertising Content",
               "role": "Co-instructor",
-              "summary": "Fall semester 2020 · University course for Halla University students, delivered with Hello Peace Lab.",
+              "summary": "Fall semester 2020 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.",
               "href": ""
             },
             {
               "year": "2020",
               "title": "Mobile Video Editing for Small Business Owners",
-              "org": "Jungnang Dongbu Market, Seoul",
+              "org": "Jungnang Dongbu Market (중랑동부시장), Seoul",
               "role": "Instructor",
               "summary": "3–12 Nov 2020 · Mobile video editing training for market merchants and small business owners.",
               "href": ""
@@ -848,9 +856,9 @@ const DEFAULT = {
             {
               "year": "2018",
               "title": "Photoshop for Educational Materials Development",
-              "org": "Bucheon 2nd Children's Meal Support Center",
+              "org": "Bucheon Children's & Social Welfare Foodservice Management Support Center (부천시어린이·사회복지급식관리지원센터)",
               "role": "Instructor",
-              "summary": "20 Dec 2018 · Internal staff training on Photoshop for producing and developing educational materials (adult learners).",
+              "summary": "20 Dec 2018 · Internal staff training on Photoshop for producing and developing educational materials (adult learners). Historical reference: Bucheon 2nd Children's Meal Support Center.",
               "href": ""
             }
           ]
@@ -2917,6 +2925,16 @@ function migrateTo22(doc) {
   return doc;
 }
 
+// v23: refresh lecture history orgs to official names + add KSA session.
+const V23_LECTURE_TALKS = [{"year": "2026", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Municipal Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "23 Sep 2026 · Hands-on media career session for upper-elementary students, focused on the role of a film director.", "href": ""}, {"year": "2025", "title": "Dream Collaboration — Video Production Project with Media Professionals", "org": "Mapo Municipal Youth Center (시립마포청소년센터)", "role": "Instructor / Project lead", "summary": "27 Nov – 18 Dec 2025 · Multi-week video production project for middle and high school students.", "href": ""}, {"year": "2025", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Municipal Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "4 Nov 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2025", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Municipal Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "28 Oct 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2025", "title": "From Analog to AI Native: The Scout Path Built Across Generations", "org": "Korea Scout Association (한국스카우트연맹) — National Training Leaders Conference", "role": "Session lead", "summary": "30 Aug 2025 · Session lead at the National Training Leaders Conference (전국훈육지도자대회).", "href": ""}, {"year": "2025", "title": "Media Career One-Day: Film Director Experience", "org": "Mapo Municipal Youth Center (시립마포청소년센터)", "role": "Instructor", "summary": "2 Jul 2025 · One-day media career workshop for middle school students.", "href": ""}, {"year": "2022", "title": "Video Content Planning", "org": "Korea Scout Association (한국스카우트연맹) — 15th Scout Journalism School", "role": "Instructor", "summary": "20 Aug 2022 · Lecture on planning video content for middle and high school Scout journalists.", "href": ""}, {"year": "2021", "title": "Virtual Company Co-Teaching (Hello Peace Lab)", "org": "Halla University (한라대학교) — Department of Media Advertising Content", "role": "Co-instructor", "summary": "Spring semester 2021 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.", "href": ""}, {"year": "2021", "title": "Influencer, Becoming the Trend of the Era (1): Lecture Edition", "org": "Publication", "role": "Author", "summary": "2021 · Authored the lecture edition of the book on influencers and contemporary media trends.", "href": ""}, {"year": "2020", "title": "Virtual Company Co-Teaching (Hello Peace Lab)", "org": "Halla University (한라대학교) — Department of Media Advertising Content", "role": "Co-instructor", "summary": "Fall semester 2020 · University course for Halla University students (formerly Dept. of Advertising & Visual Media), delivered with Hello Peace Lab.", "href": ""}, {"year": "2020", "title": "Mobile Video Editing for Small Business Owners", "org": "Jungnang Dongbu Market (중랑동부시장), Seoul", "role": "Instructor", "summary": "3–12 Nov 2020 · Mobile video editing training for market merchants and small business owners.", "href": ""}, {"year": "2018", "title": "Photoshop for Educational Materials Development", "org": "Bucheon Children's & Social Welfare Foodservice Management Support Center (부천시어린이·사회복지급식관리지원센터)", "role": "Instructor", "summary": "20 Dec 2018 · Internal staff training on Photoshop for producing and developing educational materials (adult learners). Historical reference: Bucheon 2nd Children's Meal Support Center.", "href": ""}];
+function migrateTo23(doc) {
+  const talksSec = doc.pages && doc.pages.lecture && doc.pages.lecture.sections && doc.pages.lecture.sections.talks;
+  if (talksSec) talksSec.items = JSON.parse(JSON.stringify(V23_LECTURE_TALKS));
+  doc.version = 23;
+  return doc;
+}
+
+
 
 
 
@@ -2963,7 +2981,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2972,7 +2990,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2980,7 +2998,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3001,6 +3019,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 20) doc = migrateTo20(doc);
   if ((doc.version || 0) < 21) doc = migrateTo21(doc);
   if ((doc.version || 0) < 22) doc = migrateTo22(doc);
+  if ((doc.version || 0) < 23) doc = migrateTo23(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3043,12 +3062,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 20) migrateTo20(incoming);
   if (incoming.version < 21) migrateTo21(incoming);
   if (incoming.version < 22) migrateTo22(incoming);
+  if (incoming.version < 23) migrateTo23(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 22;
+  doc.version = 23;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
