@@ -11,7 +11,7 @@
 
   var session = null;       // { token, exp }
   var content = null;       // working document (deep copy of server doc)
-  var activeTab = "home";   // home | work | dev | scouting | contact | global | media
+  var activeTab = "home";   // home | work | dev | lecture | scouting | contact | global | media
   var previewPage = "home"; // which page the iframe shows
   var deviceMode = "desktop"; // desktop | mobile — preview viewport width
   var pendingPick = null;   // fn(url) used by the image picker / upload
@@ -74,6 +74,12 @@
       { id: "sites", title: "Live websites", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Websites (top card first)", fields: WEBSITE_FIELDS, images: WEBSITE_IMAGES, tmpl: WEBSITE_TMPL }] },
       { id: "vibecoding", title: "AI in Practice", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Projects", fields: [F("slug", "Project ID"), F("href", "Project HTTPS URL (optional)"), F("title", "Title"), F("desc", "Description"), F("status", "Status", "select", STATUS), F("accent", "Accent", "select", ACCENT_NG)], images: [["image", "Image"]], tmpl: { slug: "", href: "", title: "", desc: "", status: "Prototype", accent: "neutral", image: "" } }] },
       { id: "lecture", title: "AX Consulting & Workshops", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "topics", label: "Topics", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
+      { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
+    ] },
+    lecture: { title: "Lecture", kind: "page", page: "lecture", sections: [
+      { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
+      { id: "talks", title: "Lecture history", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Talks (empty until you add some)", fields: [F("year", "Year"), F("title", "Title"), F("org", "Organization"), F("role", "Your role"), F("summary", "Summary", "textarea"), F("href", "Link (optional HTTPS or /path)")], tmpl: { year: "", title: "", org: "", role: "", summary: "", href: "" } }] },
+      { id: "topics", title: "Topics", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Topic cards", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
     scouting: { title: "Scouting", kind: "page", page: "scouting", sections: [
@@ -159,7 +165,7 @@
 
   function ensureShape() {
     content.global = content.global || {}; content.pages = content.pages || {};
-    ["home", "work", "dev", "scouting", "contact"].forEach(function (p) {
+    ["home", "work", "dev", "lecture", "scouting", "contact"].forEach(function (p) {
       var ps = content.pages[p] = content.pages[p] || {};
       ps.meta = ps.meta || { title: "", desc: "" };
       ps.sections = ps.sections || {};
@@ -182,7 +188,7 @@
   // Two groups: the site's actual pages (in top-to-bottom nav order) first, then the
   // site-wide / shared content (Global + Media) separated as its own group.
   var TAB_GROUPS = [
-    { label: "Pages", tabs: ["home", "work", "dev", "scouting", "contact", "insights"] },
+    { label: "Pages", tabs: ["home", "work", "dev", "lecture", "scouting", "contact", "insights"] },
     { label: "Site-wide", tabs: ["global", "media"] },
   ];
   function buildTabs() {

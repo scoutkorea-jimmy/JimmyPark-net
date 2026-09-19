@@ -291,6 +291,21 @@
     videoFormats: function (f) {
       return '<div class="format-row"><div class="format-name">' + esc(f.name) + '</div><div class="body-copy">' + esc(f.desc) + '</div></div>';
     },
+    lectureTalks: function (t) {
+      var href = t.href || "";
+      var external = /^https:\/\//.test(href);
+      var internal = href.charAt(0) === "/" && href.charAt(1) !== "/";
+      var link = external || internal;
+      return '<article class="card project-card lecture-talk"><div class="card-body">' +
+        '<div class="case-meta">' + (t.org ? '<span class="eyebrow">' + esc(t.org) + '</span>' : '') +
+        (t.year ? '<span class="tag">' + esc(t.year) + '</span>' : '') + '</div>' +
+        '<h3>' + esc(t.title) + '</h3>' +
+        (t.role ? '<p class="case-role">' + esc(t.role) + '</p>' : '') +
+        (t.summary ? '<p>' + esc(t.summary) + '</p>' : '') +
+        (link ? '<a class="card-link" href="' + esc(href) + '"' + (external ? ' target="_blank" rel="noopener noreferrer"' : '') +
+          '>Details<span class="msym" aria-hidden="true">north_east</span></a>' : '') +
+        '</div></article>';
+    },
     vibeItems: function (v) {
       var media = v.image ? '<div class="project-image" role="img" aria-label="' + esc(v.title) + '" style="background-image:url(&quot;' + esc(v.image) + '&quot;)"></div>' : '';
       return '<article class="card project-card">' + media + '<div class="card-body"><span class="tag status-tag">' + esc(v.status) + '</span>' +

@@ -767,3 +767,9 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 }
 @media print { [data-reveal] { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; } .md-progress { display: none; } }
 @media (prefers-reduced-motion: reduce) { .portfolio .mobile-menu .mobile-links { animation: none; } }
+
+
+/* Lecture page — hide empty-state when talks are present */
+.lecture-talks:not(:empty) + .lecture-empty { display: none; }
+.lecture-empty { margin: var(--space-24) 0 0; max-width: 42ch; color: #6b665f; }
+.lecture-talk .card-body { display: flex; flex-direction: column; gap: var(--space-8); }

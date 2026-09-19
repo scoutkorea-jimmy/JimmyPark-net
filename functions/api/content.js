@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 20,
+  "version": 21,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -121,7 +121,7 @@ const DEFAULT = {
                 "Workshops",
                 "Global education"
               ],
-              "href": "/dev",
+              "href": "/lecture",
               "accent": "burgundy"
             },
             {
@@ -740,6 +740,66 @@ const DEFAULT = {
         }
       }
     },
+
+    "lecture": {
+      "meta": {
+        "title": "Lectures & Workshops | Jimmy Park",
+        "desc": "Lectures and workshops by Jimmy Park on branded film, education, applied AI and Scouting communication — book a session for your team or event."
+      },
+      "order": [
+        "intro",
+        "talks",
+        "topics",
+        "cta"
+      ],
+      "hidden": [],
+      "sections": {
+        "intro": {
+          "eyebrow": "Lecture",
+          "title": "Lectures and workshops\nthat travel.",
+          "lead": "Talks and hands-on sessions on branded film, education, applied AI and Scouting communication — shaped for the people in the room."
+        },
+        "talks": {
+          "kicker": "01 / History",
+          "title": "Lecture history",
+          "sub": "Past talks and workshops",
+          "desc": "A running list of lectures and workshops. Entries will appear here as they are added.",
+          "items": []
+        },
+        "topics": {
+          "kicker": "02 / Themes",
+          "title": "Topics I speak on",
+          "sub": "Themes that fit a lecture or workshop",
+          "desc": "These are the themes I return to — not a schedule, just the ground I cover well.",
+          "items": [
+            {
+              "name": "Branded film",
+              "desc": "Story, craft and production for films people remember."
+            },
+            {
+              "name": "Education",
+              "desc": "Learning platforms and teaching formats that travel."
+            },
+            {
+              "name": "Applied AI",
+              "desc": "Practical AI workflows and hands-on AX practice."
+            },
+            {
+              "name": "Scouting communication",
+              "desc": "Field media, youth engagement and international messaging."
+            }
+          ]
+        },
+        "cta": {
+          "title": "Invite a lecture or workshop",
+          "body": "Share the audience, the theme and the format you have in mind. We can shape a talk or a hands-on session that fits.",
+          "button": {
+            "label": "Book a lecture",
+            "href": "/contact"
+          }
+        }
+      }
+    },
     "scouting": {
       "meta": {
         "title": "Global Scouting & International Collaboration | Jimmy Park",
@@ -1076,15 +1136,38 @@ const DEFAULT = {
 };
 
 // ── generic validator: use DEFAULT as the schema, clamp strings/arrays ────────
+const LECTURE_TALK_SHAPE = { year: "", title: "", org: "", role: "", summary: "", href: "" };
+
 function sanitize(def, val) {
   if (typeof def === "string") return val == null ? def : String(val).slice(0, MAXSTR);
   if (typeof def === "number") { const n = Number(val); return Number.isFinite(n) ? n : def; }
   if (Array.isArray(def)) {
-    if (!Array.isArray(val)) return def;
-    const tmpl = def.length ? def[0] : "";
-    return val.slice(0, MAXARR).map((item) =>
-      typeof tmpl === "object" && tmpl !== null ? sanitize(tmpl, item) : String(item == null ? "" : item).slice(0, MAXSTR)
-    );
+    if (!Array.isArray(val)) return JSON.parse(JSON.stringify(def));
+    const tmpl = def.length ? def[0] : null;
+    if (tmpl && typeof tmpl === "object" && tmpl !== null && !Array.isArray(tmpl)) {
+      return val.slice(0, MAXARR).map((item) => sanitize(tmpl, item));
+    }
+    if (typeof tmpl === "string") {
+      return val.slice(0, MAXARR).map((item) => String(item == null ? "" : item).slice(0, MAXSTR));
+    }
+    // Empty DEFAULT collections (e.g. lecture talks): keep object rows so admin can grow the list.
+    return val.slice(0, MAXARR).map((item) => {
+      if (item && typeof item === "object" && !Array.isArray(item)) {
+        // Prefer the known lecture-talk shape when keys align; otherwise keep stringish fields.
+        const keys = Object.keys(item);
+        if (keys.length && keys.every((k) => k in LECTURE_TALK_SHAPE)) return sanitize(LECTURE_TALK_SHAPE, item);
+        const out = {};
+        for (const k of keys) {
+          const v = item[k];
+          if (typeof v === "string") out[k] = v.slice(0, MAXSTR);
+          else if (typeof v === "number" && Number.isFinite(v)) out[k] = v;
+          else if (v == null) out[k] = "";
+          else out[k] = String(v).slice(0, MAXSTR);
+        }
+        return out;
+      }
+      return String(item == null ? "" : item).slice(0, MAXSTR);
+    });
   }
   if (def && typeof def === "object") {
     const out = {};
@@ -2716,6 +2799,26 @@ function migrateTo20(doc) {
   return doc;
 }
 
+// v21: add Lecture page (empty talk history) and retarget homepage education card to /lecture.
+function migrateTo21(doc) {
+  const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
+  const pages = object(doc.pages) ? doc.pages : (doc.pages = {});
+  if (!object(pages.lecture)) {
+    pages.lecture = JSON.parse(JSON.stringify(DEFAULT.pages.lecture));
+  }
+  const acts = pages.home && pages.home.sections && pages.home.sections.activities && pages.home.sections.activities.items;
+  if (Array.isArray(acts)) {
+    for (const a of acts) {
+      if (!a || typeof a !== 'object') continue;
+      if (a.href === '/dev' && typeof a.kicker === 'string' && /education/i.test(a.kicker)) a.href = '/lecture';
+    }
+  }
+  doc.version = 21;
+  return doc;
+}
+
+
+
 
 
 
@@ -2759,7 +2862,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2768,7 +2871,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2776,7 +2879,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2794,6 +2897,8 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 17) doc = migrateTo17(doc);
   if ((doc.version || 0) < 18) doc = migrateTo18(doc);
   if ((doc.version || 0) < 19) doc = migrateTo19(doc);
+  if ((doc.version || 0) < 20) doc = migrateTo20(doc);
+  if ((doc.version || 0) < 21) doc = migrateTo21(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2834,12 +2939,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 18) migrateTo18(incoming);
   if (incoming.version < 19) migrateTo19(incoming);
   if (incoming.version < 20) migrateTo20(incoming);
+  if (incoming.version < 21) migrateTo21(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 20;
+  doc.version = 21;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
