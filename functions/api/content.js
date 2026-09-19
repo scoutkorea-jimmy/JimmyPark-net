@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 33,
+  "version": 34,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -976,7 +976,7 @@ const DEFAULT = {
           "title": "Roles behind the relationships",
           "items": [
             {
-              "title": "Unit Leader · Baengnyong Dongwoo Unit",
+              "title": "Unit Leader · Baek-ryong Unit",
               "org": "Gyeonggi Southern Federation, KSA",
               "period": "2024.01–",
               "accent": "green"
@@ -1012,7 +1012,7 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
-              "title": "Public Relations Director",
+              "title": "Head of PR Department",
               "org": "15th Korea Jamboree · Planning & Coordination HQ",
               "period": "2026",
               "accent": "neutral"
@@ -1022,12 +1022,6 @@ const DEFAULT = {
               "org": "Founder",
               "period": "2026–",
               "accent": "green"
-            },
-            {
-              "title": "Mugunghwa Silver Medal",
-              "org": "Korea Scout Association",
-              "period": "2025",
-              "accent": "neutral"
             }
           ]
         },
@@ -1081,7 +1075,8 @@ const DEFAULT = {
               "context": "I started Scouting as a Scout, experiencing people and activities first-hand in the field.",
               "track": "Scout",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2012",
@@ -1089,7 +1084,8 @@ const DEFAULT = {
               "context": "Participated as a Scout journalist (대원기자) at the 13th Korea Jamboree.",
               "track": "Scout",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2012.01",
@@ -1097,7 +1093,8 @@ const DEFAULT = {
               "context": "Authorized as Bear Scout (범스카우트) No. 1420 on 20 January 2012 — Korea’s top Scout rank.",
               "track": "Scout",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2014",
@@ -1105,7 +1102,8 @@ const DEFAULT = {
               "context": "Attended the 1st China–Japan–Korea Scouting Friendship (CJK-B) as a journalist with the Korean Contingent.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2014",
@@ -1113,7 +1111,8 @@ const DEFAULT = {
               "context": "Planning & Coordination HQ Media Center: lead for newspaper design.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             },
             {
               "year": "2014",
@@ -1121,7 +1120,8 @@ const DEFAULT = {
               "context": "Instructor for the “I Am Also a Journalist” (나도저널리스트) program at the 6th Scout Journalism School.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "instructor"
             },
             {
               "year": "2014",
@@ -1129,7 +1129,8 @@ const DEFAULT = {
               "context": "I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2014",
@@ -1137,7 +1138,8 @@ const DEFAULT = {
               "context": "Completed Korea Scout Association intermediate training (중급훈련).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "training"
             },
             {
               "year": "2014–",
@@ -1145,7 +1147,8 @@ const DEFAULT = {
               "context": "From 2014 to the present, a core ongoing role: lead and dedicated photography for many national-level Korea Scout Association events.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2015",
@@ -1153,7 +1156,8 @@ const DEFAULT = {
               "context": "Joined the PRESS media team and led the video unit.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             },
             {
               "year": "2015",
@@ -1161,7 +1165,8 @@ const DEFAULT = {
               "context": "Joined the Association of Top Achiever Scouts (ATAS) in 2015 (membership No. 3226).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2015",
@@ -1169,7 +1174,8 @@ const DEFAULT = {
               "context": "Completed Korea Scout Association advanced course (상급과정).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "training"
             },
             {
               "year": "2016",
@@ -1177,7 +1183,8 @@ const DEFAULT = {
               "context": "Planning & Coordination HQ Media Center: video team leader.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             },
             {
               "year": "2016",
@@ -1185,7 +1192,8 @@ const DEFAULT = {
               "context": "Lead photographer for the 20th National Orienteering Competition (전국오리엔티어링대회).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2016–2017",
@@ -1193,7 +1201,8 @@ const DEFAULT = {
               "context": "Deputy team leader of the Brush Team during the bid campaign.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "bid"
             },
             {
               "year": "2016–2017",
@@ -1201,7 +1210,8 @@ const DEFAULT = {
               "context": "Team leader of the Jamboree bid supporters group.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "bid"
             },
             {
               "year": "2016–2017",
@@ -1209,7 +1219,8 @@ const DEFAULT = {
               "context": "Practical promotion committee member for the bid; youth lead covering the Arab region.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "bid"
             },
             {
               "year": "2016",
@@ -1217,7 +1228,8 @@ const DEFAULT = {
               "context": "Joined the Korean observer delegation to the 3rd Arab Scout Youth Forum and the 28th Arab Scout Regional Conference to promote Korea’s bid for the World Scout Jamboree.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "bid"
             },
             {
               "year": "2016",
@@ -1225,7 +1237,8 @@ const DEFAULT = {
               "context": "Attended the 3rd China–Japan–Korea Scouting Friendship (CJK-B) as Head of the Korean Contingent.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2016",
@@ -1233,7 +1246,8 @@ const DEFAULT = {
               "context": "Photography for the youth exchange and the National Assembly invitation roundtable.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2016",
@@ -1241,7 +1255,8 @@ const DEFAULT = {
               "context": "Lead photographer for the Korea Scout Association Daejeon Federation Cub Scout joint investiture ceremony (컵스카우트 연합선서식).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2016",
@@ -1249,7 +1264,8 @@ const DEFAULT = {
               "context": "Lead photographer for the 25th Bear Scout (범스카우트) advancement camp of the Jeonnam Federation.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2016.08",
@@ -1257,7 +1273,8 @@ const DEFAULT = {
               "context": "Instructor at the 8th Scout Journalism School (August 2016).",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "instructor"
             },
             {
               "year": "2017",
@@ -1265,7 +1282,8 @@ const DEFAULT = {
               "context": "Joined the Asia-Pacific Region Scout Support Foundation as an Associate Member.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2017",
@@ -1273,7 +1291,8 @@ const DEFAULT = {
               "context": "Received the Korea Scout Association International Service Award.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "award"
             },
             {
               "year": "2017",
@@ -1281,7 +1300,8 @@ const DEFAULT = {
               "context": "Received the Korea Scout Association commendation badge (표창 기장).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "award"
             },
             {
               "year": "2017",
@@ -1289,7 +1309,8 @@ const DEFAULT = {
               "context": "Joined the Korean observer delegation to the National Rover Scout Conference hosted by The General Association of the Scouts of China (Taiwan).",
               "track": "Leader",
               "accent": "neutral",
-              "href": "https://en.scout.org.tw/"
+              "href": "https://en.scout.org.tw/",
+              "kind": "participation"
             },
             {
               "year": "2017.03",
@@ -1297,7 +1318,8 @@ const DEFAULT = {
               "context": "Mentored at the 1st Scout Youth Mock National Assembly (스카우트 청소년모의국회).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "mentoring"
             },
             {
               "year": "2017.08–2019.01",
@@ -1305,7 +1327,8 @@ const DEFAULT = {
               "context": "Member of the Korea Scout Association Uniform and Equipment Committee (제복장구위원회).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2018",
@@ -1313,7 +1336,8 @@ const DEFAULT = {
               "context": "Planning & Coordination HQ Media Center: newspaper design and media archive lead.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             },
             {
               "year": "2018",
@@ -1321,7 +1345,8 @@ const DEFAULT = {
               "context": "Received the Korea Scout Association President’s Citation (총재 표창).",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "award"
             },
             {
               "year": "2018.03",
@@ -1329,7 +1354,8 @@ const DEFAULT = {
               "context": "Mentored at the 2nd Scout Youth Mock National Assembly.",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "mentoring"
             },
             {
               "year": "2019.08",
@@ -1337,7 +1363,8 @@ const DEFAULT = {
               "context": "Photography practical instructor at the 12th Scout Journalism School.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "photography"
             },
             {
               "year": "2020",
@@ -1345,7 +1372,8 @@ const DEFAULT = {
               "context": "Awarded the Korea Scout Association Mugunghwa Bronze Medal (무궁화 동장).",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "award"
             },
             {
               "year": "2022",
@@ -1353,7 +1381,8 @@ const DEFAULT = {
               "context": "Served as Marketing Headquarters Director for the 2nd World Digital Camporee (세계디지털야영대회).",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2022",
@@ -1361,7 +1390,8 @@ const DEFAULT = {
               "context": "Completed the Korea Scout Association Commissioner Course (커미셔너과정).",
               "track": "Leader",
               "accent": "neutral",
-              "href": ""
+              "href": "",
+              "kind": "training"
             },
             {
               "year": "2022–2024",
@@ -1369,7 +1399,8 @@ const DEFAULT = {
               "context": "Served as National Commissioner on PR II, working on domestic Scouting activity and communication.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2022",
@@ -1377,7 +1408,8 @@ const DEFAULT = {
               "context": "Completed Wood Badge qualification.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "training"
             },
             {
               "year": "2023",
@@ -1385,7 +1417,8 @@ const DEFAULT = {
               "context": "Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             },
             {
               "year": "2024–2025",
@@ -1393,7 +1426,8 @@ const DEFAULT = {
               "context": "Served as a subcommittee chair of the Korea Scout Association Future Value Committee (미래가치위원회) and helped shape Vision 2032.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2024",
@@ -1401,15 +1435,17 @@ const DEFAULT = {
               "context": "Head of Contingent at WE@FUTURE Jamboree, hosted by the Scout Association of Hong Kong.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2024.01–",
-              "title": "Unit Leader, Baengnyong Dongwoo Unit",
-              "context": "Unit Leader (단대장) of Baengnyong Dongwoo Unit, Gyeonggi Southern Federation, Korea Scout Association — ongoing since January 2024.",
+              "title": "Unit Leader, Baek-ryong Unit",
+              "context": "Unit Leader (단대장) of Baek-ryong Unit, Gyeonggi Southern Federation, Korea Scout Association — ongoing since January 2024.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2025",
@@ -1417,7 +1453,8 @@ const DEFAULT = {
               "context": "Full (voting) delegate of the Korean Contingent to the 28th Asia-Pacific Scout Conference.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "participation"
             },
             {
               "year": "2025–2028",
@@ -1425,7 +1462,8 @@ const DEFAULT = {
               "context": "2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2025",
@@ -1433,15 +1471,17 @@ const DEFAULT = {
               "context": "Awarded the Korea Scout Association Mugunghwa Silver Medal (무궁화 은장).",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "award"
             },
             {
               "year": "2026",
-              "title": "15th Korea Jamboree — Public Relations Director",
-              "context": "Director of the Public Relations Department (홍보부 부장), Planning & Coordination HQ.",
+              "title": "15th Korea Jamboree — Head of PR Department",
+              "context": "Head of PR Department (홍보부 부장), Planning & Coordination HQ.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "leadership"
             },
             {
               "year": "2026–",
@@ -1449,7 +1489,8 @@ const DEFAULT = {
               "context": "I run BP Media, a Scouting-specialized media platform.",
               "track": "Leader",
               "accent": "green",
-              "href": ""
+              "href": "",
+              "kind": "media"
             }
           ]
         },
@@ -3399,6 +3440,19 @@ function migrateTo33(doc) {
   doc.version = 33;
   return doc;
 }
+// v34: Head of PR; Baek-ryong; kind chips; Mugunghwa awards not roles.
+const V34_SCOUTING = {"timeline": {"title": "A life in Scouting. A practice in communication.", "note": "From joining in 2003 through jamboree media, international contingents, and Asia-Pacific leadership. Expand a year to see the full list.", "items": [{"year": "2003", "title": "Joined Scouting as a Scout", "context": "I started Scouting as a Scout, experiencing people and activities first-hand in the field.", "track": "Scout", "accent": "neutral", "href": "", "kind": "participation"}, {"year": "2012", "title": "13th Korea Jamboree — Scout journalist", "context": "Participated as a Scout journalist (대원기자) at the 13th Korea Jamboree.", "track": "Scout", "accent": "neutral", "href": "", "kind": "participation"}, {"year": "2012.01", "title": "Bear Scout advancement No. 1420", "context": "Authorized as Bear Scout (범스카우트) No. 1420 on 20 January 2012 — Korea’s top Scout rank.", "track": "Scout", "accent": "neutral", "href": "", "kind": "participation"}, {"year": "2014", "title": "1st CJK-B — Korean Contingent journalist", "context": "Attended the 1st China–Japan–Korea Scouting Friendship (CJK-B) as a journalist with the Korean Contingent.", "track": "Leader", "accent": "neutral", "href": "", "kind": "participation"}, {"year": "2014", "title": "4th International Patrol Jamboree — newspaper design lead", "context": "Planning & Coordination HQ Media Center: lead for newspaper design.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}, {"year": "2014", "title": "6th Scout Journalism School — instructor", "context": "Instructor for the “I Am Also a Journalist” (나도저널리스트) program at the 6th Scout Journalism School.", "track": "Leader", "accent": "green", "href": "", "kind": "instructor"}, {"year": "2014", "title": "Became a Scout Leader", "context": "I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2014", "title": "Intermediate Scout training completed", "context": "Completed Korea Scout Association intermediate training (중급훈련).", "track": "Leader", "accent": "neutral", "href": "", "kind": "training"}, {"year": "2014–", "title": "National-level event photography for Korea Scout Association", "context": "From 2014 to the present, a core ongoing role: lead and dedicated photography for many national-level Korea Scout Association events.", "track": "Leader", "accent": "green", "href": "", "kind": "photography"}, {"year": "2015", "title": "25th Asia-Pacific Scout Conference — PRESS video lead", "context": "Joined the PRESS media team and led the video unit.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}, {"year": "2015", "title": "ATAS membership No. 3226", "context": "Joined the Association of Top Achiever Scouts (ATAS) in 2015 (membership No. 3226).", "track": "Leader", "accent": "neutral", "href": "", "kind": "participation"}, {"year": "2015", "title": "Advanced Scout course completed", "context": "Completed Korea Scout Association advanced course (상급과정).", "track": "Leader", "accent": "neutral", "href": "", "kind": "training"}, {"year": "2016", "title": "14th Korea Jamboree — video team leader", "context": "Planning & Coordination HQ Media Center: video team leader.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}, {"year": "2016", "title": "20th National Orienteering Competition — photography lead", "context": "Lead photographer for the 20th National Orienteering Competition (전국오리엔티어링대회).", "track": "Leader", "accent": "neutral", "href": "", "kind": "photography"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — Brush Team deputy leader", "context": "Deputy team leader of the Brush Team during the bid campaign.", "track": "Leader", "accent": "neutral", "href": "", "kind": "bid"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — supporters team leader", "context": "Team leader of the Jamboree bid supporters group.", "track": "Leader", "accent": "green", "href": "", "kind": "bid"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — working committee", "context": "Practical promotion committee member for the bid; youth lead covering the Arab region.", "track": "Leader", "accent": "neutral", "href": "", "kind": "bid"}, {"year": "2016", "title": "3rd Arab Scout Youth Forum & 28th Arab Regional Conference — observer", "context": "Joined the Korean observer delegation to the 3rd Arab Scout Youth Forum and the 28th Arab Scout Regional Conference to promote Korea’s bid for the World Scout Jamboree.", "track": "Leader", "accent": "green", "href": "", "kind": "bid"}, {"year": "2016", "title": "3rd CJK-B — Head of Korean Contingent", "context": "Attended the 3rd China–Japan–Korea Scouting Friendship (CJK-B) as Head of the Korean Contingent.", "track": "Leader", "accent": "green", "href": "", "kind": "participation"}, {"year": "2016", "title": "6th WSPU youth exchange — photography", "context": "Photography for the youth exchange and the National Assembly invitation roundtable.", "track": "Leader", "accent": "neutral", "href": "", "kind": "photography"}, {"year": "2016", "title": "Daejeon Federation Cub Scout joint investiture — photography lead", "context": "Lead photographer for the Korea Scout Association Daejeon Federation Cub Scout joint investiture ceremony (컵스카우트 연합선서식).", "track": "Leader", "accent": "neutral", "href": "", "kind": "photography"}, {"year": "2016", "title": "Jeonnam Federation 25th Bear Scout advancement camp — photography lead", "context": "Lead photographer for the 25th Bear Scout (범스카우트) advancement camp of the Jeonnam Federation.", "track": "Leader", "accent": "neutral", "href": "", "kind": "photography"}, {"year": "2016.08", "title": "8th Scout Journalism School — instructor", "context": "Instructor at the 8th Scout Journalism School (August 2016).", "track": "Leader", "accent": "green", "href": "", "kind": "instructor"}, {"year": "2017", "title": "Asia-Pacific Scout Foundation — Associate Member", "context": "Joined the Asia-Pacific Region Scout Support Foundation as an Associate Member.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2017", "title": "International Service Award", "context": "Received the Korea Scout Association International Service Award.", "track": "Leader", "accent": "green", "href": "", "kind": "award"}, {"year": "2017", "title": "Korea Scout Association Citation Badge", "context": "Received the Korea Scout Association commendation badge (표창 기장).", "track": "Leader", "accent": "neutral", "href": "", "kind": "award"}, {"year": "2017", "title": "National Rover Scout Conference — Korean observer", "context": "Joined the Korean observer delegation to the National Rover Scout Conference hosted by The General Association of the Scouts of China (Taiwan).", "track": "Leader", "accent": "neutral", "href": "https://en.scout.org.tw/", "kind": "participation"}, {"year": "2017.03", "title": "1st Scout Youth Mock National Assembly — mentor", "context": "Mentored at the 1st Scout Youth Mock National Assembly (스카우트 청소년모의국회).", "track": "Leader", "accent": "neutral", "href": "", "kind": "mentoring"}, {"year": "2017.08–2019.01", "title": "Uniform & Equipment Committee member", "context": "Member of the Korea Scout Association Uniform and Equipment Committee (제복장구위원회).", "track": "Leader", "accent": "neutral", "href": "", "kind": "leadership"}, {"year": "2018", "title": "5th International Patrol Jamboree — design & archive lead", "context": "Planning & Coordination HQ Media Center: newspaper design and media archive lead.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}, {"year": "2018", "title": "President’s Citation, Korea Scout Association", "context": "Received the Korea Scout Association President’s Citation (총재 표창).", "track": "Leader", "accent": "green", "href": "", "kind": "award"}, {"year": "2018.03", "title": "2nd Scout Youth Mock National Assembly — mentor", "context": "Mentored at the 2nd Scout Youth Mock National Assembly.", "track": "Leader", "accent": "neutral", "href": "", "kind": "mentoring"}, {"year": "2019.08", "title": "12th Scout Journalism School — photography instructor", "context": "Photography practical instructor at the 12th Scout Journalism School.", "track": "Leader", "accent": "green", "href": "", "kind": "photography"}, {"year": "2020", "title": "Mugunghwa Bronze Medal", "context": "Awarded the Korea Scout Association Mugunghwa Bronze Medal (무궁화 동장).", "track": "Leader", "accent": "green", "href": "", "kind": "award"}, {"year": "2022", "title": "2nd World Digital Camporee — Marketing Director", "context": "Served as Marketing Headquarters Director for the 2nd World Digital Camporee (세계디지털야영대회).", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2022", "title": "Commissioner Course completed", "context": "Completed the Korea Scout Association Commissioner Course (커미셔너과정).", "track": "Leader", "accent": "neutral", "href": "", "kind": "training"}, {"year": "2022–2024", "title": "National Commissioner, Korea Scout Association", "context": "Served as National Commissioner on PR II, working on domestic Scouting activity and communication.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2022", "title": "Wood Badge completed", "context": "Completed Wood Badge qualification.", "track": "Leader", "accent": "green", "href": "", "kind": "training"}, {"year": "2023", "title": "25th World Scout Jamboree — Korea Contingent media", "context": "Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}, {"year": "2024–2025", "title": "Future Value Committee — subcommittee chair", "context": "Served as a subcommittee chair of the Korea Scout Association Future Value Committee (미래가치위원회) and helped shape Vision 2032.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2024", "title": "WE@FUTURE Jamboree — Head of Contingent", "context": "Head of Contingent at WE@FUTURE Jamboree, hosted by the Scout Association of Hong Kong.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2024.01–", "title": "Unit Leader, Baek-ryong Unit", "context": "Unit Leader (단대장) of Baek-ryong Unit, Gyeonggi Southern Federation, Korea Scout Association — ongoing since January 2024.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2025", "title": "28th Asia-Pacific Scout Conference — voting delegate", "context": "Full (voting) delegate of the Korean Contingent to the 28th Asia-Pacific Scout Conference.", "track": "Leader", "accent": "green", "href": "", "kind": "participation"}, {"year": "2025–2028", "title": "APR C&P Sub-Committee, 2nd Vice Chair", "context": "2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2025", "title": "Mugunghwa Silver Medal", "context": "Awarded the Korea Scout Association Mugunghwa Silver Medal (무궁화 은장).", "track": "Leader", "accent": "green", "href": "", "kind": "award"}, {"year": "2026", "title": "15th Korea Jamboree — Head of PR Department", "context": "Head of PR Department (홍보부 부장), Planning & Coordination HQ.", "track": "Leader", "accent": "green", "href": "", "kind": "leadership"}, {"year": "2026–", "title": "BP Media", "context": "I run BP Media, a Scouting-specialized media platform.", "track": "Leader", "accent": "green", "href": "", "kind": "media"}]}, "roles": {"title": "Roles behind the relationships", "items": [{"title": "Unit Leader · Baek-ryong Unit", "org": "Gyeonggi Southern Federation, KSA", "period": "2024.01–", "accent": "green"}, {"title": "APR Communication & Partnerships", "org": "2nd Vice Chair", "period": "2025–2028", "accent": "neutral"}, {"title": "National Commissioner on PR II", "org": "Korea Scout Association", "period": "2022–2024", "accent": "neutral"}, {"title": "Future Value Committee — subcommittee chair", "org": "Korea Scout Association · Vision 2032", "period": "2024–2025", "accent": "neutral"}, {"title": "Head of Contingent", "org": "WE@FUTURE Jamboree (Hong Kong)", "period": "2024", "accent": "neutral"}, {"title": "Deputy Head of Media · Korean Contingent", "org": "25th World Scout Jamboree", "period": "2023", "accent": "neutral"}, {"title": "Head of PR Department", "org": "15th Korea Jamboree · Planning & Coordination HQ", "period": "2026", "accent": "neutral"}, {"title": "BP Media", "org": "Founder", "period": "2026–", "accent": "green"}]}};
+function migrateTo34(doc) {
+  const sc = doc.pages && doc.pages.scouting && doc.pages.scouting.sections;
+  if (sc) {
+    sc.timeline = JSON.parse(JSON.stringify(V34_SCOUTING.timeline));
+    sc.roles = JSON.parse(JSON.stringify(V34_SCOUTING.roles));
+  }
+  doc.version = 34;
+  return doc;
+}
+
+
 
 
 
@@ -3466,7 +3520,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3475,7 +3529,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3483,7 +3537,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3515,6 +3569,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 31) doc = migrateTo31(doc);
   if ((doc.version || 0) < 32) doc = migrateTo32(doc);
   if ((doc.version || 0) < 33) doc = migrateTo33(doc);
+  if ((doc.version || 0) < 34) doc = migrateTo34(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3568,12 +3623,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 31) migrateTo31(incoming);
   if (incoming.version < 32) migrateTo32(incoming);
   if (incoming.version < 33) migrateTo33(incoming);
+  if (incoming.version < 34) migrateTo34(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 33;
+  doc.version = 34;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

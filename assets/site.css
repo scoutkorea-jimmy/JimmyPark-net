@@ -836,3 +836,24 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
   }
   .portfolio .timeline-year-blurb { grid-column: 1 / -1; }
 }
+
+
+/* Timeline kind chips */
+.portfolio .timeline-chips { margin: 0 0 var(--space-8); }
+.portfolio .timeline-kind {
+  display: inline-flex; align-items: center; border-radius: 999px;
+  padding: 0.2rem 0.65rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em;
+  background: #efeaf8; color: #4a3b78; border: 1px solid #d9d0ee;
+}
+.portfolio .timeline-kind--award { background: #fff3df; color: #8a5a10; border-color: #f0d6a8; }
+.portfolio .timeline-kind--photography { background: #e7f3ff; color: #1d4f86; border-color: #bdd9f5; }
+.portfolio .timeline-kind--instructor { background: #e8f7ef; color: #1f6b45; border-color: #b7e0c8; }
+.portfolio .timeline-kind--training { background: #eef2ff; color: #3730a3; border-color: #c7c9f3; }
+.portfolio .timeline-kind--leadership { background: #f3e8ff; color: #6b21a8; border-color: #e0c6f5; }
+.portfolio .timeline-kind--mentoring { background: #fce7f3; color: #9d174d; border-color: #f0c0d8; }
+.portfolio .timeline-kind--media { background: #ecfeff; color: #0e7490; border-color: #a5e8f0; }
+.portfolio .timeline-kind--bid { background: #ffedd5; color: #9a3412; border-color: #fdba74; }
+.portfolio .timeline-kind--publication { background: #f4f4f5; color: #3f3f46; border-color: #d4d4d8; }
+.portfolio .timeline-kind--participation { background: #efeaf8; color: #4a3b78; border-color: #d9d0ee; }
+.portfolio .timeline-year-blurb { display: block; }
+.portfolio .timeline-year-group:not([open]) > .timeline-year-summary .timeline-year-blurb { opacity: 1; }

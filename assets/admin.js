@@ -38,7 +38,9 @@
   var ACCENT_BG = [{ v: "burgundy", t: "Burgundy" }, { v: "green", t: "Scouting theme" }];
   var ACCENT_NG = [{ v: "neutral", t: "Neutral" }, { v: "green", t: "Scouting theme" }];
   var STATUS = [{ v: "Live", t: "Live" }, { v: "Prototype", t: "Prototype" }, { v: "Beta", t: "Beta" }, { v: "In Progress", t: "In Progress" }];
-  var TRACK = [{ v: "Scout", t: "Scout" }, { v: "Leader", t: "Leader" }];
+  var TRACK = [{ v: "Scout", t: "Scout" }, { v: "Leader", t: "Leader" }]
+const TIMELINE_KIND = ["participation","photography","instructor","award","leadership","training","mentoring","media","publication","bid"];
+;
   var F = function (k, label, type, options) { return { k: k, label: label, type: type || "text", options: options }; };
   var WEBSITE_FIELDS = [F("id", "ID"), F("title", "Title"), F("format", "Sector · type"), F("year", "Year (optional)"), F("role", "Your role"), F("summary", "One-line summary", "textarea"), F("need", "The need", "textarea"), F("built", "What I built", "textarea"), F("stack", "Stack (optional, separate with ·)"), F("backend", "Admin & back-end features (one per line)", "textarea"), F("stats", "Back-end facts (separate with ·)"), F("adminCaption", "Admin screenshot caption"), F("href", "Live site HTTPS URL"), F("linkLabel", "Link label")];
   var WEBSITE_IMAGES = [["image", "Desktop screenshot (16:9)"], ["mobileImage", "Mobile screenshot (optional)"], ["adminImage", "Admin screenshot (16:10, no personal data)"]];
@@ -90,7 +92,7 @@
       { id: "international", title: "International Experience", fields: [F("title", "Title"), F("body", "Body", "textarea")], collections: [{ k: "tags", label: "Tags", fields: [F("text", "Text")], tmpl: { text: "" } }] },
       { id: "travel", title: "Countries & regions visited", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("body", "Introduction", "textarea"), F("countLabel", "Count label"), F("listLabel", "Expand label")], collections: [{ k: "items", label: "Destinations (total calculated automatically)", fields: [F("name", "Country / region"), F("cities", "Cities / destinations (optional)")], tmpl: { name: "", cities: "" } }] },
       { id: "mediaprojects", title: "Media Projects", fields: [F("title", "Title")], objects: [{ k: "feature", label: "Feature card", fields: [F("badge", "Badge"), F("title", "Title"), F("desc", "Description", "textarea")], images: [["image", "Image"]] }], collections: [{ k: "items", label: "Cards", fields: [F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { title: "", desc: "" } }] },
-      { id: "timeline", title: "Scouting History (timeline)", fields: [F("title", "Title"), F("note", "Note", "textarea")], collections: [{ k: "items", label: "Entries", fields: [F("year", "Year"), F("track", "Track", "select", TRACK), F("title", "Title"), F("context", "Context", "textarea"), F("href", "Link (optional HTTPS)"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { year: "", track: "Leader", title: "", context: "", href: "", accent: "green" } }] },
+      { id: "timeline", title: "Scouting History (timeline)", fields: [F("title", "Title"), F("note", "Note", "textarea")], collections: [{ k: "items", label: "Entries", fields: [F("year", "Year"), F("track", "Track", "select", TRACK), F("kind", "Kind", "select", TIMELINE_KIND), F("title", "Title"), F("context", "Context", "textarea"), F("href", "Link (optional HTTPS)"), F("accent", "Accent", "select", ACCENT_NG)], tmpl: { year: "", track: "Leader", kind: "participation", title: "", context: "", href: "", accent: "green" } }] },
       { id: "gallery", title: "Field Gallery", fields: [F("title", "Title")], collections: [{ k: "figs", label: "Images", fields: [F("label", "Label"), F("category", "Category")], images: [["image", "Image"]], tmpl: { label: "", category: "Scouting field", image: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },

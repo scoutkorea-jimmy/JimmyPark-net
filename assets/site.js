@@ -223,13 +223,38 @@
     return m ? parseInt(m[1], 10) : 0;
   }
 
+  var TIMELINE_KIND_LABELS = {
+    award: "Award",
+    photography: "Photography",
+    instructor: "Instructor",
+    participation: "Participation",
+    leadership: "Leadership",
+    training: "Training",
+    mentoring: "Mentoring",
+    media: "Media",
+    publication: "Publication",
+    bid: "Bid campaign"
+  };
+
+  function timelineKindLabel(kind) {
+    return TIMELINE_KIND_LABELS[kind] || "Participation";
+  }
+
   function timelineYearSummary(items) {
-    var titles = items.map(function (t) { return String(t.title || "").trim(); }).filter(Boolean);
-    if (!titles.length) return "No entries.";
-    if (titles.length === 1) return titles[0] + ".";
-    if (titles.length === 2) return titles[0] + "; " + titles[1] + ".";
-    if (titles.length === 3) return titles[0] + "; " + titles[1] + "; " + titles[2] + ".";
-    return titles[0] + "; " + titles[1] + "; " + titles[2] + " · +" + (titles.length - 3) + " more.";
+    var list = items || [];
+    var titles = list.map(function (t) { return String(t.title || "").trim(); }).filter(Boolean);
+    var kinds = [];
+    list.forEach(function (t) {
+      var label = timelineKindLabel(t.kind);
+      if (kinds.indexOf(label) === -1) kinds.push(label);
+    });
+    var kindBit = kinds.length ? kinds.join(" · ") : "";
+    if (!titles.length) return kindBit || "No entries.";
+    if (titles.length === 1) return (kindBit ? kindBit + " — " : "") + titles[0] + ".";
+    if (titles.length === 2) return (kindBit ? kindBit + ": " : "") + titles[0] + "; " + titles[1] + ".";
+    var head = titles[0] + "; " + titles[1] + "; " + titles[2];
+    if (titles.length === 3) return (kindBit ? kindBit + ": " : "") + head + ".";
+    return (kindBit ? kindBit + ": " : "") + head + " · +" + (titles.length - 3) + " more.";
   }
 
   function renderTimelineByYear(items) {
@@ -368,7 +393,11 @@
     timelineEntry: function (t) {
       var href = t.href || "";
       var link = /^https:\/\//.test(href);
-      return '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') +
+      var kind = t.kind || "participation";
+      var kindLabel = timelineKindLabel(kind);
+      return '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content">' +
+        '<div class="timeline-chips"><span class="tag timeline-kind timeline-kind--' + esc(kind) + '">' + esc(kindLabel) + '</span></div>' +
+        '<h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') +
         (link ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">Host association<span class="msym" aria-hidden="true">north_east</span></a>' : '') +
         '</div></article>';
     },
