@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 34,
+  "version": 35,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -85,6 +85,14 @@ const DEFAULT = {
             {
               "label": "International fieldwork",
               "value": "25th World Scout Jamboree · Korean Contingent Media, 2023"
+            },
+            {
+              "label": "Creative tech",
+              "value": "Adobe Korea · Premiere Pro Prerelease Advisor, 2021–"
+            },
+            {
+              "label": "Global network",
+              "value": "DCN Global · Member, 2025.06–"
             },
             {
               "label": "Based in",
@@ -3451,6 +3459,18 @@ function migrateTo34(doc) {
   doc.version = 34;
   return doc;
 }
+// v35: home snapshot — Adobe Premiere Pro Prerelease Advisor; DCN Global member.
+const V35_HOME_SNAPSHOT = {"rows": [{"label": "Content & media", "value": "BP Media · Founder, 2026–"}, {"label": "Education", "value": "Korea Dream Path · CEO"}, {"label": "Asia-Pacific", "value": "Communications & Partnerships · 2nd Vice Chair, 2025–2028"}, {"label": "International fieldwork", "value": "25th World Scout Jamboree · Korean Contingent Media, 2023"}, {"label": "Creative tech", "value": "Adobe Korea · Premiere Pro Prerelease Advisor, 2021–"}, {"label": "Global network", "value": "DCN Global · Member, 2025.06–"}, {"label": "Based in", "value": "Korea · Korean / English"}], "eyebrow": "About Jimmy Park", "title": "Who is Jimmy Park?", "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration.", "detail": "His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."};
+function migrateTo35(doc) {
+  if (!doc.pages) doc.pages = {};
+  if (!doc.pages.home) doc.pages.home = JSON.parse(JSON.stringify(DEFAULT.pages.home));
+  if (!doc.pages.home.sections) doc.pages.home.sections = {};
+  doc.pages.home.sections.snapshot = JSON.parse(JSON.stringify(V35_HOME_SNAPSHOT));
+  doc.version = 35;
+  return doc;
+}
+
+
 
 
 
@@ -3520,7 +3540,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3529,7 +3549,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3537,7 +3557,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3570,6 +3590,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 32) doc = migrateTo32(doc);
   if ((doc.version || 0) < 33) doc = migrateTo33(doc);
   if ((doc.version || 0) < 34) doc = migrateTo34(doc);
+  if ((doc.version || 0) < 35) doc = migrateTo35(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3624,12 +3645,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 32) migrateTo32(incoming);
   if (incoming.version < 33) migrateTo33(incoming);
   if (incoming.version < 34) migrateTo34(incoming);
+  if (incoming.version < 35) migrateTo35(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 34;
+  doc.version = 35;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
