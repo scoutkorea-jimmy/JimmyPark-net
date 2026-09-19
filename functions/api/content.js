@@ -53,7 +53,7 @@ const DEFAULT = {
       "sections": {
         "hero": {
           "eyebrow": "Video · Education · AI",
-          "title": "I make video.\nBuild learning experiences.\nApply AI.",
+          "title": "Video that lands.\nLearning that scales.\nAI that works.",
           "lead": "I’m Jimmy Park — a Korea-based video producer, education platform builder, and AI practitioner. From branded films and storytelling to learning platforms, workshops, and AI-assisted creation, I help teams turn ideas into work people can watch, use, and teach from.",
           "ctaPrimary": {
             "label": "Start a conversation",
@@ -2640,6 +2640,8 @@ const V17_SEEDS = [
   [["pages","home","meta","desc"],"Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."],
   [["pages","home","sections","hero","eyebrow"],"Solution maker · Video producer & web developer"],
   [["pages","home","sections","hero","title"],"Your goal.\nThe right way to reach it."],
+  [["pages","home","sections","hero","title"],"I make video.\nBuild learning experiences.\nApply AI."],
+
   [["pages","home","sections","hero","lead"],"I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly."],
   [["pages","home","sections","hero","ctaPrimary"],{"label":"Tell me your goal","href":"/contact"}],
   [["pages","home","sections","hero","caption"],"The need first, then the right tool."],
