@@ -71,6 +71,7 @@ wrangler.toml   Pages config + KV binding
 - Drafts require the existing admin login. Only published posts enter public HTML and
   the sitemap. The published AX Series covers prompt clarity, human-AI work division,
   accountability for AI-generated work, and AI transformation as a shared operating model.
+  Its index is a chronological Part 1–4 list with scheduled 9:00 AM KST publication times.
   Content is rendered on the server
   for reading without JavaScript and carries article-specific metadata.
 - Posts live in a separate `insights:v1` KV document. One editor is intended; revision
