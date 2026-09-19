@@ -366,7 +366,11 @@
     intlTags: function (t) { return '<span class="tag tag--scouting tag--large">' + esc(t.text) + '</span>'; },
     mediaProjects: function (m) { return '<div class="card card--compact"><h3>' + esc(m.title) + '</h3><p>' + esc(m.desc) + '</p></div>'; },
     timelineEntry: function (t) {
-      return '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') + '</div></article>';
+      var href = t.href || "";
+      var link = /^https:\/\//.test(href);
+      return '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') +
+        (link ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">Host association<span class="msym" aria-hidden="true">north_east</span></a>' : '') +
+        '</div></article>';
     },
     // Kept for admin preview compatibility; year grouping uses renderTimelineByYear.
     timeline: function (t, i, items) {
