@@ -21,7 +21,7 @@
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.17.3">
+<link rel="stylesheet" href="/assets/site.css?v=0.18.0">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -107,11 +107,11 @@
   <div class="split portfolio-hero site-container" style="display:grid; grid-template-columns:1.08fr .92fr; gap:var(--split-gap); align-items:center;">
     <div>
       <div data-gbind="brand.name" style="font-size:18px; font-weight:700; margin-bottom:var(--space-16);">Jimmy Park</div>
-      <div data-bind="hero.eyebrow" style="color:#9b3544;" class="eyebrow">Video · Education · AI</div>
+      <div data-bind="hero.eyebrow" style="color:var(--md-primary);" class="eyebrow">Video · Education · AI</div>
       <h1 data-bind="hero.title" style="white-space:pre-line;" class="heading hero-title page-heading">Video that lands.
 Learning that scales.
 AI that works.</h1>
-      <p data-bind="hero.lead" style="margin:var(--space-24) 0 0; color:#2c2925; max-width:40ch;" class="hero-lead">I’m Jimmy Park — branded-film director & producer, education-platform founder, and applied-AI practitioner. Production-grade storytelling, learning products with real users, and AI workflows teams keep using.</p>
+      <p data-bind="hero.lead" style="margin:var(--space-24) 0 0; color:var(--md-on-surface); max-width:40ch;" class="hero-lead">I’m Jimmy Park — branded-film director & producer, education-platform founder, and applied-AI practitioner. Production-grade storytelling, learning products with real users, and AI workflows teams keep using.</p>
       <div style="margin-top:var(--space-32); display:flex; gap:var(--space-12); flex-wrap:wrap;">
         <a href="/contact" data-href="hero.ctaPrimary.href" class="btn btn-primary site-button"><span data-bind="hero.ctaPrimary.label">Start a conversation</span> <span class="msym" aria-hidden="true" style="font-size:18px;">arrow_forward</span></a>
         <a href="#selected" data-href="hero.ctaGhost.href" data-bind="hero.ctaGhost.label" class="btn btn-ghost site-button">See selected work</a>
@@ -120,11 +120,11 @@ AI that works.</h1>
       <a class="travel-link" href="/scouting#travel"><strong data-travel-count>19</strong><span>countries &amp; regions visited</span><span class="msym" aria-hidden="true">arrow_forward</span></a>
     </div>
     <figure class="split-img" style="margin:0;">
-      <div data-hero-image role="img" aria-label="Portrait of Jimmy Park" data-image-position="center 10%" style="position:relative; aspect-ratio:4/5; border-radius:var(--radius-panel); overflow:hidden; border:1px solid #e6e1da; background:#f7f6f3 url(&#x27;/assets/img/jimmy-park-portrait-960.jpg?v=0.17.2&#x27;) center 10%/cover;">
-        <span data-bind="hero.badge" style="position:absolute; top:16px; left:16px; font-size:12px; font-weight:500; background:rgba(255,255,255,.88); color:#3a3631; padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Jimmy Park</span>
+      <div data-hero-image role="img" aria-label="Portrait of Jimmy Park" data-image-position="center 10%" style="position:relative; aspect-ratio:4/5; border-radius:var(--radius-panel); overflow:hidden; border:1px solid var(--md-outline-variant); background:var(--md-surface-container) url(&#x27;/assets/img/jimmy-park-portrait-960.jpg?v=0.17.2&#x27;) center 10%/cover;">
+        <span data-bind="hero.badge" style="position:absolute; top:16px; left:16px; font-size:12px; font-weight:500; background:color-mix(in srgb, var(--md-surface) 88%, transparent); color:var(--md-on-surface); padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Jimmy Park</span>
         <div style="position:absolute; inset:0; background:radial-gradient(130% 80% at 75% 15%, rgba(255,255,255,.35), transparent 60%);"></div>
       </div>
-      <figcaption style="margin-top:var(--space-12); display:flex; justify-content:space-between; gap:var(--space-12); font-size:12.5px; color:#6b665f;"><span data-bind="hero.caption">Film · Learning platforms · AI workflows</span><span data-bind="hero.captionRight">Based in Korea</span></figcaption>
+      <figcaption style="margin-top:var(--space-12); display:flex; justify-content:space-between; gap:var(--space-12); font-size:12.5px; color:var(--md-on-surface-variant);"><span data-bind="hero.caption">Film · Learning platforms · AI workflows</span><span data-bind="hero.captionRight">Based in Korea</span></figcaption>
     </figure>
   </div>
 </section>
@@ -144,7 +144,7 @@ AI that works.</h1>
 
 <section data-section="activities" id="activities" class="site-section">
   <div class="site-container">
-    <div data-bind="activities.eyebrow" style="color:#9b3544;" class="eyebrow">How I can help</div>
+    <div data-bind="activities.eyebrow" style="color:var(--md-primary);" class="eyebrow">How I can help</div>
     <h2 data-bind="activities.title" class="heading section-title">Video. Education. AI. Where should we start?</h2>
     <div class="capability-grid collection-grid" data-collection="activities.items" data-template="activities" style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr));"><a href="/work" class="card capability act"><span class="eyebrow">01 / Video</span><h3>Film &amp; Branded Content</h3><p>Concept, script, filming and edit for films people remember — promotional films, keynotes, interviews and branded storytelling.</p><div class="tag-list"><span class="tag">Branded films</span><span class="tag">Keynotes</span><span class="tag">Storytelling</span></div><span class="card-link">Explore this work<span class="act-arrow msym" aria-hidden="true">arrow_forward</span></span></a>
 <a href="/lecture" class="card capability act"><span class="eyebrow">02 / Education</span><h3>Learning Platforms &amp; Teaching</h3><p>Learning experiences that travel — education platforms, workshops and teaching formats that help people discover, practice and grow.</p><div class="tag-list"><span class="tag">Learning platforms</span><span class="tag">Workshops</span><span class="tag">Global education</span></div><span class="card-link">Explore this work<span class="act-arrow msym" aria-hidden="true">arrow_forward</span></span></a>
@@ -156,7 +156,7 @@ AI that works.</h1>
 
 <section aria-label="Experience behind the work" data-section="snapshot" id="snapshot" class="site-section site-section--compact"><div class="site-container">
   <div class="profile-intro"><span class="eyebrow" data-bind="snapshot.eyebrow">About Jimmy Park</span><h2 class="heading section-title" data-bind="snapshot.title">Who is Jimmy Park?</h2><p class="body-copy" data-bind="snapshot.body">Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration.</p><p class="body-copy" data-bind="snapshot.detail">His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site.</p></div>
-  <div style="background:#f7f6f3; border:1px solid #ece7df;" class="info-panel">
+  <div style="background:var(--md-surface-container); border:1px solid var(--md-outline-variant);" class="info-panel">
     <dl class="snapshot-list" data-collection="snapshot.rows" data-template="snapshotRows"><div class="snapshot-row"><dt>Content &amp; media</dt><dd>BP Media · Founder, 2026–</dd></div>
 <div class="snapshot-row"><dt>Education</dt><dd>Korea Dream Path · CEO</dd></div>
 <div class="snapshot-row"><dt>Asia-Pacific</dt><dd>Communications &amp; Partnerships · 2nd Vice Chair, 2025–2028</dd></div>
@@ -172,21 +172,21 @@ AI that works.</h1>
   <div class="site-container">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:var(--space-16); flex-wrap:wrap;">
       <div>
-        <div data-bind="projects.eyebrow" style="color:#9b3544;" class="eyebrow">Stay connected</div>
+        <div data-bind="projects.eyebrow" style="color:var(--md-primary);" class="eyebrow">Stay connected</div>
         <h2 data-bind="projects.title" class="heading section-title">Network, background, and next roles.</h2>
       </div>
       <a href="/work" class="lnk" style="font-size:14px; font-weight:600; display:inline-flex; align-items:center; gap:var(--space-4);">Explore the work <span class="msym" aria-hidden="true" style="font-size:17px;">arrow_forward</span></a>
     </div>
-    <a href="https://bpmedia.net" data-href="projects.feature.href" class="feat soft feature-card" style="display:grid; grid-template-columns:1.18fr .82fr; gap:0; align-items:stretch; background:#fff; border:1px solid #e6e1da; overflow:hidden;">
+    <a href="https://bpmedia.net" data-href="projects.feature.href" class="feat soft feature-card" style="display:grid; grid-template-columns:1.18fr .82fr; gap:0; align-items:stretch; background:var(--md-surface); border:1px solid var(--md-outline-variant); overflow:hidden;">
       <div data-img="projects.feature.image" style="position:relative; min-height:280px; background:var(--scout-surface); background-image:url('/assets/img/bp-media-card.jpg'); background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; padding:var(--space-64) var(--space-24);">
 <span data-image-fallback aria-hidden="true" hidden style="font-size:clamp(44px,6vw,76px); font-weight:700; letter-spacing:-.04em; color:var(--scout-accent); line-height:1;">BP Media</span>
-        <span data-bind="projects.feature.badge" style="position:absolute; top:18px; left:18px; font-size:12px; font-weight:500; background:rgba(255,255,255,.9); color:var(--scout-accent); padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Content strategy · Global Scouting</span>
-        <span data-bind="projects.feature.sub" style="position:absolute; bottom:18px; left:18px; font-size:12px; font-weight:500; background:rgba(255,255,255,.9); color:var(--scout-accent); padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Founder · Scouting media</span>
+        <span data-bind="projects.feature.badge" style="position:absolute; top:18px; left:18px; font-size:12px; font-weight:500; background:color-mix(in srgb, var(--md-surface) 90%, transparent); color:var(--scout-accent); padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Content strategy · Global Scouting</span>
+        <span data-bind="projects.feature.sub" style="position:absolute; bottom:18px; left:18px; font-size:12px; font-weight:500; background:color-mix(in srgb, var(--md-surface) 90%, transparent); color:var(--scout-accent); padding:var(--space-4) var(--space-12); border-radius:var(--radius-chip);">Founder · Scouting media</span>
       </div>
       <div style="display:flex; flex-direction:column; justify-content:center;" class="feature-body">
         <h3 data-bind="projects.feature.title" style="margin:0;" class="heading card-title">BP Media</h3>
-        <p data-bind="projects.feature.desc" style="margin:var(--space-12) 0 0; color:#66615c; max-width:44ch;" class="body-copy">A Scouting media platform bringing stories, events, and people into a shared editorial space. My work connects field documentation with content planning and international perspectives.</p>
-        <span class="lnk" style="margin-top:var(--space-16); font-size:14px; font-weight:600; color:#7a1e2c; display:inline-flex; align-items:center; gap:var(--space-4);">Visit bpmedia.net <span class="msym" aria-hidden="true" style="font-size:17px;">arrow_forward</span></span>
+        <p data-bind="projects.feature.desc" style="margin:var(--space-12) 0 0; color:var(--md-on-surface-variant); max-width:44ch;" class="body-copy">A Scouting media platform bringing stories, events, and people into a shared editorial space. My work connects field documentation with content planning and international perspectives.</p>
+        <span class="lnk" style="margin-top:var(--space-16); font-size:14px; font-weight:600; color:var(--md-primary); display:inline-flex; align-items:center; gap:var(--space-4);">Visit bpmedia.net <span class="msym" aria-hidden="true" style="font-size:17px;">arrow_forward</span></span>
       </div>
     </a>
     <div class="project-grid collection-grid" data-collection="projects.items" data-template="projectCards" style="display:grid;"><a href="https://www.linkedin.com/in/jimmy1420" class="card project-card soft"><div class="card-body"><span class="eyebrow">Professional network</span><h3>Connect on LinkedIn</h3><p>For professional introductions, shared interests and future collaboration.</p><span class="card-link">Learn more <span class="msym" aria-hidden="true">arrow_forward</span></span></div></a>
@@ -196,13 +196,13 @@ AI that works.</h1>
 </section>
 
 
-<section data-section="approach" style="background:#f7f6f3;" id="approach" class="site-section">
+<section data-section="approach" style="background:var(--md-surface-container);" id="approach" class="site-section">
   <div class="site-container">
     <div style="max-width:50ch; margin-bottom:var(--space-32);">
-      <div data-bind="approach.eyebrow" style="color:#9b3544;" class="eyebrow">How I work</div>
+      <div data-bind="approach.eyebrow" style="color:var(--md-primary);" class="eyebrow">How I work</div>
       <h2 data-bind="approach.title" class="heading section-title">Start with the story. Shape the learning. Ship with AI.</h2>
     </div>
-    <div class="flow collection-grid" data-collection="approach.steps" data-template="approachSteps" style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid #e0dacf;"><div class="process-step"><div class="step-number">01</div><h3>Listen</h3><p>Clarify who it is for, what should change, and what “done” looks like.</p></div>
+    <div class="flow collection-grid" data-collection="approach.steps" data-template="approachSteps" style="display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--md-outline-variant);"><div class="process-step"><div class="step-number">01</div><h3>Listen</h3><p>Clarify who it is for, what should change, and what “done” looks like.</p></div>
 <div class="process-step"><div class="step-number">02</div><h3>Choose</h3><p>Pick the form that fits — a film, a learning experience, an AI workflow or a partnership.</p></div>
 <div class="process-step"><div class="step-number">03</div><h3>Build with AI</h3><p>Produce and prototype with AI-assisted creation, then test with the people who will use it.</p></div>
 <div class="process-step"><div class="step-number">04</div><h3>Hand over</h3><p>Deliver the film, platform or workflow with the guidance your team needs to keep going.</p></div></div>
@@ -211,14 +211,14 @@ AI that works.</h1>
 
 <!-- CONTACT CTA -->
 <section data-section="cta" id="cta" class="site-section site-section--cta"><div class="site-container">
-  <div class="cta-grid cta-panel" style="background:#7a1e2c; color:#fff;">
+  <div class="cta-grid cta-panel" style="background:var(--md-primary); color:var(--md-on-primary);">
     <div>
-      <h2 data-bind="cta.title" style="margin:0; color:#fff;" class="heading section-title">Have a film, platform, or AI idea?</h2>
+      <h2 data-bind="cta.title" style="margin:0; color:var(--md-on-primary);" class="heading section-title">Have a film, platform, or AI idea?</h2>
       <p data-bind="cta.body" style="margin:var(--space-16) 0 0; max-width:46ch; color:rgba(255,255,255,.82);" class="body-copy">Tell me what you want people to see, learn or ship — and when you need it. I’ll suggest a clear next step.</p>
     </div>
     <div class="cta-actions">
       <a href="/contact" data-href="cta.button.href" class="btn btn-white site-button"><span data-bind="cta.button.label">Start a conversation</span> <span class="msym" aria-hidden="true" style="font-size:18px;">arrow_forward</span></a>
-      <a href="mailto:scoutkorea@kakao.com" data-mail data-gbind="contact.email" class="lnk" style="font-size:14px; color:rgba(255,255,255,.92); border-bottom:1px solid rgba(255,255,255,.4); padding-bottom:var(--space-2);">scoutkorea@kakao.com</a>
+      <a href="mailto:scoutkorea@kakao.com" data-mail data-gbind="contact.email" class="lnk" style="font-size:14px; color:color-mix(in srgb, var(--md-on-primary) 92%, transparent); border-bottom:1px solid color-mix(in srgb, var(--md-on-primary) 40%, transparent); padding-bottom:var(--space-2);">scoutkorea@kakao.com</a>
     </div>
   </div>
 </div></section>
