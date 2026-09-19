@@ -289,12 +289,32 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
      reveals it — wipe clips only inside its animation, and a wipe panel reveals its children;
   2. an animation with `fill-mode: both` on a transform keeps the element a containing block for
      fixed children — the app bar's entrance uses `backwards`, or the drawer scrim shrinks to 64px.
-- QA (local + live): every `[data-reveal]` element ends visible after a gradual scroll on Home,
-  Media Work, Dev Work, Global & Scouting and Contact at 1440 and 390px; no horizontal overflow;
-  equal card rows; drawer scrim covers the viewport, closes on scrim/Escape and returns focus.
-  Hover states were not screenshot-tested.
+- QA (local + live): full-page screenshots at 1440/390, equal card rows, no horizontal overflow;
+  drawer scrim covers the viewport, closes on scrim/Escape and returns focus. Hover states were not
+  screenshot-tested. **Correction (v0.17.2):** the v0.17.0 gradual-scroll reveal check passed the
+  viewport as one zsh word (`$W` = "1440 900" is not split), so it ran at headless Chrome's default
+  width, not 1440/390. Re-run at true widths it found two phone-only gaps, fixed in v0.17.2 below.
 - v0.17.1: documentation (this section, Golden rule 1, design.md §2–5, §8, §17–18), the `site.css`
   header comment and the `?v=` bump only; no visual or behaviour change.
+
+### BP Media card image, phone reveals and the M3 guide folder (v0.17.2, 2026-09-19)
+- Owner: "capture the BP Media card too" (the Scouting feature card had an empty image) and "make a
+  design folder with all the Google Material Design guidance we can use on our site".
+- `assets/img/bp-media-card.jpg` (1600×667): bpmedia.net captured 2026-09-19 in headless Chrome —
+  desktop 1280×720 at 2× and a 390×844 phone view, hero carousel paused on the "Central Zone" slide —
+  placed in the Dev Work browser + phone mockup on the warm stage gradient. The mockup sits inside
+  x 280–920 / y 44–456 of the 1200×500 canvas, the area kept by both the phone crop (≈1.28:1) and the
+  Scouting desktop crop (≈2.9:1). No private data: public homepage only. Rebuild it the same way
+  when bpmedia.net changes; it does not refresh itself.
+- Used by Home `projects.feature.image` and Scouting `mediaprojects.feature.image`. Schema v16
+  (`migrateTo16`) fills either only while it is empty. The Home `projects.feature.sub` line is a
+  white chip like the badge (italic muted text was unreadable over an image).
+- Reveal fixes: a phone swipe row (`scrollWidth > clientWidth`) enters as one row when its first card
+  is seen; opening an on-screen `<details>` shows its items at once. Verified at true 1440/390 widths
+  on every page, local and live: 0 hidden reveal targets (closed disclosures excluded, each opened
+  one checked item by item).
+- `design/` holds the Material 3 reference library for this site (see its README). It is guidance;
+  [design.md](design.md) stays the contract. `.md` files are never served (middleware 404).
 
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
@@ -432,6 +452,7 @@ robots.txt      allow all except /admin, /api/, /saju ; points to sitemap
 sitemap.xml     the 4 public routes
 wrangler.toml   Pages config: pages_build_output_dir=".", JP_KV binding
 .checks/        development-only layout contract + static/runtime collection checks
+design/         Material 3 reference library for this site (Markdown, never served; design.md wins)
 VERSION         site version string (currently mirrored in ?v= asset query strings)
 ```
 
@@ -457,7 +478,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 14`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 16`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

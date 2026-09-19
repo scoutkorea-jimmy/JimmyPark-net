@@ -8,6 +8,11 @@
 When in doubt, copy an existing block. Consistency beats cleverness — every page repeats the
 same header, footer, eyebrow, button, and card patterns by design.
 
+Since v0.17.0 the site follows Material Design 3. The [design/](design/README.md) folder is the M3
+reference library (colour, type, shape, elevation, motion, layout, states, icons, accessibility and
+components, each with the M3 values and how this site applies them). This file stays the contract:
+where the two differ, this file wins and the difference is recorded here.
+
 ### Portfolio composition (v0.7.1)
 - Keep the burgundy site identity and approved typefaces. The Scouting page uses the owner-requested purple theme; existing Scouting references on other pages retain their green sub-accent.
 - Home: purpose-led headline and existing portrait, four capability cards, dated experience,
@@ -300,6 +305,8 @@ Icon buttons (menu, copy) are 40px circles.
 ### Tags / pills
 `.tag`: M3 chip — 14px/500 label, 8px radius, 32px tall, `--md-outline-variant` border.
 `.status-tag` (e.g. Live) uses the tertiary container; `.stat-chip` uses the secondary container.
+Chips over an image (feature-card badge and sub line) use a white 90% fill, 12px/500 label and
+`--radius-chip`, so they stay legible on any picture.
 `.tag--scouting`: page-aware Scouting text/border. `.tag--large`: **12px 16px** padding and control radius.
 
 ---
@@ -357,6 +364,10 @@ Rules learned in QA — keep them:
   counts clipped area, so it would never be revealed. Clip only inside the reveal animation.
 - The observer uses threshold 0 (tall targets still reveal); anything hydrated above the viewport
   is shown immediately.
+- A phone swipe row enters as one row (cards past the right edge never meet the viewport), and an
+  on-screen `<details>` shows its items as soon as it opens (v0.17.2).
+- Test reveals at the real widths: pass viewport width and height as separate arguments (in zsh an
+  unquoted `$W` holding "1440 900" stays one word).
 - Page-load animations on containers use `animation-fill-mode: backwards`. A transform animation
   held with `both` keeps the app bar a containing block, and the fixed drawer scrim shrinks to 64px.
 
