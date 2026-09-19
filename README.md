@@ -24,7 +24,7 @@ index.html      Home  (/)
 work.html       Work  (/work)
 scouting.html   Scouting (/scouting)
 contact.html    Contact (/contact)
-insights.html   Insights static fallback; Pages Functions render /insights and /insights/:slug
+insights.html   Articles static fallback; Pages Functions render /insights and /insights/:slug
 404.html        Missing-page response (disables the Pages SPA fallback)
 admin.html      Hidden admin (/admin · noindex)
 assets/         site.css · site.js (public) · admin.js · img/ (favicon, og)
@@ -74,6 +74,8 @@ wrangler.toml   Pages config + KV binding
   Its index is a chronological Part 1–4 list with scheduled 9:00 AM KST publication times.
   Content is rendered on the server
   for reading without JavaScript and carries article-specific metadata.
+- Public navigation calls this section **Articles**, while `/insights` remains the stable URL.
+  The public `/sitemap` page lists portfolio routes and published Articles only.
 - Posts live in a separate `insights:v1` KV document. One editor is intended; revision
   checks reject observed stale saves but Cloudflare KV is eventually consistent, not a
   transactional multi-editor database. Publishing visibility may lag briefly between regions.

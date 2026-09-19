@@ -38,7 +38,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 
 ### Insights and portfolio completion (v0.8.0)
 - Add `/insights` and `/insights/:slug` to the portfolio. The existing four routes and all
-  standalone app files stay intact. With four published AX Series posts, Insights is visible in
+  standalone app files stay intact. With four published AX Series posts, Articles is visible in
   desktop, mobile, and footer navigation.
 - `functions/api/_posts.js` manages separate KV key `insights:v1`; `/api/posts` always requires
   the existing signed admin session. Public server-rendered views and dynamic sitemap select
@@ -219,8 +219,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Person JSON-LD jobTitle "Video Producer and Web Developer" (image stays the full-resolution original).
 - Hiring: Contact `#hiring` block with a "Role enquiry" mailto; Home "Stay connected" third card is
   "Hiring enquiries" → `/contact#hiring` (replaced the Insights card). Card links read "Learn more".
-- Insights is visible in header, mobile, and footer navigation now that the site has four published
-  AX Series posts. `/insights` remains in the sitemap and has og:image/twitter:image.
+- Articles is visible in header, mobile, and footer navigation now that the site has four published
+  AX Series posts. `/insights` remains the stable route, appears in the sitemap, and has og:image/twitter:image.
 - Fixes: section subtitles and the Scouting timeline note use `#6b665f` (AA); `/dev` has an `.sr-only`
   H2 before the principles; the hero uses `jimmy-park-portrait-960.jpg` (152 KB display derivative,
   original 1.19 MB file kept unchanged).

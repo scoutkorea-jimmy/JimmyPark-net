@@ -546,6 +546,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .insight-body h2 { font-size: var(--title-card); line-height: 1.3; margin: var(--space-48) 0 var(--space-16); }
 .insight-body h3 { font-size: var(--md-title-large); line-height: 1.27; margin: var(--space-32) 0 var(--space-12); }
 .insights-empty { margin-top: var(--space-48); color: var(--md-on-surface-variant); }
+.sitemap-page { max-width: 850px; }
+.sitemap-page section { margin-top: var(--space-48); }
+.sitemap-list { display: flex; flex-direction: column; gap: var(--space-16); margin: var(--space-24) 0 0; padding: 0; list-style: none; }
+.sitemap-list li { padding-bottom: var(--space-16); border-bottom: 1px solid var(--md-outline-variant); }
+.sitemap-list a { font-size: var(--md-title-large); color: var(--md-on-surface); }
+.sitemap-list p { margin: var(--space-8) 0 0; color: var(--md-on-surface-variant); }
 .insight-fields { border: 0; padding: 0; min-width: 0; margin: 0; }
 .insight-admin-list, .insight-admin-actions { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-24); }
 .insight-admin-list { flex-direction: column; align-items: flex-start; }
