@@ -128,5 +128,17 @@ test posts are created. This release did not run browser interaction or visual Q
 Or deploy from CLI:
 `wrangler pages deploy . --project-name jimmypark-net --branch main`
 
+## KOTMA temporary preview
+
+The Korean Traditional Music Association sample site is built in the separate `KOTMA` repository and temporarily served at [https://jimmypark.net/kotma/](https://jimmypark.net/kotma/). It is a static preview only; its future production deployment remains separate.
+
+Deploy the portfolio and its latest KOTMA export together without replacing Pages Functions:
+
+```sh
+./scripts/deploy-kotma-preview.sh
+```
+
+The script builds `../KOTMA/apps/web`, merges the generated files under `/kotma` in a temporary directory, and deploys that combined directory to the existing `jimmypark-net` Pages project. It never copies generated KOTMA output into either Git repository.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
