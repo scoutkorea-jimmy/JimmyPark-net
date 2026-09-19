@@ -20,6 +20,10 @@ rsync -a --delete \
   --exclude '.DS_Store' \
   --exclude '.checks/' \
   --exclude '.impeccable/' \
+  --exclude 'node_modules/' \
+  --exclude '.next/' \
+  --exclude '**/node_modules/' \
+  --exclude '**/.next/' \
   "$ROOT/" "$STAGING_DIR/"
 
 npm --prefix "$KOTMA_ROOT/apps/web" run build
