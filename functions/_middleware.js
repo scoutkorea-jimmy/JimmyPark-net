@@ -28,6 +28,20 @@ export async function onRequest(context) {
     return new Response("Not found", { status: 404 });
   }
   const res = await next();
+  // KOTMA is a static export mounted under this Pages project. Its unknown
+  // content routes should show KOTMA's temporary page, never this portfolio's
+  // 404 page. Leave static asset and Next.js chunk failures as real 404s.
+  if (
+    res.status === 404 &&
+    path.startsWith("/kotma/") &&
+    !path.startsWith("/kotma/_next/") &&
+    !/\.[a-z0-9]+$/i.test(path)
+  ) {
+    const fallback = await fetch(new URL("/kotma/coming-soon/", url.origin));
+    const out = new Response(fallback.body, fallback);
+    out.headers.set("Cache-Control", "no-cache");
+    return out;
+  }
   // Middleware-wrapped static responses ignore _headers, so Pages' default
   // max-age=14400 would delay deploys for hours. Force revalidation instead
   // (ETag -> 304). API routes manage their own caching.

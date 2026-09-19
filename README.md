@@ -140,5 +140,7 @@ Deploy the portfolio and its latest KOTMA export together without replacing Page
 
 The script builds `../KOTMA/apps/web`, merges the generated files under `/kotma` in a temporary directory, and deploys that combined directory to the existing `jimmypark-net` Pages project. It never copies generated KOTMA output into either Git repository.
 
+Unknown KOTMA content paths are served with KOTMA's `/kotma/coming-soon/` temporary page by Pages middleware. Missing KOTMA static assets and Next.js chunks stay HTTP 404 so real loading errors remain visible.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
