@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 27,
+  "version": 28,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -988,6 +988,12 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
+              "title": "Future Value Committee — subcommittee chair",
+              "org": "Korea Scout Association · Vision 2032",
+              "period": "2024–2025",
+              "accent": "neutral"
+            },
+            {
               "title": "Head of Contingent",
               "org": "WE@FUTURE Jamboree (Hong Kong)",
               "period": "2024",
@@ -1109,7 +1115,7 @@ const DEFAULT = {
             {
               "year": "2015",
               "title": "ATAS membership No. 3226",
-              "context": "Joined ATAS in 2015 (membership No. 3226).",
+              "context": "Joined the Association of Top Achiever Scouts (ATAS) in 2015 (membership No. 3226).",
               "track": "Leader",
               "accent": "neutral"
             },
@@ -1194,6 +1200,13 @@ const DEFAULT = {
               "year": "2024",
               "title": "WE@FUTURE Jamboree — Head of Contingent",
               "context": "Head of Contingent at WE@FUTURE Jamboree, hosted by the Scout Association of Hong Kong.",
+              "track": "Leader",
+              "accent": "green"
+            },
+            {
+              "year": "2024–2025",
+              "title": "Future Value Committee — subcommittee chair",
+              "context": "Served as a subcommittee chair of the Korea Scout Association Future Value Committee (미래가치위원회) and helped shape Vision 2032.",
               "track": "Leader",
               "accent": "green"
             },
@@ -3126,6 +3139,19 @@ function migrateTo27(doc) {
   doc.version = 27;
   return doc;
 }
+// v28: ATAS full name; Future Value Committee / Vision 2032 (2024–2025).
+const V28_SCOUTING = {"timeline": {"title": "A life in Scouting. A practice in communication.", "note": "From joining in 2003 through jamboree media, international contingents, and Asia-Pacific leadership.", "items": [{"year": "2003", "title": "Joined Scouting as a Scout", "context": "I started Scouting as a Scout, experiencing people and activities first-hand in the field.", "track": "Scout", "accent": "neutral"}, {"year": "2012.01", "title": "Bear Scout advancement No. 1420", "context": "Authorized as Bear Scout (범스카우트) No. 1420 on 20 January 2012 — Korea’s top Scout rank.", "track": "Scout", "accent": "neutral"}, {"year": "2012", "title": "13th Korea Jamboree — Scout journalist", "context": "Participated as a Scout journalist (대원기자) at the 13th Korea Jamboree.", "track": "Scout", "accent": "neutral"}, {"year": "2014", "title": "Became a Scout Leader", "context": "I became a Scout Leader, moving into a role that guides and supports youth activities — built on my years as a Scout.", "track": "Leader", "accent": "green"}, {"year": "2014", "title": "1st CJK-B — Korean Contingent journalist", "context": "Attended the 1st China–Japan–Korea Scouting Friendship (CJK-B) as a journalist with the Korean Contingent.", "track": "Leader", "accent": "neutral"}, {"year": "2014", "title": "4th International Patrol Jamboree — newspaper design lead", "context": "Planning & Coordination HQ Media Center: lead for newspaper design.", "track": "Leader", "accent": "green"}, {"year": "2015", "title": "25th Asia-Pacific Scout Conference — PRESS video lead", "context": "Joined the PRESS media team and led the video unit.", "track": "Leader", "accent": "green"}, {"year": "2015", "title": "ATAS membership No. 3226", "context": "Joined the Association of Top Achiever Scouts (ATAS) in 2015 (membership No. 3226).", "track": "Leader", "accent": "neutral"}, {"year": "2016", "title": "6th WSPU youth exchange — photography", "context": "Photography for the youth exchange and the National Assembly invitation roundtable.", "track": "Leader", "accent": "neutral"}, {"year": "2016", "title": "3rd CJK-B — Head of Korean Contingent", "context": "Attended the 3rd China–Japan–Korea Scouting Friendship (CJK-B) as Head of the Korean Contingent.", "track": "Leader", "accent": "green"}, {"year": "2016", "title": "14th Korea Jamboree — video team leader", "context": "Planning & Coordination HQ Media Center: video team leader.", "track": "Leader", "accent": "green"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — working committee", "context": "Practical promotion committee member for the bid; youth lead covering the Arab region.", "track": "Leader", "accent": "neutral"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — supporters team leader", "context": "Team leader of the Jamboree bid supporters group.", "track": "Leader", "accent": "green"}, {"year": "2016–2017", "title": "25th World Scout Jamboree bid — Brush Team deputy leader", "context": "Deputy team leader of the Brush Team during the bid campaign.", "track": "Leader", "accent": "neutral"}, {"year": "2017", "title": "Taiwan National Rover Scout Conference — observer", "context": "Joined the Korean observer delegation to the National Rover Scout Conference hosted by the Scout Association of Taiwan.", "track": "Leader", "accent": "neutral"}, {"year": "2017", "title": "Asia-Pacific Scout Foundation — Associate Member", "context": "Joined the Asia-Pacific Region Scout Support Foundation as an Associate Member.", "track": "Leader", "accent": "green"}, {"year": "2018", "title": "5th International Patrol Jamboree — design & archive lead", "context": "Planning & Coordination HQ Media Center: newspaper design and media archive lead.", "track": "Leader", "accent": "green"}, {"year": "2022–2024", "title": "National Commissioner, Korea Scout Association", "context": "Served as National Commissioner on PR II, working on domestic Scouting activity and communication.", "track": "Leader", "accent": "green"}, {"year": "2023", "title": "25th World Scout Jamboree — Korea Contingent media", "context": "Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree.", "track": "Leader", "accent": "green"}, {"year": "2024", "title": "WE@FUTURE Jamboree — Head of Contingent", "context": "Head of Contingent at WE@FUTURE Jamboree, hosted by the Scout Association of Hong Kong.", "track": "Leader", "accent": "green"}, {"year": "2024–2025", "title": "Future Value Committee — subcommittee chair", "context": "Served as a subcommittee chair of the Korea Scout Association Future Value Committee (미래가치위원회) and helped shape Vision 2032.", "track": "Leader", "accent": "green"}, {"year": "2025", "title": "28th Asia-Pacific Scout Conference — voting delegate", "context": "Full (voting) delegate of the Korean Contingent to the 28th Asia-Pacific Scout Conference.", "track": "Leader", "accent": "green"}, {"year": "2025–2028", "title": "APR C&P Sub-Committee, 2nd Vice Chair", "context": "2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.", "track": "Leader", "accent": "green"}, {"year": "2026", "title": "15th Korea Jamboree — Public Relations Director", "context": "Director of the Public Relations Department (홍보부 부장), Planning & Coordination HQ.", "track": "Leader", "accent": "green"}, {"year": "2026–", "title": "BP Media", "context": "I run BP Media, a Scouting-specialized media platform.", "track": "Leader", "accent": "green"}, {"year": "2026–", "title": "Scouting web experiments", "context": "I experiment with web projects such as Scout Tour Assistant to make Scouting places and information easier to explore.", "track": "Leader", "accent": "green"}]}, "roles": {"title": "Roles behind the relationships", "items": [{"title": "APR Communication & Partnerships", "org": "2nd Vice Chair", "period": "2025–2028", "accent": "neutral"}, {"title": "National Commissioner on PR II", "org": "Korea Scout Association", "period": "2022–2024", "accent": "neutral"}, {"title": "Future Value Committee — subcommittee chair", "org": "Korea Scout Association · Vision 2032", "period": "2024–2025", "accent": "neutral"}, {"title": "Head of Contingent", "org": "WE@FUTURE Jamboree (Hong Kong)", "period": "2024", "accent": "neutral"}, {"title": "Deputy Head of Media · Korean Contingent", "org": "25th World Scout Jamboree", "period": "2023", "accent": "neutral"}, {"title": "Public Relations Director", "org": "15th Korea Jamboree · Planning & Coordination HQ", "period": "2026", "accent": "neutral"}, {"title": "BP Media", "org": "Founder", "period": "2026–", "accent": "green"}]}};
+function migrateTo28(doc) {
+  const sc = doc.pages && doc.pages.scouting && doc.pages.scouting.sections;
+  if (sc) {
+    sc.timeline = JSON.parse(JSON.stringify(V28_SCOUTING.timeline));
+    sc.roles = JSON.parse(JSON.stringify(V28_SCOUTING.roles));
+  }
+  doc.version = 28;
+  return doc;
+}
+
+
 
 
 
@@ -3181,7 +3207,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3190,7 +3216,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3198,7 +3224,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3224,6 +3250,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 25) doc = migrateTo25(doc);
   if ((doc.version || 0) < 26) doc = migrateTo26(doc);
   if ((doc.version || 0) < 27) doc = migrateTo27(doc);
+  if ((doc.version || 0) < 28) doc = migrateTo28(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3271,12 +3298,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 25) migrateTo25(incoming);
   if (incoming.version < 26) migrateTo26(incoming);
   if (incoming.version < 27) migrateTo27(incoming);
+  if (incoming.version < 28) migrateTo28(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 27;
+  doc.version = 28;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
