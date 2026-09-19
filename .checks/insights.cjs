@@ -34,7 +34,7 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   res = await manage('POST',{revision:store.revision,post:{...current,status:'published'}}); assert.equal(res.status,200); store=await res.json();
   const detail=await page('test-note'); assert.equal(detail.status,200); assert.equal(detail.cache,'no-store');
   assert.match(detail.html,/<title>A &lt;script&gt; &amp; &quot;title&quot; \| Jimmy Park<\/title>/);
-  assert.match(detail.html,/<h2>A heading<\/h2>/); assert.ok(!detail.html.includes('<script>alert(1)'));
+  assert.match(detail.html,/<h2 id="section-1">A heading<\/h2>/); assert.match(detail.html,/href="#section-1">A heading/); assert.ok(!detail.html.includes('<script>alert(1)'));
   assert.match(detail.html,/https:\/\/jimmypark.net\/insights\/test-note/);
   assert.match(detail.html, /rel="author" href="\/#snapshot">By Jimmy Park/);
   const structured = JSON.parse(detail.html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);

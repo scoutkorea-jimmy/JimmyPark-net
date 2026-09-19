@@ -5,11 +5,24 @@ export function escapeHTML(value) {
   return String(value || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 }
 export function articleBody(value) {
+  let headingIndex = 0;
   return value.split(/\n\s*\n/).filter(p => p.trim()).map(paragraph => {
     if (/^### /u.test(paragraph)) return '<h3>' + escapeHTML(paragraph.slice(4)) + '</h3>';
-    if (/^## /u.test(paragraph)) return '<h2>' + escapeHTML(paragraph.slice(3)) + '</h2>';
+    if (/^## /u.test(paragraph)) {
+      headingIndex += 1;
+      return '<h2 id="section-' + headingIndex + '">' + escapeHTML(paragraph.slice(3)) + '</h2>';
+    }
     return '<p>' + escapeHTML(paragraph) + '</p>';
   }).join('\n');
+}
+
+function articleToc(value) {
+  let headingIndex = 0;
+  const items = value.split(/\n\s*\n/).filter(p => p.trim()).filter(paragraph => /^## /u.test(paragraph)).map(paragraph => {
+    headingIndex += 1;
+    return '<li><a href="#section-' + headingIndex + '">' + escapeHTML(paragraph.slice(3)) + '</a></li>';
+  }).join('');
+  return items ? '<aside class="insight-toc" aria-label="On this page"><p class="eyebrow">On this page</p><nav><ol>' + items + '</ol></nav></aside>' : '';
 }
 
 const AX_SERIES = {
@@ -45,7 +58,7 @@ export async function renderInsights({ env }, slug) {
   } else if (post) {
     const part = seriesPart(post);
     const seriesLabel = part ? 'AX Series · Part ' + part + ' of 4' : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading"><a class="card-link" href="/insights">All Insights</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-body">' + articleBody(post.body) + '</div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="card-link" href="/insights">All Insights</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-body">' + articleBody(post.body) + '</div></div></div></article>';
   } else {
     const ordered = posts.slice().sort((a, b) => seriesPart(a) && seriesPart(b) ? seriesPart(a) - seriesPart(b) : b.date.localeCompare(a.date));
     const list = ordered.map(p => {
