@@ -13,14 +13,14 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 16,
+  "version": 17,
   "global": {
     "brand": {
       "name": "Jimmy Park",
-      "roleline": "Solutions through content, web & AI · Global Scouting"
+      "roleline": "Video · Education · AI · Global Scouting"
     },
     "footer": {
-      "tagline": "SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION.",
+      "tagline": "VIDEO. EDUCATION. AI. · BUILT FOR CONNECTION.",
       "copyright": "© 2026 Jimmy Park"
     },
     "contact": {
@@ -30,15 +30,15 @@ const DEFAULT = {
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park (박지민) | Solutions Through Content, Web & AI",
-      "desc": "Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."
+      "title": "Jimmy Park (박지민) | Video, Education & AI",
+      "desc": "Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park (박지민) | Solutions Through Content, Web & AI",
-        "desc": "Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."
+        "title": "Jimmy Park (박지민) | Video, Education & AI",
+        "desc": "Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."
       },
       "order": [
         "hero",
@@ -52,11 +52,11 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Solution maker · Video producer & web developer",
-          "title": "Your goal.\nThe right way to reach it.",
-          "lead": "I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly.",
+          "eyebrow": "Video · Education · AI",
+          "title": "I make video.\nBuild learning experiences.\nApply AI.",
+          "lead": "I’m Jimmy Park — a Korea-based video producer, education platform builder, and AI practitioner. From branded films and storytelling to learning platforms, workshops, and AI-assisted creation, I help teams turn ideas into work people can watch, use, and teach from.",
           "ctaPrimary": {
-            "label": "Tell me your goal",
+            "label": "Start a conversation",
             "href": "/contact"
           },
           "ctaGhost": {
@@ -65,7 +65,7 @@ const DEFAULT = {
           },
           "image": "/assets/img/jimmy-park-portrait-960.jpg?v=0.14.0",
           "badge": "Jimmy Park",
-          "caption": "The need first, then the right tool.",
+          "caption": "Film · Learning platforms · AI workflows",
           "captionRight": "Based in Korea"
         },
         "snapshot": {
@@ -93,51 +93,51 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media and leads Korea Dream Path as CEO.",
-          "detail": "His work includes technology films, educational web series and event media, as well as live websites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration.",
+          "detail": "His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
         },
         "activities": {
           "eyebrow": "How I can help",
-          "title": "What do you need to achieve?",
+          "title": "Video. Education. AI. Where should we start?",
           "items": [
             {
-              "kicker": "01 / Be understood",
-              "title": "Content & Video Production",
-              "desc": "When people need to understand, remember or act on your message: concept, script, filming and editing, delivered as a film or series.",
+              "kicker": "01 / Video",
+              "title": "Film & Branded Content",
+              "desc": "Concept, script, filming and edit for films people remember — promotional films, keynotes, interviews and branded storytelling.",
               "tags": [
-                "Promotional films",
+                "Branded films",
                 "Keynotes",
-                "Interviews & series"
+                "Storytelling"
               ],
               "href": "/work",
               "accent": "burgundy"
             },
             {
-              "kicker": "02 / Launch online",
-              "title": "Websites & Web Tools",
-              "desc": "When you need a website or tool people will actually use: public pages, forms, member accounts and admin consoles, built quickly with AI.",
+              "kicker": "02 / Education",
+              "title": "Learning Platforms & Teaching",
+              "desc": "Learning experiences that travel — education platforms, workshops and teaching formats that help people discover, practice and grow.",
               "tags": [
-                "Websites",
-                "Admin tools",
-                "Built with AI"
+                "Learning platforms",
+                "Workshops",
+                "Global education"
               ],
               "href": "/dev",
               "accent": "burgundy"
             },
             {
-              "kicker": "03 / Work smarter",
-              "title": "AI Workflows & Workshops",
-              "desc": "When your team wants AI in everyday work: review the workflow, pilot one use case and practice it hands-on together.",
+              "kicker": "03 / AI",
+              "title": "AI Workflows & AX",
+              "desc": "Practical AI for everyday creation — review the workflow, pilot an AI-assisted path, and practice it hands-on with your team.",
               "tags": [
-                "Workflow review",
-                "Pilot",
-                "Workshops"
+                "AI workflows",
+                "AI-assisted creation",
+                "AX workshops"
               ],
               "href": "/dev#lecture",
               "accent": "burgundy"
             },
             {
-              "kicker": "04 / Reach further",
+              "kicker": "04 / Global",
               "title": "Global Scouting & Collaboration",
               "desc": "When your project crosses borders: international Scouting experience, Asia-Pacific communications and cross-cultural partnerships.",
               "tags": [
@@ -152,33 +152,33 @@ const DEFAULT = {
         },
         "approach": {
           "eyebrow": "How I work",
-          "title": "Understand the need. Choose the fitting way. Deliver it fast.",
+          "title": "Start with the story. Shape the learning. Ship with AI.",
           "steps": [
             {
               "num": "01",
               "title": "Listen",
-              "desc": "Clarify your goal, the people involved and what a good result looks like."
+              "desc": "Clarify who it is for, what should change, and what \"done\" looks like."
             },
             {
               "num": "02",
               "title": "Choose",
-              "desc": "Pick the most fitting form, whether a film, a website, an AI workflow or a partnership."
+              "desc": "Pick the form that fits — a film, a learning experience, an AI workflow or a partnership."
             },
             {
               "num": "03",
               "title": "Build with AI",
-              "desc": "Make it quickly with AI, then test it with the people who will use it."
+              "desc": "Produce and prototype with AI-assisted creation, then test with the people who will use it."
             },
             {
               "num": "04",
               "title": "Hand over",
-              "desc": "Deliver the result with the guidance your team needs to keep using it."
+              "desc": "Deliver the film, platform or workflow with the guidance your team needs to keep going."
             }
           ]
         },
         "projects": {
           "eyebrow": "Stay connected",
-          "title": "Network, background and hiring.",
+          "title": "Network, background, and next roles.",
           "feature": {
             "badge": "Content strategy · Global Scouting",
             "sub": "Founder · Scouting media",
@@ -212,16 +212,16 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "Have a goal in mind?",
-          "body": "Tell me what you want to achieve, who it is for and when you need it. I’ll suggest the most fitting way to get there.",
+          "title": "Have a film, platform, or AI idea?",
+          "body": "Tell me what you want people to see, learn or ship — and when you need it. I’ll suggest a clear next step.",
           "button": {
-            "label": "Tell me your goal",
+            "label": "Start a conversation",
             "href": "/contact"
           }
         },
         "selected": {
           "eyebrow": "Selected work",
-          "title": "Different goals. Different solutions.",
+          "title": "Films, platforms, and AI in the field.",
           "sitesTitle": "Websites",
           "sites": [
             {
@@ -230,7 +230,7 @@ const DEFAULT = {
               "format": "Own platform · Global education",
               "year": "2026",
               "role": "CEO · Planning & development",
-              "summary": "The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.",
+              "summary": "Global education platform I lead as CEO — connecting young people worldwide with Korean higher education through learning pathways they can actually use.",
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
@@ -249,7 +249,7 @@ const DEFAULT = {
               "format": "Own platform · Scouting media",
               "year": "2026",
               "role": "Founder · Planning & development",
-              "summary": "The Korean-language Scouting news platform I founded, covering Korea, the Asia-Pacific Region and world Scouting.",
+              "summary": "Scouting media platform I founded — Korean-language storytelling covering Korea, the Asia-Pacific Region and world Scouting.",
               "need": "An independent home for Scouting news in Korean, with reference material that stays useful beyond the news cycle.",
               "built": "News boards with article pages and sharing, search, a Scout calendar, a glossary with a keyword chatbot, a memorabilia encyclopedia, card news, RSS and sitemaps.",
               "stack": "Cloudflare Pages Functions · D1 · Scheduled Workers",
@@ -268,7 +268,7 @@ const DEFAULT = {
               "format": "Food cooperative · Official website",
               "year": "2026",
               "role": "Planning & development",
-              "summary": "The official website of a traditional fermented-foods cooperative, with product detail pages made with AI.",
+              "summary": "Official site for a traditional fermented-foods cooperative, including product pages built with AI-assisted creation.",
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
               "built": "Education and course-application pages, a product shop whose detail pages and product images were created with AI, guest order lookup, member accounts, a news board and an admin console.",
               "stack": "Cloudflare Pages Functions · D1 · R2",
@@ -289,7 +289,7 @@ const DEFAULT = {
               "title": "Samsung Tech Conference 2025",
               "year": "2025",
               "role": "Planning, Direction, Filming & Editing",
-              "desc": "Keynote presentation videos combining presenter footage, chroma key and presentation graphics.",
+              "desc": "Keynote films that blend presenter footage, chroma key and presentation graphics into clear tech storytelling.",
               "href": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
               "image": "/assets/img/video/samsung-keynote.jpg",
               "format": "Technology · Keynote videos",
@@ -300,7 +300,7 @@ const DEFAULT = {
               "title": "AI2RE by SPAID",
               "year": "2025",
               "role": "Planning & Direction Lead",
-              "desc": "CES Innovation Award promotional film for AI2RE.",
+              "desc": "Promotional film for AI2RE’s CES Innovation Award — tight storytelling for a technology brand moment.",
               "href": "https://www.youtube.com/watch?v=OmnvbFs-6Ws",
               "image": "https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg",
               "format": "Technology · Promotional film",
@@ -311,7 +311,7 @@ const DEFAULT = {
               "title": "Daekyo Newif · Jangsuhae",
               "year": "2024",
               "role": "Direction, Production & Editing Lead",
-              "desc": "TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
+              "desc": "Branded TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
               "href": "https://www.youtube.com/watch?v=DJcwT3V79B0",
               "image": "https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg",
               "format": "Brand · TV commercial",
@@ -419,7 +419,7 @@ const DEFAULT = {
               "title": "Samsung Tech Conference 2025",
               "year": "2025",
               "role": "Planning, Direction, Filming & Editing",
-              "desc": "Keynote presentation videos combining presenter footage, chroma key and presentation graphics.",
+              "desc": "Keynote films that blend presenter footage, chroma key and presentation graphics into clear tech storytelling.",
               "href": "https://drive.google.com/drive/folders/1IwaEHy3QLIeYCXLcSPlfMnP-hgoZ9s6g",
               "image": "/assets/img/video/samsung-keynote.jpg",
               "format": "Technology · Keynote videos",
@@ -430,7 +430,7 @@ const DEFAULT = {
               "title": "AI2RE by SPAID",
               "year": "2025",
               "role": "Planning & Direction Lead",
-              "desc": "CES Innovation Award promotional film for AI2RE.",
+              "desc": "Promotional film for AI2RE’s CES Innovation Award — tight storytelling for a technology brand moment.",
               "href": "https://www.youtube.com/watch?v=OmnvbFs-6Ws",
               "image": "https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg",
               "format": "Technology · Promotional film",
@@ -452,7 +452,7 @@ const DEFAULT = {
               "title": "Daekyo Newif · Jangsuhae",
               "year": "2024",
               "role": "Direction, Production & Editing Lead",
-              "desc": "TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
+              "desc": "Branded TV commercial for Daekyo Newif’s Jangsuhae deep-sea water.",
               "href": "https://www.youtube.com/watch?v=DJcwT3V79B0",
               "image": "https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg",
               "format": "Brand · TV commercial",
@@ -1056,8 +1056,8 @@ const DEFAULT = {
     },
     "contact": {
       "meta": {
-        "title": "Contact Jimmy Park | Tell Me Your Goal",
-        "desc": "Contact Jimmy Park by email or phone (+82). Share your goal, audience, timing and budget, and get the most fitting approach: video, website, AI workflow or global collaboration."
+        "title": "Contact Jimmy Park | Video, Education & AI",
+        "desc": "Contact Jimmy Park by email or phone (+82). Share your brief for video, learning platforms, AI workflows or global collaboration."
       },
       "order": [
         "intro"
@@ -2629,6 +2629,45 @@ function migrateTo16(doc) {
   return doc;
 }
 
+
+// v17: homepage Video + Education + AI positioning. Only unchanged v16 seed values move.
+const V17_SEEDS = [
+  [["global","brand","roleline"],"Solutions through content, web & AI · Global Scouting"],
+  [["global","footer","tagline"],"SIMPLE. DIRECT. TRUSTED. · BUILT FOR CONNECTION."],
+  [["global","seo","title"],"Jimmy Park (박지민) | Solutions Through Content, Web & AI"],
+  [["global","seo","desc"],"Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."],
+  [["pages","home","meta","title"],"Jimmy Park (박지민) | Solutions Through Content, Web & AI"],
+  [["pages","home","meta","desc"],"Jimmy Park (박지민) is a Korea-based solution maker who helps clients reach their goals in the most fitting way: video production, websites built with AI, AI workflows and global Scouting collaboration."],
+  [["pages","home","sections","hero","eyebrow"],"Solution maker · Video producer & web developer"],
+  [["pages","home","sections","hero","title"],"Your goal.\nThe right way to reach it."],
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park, a Korea-based solution maker. I work out what you actually need, then deliver it in the form that fits best: a film, a website, an AI workflow or an international connection. AI helps me move from idea to result quickly."],
+  [["pages","home","sections","hero","ctaPrimary"],{"label":"Tell me your goal","href":"/contact"}],
+  [["pages","home","sections","hero","caption"],"The need first, then the right tool."],
+  [["pages","home","sections","selected","title"],"Different goals. Different solutions."],
+  [["pages","home","sections","activities","title"],"What do you need to achieve?"],
+  [["pages","home","sections","activities","items"],[{"kicker":"01 / Be understood","title":"Content & Video Production","desc":"When people need to understand, remember or act on your message: concept, script, filming and editing, delivered as a film or series.","tags":["Promotional films","Keynotes","Interviews & series"],"href":"/work","accent":"burgundy"},{"kicker":"02 / Launch online","title":"Websites & Web Tools","desc":"When you need a website or tool people will actually use: public pages, forms, member accounts and admin consoles, built quickly with AI.","tags":["Websites","Admin tools","Built with AI"],"href":"/dev","accent":"burgundy"},{"kicker":"03 / Work smarter","title":"AI Workflows & Workshops","desc":"When your team wants AI in everyday work: review the workflow, pilot one use case and practice it hands-on together.","tags":["Workflow review","Pilot","Workshops"],"href":"/dev#lecture","accent":"burgundy"},{"kicker":"04 / Reach further","title":"Global Scouting & Collaboration","desc":"When your project crosses borders: international Scouting experience, Asia-Pacific communications and cross-cultural partnerships.","tags":["Asia-Pacific","Scouting","Partnerships"],"href":"/scouting#roles","accent":"green"}]],
+  [["pages","home","sections","snapshot","body"],"Jimmy Park (박지민, Park Jimin) is a Korea-based solution maker. He starts from what a client needs to achieve, then delivers the most fitting solution: video production, a website built with AI, an AI workflow or international Scouting collaboration. He founded BP Media and leads Korea Dream Path as CEO."],
+  [["pages","home","sections","snapshot","detail"],"His work includes technology films, educational web series and event media, as well as live websites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."],
+  [["pages","home","sections","approach","title"],"Understand the need. Choose the fitting way. Deliver it fast."],
+  [["pages","home","sections","approach","steps"],[{"num":"01","title":"Listen","desc":"Clarify your goal, the people involved and what a good result looks like."},{"num":"02","title":"Choose","desc":"Pick the most fitting form, whether a film, a website, an AI workflow or a partnership."},{"num":"03","title":"Build with AI","desc":"Make it quickly with AI, then test it with the people who will use it."},{"num":"04","title":"Hand over","desc":"Deliver the result with the guidance your team needs to keep using it."}]],
+  [["pages","home","sections","projects","title"],"Network, background and hiring."],
+  [["pages","home","sections","cta","title"],"Have a goal in mind?"],
+  [["pages","home","sections","cta","body"],"Tell me what you want to achieve, who it is for and when you need it. I’ll suggest the most fitting way to get there."],
+  [["pages","home","sections","cta","button"],{"label":"Tell me your goal","href":"/contact"}],
+  [["pages","contact","meta","title"],"Contact Jimmy Park | Tell Me Your Goal"],
+  [["pages","contact","meta","desc"],"Contact Jimmy Park by email or phone (+82). Share your goal, audience, timing and budget, and get the most fitting approach: video, website, AI workflow or global collaboration."]
+];
+function migrateTo17(doc) {
+  for (const [path, previous] of V17_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  doc.version = 17;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -2666,7 +2705,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -2675,7 +2714,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -2683,7 +2722,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -2698,6 +2737,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 14) doc = migrateTo14(doc);
   if ((doc.version || 0) < 15) doc = migrateTo15(doc);
   if ((doc.version || 0) < 16) doc = migrateTo16(doc);
+  if ((doc.version || 0) < 17) doc = migrateTo17(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -2734,12 +2774,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 14) migrateTo14(incoming);
   if (incoming.version < 15) migrateTo15(incoming);
   if (incoming.version < 16) migrateTo16(incoming);
+  if (incoming.version < 17) migrateTo17(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 16;
+  doc.version = 17;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
