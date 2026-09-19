@@ -79,11 +79,11 @@
 
   // Scroll reveals: each kind of element gets its own entrance; grid items are staggered.
   var REVEALS = [
-    ["rise", ".eyebrow, .section-title, .section-subtitle, .case-section-title, .selected-group-head, .video-portfolio, .photo-portfolio, .profile-intro, .timeline-era, .showcase-body, .showcase-backend, .contact-card, .deliverable-list, .label-heading, .format-details, .travel-details, .principle-grid .process-step"],
+    ["rise", ".eyebrow, .section-title, .section-subtitle, .case-section-title, .selected-group-head, .video-portfolio, .photo-portfolio, .profile-intro, .timeline-era, .timeline-year-group, .showcase-body, .showcase-backend, .contact-card, .deliverable-list, .label-heading, .format-details, .travel-details, .principle-grid .process-step"],
     ["card", ".collection-grid > *"],
     ["zoom", ".photo-item, .scouting-hero-photo, [data-img], .gallery-image"],
     ["wipe", ".cta-panel, .info-panel, .feature-card"],
-    ["slide", ".timeline-entry, .snapshot-row, .backend-list li, .brief-list li, .showcase-facts > div, .browser-frame"],
+    ["slide", ".timeline-entry, .timeline-year-group, .snapshot-row, .backend-list li, .brief-list li, .showcase-facts > div, .browser-frame"],
     ["pop", ".phone-frame"]
   ];
   var revealObserver = motionOK ? new IntersectionObserver(function (entries) {
@@ -217,6 +217,50 @@
   function pageData(content) { return (content.pages && content.pages[page]) || {}; }
   function sectionData(content) { return pageData(content).sections || {}; }
 
+
+  function timelineStartYear(item) {
+    var m = String((item && item.year) || "").match(/(\d{4})/);
+    return m ? parseInt(m[1], 10) : 0;
+  }
+
+  function timelineYearSummary(items) {
+    var titles = items.map(function (t) { return String(t.title || "").trim(); }).filter(Boolean);
+    if (!titles.length) return "No entries.";
+    if (titles.length === 1) return titles[0] + ".";
+    if (titles.length === 2) return titles[0] + "; " + titles[1] + ".";
+    if (titles.length === 3) return titles[0] + "; " + titles[1] + "; " + titles[2] + ".";
+    return titles[0] + "; " + titles[1] + "; " + titles[2] + " · +" + (titles.length - 3) + " more.";
+  }
+
+  function renderTimelineByYear(items) {
+    var groups = {};
+    (items || []).forEach(function (item) {
+      var y = timelineStartYear(item);
+      if (!y) return;
+      if (!groups[y]) groups[y] = [];
+      groups[y].push(item);
+    });
+    var years = Object.keys(groups).map(Number).sort(function (a, b) { return b - a; });
+    if (!years.length) return "";
+    return years.map(function (year, idx) {
+      var list = groups[year].slice().sort(function (a, b) {
+        return String(a.year || "").localeCompare(String(b.year || ""));
+      });
+      var summary = timelineYearSummary(list);
+      var open = idx === 0 ? " open" : "";
+      var body = list.map(function (t) { return TT.timelineEntry(t); }).join("");
+      return '<details class="timeline-year-group"' + open + '>' +
+        '<summary class="timeline-year-summary">' +
+          '<span class="timeline-year-label">' + esc(String(year)) + '</span>' +
+          '<span class="timeline-year-count">' + list.length + (list.length === 1 ? " entry" : " entries") + '</span>' +
+          '<span class="timeline-year-blurb">' + esc(summary) + '</span>' +
+        '</summary>' +
+        '<div class="timeline-year-body">' + body + '</div>' +
+      '</details>';
+    }).join("");
+  }
+
+
   // collection item templates (markup mirrors the static seeds / design.md)
   var TT = {
     travelPlaces: function (place) {
@@ -321,12 +365,12 @@
     },
     intlTags: function (t) { return '<span class="tag tag--scouting tag--large">' + esc(t.text) + '</span>'; },
     mediaProjects: function (m) { return '<div class="card card--compact"><h3>' + esc(m.title) + '</h3><p>' + esc(m.desc) + '</p></div>'; },
+    timelineEntry: function (t) {
+      return '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') + '</div></article>';
+    },
+    // Kept for admin preview compatibility; year grouping uses renderTimelineByYear.
     timeline: function (t, i, items) {
-      var leader = t.track ? t.track === "Leader" : t.accent === "green";
-      var previous = i > 0 ? items[i - 1] : null;
-      var previousLeader = previous && (previous.track ? previous.track === 'Leader' : previous.accent === 'green');
-      var group = !previous || leader !== previousLeader ? '<div class="timeline-era">' + (leader ? 'Leadership &amp; media' : 'Early Scouting') + '</div>' : '';
-      return group + '<article class="timeline-entry"><div class="timeline-year">' + esc(t.year) + '</div><div class="timeline-content"><h3>' + esc(t.title) + '</h3>' + (t.context ? '<p>' + esc(t.context) + '</p>' : '') + '</div></article>';
+      return TT.timelineEntry(t);
     },
     gallery: function (g, i) {
       if (!g.image) return '';
@@ -433,8 +477,11 @@
     // collections
     document.querySelectorAll("[data-collection]").forEach(function (el) {
       var arr = get(sd, el.getAttribute("data-collection"));
-      var t = TT[el.getAttribute("data-template")];
-      if (Array.isArray(arr) && t) el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
+      var tmplName = el.getAttribute("data-template");
+      var t = TT[tmplName];
+      if (!Array.isArray(arr) || !t) return;
+      if (tmplName === "timeline") el.innerHTML = renderTimelineByYear(arr);
+      else el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
     });
 
     // Travel totals use the same entries shown in the destination list.
