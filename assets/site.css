@@ -1009,23 +1009,23 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
   box-shadow: var(--md-elevation-1);
 }
 
-/* Homepage CTA band: filled primary container / inverse-friendly primary. */
-.portfolio [data-section="cta"] {
+/* Home CTA band: filled primary container / inverse-friendly primary. */
+.portfolio[data-page="home"] [data-section="cta"] {
   background: var(--md-primary) !important;
   color: var(--md-on-primary) !important;
   border: 0 !important;
 }
-.portfolio [data-section="cta"] :is(h2, p, a, .eyebrow, .body-copy) {
+.portfolio[data-page="home"] [data-section="cta"] :is(h2, p, a, .eyebrow, .body-copy) {
   color: var(--md-on-primary) !important;
 }
-.portfolio [data-section="cta"] .btn,
-.portfolio [data-section="cta"] .site-button {
+.portfolio[data-page="home"] [data-section="cta"] .btn,
+.portfolio[data-page="home"] [data-section="cta"] .site-button {
   background: var(--md-on-primary);
   color: var(--md-primary) !important;
   border-radius: var(--md-shape-full);
 }
-.portfolio [data-section="cta"] .btn:hover,
-.portfolio [data-section="cta"] .site-button:hover {
+.portfolio[data-page="home"] [data-section="cta"] .btn:hover,
+.portfolio[data-page="home"] [data-section="cta"] .site-button:hover {
   box-shadow: var(--md-elevation-1);
 }
 
