@@ -325,10 +325,14 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-row2" }, [a, b])]);
   }
 
+  function cssUrl(value) {
+    if (!value || /[\u0000-\u0020\\'"()]/.test(String(value))) return "";
+    return "url(" + JSON.stringify(String(value)) + ")";
+  }
   function imageEl(obj, key, label) {
     var thumb = el("div", { class: "ad-imgthumb" });
-    if (obj[key]) thumb.style.backgroundImage = "url('" + obj[key] + "')";
-    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; thumb.style.backgroundImage = url ? "url('" + url + "')" : ""; btn.textContent = url ? "Change" : "Set image"; schedulePreview(); }); } });
+    if (obj[key]) thumb.style.backgroundImage = cssUrl(obj[key]);
+    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; thumb.style.backgroundImage = url ? cssUrl(url) : ""; btn.textContent = url ? "Change" : "Set image"; schedulePreview(); }); } });
     return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-imgpick" }, [thumb, btn])]);
   }
 

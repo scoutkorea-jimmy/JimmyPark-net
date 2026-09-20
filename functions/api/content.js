@@ -3542,7 +3542,8 @@ function safeSiteUrl(value, externalOnly = false) {
   if (typeof value !== 'string') return '';
   const url = value.trim();
   if (!url) return '';
-  if (/[\u0000-\u0020\\]/.test(url)) return '';
+  // Reject control chars, backslash, and CSS url() breakers (quotes/parens).
+  if (/[\u0000-\u0020\\'"()]/.test(url)) return '';
   if (!externalOnly && (url.startsWith('#') || (url.startsWith('/') && !url.startsWith('//')))) return url;
   if (!url.startsWith('https://')) return '';
   try { const parsed = new URL(url); return parsed.hostname && !parsed.username && !parsed.password ? url : ''; } catch (_) { return ''; }
