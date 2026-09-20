@@ -8,7 +8,8 @@ export async function readPosts(env) {
   return saved;
 }
 export function publishedPosts(store) {
-  return store.posts.filter(p => p.status === 'published')
+  const todayKST = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
+  return store.posts.filter(p => p.status === 'published' && p.date <= todayKST)
     .sort((a, b) => b.date.localeCompare(a.date) || b.updatedAt - a.updatedAt);
 }
 export async function managePosts({ request, env }) {
@@ -30,13 +31,15 @@ export async function managePosts({ request, env }) {
     if (index < 0) return json({ ok: false, error: 'not_found' }, 404);
     store.posts.splice(index, 1);
   } else {
-    const limits = { title: 160, slug: 100, category: 60, summary: 500, body: 50000, date: 10 };
+    const limits = { title: 160, slug: 100, category: 60, summary: 500, body: 50000, hashtags: 500, date: 10 };
     const post = {};
     for (const [key, max] of Object.entries(limits)) {
-      if (typeof incoming[key] !== 'string' || incoming[key].length > max) return json({ ok: false, error: 'invalid_' + key }, 400);
-      post[key] = incoming[key].trim();
+      const value = incoming[key] === undefined && key === 'hashtags' ? '' : incoming[key];
+      if (typeof value !== 'string' || value.length > max) return json({ ok: false, error: 'invalid_' + key }, 400);
+      post[key] = value.trim();
     }
     if (!post.title) return json({ ok: false, error: 'title_required' }, 400);
+    if (post.hashtags && !/^#[^\s#]+(?:\s+#[^\s#]+)*$/u.test(post.hashtags)) return json({ ok: false, error: 'invalid_hashtags' }, 400);
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug)) return json({ ok: false, error: 'invalid_slug' }, 400);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(post.date) || Number.isNaN(Date.parse(post.date)) || new Date(post.date).toISOString().slice(0, 10) !== post.date) return json({ ok: false, error: 'invalid_date' }, 400);
     if (!['draft', 'published'].includes(incoming.status)) return json({ ok: false, error: 'invalid_status' }, 400);

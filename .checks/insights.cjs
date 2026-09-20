@@ -41,6 +41,7 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   assert.equal(structured['@type'], 'BlogPosting');
   assert.equal(structured.author['@id'], 'https://jimmypark.net/#person');
   assert.equal(structured.headline, current.title);
+  assert.match(detail.html, /What do you think\?/);
   assert.ok((await page()).html.includes('/insights/test-note'));
   const before = writes;
   assert.equal((await manage('POST',{revision:store.revision,post:{...post,status:'published'}})).status,409);
