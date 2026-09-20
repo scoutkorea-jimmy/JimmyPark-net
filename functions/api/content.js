@@ -949,34 +949,34 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Global network · Scouting",
+          "eyebrow": "Scouting record · International work",
           "title": "Scouting, media and\ninternational collaboration.",
-          "lead": "My international network grows through Scouting, Asia-Pacific communication and partnerships, and media work at global events.",
+          "lead": "Scouting involvement since 2003, 19 countries and regions visited, and dated roles in Korea Scout Association, Asia-Pacific Scouting, Jamboree media, and international contingents.",
           "image": "/assets/img/scouting-main.jpg?v=0.10.0",
           "badge": "Scouting",
           "caption": "Scouting, communication and international connections."
         },
         "why": {
-          "eyebrow": "The foundation of my network",
-          "body": "Scouting is where I learned to work across cultures, understand different audiences, and build trust through shared projects. I bring that experience to content planning, international communication, and collaboration."
+          "eyebrow": "Scope of experience",
+          "body": "The record covers leadership, media, training, photography, international delegation, and youth communication. Each entry below identifies its year, organization or event, and role."
         },
         "stats": {
           "items": [
             {
-              "value": "20+",
-              "label": "Years in Scouting"
+                "value": "2003–",
+                "label": "Scouting involvement"
             },
             {
-              "value": "Youth",
-              "label": "Movement & social impact"
+                "value": "19",
+                "label": "Countries & regions visited"
             },
             {
-              "value": "Global",
-              "label": "Exchange & networks"
+                "value": "2025–2028",
+                "label": "APR C&P 2nd Vice Chair"
             },
             {
-              "value": "Media",
-              "label": "Records & communication"
+                "value": "2023",
+                "label": "25th WSJ Korean Contingent Media"
             }
           ]
         },
@@ -1034,8 +1034,8 @@ const DEFAULT = {
           ]
         },
         "international": {
-          "title": "A network with a working context",
-          "body": "World Scout Jamborees, Asia-Pacific regional activities, and international Scout networks connect me with people working in youth engagement, media, and partnerships. These relationships inform how I approach cross-cultural projects and communication.",
+          "title": "International record",
+          "body": "Recorded roles include Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree in 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair for APR Communication & Partnerships from 2025 to 2028.",
           "tags": [
             {
               "text": "World Scout Jamboree"
@@ -1494,7 +1494,7 @@ const DEFAULT = {
             {
               "year": "2026–",
               "title": "BP Media",
-              "context": "I run BP Media, a Scouting-specialized media platform.",
+               "context": "Founder of a Scouting-specialized media platform, established in 2026.",
               "track": "Leader",
               "accent": "green",
               "href": "",
