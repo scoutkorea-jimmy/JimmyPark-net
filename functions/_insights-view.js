@@ -59,6 +59,7 @@ const SERIES = {
   'the-cost-of-making-meaning': { name: 'Message in Motion', part: 3 },
   'media-before-message-humans-before-media': { name: 'Message in Motion', part: 4 },
 };
+const SERIES_ORDER = ['AX Series', 'Message in Motion'];
 
 function seriesPart(post) {
   return SERIES[post.slug] ? SERIES[post.slug].part : 0;
@@ -86,6 +87,27 @@ function requestedSeries(request) {
   const match = raw.split('&').find(pair => pair.startsWith('series='));
   return match ? decodeURIComponent(match.slice(7).replace(/\+/g, ' ')) : '';
 }
+function requestedSort(request) {
+  const raw = request && request.url ? request.url.split('?')[1] || '' : '';
+  return raw.split('&').some(pair => pair === 'sort=latest') ? 'latest' : 'series';
+}
+function articleURL({ series, sort }) {
+  const pairs = [];
+  if (series) pairs.push('series=' + encodeURIComponent(series));
+  if (sort === 'latest') pairs.push('sort=latest');
+  const query = pairs.join('&');
+  return '/insights' + (query ? '?' + query : '');
+}
+function articleControls(posts, { series, sort }) {
+  return '<div class="insight-controls">' +
+    seriesChips(posts, series) +
+    '<nav class="insight-sort-chips" aria-label="Sort articles">' +
+      '<span class="insight-control-label">Order</span>' +
+      '<a class="insight-chip' + (sort === 'series' ? ' is-selected' : '') + '" href="' + escapeHTML(articleURL({ series, sort: 'series' })) + '"' + (sort === 'series' ? ' aria-current="true"' : '') + '>Series order</a>' +
+      '<a class="insight-chip' + (sort === 'latest' ? ' is-selected' : '') + '" href="' + escapeHTML(articleURL({ series, sort: 'latest' })) + '"' + (sort === 'latest' ? ' aria-current="true"' : '') + '>Latest published</a>' +
+    '</nav>' +
+  '</div>';
+}
 export async function renderInsights({ env, request }, slug) {
   let store;
   try { store = await readPosts(env); } catch (_) {
@@ -97,6 +119,7 @@ export async function renderInsights({ env, request }, slug) {
     .sort((a, b) => a.date.localeCompare(b.date) || (a.updatedAt || 0) - (b.updatedAt || 0));
   const posts = livePosts.concat(visiblePosts.filter(p => !livePosts.some(live => live.id === p.id)));
   const seriesFilter = requestedSeries(request);
+  const sort = requestedSort(request);
   const post = slug ? posts.find(p => p.slug === slug) : null;
   const scheduled = !!post && post.date > todayKST();
   const missing = !!slug && !post;
@@ -120,7 +143,12 @@ export async function renderInsights({ env, request }, slug) {
   } else {
     const ordered = posts.slice().sort((a, b) => {
       const ai = seriesInfo(a), bi = seriesInfo(b);
-      if (ai && bi && ai.name === bi.name) return ai.part - bi.part;
+      if (sort === 'series') {
+        const aiOrder = ai ? SERIES_ORDER.indexOf(ai.name) : SERIES_ORDER.length;
+        const biOrder = bi ? SERIES_ORDER.indexOf(bi.name) : SERIES_ORDER.length;
+        if (aiOrder !== biOrder) return aiOrder - biOrder;
+        if (ai && bi && ai.name === bi.name) return ai.part - bi.part;
+      }
       return b.date.localeCompare(a.date) || (b.updatedAt || 0) - (a.updatedAt || 0);
     });
     const list = (seriesFilter ? ordered.filter(post => seriesInfo(post)?.name === seriesFilter) : ordered).map(p => {
@@ -129,7 +157,7 @@ export async function renderInsights({ env, request }, slug) {
       const label = info ? info.name + ' · Part ' + part + ' of 4' : (p.category || 'Notes');
       return '<article class="insight-list-item"><div class="insight-list-meta"><span class="eyebrow">' + e(label) + '</span><time datetime="' + e(p.date + 'T09:00:00+09:00') + '">' + e(displayDate(p)) + '</time></div><div class="insight-list-content"><h2><a class="lnk" href="/insights/' + e(p.slug) + '">' + e(p.title) + '</a></h2><p>' + e(p.summary || p.body.slice(0, 180)) + '</p><a class="card-link" href="/insights/' + e(p.slug) + '" aria-label="' + e('Read ' + p.title) + '">Read ' + (info ? 'Part ' + part : 'article') + '<span class="msym" aria-hidden="true">arrow_forward</span></a></div></article>';
     }).join('');
-     content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p>' + seriesChips(posts, seriesFilter) + (list ? '<div class="insights-list">' + list + '</div>' : '<p class="insights-empty">' + (seriesFilter ? 'No articles in this series yet.' : 'New writing will appear here.') + '</p>') + '</div></section>';
+     content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p>' + articleControls(posts, { series: seriesFilter, sort }) + (list ? '<div class="insights-list">' + list + '</div>' : '<p class="insights-empty">' + (seriesFilter ? 'No articles in this series yet.' : 'New writing will appear here.') + '</p>') + '</div></section>';
   }
   if (post && !scheduled) {
     const structured = { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': url + '#article', mainEntityOfPage: url, headline: post.title, description: desc, datePublished: post.date + 'T09:00:00+09:00', dateModified: new Date(post.updatedAt).toISOString(), author: { '@type': 'Person', '@id': 'https://jimmypark.net/#person', name: 'Jimmy Park', url: 'https://jimmypark.net/#snapshot' } };

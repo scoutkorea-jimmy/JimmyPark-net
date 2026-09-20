@@ -15,7 +15,7 @@ let token;
 async function manage(method, data, authorized = true) {
   return api.managePosts({ env, request: new Request('https://example.test/api/posts', { method, headers: authorized ? { Authorization: 'Bearer ' + token } : {}, body: data === undefined ? undefined : typeof data === 'string' ? data : JSON.stringify(data) }) });
 }
-async function page(slug) { const res = await api.renderInsights({env},slug); return { status:res.status, html:await res.text(), cache:res.headers.get('cache-control') }; }
+async function page(slug, query = '') { const res = await api.renderInsights({env,request:new Request('https://example.test/insights' + query)},slug); return { status:res.status, html:await res.text(), cache:res.headers.get('cache-control') }; }
 (async () => {
   token = (await api.issueSession(env)).token;
   for (const method of ['GET','POST','DELETE']) assert.equal((await manage(method, method === 'GET' ? undefined : {}, false)).status,401);
@@ -43,6 +43,14 @@ async function page(slug) { const res = await api.renderInsights({env},slug); re
   assert.equal(structured.headline, current.title);
   assert.match(detail.html, /What do you think\?/);
   assert.ok((await page()).html.includes('/insights/test-note'));
+  const controls = (await page(undefined, '?sort=latest')).html;
+  assert.match(controls, /aria-label="Sort articles"/);
+  assert.match(controls, /Series order/);
+  assert.match(controls, /Latest published/);
+  assert.match(controls, /sort=latest/);
+  const filteredLatest = (await page(undefined, '?series=AX%20Series&sort=latest')).html;
+  assert.match(filteredLatest, /href="\/insights\?series=AX%20Series"/);
+  assert.match(filteredLatest, /href="\/insights\?series=AX%20Series&amp;sort=latest"/);
   const before = writes;
   assert.equal((await manage('POST',{revision:store.revision,post:{...post,status:'published'}})).status,409);
   for (const invalid of [{slug:'../bad'},{date:'2026-02-30'},{title:''},{body:''},{title:'x'.repeat(161)},{status:'unknown'}]) {

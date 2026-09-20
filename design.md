@@ -286,6 +286,11 @@ state layers (`::before` at 8% / 10% / 10% of the label colour) plus a ripple on
 Trailing `arrow_forward` / `arrow_outward` icons are decorative and nudge on hover.
 Icon buttons (menu, copy) are 40px circles.
 
+Articles use assist-chip controls for series filters and ordering. **Series order** is the default so
+multi-part writing reads as intended; **Latest published** is an explicit alternate. Preserve the
+selected series when changing order. Controls use the same 36px assist-chip target, visible selected
+state, keyboard focus ring, and M3 state layers as the rest of the interface.
+
 ### Cards
 - `.card` is an M3 outlined card: `--md-outline-variant` border, 12px radius, 16–24px padding. `.card--compact` uses 24px;
   `.card--scouting` adds the page-aware Scouting surface and border.

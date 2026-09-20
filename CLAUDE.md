@@ -318,6 +318,15 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - `design/` holds the Material 3 reference library for this site (see its README). It is guidance;
   [design.md](design.md) stays the contract. `.md` files are never served (middleware 404).
 
+### Article order and interaction accessibility (v0.18.5, 2026-09-20)
+- `/insights` defaults to **Series order**, preserving Part 1–4 for each editorial sequence. It offers
+  **Latest published** as an explicit alternative; changing order preserves any selected series filter.
+- Article order and series filters use server-rendered, keyboard-accessible M3 assist chips. Do not make
+  article discovery dependent on client-side state.
+- M3 state layers must render above a component surface and below its label. Keep the interaction target
+  at least 40px for buttons and 36px for article filter/order chips; retain the shared visible focus ring.
+- The Scouting CTA uses the shared `.btn.btn-white.site-button`, not a small underlined text link.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,

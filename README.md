@@ -1,9 +1,9 @@
 # JimmyPark.net — Jimmy Park
 
-Personal portfolio: Content Strategist · AI Practitioner · AX Consultant · Global Collaborator.
-Clean, modern, warm-minimal. English-only. Burgundy `#7a1e2c`
-accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
-Wanted Sans Variable is the default typeface, with Pretendard/system fallbacks.
+Personal portfolio for a solution maker working across content, web and AI.
+Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgundy `#7a1e2c`
+is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
+Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
 The home page leads with four capabilities, connects each to supporting work, and
 places dated international roles alongside the projects. Work covers content
@@ -68,10 +68,14 @@ wrangler.toml   Pages config + KV binding
   article text, then **Save draft** or **Publish**. Existing articles can be edited,
   unpublished or deleted. Article controls save independently of the page editor.
 - A blank line separates paragraphs; `## ` starts a heading. HTML is displayed as text.
+- Article metadata and body stay in the remote `insights:v1` KV store. The repository contains
+  rendering and validation code only; revise published writing through `/admin` after an editorial
+  review, not by changing a static fallback.
 - Drafts require the existing admin login. Only published posts enter public HTML and
   the sitemap. The published AX Series covers prompt clarity, human-AI work division,
   accountability for AI-generated work, and AI transformation as a shared operating model.
-  Its index is a chronological Part 1–4 list with scheduled 9:00 AM KST publication times.
+  Its index defaults to series Part 1–4 order, can switch to latest-published order, and shows scheduled
+  9:00 AM KST publication times.
   Content is rendered on the server
   for reading without JavaScript and carries article-specific metadata.
 - Public navigation calls this section **Articles**, while `/insights` remains the stable URL.

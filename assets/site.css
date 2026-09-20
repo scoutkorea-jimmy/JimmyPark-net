@@ -25,7 +25,7 @@ body {
 ::selection { background: var(--accent); color: #fff; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible {
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
   outline: 3px solid var(--md-primary); outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -538,6 +538,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .insight-list-content p { margin: var(--space-12) 0 0; max-width: 70ch; color: var(--md-on-surface-variant); }
 .insight-list-content .card-link { margin-top: var(--space-16); }
 .insight-series-chips { display: flex; flex-wrap: wrap; gap: var(--space-8); margin: var(--space-24) 0; }
+.insight-controls { margin-top: var(--space-24); }
+.insight-controls .insight-series-chips { margin: 0; }
+.insight-sort-chips { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-8); margin-top: var(--space-16); }
+.insight-control-label { color: var(--md-on-surface-variant); font-size: var(--md-label-large); font-weight: 500; line-height: 20px; }
 .insight-chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--space-16); border: 1px solid var(--md-outline); border-radius: var(--md-shape-full); color: var(--md-on-surface-variant); font-size: var(--md-label-large); line-height: 20px; text-decoration: none; transition: background var(--md-duration-short) var(--md-ease-standard), color var(--md-duration-short) var(--md-ease-standard), border-color var(--md-duration-short) var(--md-ease-standard); }
 .insight-chip:hover, .insight-chip:focus-visible { background: var(--md-primary-container); color: var(--md-on-primary-container); border-color: var(--md-primary); }
 .insight-chip.is-selected { background: var(--md-primary); color: var(--md-on-primary); border-color: var(--md-primary); }
@@ -619,7 +623,7 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio .showcase-facts dt { color: var(--md-primary); }
 
 /* State layers: an 8–10% overlay of the content colour, painted under the content. */
-.portfolio :is(.site-button, .nav-link, .mobile-links a, .copybtn, .nav-toggle, a.card, a.card-link, .backend-toggle, .format-details > summary, .travel-details > summary, .profile-link, .travel-link) { position: relative; isolation: isolate; }
+.portfolio :is(.site-button, .nav-link, .mobile-links a, .copybtn, .nav-toggle, a.card, a.card-link, .backend-toggle, .format-details > summary, .travel-details > summary, .profile-link, .travel-link) { position: relative; z-index: 0; isolation: isolate; }
 .portfolio :is(.site-button, .nav-link, .mobile-links a, .copybtn, .nav-toggle, a.card, a.card-link, .backend-toggle, .format-details > summary, .travel-details > summary, .profile-link, .travel-link)::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: currentColor; opacity: 0; pointer-events: none;
   transition: opacity var(--md-duration-short) var(--md-ease-standard);
