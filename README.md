@@ -115,6 +115,7 @@ node .checks/content.cjs
 node .checks/insights.cjs
 node .checks/admin-save.cjs
 node .checks/stability.cjs
+node .checks/button-contrast.mjs https://jimmypark.net
 git diff --check
 ```
 The check uses Python 3 and Node only. It verifies layout rules, shared shell, links/assets and
@@ -125,6 +126,10 @@ The additional checks exercise authenticated draft/publication transitions, esca
 invalid/stale writes, repeated saves and in-flight edits with isolated data. Local HTTP checks
 cover public routes, sitemap, missing routes and unauthorized admin requests. No production
 test posts are created. This release did not run browser interaction or visual QA.
+
+`button-contrast.mjs` uses the locally installed Google Chrome to capture each public portfolio
+route at 1440px and 390px, check visible button geometry, and reject an opaque button whose
+computed foreground/background contrast is below WCAG AA. It does not write site content.
 
 ## Deploy (Cloudflare Pages)
 1. Connect this repo to a Pages project (build output dir = repo root, no build cmd).

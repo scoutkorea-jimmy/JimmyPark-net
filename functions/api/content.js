@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 36,
+  "version": 37,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -80,11 +80,11 @@ const DEFAULT = {
             },
             {
               "label": "Asia-Pacific",
-              "value": "Communications & Partnerships · 2nd Vice Chair, 2025–2028"
+              "value": "Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028"
             },
             {
               "label": "International fieldwork",
-              "value": "25th World Scout Jamboree · Korean Contingent Media, 2023"
+              "value": "25th World Scout Jamboree · Deputy Head of Media Dept., 2022–2023"
             },
             {
               "label": "Creative tech",
@@ -932,7 +932,7 @@ const DEFAULT = {
     "scouting": {
       "meta": {
         "title": "Global Scouting & International Collaboration | Jimmy Park",
-        "desc": "Explore Jimmy Park’s Scouting communications roles, Asia-Pacific collaboration, Korean Contingent Jamboree media work and international experience."
+          "desc": "Explore Jimmy Park’s documented Scouting roles, Asia-Pacific Region service, World Scout Jamboree media work and international experience."
       },
       "order": [
         "hero",
@@ -1035,7 +1035,7 @@ const DEFAULT = {
         },
         "international": {
           "title": "International record",
-          "body": "Recorded roles include Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree in 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair for APR Communication & Partnerships from 2025 to 2028.",
+          "body": "Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee from 2025 to 2028.",
           "tags": [
             {
               "text": "World Scout Jamboree"
@@ -3478,6 +3478,23 @@ function migrateTo36(doc) {
   return doc;
 }
 
+// v37: align public Scouting terminology and dated roles with the owner-maintained record.
+function migrateTo37(doc) {
+  const sc = doc.pages && doc.pages.scouting && doc.pages.scouting.sections;
+  if (sc) {
+    sc.hero = { ...sc.hero, eyebrow: "Scouting record · International work", lead: "Scouting involvement since 2003, 19 countries and regions visited, and dated roles in Korea Scout Association, Asia-Pacific Scouting, Jamboree media, and international contingents." };
+    sc.stats = { items: [{ value: "2003–", label: "Scouting involvement" }, { value: "19", label: "Countries & regions visited" }, { value: "2025–2028", label: "Asia-Pacific Region C&P 2nd Vice Chair" }, { value: "2022–2023", label: "25th WSJ Deputy Head of Media Dept." }] };
+    sc.international = { ...sc.international, title: "International record", body: "Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee from 2025 to 2028." };
+    sc.why = { ...sc.why, eyebrow: "Scope of experience", body: "The record covers leadership, media, training, photography, international delegation, and youth communication. Each entry below identifies its year, organization or event, and role." };
+  }
+  if (doc.pages && doc.pages.home && doc.pages.home.sections && doc.pages.home.sections.snapshot && Array.isArray(doc.pages.home.sections.snapshot.rows)) {
+    doc.pages.home.sections.snapshot.rows = doc.pages.home.sections.snapshot.rows.map(row => row.label === "Asia-Pacific" ? { ...row, value: "Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028" } : row.label === "International fieldwork" ? { ...row, value: "25th World Scout Jamboree · Deputy Head of Media Dept., 2022–2023" } : row);
+  }
+  if (doc.pages && doc.pages.scouting && doc.pages.scouting.meta) doc.pages.scouting.meta.desc = "Explore Jimmy Park’s documented Scouting roles, Asia-Pacific Region service, World Scout Jamboree media work and international experience.";
+  doc.version = 37;
+  return doc;
+}
+
 
 
 
@@ -3550,7 +3567,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3559,7 +3576,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3567,7 +3584,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3602,6 +3619,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 34) doc = migrateTo34(doc);
   if ((doc.version || 0) < 35) doc = migrateTo35(doc);
   if ((doc.version || 0) < 36) doc = migrateTo36(doc);
+  if ((doc.version || 0) < 37) doc = migrateTo37(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3658,12 +3676,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 34) migrateTo34(incoming);
   if (incoming.version < 35) migrateTo35(incoming);
   if (incoming.version < 36) migrateTo36(incoming);
+  if (incoming.version < 37) migrateTo37(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 36;
+  doc.version = 37;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

@@ -327,6 +327,16 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   at least 40px for buttons and 36px for article filter/order chips; retain the shared visible focus ring.
 - The Scouting CTA uses the shared `.btn.btn-white.site-button`, not a small underlined text link.
 
+### Scouting terminology and evidence (v0.18.6, 2026-09-20)
+- The Scouting terminology authority is `Claude_Memories/reference/scout-terminology-ko.md`; the roles
+  authority is `Claude_Memories/core/소속과-직함-2026.md`. Apply their official English role names to
+  public profile content and preserve the Korean conventions when Korean is needed elsewhere.
+- Public chronology uses owner-recorded dates, organizations, roles and supplied counts only. Do not
+  infer reach, partnership scope, audiences, outcomes, or importance from an appointment title.
+- The 2026 event is **16th Korea Jamboree**, Head of PR, 5–9 August. The published reference for the
+  25th World Scout Jamboree is **Deputy Head of Media Dept.**, 2022–2023. Never reintroduce conflicting
+  “15th” or Korean-Contingent-only variants without an owner-approved official source.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,

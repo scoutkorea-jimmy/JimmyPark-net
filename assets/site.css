@@ -1021,7 +1021,7 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio [data-section="cta"] .btn,
 .portfolio [data-section="cta"] .site-button {
   background: var(--md-on-primary);
-  color: var(--md-primary);
+  color: var(--md-primary) !important;
   border-radius: var(--md-shape-full);
 }
 .portfolio [data-section="cta"] .btn:hover,
