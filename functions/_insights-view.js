@@ -74,7 +74,19 @@ function displayDate(post) {
 function todayKST() {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
 }
-export async function renderInsights({ env }, slug) {
+function seriesChips(posts, selected) {
+  const names = [...new Set(posts.map(post => seriesInfo(post)?.name).filter(Boolean))];
+  return '<nav class="insight-series-chips" aria-label="Filter articles by series">' +
+    '<a class="insight-chip' + (!selected ? ' is-selected' : '') + '" href="/insights">All articles</a>' +
+    names.map(name => '<a class="insight-chip' + (selected === name ? ' is-selected' : '') + '" href="/insights?series=' + encodeURIComponent(name) + '">' + escapeHTML(name) + '</a>').join('') +
+    '</nav>';
+}
+function requestedSeries(request) {
+  const raw = request && request.url ? request.url.split('?')[1] || '' : '';
+  const match = raw.split('&').find(pair => pair.startsWith('series='));
+  return match ? decodeURIComponent(match.slice(7).replace(/\+/g, ' ')) : '';
+}
+export async function renderInsights({ env, request }, slug) {
   let store;
   try { store = await readPosts(env); } catch (_) {
     const values = { TITLE: 'Articles temporarily unavailable | Jimmy Park', DESC: 'Please try again shortly.', URL: 'https://jimmypark.net/insights', TYPE: 'website', ROBOTS: '<meta name="robots" content="noindex">', CONTENT: '<section class="site-section"><div class="site-container"><h1 class="heading page-heading">Articles will be back shortly.</h1><p class="body-copy">The writing could not be loaded. Please try again in a moment.</p><a class="card-link" href="/">Return home</a></div></section>' };
@@ -84,6 +96,7 @@ export async function renderInsights({ env }, slug) {
   const visiblePosts = store.posts.filter(p => p.status === 'published' && p.date >= todayKST())
     .sort((a, b) => a.date.localeCompare(b.date) || (a.updatedAt || 0) - (b.updatedAt || 0));
   const posts = livePosts.concat(visiblePosts.filter(p => !livePosts.some(live => live.id === p.id)));
+  const seriesFilter = requestedSeries(request);
   const post = slug ? posts.find(p => p.slug === slug) : null;
   const scheduled = !!post && post.date > todayKST();
   const missing = !!slug && !post;
@@ -98,25 +111,25 @@ export async function renderInsights({ env }, slug) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
     const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading-layout"><div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-scheduled"><p class="eyebrow">Scheduled article</p><h2>This article will be published on ' + e(displayDate(post)) + '.</h2><p>The full text will be available here when the article goes live.</p></div></div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout insight-reading-layout--scheduled"><div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-scheduled"><p class="eyebrow">Scheduled article</p><h2>This article will be published on ' + e(displayDate(post)) + '.</h2><p>The full text will be available here when the article goes live.</p></div></div></div></article>';
   } else if (post) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
     const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Message%20in%20Motion%20article">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Message%20in%20Motion%20article">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
   } else {
     const ordered = posts.slice().sort((a, b) => {
       const ai = seriesInfo(a), bi = seriesInfo(b);
       if (ai && bi && ai.name === bi.name) return ai.part - bi.part;
       return b.date.localeCompare(a.date) || (b.updatedAt || 0) - (a.updatedAt || 0);
     });
-    const list = ordered.map(p => {
+    const list = (seriesFilter ? ordered.filter(post => seriesInfo(post)?.name === seriesFilter) : ordered).map(p => {
       const part = seriesPart(p);
       const info = seriesInfo(p);
       const label = info ? info.name + ' · Part ' + part + ' of 4' : (p.category || 'Notes');
       return '<article class="insight-list-item"><div class="insight-list-meta"><span class="eyebrow">' + e(label) + '</span><time datetime="' + e(p.date + 'T09:00:00+09:00') + '">' + e(displayDate(p)) + '</time></div><div class="insight-list-content"><h2><a class="lnk" href="/insights/' + e(p.slug) + '">' + e(p.title) + '</a></h2><p>' + e(p.summary || p.body.slice(0, 180)) + '</p><a class="card-link" href="/insights/' + e(p.slug) + '" aria-label="' + e('Read ' + p.title) + '">Read ' + (info ? 'Part ' + part : 'article') + '<span class="msym" aria-hidden="true">arrow_forward</span></a></div></article>';
     }).join('');
-    content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p>' + (list ? '<div class="insights-list">' + list + '</div>' : '<p class="insights-empty">New writing will appear here.</p>') + '</div></section>';
+     content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p>' + seriesChips(posts, seriesFilter) + (list ? '<div class="insights-list">' + list + '</div>' : '<p class="insights-empty">' + (seriesFilter ? 'No articles in this series yet.' : 'New writing will appear here.') + '</p>') + '</div></section>';
   }
   if (post && !scheduled) {
     const structured = { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': url + '#article', mainEntityOfPage: url, headline: post.title, description: desc, datePublished: post.date + 'T09:00:00+09:00', dateModified: new Date(post.updatedAt).toISOString(), author: { '@type': 'Person', '@id': 'https://jimmypark.net/#person', name: 'Jimmy Park', url: 'https://jimmypark.net/#snapshot' } };

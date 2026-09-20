@@ -537,6 +537,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .insight-list-content h2 a { color: var(--md-on-surface); }
 .insight-list-content p { margin: var(--space-12) 0 0; max-width: 70ch; color: var(--md-on-surface-variant); }
 .insight-list-content .card-link { margin-top: var(--space-16); }
+.insight-series-chips { display: flex; flex-wrap: wrap; gap: var(--space-8); margin: var(--space-24) 0; }
+.insight-chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--space-16); border: 1px solid var(--md-outline); border-radius: var(--md-shape-full); color: var(--md-on-surface-variant); font-size: var(--md-label-large); line-height: 20px; text-decoration: none; transition: background var(--md-duration-short) var(--md-ease-standard), color var(--md-duration-short) var(--md-ease-standard), border-color var(--md-duration-short) var(--md-ease-standard); }
+.insight-chip:hover, .insight-chip:focus-visible { background: var(--md-primary-container); color: var(--md-on-primary-container); border-color: var(--md-primary); }
+.insight-chip.is-selected { background: var(--md-primary); color: var(--md-on-primary); border-color: var(--md-primary); }
 .insight-reading { max-width: 850px; }
 .insight-reading h1 { overflow-wrap: anywhere; }
 .insight-body :is(h2, h3) { scroll-margin-top: 96px; }
@@ -573,6 +577,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (min-width:1100px) {
   .insight-reading-layout { display: grid; grid-template-columns: 220px minmax(0,850px); justify-content: center; gap: var(--space-48); }
+  .insight-reading-layout--scheduled .insight-reading { grid-column: 1 / -1; margin-inline: auto; }
   .insight-toc { display: block; position: sticky; top: calc(64px + var(--space-32)); align-self: start; max-height: calc(100dvh - 128px); overflow-y: auto; padding-right: var(--space-16); }
   .insight-toc .eyebrow { margin: 0 0 var(--space-12); }
   .insight-toc ol { display: flex; flex-direction: column; gap: var(--space-8); margin: 0; padding: 0; list-style: none; }
