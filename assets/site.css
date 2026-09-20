@@ -624,6 +624,8 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio .btn-ghost { background: transparent; color: var(--md-primary); border: 1px solid var(--md-outline); }
 .portfolio .btn-white { background: var(--md-surface-container-lowest); color: var(--md-primary); }
 .portfolio .btn-white:hover { box-shadow: var(--md-elevation-1); }
+/* The home CTA panel sets light foreground text; its white action must retain primary text. */
+.portfolio .cta-panel .btn-white { background: var(--md-surface-container-lowest); color: var(--md-primary); }
 .portfolio header .site-button { padding: 0 var(--space-24); font-size: var(--md-label-large); }
 .portfolio a.card-link { min-height: var(--control-size); padding: 0 var(--space-12); margin-inline-start: calc(var(--space-12) * -1); border-radius: var(--md-shape-full); font-size: var(--md-label-large); font-weight: 500; }
 .portfolio .card-body a.card-link { padding-top: 0; margin-top: auto; }
