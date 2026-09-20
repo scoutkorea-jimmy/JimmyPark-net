@@ -963,20 +963,20 @@ const DEFAULT = {
         "stats": {
           "items": [
             {
-                "value": "2003–",
-                "label": "Scouting involvement"
+              "value": "2003–",
+              "label": "Scouting involvement"
             },
             {
-                "value": "19",
-                "label": "Countries & regions visited"
+              "value": "19",
+              "label": "Countries & regions visited"
             },
             {
-                "value": "2025–2028",
-                "label": "APR C&P 2nd Vice Chair"
+              "value": "2025–2028",
+              "label": "APR C&P 2nd Vice Chair"
             },
             {
-                "value": "2023",
-                "label": "25th WSJ Korean Contingent Media"
+              "value": "2023",
+              "label": "25th WSJ Korean Contingent Media"
             }
           ]
         },
@@ -1494,7 +1494,7 @@ const DEFAULT = {
             {
               "year": "2026–",
               "title": "BP Media",
-               "context": "Founder of a Scouting-specialized media platform, established in 2026.",
+              "context": "Founder of a Scouting-specialized media platform, established in 2026.",
               "track": "Leader",
               "accent": "green",
               "href": "",
