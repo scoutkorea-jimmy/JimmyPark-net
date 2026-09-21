@@ -358,6 +358,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   paginate independently at five items while preserving the series filter and selected order.
 - `The Work Behind the Work` is a four-part personal-practice series scheduled every two days from
   28 September through 4 October 2026 at 9:00 AM KST.
+- Detail pages use one `View all articles` back button. Keep series chips as index filters; do not
+  repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the

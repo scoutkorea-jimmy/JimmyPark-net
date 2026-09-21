@@ -45,12 +45,15 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   assert.match(detail.html, /<meta property="og:image" content="https:\/\/jimmypark.net\/assets\/img\/og\/ax-1.png\?v=0.22.1">/);
   assert.match(detail.html, /<meta property="og:image:alt" content="AX article cover">/);
   assert.match(detail.html, /class="insight-cover"/);
+  assert.match(detail.html, /class="btn btn-secondary site-button insight-back-button" href="\/insights"><span class="msym" aria-hidden="true">arrow_back<\/span>View all articles<\/a>/);
+  assert.ok(!detail.html.includes('aria-label="Filter articles by series"'));
   assert.match(detail.html, /facebook\.com\/sharer\/sharer\.php\?u=https%3A%2F%2Fjimmypark\.net%2Finsights%2Ftest-note/);
   assert.match(detail.html, /linkedin\.com\/sharing\/share-offsite\/\?url=https%3A%2F%2Fjimmypark\.net%2Finsights%2Ftest-note/);
   assert.match(detail.html, /target="_blank" rel="noopener noreferrer"/);
   assert.match(detail.html, /What do you think\?/);
   assert.ok((await page()).html.includes('/insights/test-note'));
   const controls = (await page(undefined, '?sort=asc')).html;
+  assert.match(controls, /aria-label="Filter articles by series"/);
   assert.match(controls, /aria-label="Sort articles"/);
   assert.match(controls, /Newest first/);
   assert.match(controls, /Oldest first/);
@@ -89,6 +92,8 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   const futureDetail = await page('expertise-should-not-make-people-feel-small');
   assert.match(futureDetail.html, /The Work Behind the Work · Part 1 of 4/);
   assert.match(futureDetail.html, /Scheduled article/);
+  assert.match(futureDetail.html, /insight-back-button/);
+  assert.ok(!futureDetail.html.includes('aria-label="Filter articles by series"'));
   assert.match(futureDetail.html, /assets\/img\/og\/work-behind-1.png/);
   assert.ok(!futureDetail.html.includes('facebook.com/sharer'));
   assert.ok(!futureDetail.html.includes('Upcoming 1 private body'));

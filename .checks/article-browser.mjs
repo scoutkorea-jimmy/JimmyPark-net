@@ -48,17 +48,19 @@ try {
     await client.send('Emulation.setDeviceMetricsOverride', { ...viewport, deviceScaleFactor: 1 });
     await client.send('Page.navigate', { url: origin + livePath });
     await wait(900);
-    const result = await client.send('Runtime.evaluate', { expression: `(() => { const cover=document.querySelector('.insight-cover img')?.getBoundingClientRect(); return { innerWidth, scrollWidth:document.documentElement.scrollWidth, cover:cover&&{left:cover.left,right:cover.right,width:cover.width}, shareCount:document.querySelectorAll('.insight-share a').length, og:document.querySelector('meta[property="og:image"]')?.content }; })()`, returnByValue: true });
+    const result = await client.send('Runtime.evaluate', { expression: `(() => { const cover=document.querySelector('.insight-cover img')?.getBoundingClientRect(); return { innerWidth, scrollWidth:document.documentElement.scrollWidth, cover:cover&&{left:cover.left,right:cover.right,width:cover.width}, shareCount:document.querySelectorAll('.insight-share a').length, backCount:document.querySelectorAll('.insight-back-button').length, seriesChips:document.querySelectorAll('.insight-reading > .insight-series-chips').length, og:document.querySelector('meta[property="og:image"]')?.content }; })()`, returnByValue: true });
     const value = result.result.value;
     assert.equal(value.scrollWidth, value.innerWidth, `${viewport.width}px article has horizontal overflow`);
     assert.ok(value.cover && value.cover.left >= 0 && value.cover.right <= value.innerWidth, `${viewport.width}px cover escapes the viewport`);
     assert.equal(value.shareCount, 2, `${viewport.width}px article must show two share actions`);
+    assert.equal(value.backCount, 1, `${viewport.width}px article must show one view-all button`);
+    assert.equal(value.seriesChips, 0, `${viewport.width}px article must not repeat series chips`);
     assert.match(value.og, /\/assets\/img\/og\/ax-1\.png\?v=0\.22\.1$/);
   }
   await client.send('Page.navigate', { url: origin + '/insights/expertise-should-not-make-people-feel-small' });
   await wait(900);
-  const scheduled = await client.send('Runtime.evaluate', { expression: `(() => ({ body:Boolean(document.querySelector('.insight-body')), scheduled:Boolean(document.querySelector('.insight-scheduled')), shareCount:document.querySelectorAll('.insight-share a').length, cover:Boolean(document.querySelector('.insight-cover img')) }))()`, returnByValue: true });
-  assert.deepEqual(scheduled.result.value, { body: false, scheduled: true, shareCount: 0, cover: true });
+  const scheduled = await client.send('Runtime.evaluate', { expression: `(() => ({ body:Boolean(document.querySelector('.insight-body')), scheduled:Boolean(document.querySelector('.insight-scheduled')), shareCount:document.querySelectorAll('.insight-share a').length, cover:Boolean(document.querySelector('.insight-cover img')), backCount:document.querySelectorAll('.insight-back-button').length, seriesChips:document.querySelectorAll('.insight-reading > .insight-series-chips').length }))()`, returnByValue: true });
+  assert.deepEqual(scheduled.result.value, { body: false, scheduled: true, shareCount: 0, cover: true, backCount: 1, seriesChips: 0 });
   client.close();
   console.log('PASS: live article cover and share controls fit at 1440px/390px; scheduled body and sharing stay private.');
 } finally {

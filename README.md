@@ -5,6 +5,10 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.22.2 article-detail refinement replaces the understated text link with one clear
+`View all articles` back button. Series chips remain available as filters on the Articles index,
+but no longer repeat above the title on individual article pages.
+
 The v0.22.1 OG refinement removes the domain label from photo and symbol panes. `Jimmy Park.` and
 `jimmypark.net` now form one top-left brand lockup with a divider and a full 64px safe area. Cards
 are rendered as ordinary HTML/CSS in isolated browser targets to avoid partial SVG/font captures.
