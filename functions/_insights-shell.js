@@ -6,7 +6,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="__IMAGE__"><meta name="twitter:image:alt" content="__IMAGE_ALT__"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.22.0"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.23.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -59,4 +59,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.22.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.23.0" defer></script></body></html>`;

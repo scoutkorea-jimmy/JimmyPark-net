@@ -352,6 +352,10 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Schema v39 replaces only the exact v38 hero title and lead. The hero now reassures visitors that
   they do not need to arrive with all the answers, then describes listening, cross-discipline
   connection, delivery and handover. Preserve owner-written alternatives.
+- Schema v40 adds three locally archived hover frames to each homepage website and film card, replaces
+  known remote YouTube thumbnails with local representatives, and removes the hero's forced newline.
+  Preserve owner-supplied galleries. Hover/focus crossfades must not run on touch-only or
+  reduced-motion contexts; the representative image remains the stable fallback.
 
 ### Article scheduling and collections (v0.20.0, 2026-09-21)
 - `/insights` keeps published articles above a separately labelled `Upcoming Articles` collection.
@@ -528,7 +532,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 39`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 40`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

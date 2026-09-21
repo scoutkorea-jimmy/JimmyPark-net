@@ -56,11 +56,23 @@ async function migrate(value) {
   previous.pages.home.sections.hero.title = 'Owner-written hero';
   assert.equal((await migrate(previous)).pages.home.sections.hero.title, 'Owner-written hero');
 
+  const v39 = copy(defaults);
+  v39.version = 39;
+  v39.pages.home.sections.hero.title = 'You do not need to arrive\nwith all the answers.';
+  for (const item of [...v39.pages.home.sections.selected.sites, ...v39.pages.home.sections.selected.cases]) delete item.images;
+  v39.pages.home.sections.selected.cases[1].image = 'https://i.ytimg.com/vi/OmnvbFs-6Ws/hqdefault.jpg';
+  v39.pages.home.sections.selected.cases[2].image = 'https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg';
+  assert.deepEqual(await migrate(v39), defaults, 'The v39 homepage must gain local hover galleries and balanced hero copy');
+
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const runtime = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
+  const styles = fs.readFileSync(path.join(root, 'assets/site.css'), 'utf8');
   assert.match(html, /Why work with Jimmy/);
   assert.match(html, /You do not need to arrive/);
   assert.match(html, /work people can understand, use, and keep using/);
+  assert.equal((html.match(/case-media case-media--cycle/g) || []).length, 6);
+  assert.ok(!html.includes('i.ytimg.com'), 'Homepage representative images must be local');
+  assert.match(styles, /project-card:is\(:hover, :focus-within\) \.case-media--cycle img/);
   assert.match(html, /Read my articles/);
   assert.match(runtime, /See the evidence/);
   console.log('PASS: homepage positioning, v38 hero migration, custom-copy preservation and static/runtime brand links.');

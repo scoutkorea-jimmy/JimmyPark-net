@@ -287,22 +287,34 @@
 
 
   // collection item templates (markup mirrors the static seeds / design.md)
+  function caseMedia(primary, images, alt, width, height) {
+    var frames = [primary].concat(Array.isArray(images) ? images : []).filter(function (src, index, all) {
+      return src && all.indexOf(src) === index;
+    });
+    if (!frames.length) return '';
+    var cycle = frames.length > 1 ? ' case-media--cycle' : '';
+    return '<div class="case-media' + cycle + '">' + frames.map(function (src, index) {
+      return '<img src="' + esc(src) + '" alt="' + (index ? '' : esc(alt)) + '"' + (index ? ' aria-hidden="true"' : '') +
+        ' loading="lazy" decoding="async" width="' + width + '" height="' + height + '">';
+    }).join('') + '</div>';
+  }
+
   var TT = {
     travelPlaces: function (place) {
       return '<div class="travel-place"><h3>' + esc(place.name) + '</h3>' + (place.cities ? '<p>' + esc(place.cities) + '</p>' : '') + '</div>';
     },
     videoCases: function (v) {
       var href = /^https:\/\//.test(v.href || "") ? v.href : "";
-      var media = v.image ? '<img src="' + esc(v.image) + '" alt="Video still: ' + esc(v.title) + '" loading="lazy" decoding="async" width="640" height="360">' : '<span class="case-placeholder">' + esc(v.title) + '</span>';
-      return '<article class="card project-card video-case"><div class="case-media">' + media + '</div><div class="card-body">' +
+      var media = v.image ? caseMedia(v.image, v.images, 'Video still: ' + v.title, 640, 360) : '<div class="case-media"><span class="case-placeholder">' + esc(v.title) + '</span></div>';
+      return '<article class="card project-card video-case">' + media + '<div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(v.format) + '</span>' + (v.year ? '<span class="tag">' + esc(v.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(v.title) + '</h3><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((v.linkLabel || 'Watch film') + ': ' + v.title) + '">' + esc(v.linkLabel || 'Watch film') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
     siteCases: function (s) {
       var href = /^https:\/\//.test(s.href || "") ? s.href : "";
-      var media = s.image ? '<img src="' + esc(s.image) + '" alt="Homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="720">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
-      return '<article class="card project-card site-case"><div class="case-media">' + media + '</div><div class="card-body">' +
+      var media = s.image ? caseMedia(s.image, s.images, 'Homepage of ' + s.title, 1280, 720) : '<div class="case-media"><span class="case-placeholder">' + esc(s.title) + '</span></div>';
+      return '<article class="card project-card site-case">' + media + '<div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(s.title) + '</h3><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.summary) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';

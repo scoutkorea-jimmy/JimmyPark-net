@@ -540,6 +540,10 @@ these roles; new rules should use the `--md-*` names directly.
   global navigation and closing CTA, keeping the hero focused on personal-brand evidence.
 - The identity section combines claims with dated roles, and the lower project cards connect the
   work to professional network, international record and published perspective.
+- Homepage selected-work cards treat the first image as the representative frame. Up to three local
+  archive frames may crossfade on hover or keyboard focus. Keep the representative static for touch
+  and reduced-motion users, and keep all archived frames local so expired external links do not erase
+  the portfolio evidence. Hero headings use balanced wrapping, not authored hard line breaks.
 
 ## 20. Article collections and pagination (v0.20.0)
 - The Articles index presents `Published Articles` first and a clearly separated `Upcoming Articles`
