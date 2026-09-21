@@ -1,5 +1,11 @@
 # Current work
 
+Social previews v0.21.0 replace the single site-wide image with distinct 1200×630 cards for the
+seven main pages and the twelve current articles. Article image URL and alt text are part of the
+Insights post schema and admin editor; live and scheduled detail pages show the image, while only
+live articles expose Facebook and LinkedIn share buttons. Open Graph, Twitter Card and BlogPosting
+metadata use the same canonical representative image. Scheduled bodies remain private.
+
 Articles v0.20.0 separates published and future-scheduled writing, provides newest/oldest published
 ordering, and paginates each collection independently at five items. Scheduled entries reveal only
 metadata until exactly 9:00 AM KST on their date; draft entries remain private. The four-part

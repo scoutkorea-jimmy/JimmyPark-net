@@ -5,6 +5,13 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.21.0 social-preview system gives every main portfolio page its own 1200×630 Open Graph
+image and gives each article an editable representative image and accessible description. Article
+pages show that image above the text, expose it through Open Graph, Twitter Card and BlogPosting
+metadata, and provide Facebook and LinkedIn share buttons. The 19 checked-in images can be
+reproduced with `node scripts/generate-og-images.mjs`; page cards use owned portfolio photography
+and article cards use the site's typography and abstract visual language.
+
 The v0.20.0 Articles index separates published writing from scheduled `Upcoming Articles`.
 Published articles can be ordered newest-first or oldest-first; each collection is paged in groups
 of five. Future-dated published entries expose only their title, summary and 9:00 AM KST release
@@ -38,7 +45,7 @@ contact.html    Contact (/contact)
 insights.html   Articles static fallback; Pages Functions render /insights and /insights/:slug
 404.html        Missing-page response (disables the Pages SPA fallback)
 admin.html      Hidden admin (/admin · noindex)
-assets/         site.css · site.js (public) · admin.js · img/ (favicon, og)
+assets/         site.css · site.js (public) · admin.js · img/ (favicon, logo, page/article OG images)
 functions/      Cloudflare Pages Functions (API)
   _middleware.js          block *.md / config files from public serving
   api/_lib.js             TOTP verify + signed sessions
@@ -50,6 +57,7 @@ _headers        no-cache (deploy applies immediately)
 robots.txt · sitemap.xml
 wrangler.toml   Pages config + KV binding
 .checks/        dependency-free layout consistency checks (not public)
+scripts/        deterministic OG/social-image generator and deployment helpers
 ```
 
 ## Stability and Scouting refresh (v0.10.0 · 2026-09-10)

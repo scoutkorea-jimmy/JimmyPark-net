@@ -574,6 +574,16 @@ Routing: files under `functions/` map to paths; a leading `_` excludes a file fr
 Auth model: admin logs in with a **TOTP code** (authenticator app) → gets a session token;
 all write/admin endpoints require `isAdmin()`. There are no passwords stored.
 
+### Social previews and article sharing (v0.21.0, 2026-09-21)
+- Main public pages each use a distinct 1200×630 image from `assets/img/og/`, with matching
+  Open Graph and Twitter alt text. Do not restore the retired single-image metadata pattern.
+- Articles may store `image` and `imageAlt`. `image` accepts an HTTPS URL or a local
+  `/assets/img/` path; the public renderer converts local paths to canonical absolute URLs.
+- Live article pages show Facebook and LinkedIn share buttons using the canonical article URL.
+  Scheduled pages may show their representative image, but do not show share controls or body text.
+- `node scripts/generate-og-images.mjs` reproducibly renders the checked-in cards. Page cards use
+  existing owned photos; article cards use abstract branded motifs rather than fabricated scenes.
+
 ## Required Cloudflare config (don't commit secrets)
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,
   `img:*`, `media:index`, `rl:login:*`.

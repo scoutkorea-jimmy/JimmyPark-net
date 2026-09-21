@@ -4,7 +4,7 @@
   var panel, auth, expired, store, selected = null, dirty = false, busy = false, serial = 0;
   function node(tag, text, cls) { var n = document.createElement(tag); if (text) n.textContent = text; if (cls) n.className = cls; return n; }
   function errorText(code) {
-    return ({ conflict: 'This collection changed in another session. Your text is preserved. Copy it before reloading Insights.', slug_taken: 'That URL is already used by another article.', title_required: 'Add a title.', body_required: 'Add article text before publishing.', invalid_slug: 'Use lowercase letters, numbers and hyphens for the URL.', invalid_date: 'Enter a valid date.', unauthorized: 'Your session expired. Sign in again.' })[code] || 'Could not save. Check the fields and try again.';
+    return ({ conflict: 'This collection changed in another session. Your text is preserved. Copy it before reloading Insights.', slug_taken: 'That URL is already used by another article.', title_required: 'Add a title.', body_required: 'Add article text before publishing.', invalid_slug: 'Use lowercase letters, numbers and hyphens for the URL.', invalid_date: 'Enter a valid date.', invalid_image: 'Use an HTTPS image URL or a site image path beginning with /assets/img/.', unauthorized: 'Your session expired. Sign in again.' })[code] || 'Could not save. Check the fields and try again.';
   }
   function request(method, data) {
     return fetch('/api/posts', { method: method, headers: Object.assign({ 'content-type': 'application/json' }, auth()), body: data ? JSON.stringify(data) : undefined })
@@ -27,7 +27,7 @@
     var card = node('div', '', 'ad-card');
     card.append(node('h2', 'Insights', 'ad-h'), node('p', 'Draft, edit and publish your writing. Article changes are saved here, separately from the page editor.', 'ad-sub'));
     var add = node('button', 'New draft', 'ad-btn ad-btn-primary ad-btn-sm'); add.type = 'button';
-    add.onclick = function () { choose({ id: '', title: 'Untitled note', slug: 'note-' + Date.now().toString(36), date: new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }), category: '', summary: '', hashtags: '', body: '', status: 'draft' }); };
+    add.onclick = function () { choose({ id: '', title: 'Untitled note', slug: 'note-' + Date.now().toString(36), date: new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' }), category: '', summary: '', hashtags: '', image: '', imageAlt: '', body: '', status: 'draft' }); };
     card.appendChild(add);
     var list = node('div', '', 'insight-admin-list');
     (store.posts || []).slice().sort(function (a,b) { return b.updatedAt - a.updatedAt; }).forEach(function (p) {
@@ -48,6 +48,8 @@
     field(fields, 'Category', 'category', 'text', 60);
     field(fields, 'Summary', 'summary', 'textarea', 500);
     field(fields, 'Hashtags · separate with spaces, for example #Video #Media', 'hashtags', 'text', 500);
+    field(fields, 'Representative image · HTTPS URL or /assets/img/ path', 'image', 'text', 500);
+    field(fields, 'Representative image description', 'imageAlt', 'text', 300);
     field(fields, 'Article · separate paragraphs with a blank line; start a heading with ##', 'body', 'textarea', 50000);
     var actions = node('div', '', 'insight-admin-actions');
     var save = node('button', selected.status === 'published' ? 'Save changes' : 'Save draft', 'ad-btn ad-btn-primary ad-btn-sm'); save.type = 'submit';

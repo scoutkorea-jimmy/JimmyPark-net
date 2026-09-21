@@ -548,5 +548,15 @@ these roles; new rules should use the `--md-*` names directly.
 - Reuse the existing chips, dividers, type roles and spacing tokens. The upcoming boundary uses a
   top divider and larger section spacing rather than a new color surface.
 
+## 21. Social previews and article sharing (v0.21.0)
+- Every primary page and current article has a distinct 1200×630 social image in `assets/img/og/`.
+  Page cards pair owned portfolio photography with the page promise; article cards use an off-white
+  editorial field, burgundy or green series accent, and one abstract motif tied to the subject.
+- Article representative images appear after the summary in a rounded, outlined 1200:630 figure.
+  The same image and description are used for Open Graph, Twitter Card and BlogPosting metadata.
+- Share controls follow the existing outlined M3 button treatment. Facebook and LinkedIn sit in a
+  wrapping row below tags and above the conversation CTA, so the reading column remains usable at
+  phone widths without platform-specific colors competing with the site identity.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

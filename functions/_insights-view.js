@@ -64,6 +64,27 @@ const SERIES = {
   'if-people-cannot-understand-it-little-remains': { name: 'The Work Behind the Work', part: 4 },
 };
 const PAGE_SIZE = 5;
+const DEFAULT_IMAGE = 'https://jimmypark.net/assets/img/og/articles.png';
+
+function articleImage(post) {
+  const value = String(post?.image || '').trim();
+  if (/^\/assets\/img\/[A-Za-z0-9._/-]+$/u.test(value)) return 'https://jimmypark.net' + value;
+  if (/^https:\/\/[^\s]+$/u.test(value)) return value;
+  return DEFAULT_IMAGE;
+}
+function articleImageAlt(post) {
+  return String(post?.imageAlt || post?.title || 'Jimmy Park Articles').trim();
+}
+function articleCover(post) {
+  if (!post?.image) return '';
+  return '<figure class="insight-cover"><img src="' + escapeHTML(articleImage(post)) + '" alt="' + escapeHTML(articleImageAlt(post)) + '" width="1200" height="630" decoding="async" fetchpriority="high"></figure>';
+}
+function shareLinks(url, title) {
+  const encodedURL = encodeURIComponent(url);
+  return '<nav class="insight-share" aria-label="Share this article"><span class="insight-control-label">Share this article</span>' +
+    '<a class="btn btn-secondary site-button" href="https://www.facebook.com/sharer/sharer.php?u=' + encodedURL + '" target="_blank" rel="noopener noreferrer" aria-label="Share ' + escapeHTML(title) + ' on Facebook">Facebook<span class="msym" aria-hidden="true">open_in_new</span></a>' +
+    '<a class="btn btn-secondary site-button" href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodedURL + '" target="_blank" rel="noopener noreferrer" aria-label="Share ' + escapeHTML(title) + ' on LinkedIn">LinkedIn<span class="msym" aria-hidden="true">open_in_new</span></a></nav>';
+}
 
 function seriesPart(post) {
   return SERIES[post.slug] ? SERIES[post.slug].part : 0;
@@ -145,8 +166,8 @@ function postList(items, scheduled = false) {
 export async function renderInsights({ env, request }, slug) {
   let store;
   try { store = await readPosts(env); } catch (_) {
-    const values = { TITLE: 'Articles temporarily unavailable | Jimmy Park', DESC: 'Please try again shortly.', URL: 'https://jimmypark.net/insights', TYPE: 'website', ROBOTS: '<meta name="robots" content="noindex">', CONTENT: '<section class="site-section"><div class="site-container"><h1 class="heading page-heading">Articles will be back shortly.</h1><p class="body-copy">The writing could not be loaded. Please try again in a moment.</p><a class="card-link" href="/">Return home</a></div></section>' };
-    return new Response(INSIGHTS_SHELL.replace(/__(TITLE|DESC|URL|TYPE|ROBOTS|CONTENT)__/g, (_, key) => values[key]), { status: 503, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'retry-after': '60' } });
+    const values = { TITLE: 'Articles temporarily unavailable | Jimmy Park', DESC: 'Please try again shortly.', URL: 'https://jimmypark.net/insights', TYPE: 'website', IMAGE: DEFAULT_IMAGE, IMAGE_ALT: 'Jimmy Park Articles — notes from practice', ROBOTS: '<meta name="robots" content="noindex">', CONTENT: '<section class="site-section"><div class="site-container"><h1 class="heading page-heading">Articles will be back shortly.</h1><p class="body-copy">The writing could not be loaded. Please try again in a moment.</p><a class="card-link" href="/">Return home</a></div></section>' };
+    return new Response(INSIGHTS_SHELL.replace(/__(TITLE|DESC|URL|TYPE|IMAGE|IMAGE_ALT|ROBOTS|CONTENT)__/g, (_, key) => values[key]), { status: 503, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'retry-after': '60' } });
   }
   const livePosts = publishedPosts(store);
   const upcomingPosts = store.posts.filter(p => p.status === 'published' && isScheduled(p))
@@ -168,12 +189,12 @@ export async function renderInsights({ env, request }, slug) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
     const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading-layout insight-reading-layout--scheduled"><div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-scheduled"><p class="eyebrow">Scheduled article</p><h2>This article will be published on ' + e(displayDate(post)) + '.</h2><p>The full text will be available here when the article goes live.</p></div></div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout insight-reading-layout--scheduled"><div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-scheduled"><p class="eyebrow">Scheduled article</p><h2>This article will be published on ' + e(displayDate(post)) + '.</h2><p>The full text will be available here when the article goes live.</p></div></div></div></article>';
   } else if (post) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
     const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Message%20in%20Motion%20article">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="card-link" href="/insights">All Articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (info ? seriesChips(posts, info.name) : '') + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + shareLinks(url, post.title) + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Article%20response">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
   } else {
     const matchesSeries = p => !seriesFilter || seriesInfo(p)?.name === seriesFilter;
     const orderedLive = livePosts.filter(matchesSeries).sort((a, b) => {
@@ -195,10 +216,11 @@ export async function renderInsights({ env, request }, slug) {
   }
   if (post && !scheduled) {
     const structured = { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': url + '#article', mainEntityOfPage: url, headline: post.title, description: desc, datePublished: post.date + 'T09:00:00+09:00', dateModified: new Date(post.updatedAt).toISOString(), author: { '@type': 'Person', '@id': 'https://jimmypark.net/#person', name: 'Jimmy Park', url: 'https://jimmypark.net/#snapshot' } };
+    if (post.image) structured.image = [articleImage(post)];
     content += '<script type="application/ld+json">' + JSON.stringify(structured).replace(/</g, '\\u003c') + '</script>';
   }
-  const values = { TITLE: e(title), DESC: e(desc), URL: e(url), TYPE: post ? 'article' : 'website', ROBOTS: missing ? '<meta name="robots" content="noindex">' : '', CONTENT: content };
-  return new Response(INSIGHTS_SHELL.replace(/__(TITLE|DESC|URL|TYPE|ROBOTS|CONTENT)__/g, (_, key) => values[key]), {
+  const values = { TITLE: e(title), DESC: e(desc), URL: e(url), TYPE: post ? 'article' : 'website', IMAGE: e(articleImage(post)), IMAGE_ALT: e(articleImageAlt(post)), ROBOTS: missing ? '<meta name="robots" content="noindex">' : '', CONTENT: content };
+  return new Response(INSIGHTS_SHELL.replace(/__(TITLE|DESC|URL|TYPE|IMAGE|IMAGE_ALT|ROBOTS|CONTENT)__/g, (_, key) => values[key]), {
     status: missing ? 404 : 200,
     headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' },
   });

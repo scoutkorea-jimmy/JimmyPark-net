@@ -2,11 +2,11 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>__TITLE__</title><meta name="description" content="__DESC__"><link rel="canonical" href="__URL__">
 <meta property="og:type" content="__TYPE__"><meta property="og:site_name" content="Jimmy Park"><meta property="og:title" content="__TITLE__"><meta property="og:description" content="__DESC__"><meta property="og:url" content="__URL__">
-<meta property="og:image" content="https://jimmypark.net/assets/img/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://jimmypark.net/assets/img/og.png"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
+<meta property="og:image" content="__IMAGE__"><meta property="og:image:secure_url" content="__IMAGE__"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="__IMAGE_ALT__">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="__IMAGE__"><meta name="twitter:image:alt" content="__IMAGE_ALT__"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.20.0"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.21.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -59,4 +59,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.20.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.21.0" defer></script></body></html>`;
