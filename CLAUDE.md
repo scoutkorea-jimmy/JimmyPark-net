@@ -584,6 +584,17 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
 - `node scripts/generate-og-images.mjs` reproducibly renders the checked-in cards. Page cards use
   existing owned photos; article cards use abstract branded motifs rather than fabricated scenes.
 
+### Material 3 OG artwork (v0.22.0, 2026-09-22)
+- Generate all 19 cards with `node scripts/generate-og-images.mjs`. Generation requires network
+  access to Google Fonts and fails if Google Sans Flex or Material Symbols Outlined is unavailable.
+- Keep the artwork mapped to the site's M3 tokens: surface/color roles, 8px-based spacing,
+  display/label hierarchy, 28px/full shapes and official outlined symbols. Do not add custom icons,
+  substitute Arial/Helvetica, or describe the cards as an official Google component.
+- Material Design does not define an OG-card component. These cards apply the design system to a
+  social-preview format while preserving Jimmy Park's photography and burgundy/green/purple roles.
+- Bump the query value on every OG/Twitter image URL when artwork changes; social crawlers cache
+  images independently from the page response.
+
 ## Required Cloudflare config (don't commit secrets)
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,
   `img:*`, `media:index`, `rl:login:*`.

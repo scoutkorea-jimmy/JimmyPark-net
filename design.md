@@ -558,5 +558,17 @@ these roles; new rules should use the `--md-*` names directly.
   wrapping row below tags and above the conversation CTA, so the reading column remains usable at
   phone widths without platform-specific colors competing with the site identity.
 
+## 22. Material 3 OG artwork (v0.22.0)
+- OG cards are not an official Material component. They adapt the system using the site token map:
+  surface low background, primary/tertiary containers, on-container icon color, outline variants,
+  8px-based spacing, 28px/full shapes and the M3 display/label hierarchy.
+- Google Sans Flex is required for every text layer. Topic illustrations use only official Material
+  Symbols Outlined inside a tonal container and surface circle; handcrafted replacement icons are
+  not part of this system.
+- Portfolio page cards may use owned photography in a 28px rounded supporting pane. Article cards
+  use one large tonal supporting pane and a single semantically relevant Material Symbol.
+- Keep `jimmypark.net`, series/section label, title and identity text inside the 64px safe area.
+  Regenerate and visually inspect long titles after any copy or font change.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

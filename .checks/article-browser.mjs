@@ -53,7 +53,7 @@ try {
     assert.equal(value.scrollWidth, value.innerWidth, `${viewport.width}px article has horizontal overflow`);
     assert.ok(value.cover && value.cover.left >= 0 && value.cover.right <= value.innerWidth, `${viewport.width}px cover escapes the viewport`);
     assert.equal(value.shareCount, 2, `${viewport.width}px article must show two share actions`);
-    assert.match(value.og, /\/assets\/img\/og\/ax-1\.png$/);
+    assert.match(value.og, /\/assets\/img\/og\/ax-1\.png\?v=0\.22\.0$/);
   }
   await client.send('Page.navigate', { url: origin + '/insights/expertise-should-not-make-people-feel-small' });
   await wait(900);

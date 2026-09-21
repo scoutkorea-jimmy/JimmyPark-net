@@ -1,5 +1,10 @@
 # Current work
 
+OG cards v0.22.0 replace the earlier M3-inspired artwork with a token-based Material 3 system:
+Google Sans Flex, official Material Symbols, M3 type hierarchy, color roles, spacing and shapes.
+The deterministic generator verifies the required fonts before capture. Versioned image URLs force
+social crawlers to request the revised files instead of reusing the v0.21.0 cache.
+
 Social previews v0.21.0 replace the single site-wide image with distinct 1200×630 cards for the
 seven main pages and the twelve current articles. Article image URL and alt text are part of the
 Insights post schema and admin editor; live and scheduled detail pages show the image, while only

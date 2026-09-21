@@ -5,6 +5,12 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.22.0 OG set is rendered from the site's Material 3 tokens. It uses Google Sans Flex,
+official Material Symbols, the M3 display/label hierarchy, color roles, 28px/full shapes and the
+8px spacing system. The generator waits for and verifies both Google font families before capture;
+the resulting social URLs include a new version query so Facebook, LinkedIn and other scrapers do
+not keep the previous cards in cache.
+
 The v0.21.0 social-preview system gives every main portfolio page its own 1200×630 Open Graph
 image and gives each article an editable representative image and accessible description. Article
 pages show that image above the text, expose it through Open Graph, Twitter Card and BlogPosting

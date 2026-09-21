@@ -25,10 +25,14 @@ const pages = new Map([
 ]);
 for (const [file, image] of pages) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
-  assert.match(html, new RegExp('og:image" content="https://jimmypark\\.net/assets/img/og/' + image.replace('.', '\\.') + '"'));
+  assert.match(html, new RegExp('og:image" content="https://jimmypark\\.net/assets/img/og/' + image.replace('.', '\\.') + '\\?v=0\\.22\\.0"'));
   assert.match(html, /property="og:image:alt" content="[^"]+"/);
   assert.match(html, /name="twitter:image:alt" content="[^"]+"/);
 }
 
 assert.equal(new Set(pages.values()).size, pages.size, 'Each main page must have a distinct share image');
+const generator = fs.readFileSync(path.join(root, 'scripts/generate-og-images.mjs'), 'utf8');
+assert.match(generator, /Google Sans Flex/);
+assert.match(generator, /Material Symbols Outlined/);
+assert.doesNotMatch(generator, /Arial|Helvetica/);
 console.log('PASS: 19 social images are 1200x630 PNGs and every main page has distinct, accessible metadata.');
