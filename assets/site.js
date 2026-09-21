@@ -341,7 +341,7 @@
       var tags = (a.tags || []).map(function (t) { return '<span class="tag">' + esc(typeof t === "string" ? t : t.text) + '</span>'; }).join("");
       return '<a href="' + esc(a.href || "/work") + '" class="card capability act' + (green ? ' card--scouting' : '') + '">' +
         '<span class="eyebrow">' + esc(a.kicker) + '</span><h3>' + esc(a.title) + '</h3><p>' + esc(a.desc) + '</p>' +
-        '<div class="tag-list">' + tags + '</div><span class="card-link">' + (green ? 'Explore the connections' : 'Explore this work') +
+        '<div class="tag-list">' + tags + '</div><span class="card-link">See the evidence' +
         '<span class="act-arrow msym" aria-hidden="true">arrow_forward</span></span></a>';
     },
     approachSteps: function (s) {

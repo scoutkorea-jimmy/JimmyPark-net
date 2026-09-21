@@ -337,6 +337,19 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   25th World Scout Jamboree is **Deputy Head of Media Dept.**, 2022–2023. Never reintroduce conflicting
   “15th” or Korean-Contingent-only variants without an owner-approved official source.
 
+### Personal-brand homepage positioning (v0.19.0, 2026-09-21)
+- The homepage answers “Why Jimmy?” before repeating service categories. The hero identifies Jimmy as
+  a producer, platform builder and applied-AI practitioner whose differentiator is choosing the right
+  medium and carrying the work from purpose and brief through delivery.
+- The former `activities` service list is a proof-led “Why work with Jimmy” section: judgment,
+  end-to-end ownership, cross-medium range and experience across languages and communities. Keep the
+  section key and collection schema stable; public card actions read “See the evidence.”
+- The home identity card links to Articles instead of repeating a hiring enquiry, and the hero links
+  to selected work and published thinking before contact. Contact remains available globally.
+- Schema v38 upgrades only recognized v37 public copy and the exact old hiring card. Preserve custom
+  hero positioning, custom capability collections and custom card copy. Static HTML, `DEFAULT`, the
+  renderer, metadata and live KV must remain aligned.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,
@@ -491,7 +504,9 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
   contextual inline spacing; never inline raw spacing values or heading size/line-height.
   Reusable cards and all runtime collection templates must match the static seed markup.
 - Run `python3 .checks/design.py`, `node --check assets/site.js` and `git diff --check` before
-  every portfolio deployment. Run `node .checks/content.cjs` for schema/migration changes. Review narrow/mobile and desktop layouts after geometry changes.
+  every portfolio deployment. Run `node .checks/content.cjs` for schema/migration changes and
+  `.checks/home-brand.cjs` plus `.checks/home-brand-browser.mjs` for homepage positioning changes.
+  Review narrow/mobile and desktop layouts after geometry changes.
   `.checks/` requires only Python 3 and Node; it has no package install, network or KV writes.
 - New multi-column grid? Give it a class and add it to the matching breakpoint block in
   `site.css` (don't scatter new `@media` queries).
@@ -499,7 +514,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 16`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 38`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

@@ -13,14 +13,14 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 37,
+  "version": 38,
   "global": {
     "brand": {
       "name": "Jimmy Park",
-      "roleline": "Video · Education · AI · Global Scouting"
+      "roleline": "Video producer · Platform builder · Applied AI · Global Scouting"
     },
     "footer": {
-      "tagline": "VIDEO. EDUCATION. AI. · BUILT FOR CONNECTION.",
+      "tagline": "PURPOSE FIRST. THE RIGHT MEDIUM. BUILT FOR USE.",
       "copyright": "© 2026 Jimmy Park"
     },
     "contact": {
@@ -30,15 +30,15 @@ const DEFAULT = {
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park (박지민) | Video, Education & AI",
-      "desc": "Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."
+      "title": "Jimmy Park (박지민) | Producer, Platform Builder & Applied AI Practitioner",
+      "desc": "Jimmy Park (박지민) is a Korea-based producer and builder who turns complex goals into films, learning platforms and practical AI workflows, supported by international collaboration."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park (박지민) | Video, Education & AI",
-        "desc": "Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."
+        "title": "Jimmy Park (박지민) | Producer, Platform Builder & Applied AI Practitioner",
+        "desc": "Jimmy Park (박지민) is a Korea-based producer and builder who turns complex goals into films, learning platforms and practical AI workflows, supported by international collaboration."
       },
       "order": [
         "hero",
@@ -52,16 +52,16 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Video · Education · AI",
-          "title": "Video that lands.\nLearning that scales.\nAI that works.",
-          "lead": "I’m Jimmy Park — branded-film director & producer, education-platform founder, and applied-AI practitioner. Production-grade storytelling, learning products with real users, and AI workflows teams keep using.",
+          "eyebrow": "Producer · Platform builder · Applied AI practitioner",
+          "title": "I choose the right medium—\nand carry the work through.",
+          "lead": "I’m Jimmy Park, a Korea-based producer and builder. I begin with the people and purpose, then take the work from first brief to finished film, working platform, or practical AI workflow. The value I bring is not one tool; it is the judgment to connect the right ones.",
           "ctaPrimary": {
-            "label": "Start a conversation",
-            "href": "/contact"
+            "label": "View selected work",
+            "href": "#selected"
           },
           "ctaGhost": {
-            "label": "See selected work",
-            "href": "#selected"
+            "label": "Read my thinking",
+            "href": "/insights"
           },
           "image": "/assets/img/jimmy-park-portrait-960.jpg?v=0.14.0",
           "badge": "Jimmy Park",
@@ -101,57 +101,57 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration.",
-          "detail": "His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and applied AI practitioner. He leads Korea Dream Path as CEO, founded BP Media, and has worked across branded films, teaching, live web platforms, and international Scouting communication.",
+          "detail": "Across those fields, the method stays consistent: understand the people and purpose first, choose the medium second, and stay accountable for what gets delivered. He works in Korean and English; project credits and dated roles are documented across this site."
         },
         "activities": {
-          "eyebrow": "How I can help",
-          "title": "Video. Education. AI. Where should we start?",
+          "eyebrow": "Why work with Jimmy",
+          "title": "One person who can connect the brief, the medium, and the finish.",
           "items": [
             {
-              "kicker": "01 / Video",
-              "title": "Film & Branded Content",
-              "desc": "Concept, script, filming and edit for films people remember — promotional films, keynotes, interviews and branded storytelling.",
+              "kicker": "01 / Judgment",
+              "title": "Purpose before format",
+              "desc": "I do not begin by selling a video, website, or AI tool. I begin with who the work is for, what should change, and which form will serve that goal.",
               "tags": [
-                "Branded films",
-                "Keynotes",
-                "Storytelling"
+                "Audience",
+                "Purpose",
+                "Right medium"
               ],
-              "href": "/work",
+              "href": "#approach",
               "accent": "burgundy"
             },
             {
-              "kicker": "02 / Education",
-              "title": "Learning Platforms & Teaching",
-              "desc": "Learning experiences that travel — education platforms, workshops and teaching formats that help people discover, practice and grow.",
+              "kicker": "02 / Ownership",
+              "title": "From first brief to working result",
+              "desc": "I can stay with the work through planning, production or development, testing, and handover—so the original purpose does not get lost between specialists.",
               "tags": [
-                "Learning platforms",
-                "Workshops",
-                "Global education"
+                "Planning",
+                "Making",
+                "Handover"
               ],
-              "href": "/lecture",
+              "href": "/dev",
               "accent": "burgundy"
             },
             {
-              "kicker": "03 / AI",
-              "title": "AI Workflows & AX",
-              "desc": "Practical AI for everyday creation — review the workflow, pilot an AI-assisted path, and practice it hands-on with your team.",
+              "kicker": "03 / Range",
+              "title": "Media craft meets working systems",
+              "desc": "Film direction, learning design, web development, and practical AI are not separate labels here. They are a connected toolkit for moving an idea into use.",
               "tags": [
-                "AI workflows",
-                "AI-assisted creation",
-                "AX workshops"
+                "Film",
+                "Platforms",
+                "AI workflows"
               ],
               "href": "/dev#lecture",
               "accent": "burgundy"
             },
             {
-              "kicker": "04 / Global",
-              "title": "Global Scouting & Collaboration",
-              "desc": "When your project crosses borders: international Scouting experience, Asia-Pacific communications and cross-cultural partnerships.",
+              "kicker": "04 / Context",
+              "title": "Work across languages and communities",
+              "desc": "Korean and English work, international Scouting roles, and field experience help me listen across professional, cultural, and generational contexts.",
               "tags": [
+                "Korean / English",
                 "Asia-Pacific",
-                "Scouting",
-                "Partnerships"
+                "Field experience"
               ],
               "href": "/scouting#roles",
               "accent": "green"
@@ -160,7 +160,7 @@ const DEFAULT = {
         },
         "approach": {
           "eyebrow": "How I work",
-          "title": "Start with the story. Shape the learning. Ship with AI.",
+          "title": "Start with purpose. Choose the medium. Stay through delivery.",
           "steps": [
             {
               "num": "01",
@@ -185,8 +185,8 @@ const DEFAULT = {
           ]
         },
         "projects": {
-          "eyebrow": "Stay connected",
-          "title": "Network, background, and next roles.",
+          "eyebrow": "Ideas and perspective",
+          "title": "The thinking and communities behind the work.",
           "feature": {
             "badge": "Content strategy · Global Scouting",
             "sub": "Founder · Scouting media",
@@ -211,10 +211,10 @@ const DEFAULT = {
               "image": ""
             },
             {
-              "tag": "Roles & hiring",
-              "title": "Hiring enquiries",
-              "desc": "For employment or role discussions. I can share my CV and dated work history on request.",
-              "href": "/contact#hiring",
+              "tag": "Writing & perspective",
+              "title": "Read my articles",
+              "desc": "Notes on AI responsibility, media, and the choices behind practical work.",
+              "href": "/insights",
               "image": ""
             }
           ]
@@ -3495,6 +3495,63 @@ function migrateTo37(doc) {
   return doc;
 }
 
+// v38: make the homepage explain Jimmy's distinctive value instead of repeating a service list.
+// Only known v37 public copy is refreshed; owner-edited alternatives remain untouched.
+const V38_SEEDS = [
+  [["global","brand","roleline"],"Video · Web Development · Applied AI · Global Scouting"],
+  [["global","brand","roleline"],"Video · Education · AI · Global Scouting"],
+  [["global","footer","tagline"],"PRACTICAL WORK, MADE TO SERVE PEOPLE."],
+  [["global","footer","tagline"],"VIDEO. EDUCATION. AI. · BUILT FOR CONNECTION."],
+  [["global","seo","title"],"Jimmy Park (박지민) | Video, Web Development & Applied AI"],
+  [["global","seo","title"],"Jimmy Park (박지민) | Video, Education & AI"],
+  [["global","seo","desc"],"Jimmy Park (박지민) supports practical collaboration through video production, web development, applied AI workflows, and global Scouting communication."],
+  [["global","seo","desc"],"Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."],
+  [["pages","home","meta","title"],"Jimmy Park (박지민) | Video, Web Development & Applied AI"],
+  [["pages","home","meta","title"],"Jimmy Park (박지민) | Video, Education & AI"],
+  [["pages","home","meta","desc"],"Jimmy Park (박지민) supports practical collaboration through video production, web development, applied AI workflows, and global Scouting communication."],
+  [["pages","home","meta","desc"],"Jimmy Park (박지민) makes video, builds learning experiences, and applies AI — branded films, education platforms, AI workflows and AX workshops, plus global Scouting collaboration."],
+  [["pages","home","sections","hero","eyebrow"],"Video · Web Development · Applied AI"],
+  [["pages","home","sections","hero","eyebrow"],"Video · Education · AI"],
+  [["pages","home","sections","hero","title"],"Clarify the purpose.\nChoose a clear path.\nBuild with care."],
+  [["pages","home","sections","hero","title"],"Video that lands.\nLearning that scales.\nAI that works."],
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park. I support teams through video production, web development, applied AI, and Scouting communication, beginning with the people and purpose behind the work."],
+  [["pages","home","sections","hero","lead"],"I’m Jimmy Park — branded-film director & producer, education-platform founder, and applied-AI practitioner. Production-grade storytelling, learning products with real users, and AI workflows teams keep using."],
+  [["pages","home","sections","hero","ctaPrimary"],{"label":"Share a project brief","href":"/contact"}],
+  [["pages","home","sections","hero","ctaPrimary"],{"label":"Start a conversation","href":"/contact"}],
+  [["pages","home","sections","hero","ctaGhost"],{"label":"View selected work","href":"#selected"}],
+  [["pages","home","sections","hero","ctaGhost"],{"label":"See selected work","href":"#selected"}],
+  [["pages","home","sections","snapshot","body"],"Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration."],
+  [["pages","home","sections","snapshot","detail"],"His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site."],
+  [["pages","home","sections","activities","eyebrow"],"How I can help"],
+  [["pages","home","sections","activities","title"],"Practical support for work that matters."],
+  [["pages","home","sections","activities","title"],"Video. Education. AI. Where should we start?"],
+  [["pages","home","sections","approach","title"],"Listen carefully. Choose responsibly. Deliver for use."],
+  [["pages","home","sections","approach","title"],"Start with the story. Shape the learning. Ship with AI."],
+  [["pages","home","sections","projects","eyebrow"],"Stay connected"],
+  [["pages","home","sections","projects","title"],"Network, background, and next roles."]
+];
+const V38_ACTIVITIES = [{"kicker":"01 / Video","title":"Film & Branded Content","desc":"Concept, script, filming and edit for films people remember — promotional films, keynotes, interviews and branded storytelling.","tags":["Branded films","Keynotes","Storytelling"],"href":"/work","accent":"burgundy"},{"kicker":"02 / Education","title":"Learning Platforms & Teaching","desc":"Learning experiences that travel — education platforms, workshops and teaching formats that help people discover, practice and grow.","tags":["Learning platforms","Workshops","Global education"],"href":"/lecture","accent":"burgundy"},{"kicker":"03 / AI","title":"AI Workflows & AX","desc":"Practical AI for everyday creation — review the workflow, pilot an AI-assisted path, and practice it hands-on with your team.","tags":["AI workflows","AI-assisted creation","AX workshops"],"href":"/dev#lecture","accent":"burgundy"},{"kicker":"04 / Global","title":"Global Scouting & Collaboration","desc":"When your project crosses borders: international Scouting experience, Asia-Pacific communications and cross-cultural partnerships.","tags":["Asia-Pacific","Scouting","Partnerships"],"href":"/scouting#roles","accent":"green"}];
+const V38_HIRING_CARD = {"tag":"Roles & hiring","title":"Hiring enquiries","desc":"For employment or role discussions. I can share my CV and dated work history on request.","href":"/contact#hiring","image":""};
+function migrateTo38(doc) {
+  for (const [path, previous] of V38_SEEDS) {
+    let target = doc;
+    for (const key of path.slice(0, -1)) target = target && target[key];
+    const key = path[path.length - 1];
+    if (target && matchesLegacy(target[key], previous)) target[key] = JSON.parse(JSON.stringify(currentDefault(path)));
+  }
+  const home = doc.pages && doc.pages.home && doc.pages.home.sections;
+  if (home && home.activities && matchesLegacy(home.activities.items, V38_ACTIVITIES)) {
+    home.activities.items = JSON.parse(JSON.stringify(DEFAULT.pages.home.sections.activities.items));
+  }
+  if (home && home.projects && Array.isArray(home.projects.items)) {
+    home.projects.items = home.projects.items.map(item => matchesLegacy(item, V38_HIRING_CARD)
+      ? JSON.parse(JSON.stringify(DEFAULT.pages.home.sections.projects.items[2]))
+      : item);
+  }
+  doc.version = 38;
+  return doc;
+}
+
 
 
 
@@ -3567,7 +3624,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3576,7 +3633,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3584,7 +3641,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3620,6 +3677,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 35) doc = migrateTo35(doc);
   if ((doc.version || 0) < 36) doc = migrateTo36(doc);
   if ((doc.version || 0) < 37) doc = migrateTo37(doc);
+  if ((doc.version || 0) < 38) doc = migrateTo38(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3677,12 +3735,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 35) migrateTo35(incoming);
   if (incoming.version < 36) migrateTo36(incoming);
   if (incoming.version < 37) migrateTo37(incoming);
+  if (incoming.version < 38) migrateTo38(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 37;
+  doc.version = 38;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

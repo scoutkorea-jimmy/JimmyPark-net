@@ -6,7 +6,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8').replace(/^import .*;\n/m, '').replace(/export async function/g, 'async function');
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
-const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW, v13Seeds: V13_SEEDS, v12HomeSites: V13_HOME_SITES, v12ChamRow: V13_CHAM_ROW });', sandbox);
+const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW, v13Seeds: V13_SEEDS, v12HomeSites: V13_HOME_SITES, v12ChamRow: V13_CHAM_ROW, v38Activities: V38_ACTIVITIES, v38HiringCard: V38_HIRING_CARD });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
 // Documents saved before v9 kept the AI practice and AX workshop sections on Work.
 const MOVED = ['vibecoding', 'lecture'];
@@ -107,7 +107,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 37);
+    assert.equal(result.version, 38);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -432,7 +432,7 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 37);
+  assert.equal(refreshed.version, 38);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
@@ -531,7 +531,7 @@ async function get(value) {
   custom9.pages.home.sections.hero.title = 'Custom headline';
   custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
   const upgraded = await get(custom9);
-  assert.equal(upgraded.version, 37);
+  assert.equal(upgraded.version, 38);
   assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
   const customRow = upgraded.pages.dev.sections.sites.items.find(row => row.id === 'charmjt');
   assert.equal(customRow.backend, '', 'Custom rows must not inherit another site’s back-end list');
@@ -555,7 +555,7 @@ async function get(value) {
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
   const backed = await get(custom10);
-  assert.equal(backed.version, 37);
+  assert.equal(backed.version, 38);
   const nfee = backed.pages.dev.sections.sites.items.find(row => row.id === 'nfee');
   assert.equal(nfee.summary, 'Custom nfee summary');
   assert.equal(nfee.backend, '');
@@ -577,13 +577,13 @@ async function get(value) {
   custom11.pages.home.sections.selected.cases = custom11.pages.home.sections.selected.cases.slice(0, 1);
   custom11.pages.dev.sections.sites.items[0] = { ...custom11.pages.dev.sections.sites.items[0], summary: 'Custom KDP summary' };
   const owned = await get(custom11);
-  assert.equal(owned.version, 37);
+  assert.equal(owned.version, 38);
   assert.equal(owned.pages.dev.sections.vibecoding.sub, 'Custom tools subtitle');
   assert.equal(owned.pages.work.meta.desc, 'Custom work description');
   assert.equal(owned.pages.home.sections.selected.cases.length, 1);
   assert.equal(owned.pages.dev.sections.sites.items[0].summary, 'Custom KDP summary');
   assert.equal(owned.pages.home.sections.selected.sites[0].role, defaults.pages.home.sections.selected.sites[0].role, 'Unchanged home KDP card becomes the own-platform row');
-  assert.ok(!JSON.stringify(defaults.pages.home.sections.projects.items).includes('/insights'), 'Insights leaves the home cards until it has posts');
+  assert.equal(defaults.pages.home.sections.projects.items[2].href, '/insights', 'The homepage now connects the personal brand to published thinking');
   assert.deepEqual(defaults.pages.home.sections.selected.cases.map(item => item.id), ['samsung-keynote', 'ai2re', 'daekyo']);
   assert.deepEqual(await get(owned), owned, 'v12 normalization must be idempotent');
 
@@ -594,7 +594,7 @@ async function get(value) {
   custom12.pages.dev.sections.sites.items.reverse();
   custom12.pages.home.sections.selected.sites = custom12.pages.home.sections.selected.sites.slice(0, 2);
   const media = await get(custom12);
-  assert.equal(media.version, 37);
+  assert.equal(media.version, 38);
   const ids = media.pages.dev.sections.sites.items.map(row => row.id);
   assert.equal(ids.filter(id => id === 'bp-media').length, 1, 'BP Media is added exactly once');
   assert.equal(ids.indexOf('bp-media'), ids.indexOf('korea-dream-path') + 1, 'BP Media follows Korea Dream Path in a custom order');
@@ -610,7 +610,7 @@ async function get(value) {
   const uploaded = asV13(defaults);
   uploaded.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image = '/api/image?id=owner-upload';
   const stills = await get(uploaded);
-  assert.equal(stills.version, 37);
+  assert.equal(stills.version, 38);
   assert.equal(stills.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image, '/api/image?id=owner-upload');
   assert.equal(stills.pages.home.sections.selected.cases.find(row => row.id === 'samsung-keynote').image, '/assets/img/video/samsung-keynote.jpg');
   assert.deepEqual(await get(stills), stills, 'v14 normalization must be idempotent');
@@ -620,7 +620,7 @@ async function get(value) {
   const kbUpload = asV14(defaults);
   kbUpload.pages.work.sections.video.cases.find(row => row.id === 'kb-life').image = '/api/image?id=kb-upload';
   const filled = await get(kbUpload);
-  assert.equal(filled.version, 37);
+  assert.equal(filled.version, 38);
   assert.equal(filled.pages.work.sections.video.cases.find(row => row.id === 'kb-life').image, '/api/image?id=kb-upload');
   assert.equal(filled.pages.work.sections.video.cases.find(row => row.id === 'korean-jamboree-opening').image, '/assets/img/video/korean-jamboree-opening.jpg');
   assert.ok(defaults.pages.work.sections.video.cases.every(row => row.image), 'Every video card has a still');
@@ -633,9 +633,39 @@ async function get(value) {
   const bpUpload = asV15(defaults);
   bpUpload.pages.scouting.sections.mediaprojects.feature.image = '/api/image?id=bp-upload';
   const bpFilled = await get(bpUpload);
-  assert.equal(bpFilled.version, 37);
+  assert.equal(bpFilled.version, 38);
   assert.equal(bpFilled.pages.scouting.sections.mediaprojects.feature.image, '/api/image?id=bp-upload');
   assert.equal(bpFilled.pages.home.sections.projects.feature.image, bpImage);
   assert.deepEqual(await get(bpFilled), bpFilled, 'v16 normalization must be idempotent');
-  console.log('PASS: v2/v5/v6/v8/v9/v10/v11/v12/v13/v14/v15 to v37 migrations, BP Media card image, video stills, BP Media showcase, own-platform KDP, Scouting terminology, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
+
+  // v37 → v38: replace the repeated service-list homepage with proof-led personal positioning.
+  const v37 = copy(defaults);
+  v37.version = 37;
+  v37.global.brand.roleline = 'Video · Web Development · Applied AI · Global Scouting';
+  v37.global.footer.tagline = 'PRACTICAL WORK, MADE TO SERVE PEOPLE.';
+  v37.global.seo = { title: 'Jimmy Park (박지민) | Video, Web Development & Applied AI', desc: 'Jimmy Park (박지민) supports practical collaboration through video production, web development, applied AI workflows, and global Scouting communication.' };
+  v37.pages.home.meta = copy(v37.global.seo);
+  Object.assign(v37.pages.home.sections.hero, {
+    eyebrow: 'Video · Web Development · Applied AI',
+    title: 'Clarify the purpose.\nChoose a clear path.\nBuild with care.',
+    lead: 'I’m Jimmy Park. I support teams through video production, web development, applied AI, and Scouting communication, beginning with the people and purpose behind the work.',
+    ctaPrimary: { label: 'Share a project brief', href: '/contact' },
+    ctaGhost: { label: 'View selected work', href: '#selected' }
+  });
+  v37.pages.home.sections.snapshot.body = 'Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and AI practitioner. He creates branded films and storytelling content, leads Korea Dream Path as CEO, founded BP Media, and helps teams apply AI workflows and AX in real projects — alongside international Scouting collaboration.';
+  v37.pages.home.sections.snapshot.detail = 'His work spans technology films, educational web series and event media, plus live learning platforms and sites for global education, Scouting media, a food cooperative, after-school program administration and a travel community. He works in Korean and English; project credits and dated Scouting roles are listed on this site.';
+  Object.assign(v37.pages.home.sections.activities, { eyebrow: 'How I can help', title: 'Practical support for work that matters.', items: copy(api.v38Activities) });
+  v37.pages.home.sections.approach.title = 'Listen carefully. Choose responsibly. Deliver for use.';
+  Object.assign(v37.pages.home.sections.projects, { eyebrow: 'Stay connected', title: 'Network, background, and next roles.' });
+  v37.pages.home.sections.projects.items[2] = copy(api.v38HiringCard);
+  assert.deepEqual(await get(v37), defaults, 'The unchanged live v37 homepage must upgrade to the v38 personal-brand defaults');
+  const custom37 = copy(v37);
+  custom37.pages.home.sections.hero.title = 'My own positioning';
+  custom37.pages.home.sections.projects.items[2].desc = 'Custom hiring copy';
+  const custom38 = await get(custom37);
+  assert.equal(custom38.pages.home.sections.hero.title, 'My own positioning');
+  assert.equal(custom38.pages.home.sections.projects.items[2].desc, 'Custom hiring copy');
+  assert.deepEqual(await get(custom38), custom38, 'v38 normalization must be idempotent');
+
+  console.log('PASS: v2/v5/v6/v8/v9/v10/v11/v12/v13/v14/v15/v37 to v38 migrations, personal-brand homepage, BP Media card image, video stills, BP Media showcase, own-platform KDP, Scouting terminology, stale early seeds and Korean subtitle, website back-end details, showcase fields, +82 phone, Work → Media/Dev split with custom sections, visibility, order and links, retired project removal, additive evidence, empty edits, idempotence and no GET writes.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

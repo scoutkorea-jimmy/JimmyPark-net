@@ -5,6 +5,12 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.19.0 homepage positions Jimmy Park as a producer, platform builder and applied-AI
+practitioner. It explains the distinguishing method—start with people and purpose, choose the
+right medium, then carry the work through delivery—and connects that claim to selected work,
+documented roles and published Articles. Schema v38 migrates recognized v37 public copy while
+preserving owner-edited alternatives.
+
 The home page leads with four capabilities, connects each to supporting work, and
 places dated international roles alongside the projects. Work covers content
 strategy, AI prototypes, AX consulting/workshops, and field production. The existing
@@ -111,6 +117,8 @@ Before deploying portfolio changes:
 ```sh
 python3 .checks/design.py
 node --check assets/site.js
+node .checks/home-brand.cjs
+node .checks/home-brand-browser.mjs http://127.0.0.1:4173
 node .checks/content.cjs
 node .checks/insights.cjs
 node .checks/admin-save.cjs

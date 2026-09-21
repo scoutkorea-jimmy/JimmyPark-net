@@ -529,5 +529,16 @@ Global & Scouting (`body[data-page="scouting"]`) remaps primary, containers and 
 purple palette. Legacy tokens (`--accent`, `--radius-*`, `--title-*`, `--scout-*`) are aliases of
 these roles; new rules should use the `--md-*` names directly.
 
+## 19. Personal-brand homepage (v0.19.0)
+- The first viewport identifies Jimmy before listing services: producer, platform builder and
+  applied-AI practitioner. Its value statement is the ability to choose the right medium and carry
+  the work through, followed immediately by selected-work evidence.
+- `activities` remains the stable CMS section key but presents four reasons to work with Jimmy:
+  judgment, ownership, range and context. Do not turn it back into a second service catalogue.
+- The primary hero path is selected work; the secondary path is Articles. Contact remains in the
+  global navigation and closing CTA, keeping the hero focused on personal-brand evidence.
+- The identity section combines claims with dated roles, and the lower project cards connect the
+  work to professional network, international record and published perspective.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
