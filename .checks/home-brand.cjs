@@ -64,6 +64,12 @@ async function migrate(value) {
   v39.pages.home.sections.selected.cases[2].image = 'https://i.ytimg.com/vi/DJcwT3V79B0/hqdefault.jpg';
   assert.deepEqual(await migrate(v39), defaults, 'The v39 homepage must gain local hover galleries and balanced hero copy');
 
+  const v40 = copy(defaults);
+  v40.version = 40;
+  for (const item of v40.pages.work.sections.video.cases) delete item.images;
+  for (const item of v40.pages.dev.sections.sites.items) delete item.images;
+  assert.deepEqual(await migrate(v40), defaults, 'The v40 full work pages must gain their preview galleries');
+
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const runtime = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site.css'), 'utf8');
@@ -72,7 +78,8 @@ async function migrate(value) {
   assert.match(html, /work people can understand, use, and keep using/);
   assert.equal((html.match(/case-media case-media--cycle/g) || []).length, 6);
   assert.ok(!html.includes('i.ytimg.com'), 'Homepage representative images must be local');
-  assert.match(styles, /project-card:is\(:hover, :focus-within\) \.case-media--cycle img/);
+  assert.match(styles, /:is\(\.project-card, \.site-showcase\):is\(:hover, :focus-within\) \.case-media--cycle img/);
+  assert.match(fs.readFileSync(path.join(root, 'assets/admin.js'), 'utf8'), /Add preview image/);
   assert.match(html, /Read my articles/);
   assert.match(runtime, /See the evidence/);
   console.log('PASS: homepage positioning, v38 hero migration, custom-copy preservation and static/runtime brand links.');

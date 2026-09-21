@@ -43,8 +43,12 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
 ;
   var F = function (k, label, type, options) { return { k: k, label: label, type: type || "text", options: options }; };
   var WEBSITE_FIELDS = [F("id", "ID"), F("title", "Title"), F("format", "Sector · type"), F("year", "Year (optional)"), F("role", "Your role"), F("summary", "One-line summary", "textarea"), F("need", "The need", "textarea"), F("built", "What I built", "textarea"), F("stack", "Stack (optional, separate with ·)"), F("backend", "Admin & back-end features (one per line)", "textarea"), F("stats", "Back-end facts (separate with ·)"), F("adminCaption", "Admin screenshot caption"), F("href", "Live site HTTPS URL"), F("linkLabel", "Link label")];
-  var WEBSITE_IMAGES = [["image", "Desktop screenshot (16:9)"], ["mobileImage", "Mobile screenshot (optional)"], ["adminImage", "Admin screenshot (16:10, no personal data)"]];
-  var WEBSITE_TMPL = { id: "", title: "", format: "", year: "", role: "Planning & development", summary: "", need: "", built: "", stack: "", backend: "", stats: "", href: "", linkLabel: "Visit site", image: "", mobileImage: "", adminImage: "", adminCaption: "" };
+  var WEBSITE_IMAGES = [["image", "Representative image (16:9)"], ["mobileImage", "Mobile screenshot (optional)"], ["adminImage", "Admin screenshot (16:10, no personal data)"]];
+  var PREVIEW_GALLERIES = [{ k: "images", label: "Additional previews", max: 3, help: "Add up to three images. Matching Home and full-page projects update together." }];
+  var WEBSITE_TMPL = { id: "", title: "", format: "", year: "", role: "Planning & development", summary: "", need: "", built: "", stack: "", backend: "", stats: "", href: "", linkLabel: "Visit site", image: "", images: [], mobileImage: "", adminImage: "", adminCaption: "" };
+  var VIDEO_FIELDS = [F("id", "ID"), F("title", "Title"), F("year", "Year (optional)"), F("role", "Your role"), F("desc", "Context", "textarea"), F("format", "Format"), F("href", "Video or playlist HTTPS URL"), F("linkLabel", "Link label")];
+  var VIDEO_IMAGES = [["image", "Representative image (16:9)"]];
+  var VIDEO_TMPL = { id: "", title: "", year: "", role: "", desc: "", format: "", href: "", linkLabel: "Watch film", image: "", images: [] };
 
   var SCHEMA = {
     global: {
@@ -58,7 +62,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     },
     home: { title: "Home", kind: "page", page: "home", sections: [
       { id: "hero", title: "Hero", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea"), F("badge", "Image badge"), F("caption", "Caption"), F("captionRight", "Caption (right)")], links: [["ctaPrimary", "Primary button"], ["ctaGhost", "Secondary button"]], images: [["image", "Hero image"]] },
-      { id: "selected", title: "Selected work", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("sitesTitle", "Websites group title"), F("casesTitle", "Films group title")], collections: [{ k: "sites", label: "Websites", fields: WEBSITE_FIELDS, images: WEBSITE_IMAGES, tmpl: WEBSITE_TMPL }, { k: "cases", label: "Video portfolio", fields: [F("id", "ID"), F("title", "Title"), F("year", "Year (optional)"), F("role", "Your role"), F("desc", "Context", "textarea"), F("format", "Format"), F("href", "Video or playlist HTTPS URL"), F("linkLabel", "Link label")], images: [["image", "Thumbnail"]], tmpl: { id: "", title: "", year: "", role: "", desc: "", format: "", href: "", linkLabel: "Watch film", image: "" } }] },
+      { id: "selected", title: "Selected work", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("sitesTitle", "Websites group title"), F("casesTitle", "Films group title")], collections: [{ k: "sites", label: "Websites", fields: WEBSITE_FIELDS, images: WEBSITE_IMAGES, galleries: PREVIEW_GALLERIES, tmpl: WEBSITE_TMPL }, { k: "cases", label: "Video portfolio", fields: VIDEO_FIELDS, images: VIDEO_IMAGES, galleries: PREVIEW_GALLERIES, tmpl: VIDEO_TMPL }] },
       { id: "snapshot", title: "Profile & identity", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("body", "Biography", "textarea"), F("detail", "Experience summary", "textarea")], collections: [{ k: "rows", label: "Rows", fields: [F("label", "Label"), F("value", "Value")], tmpl: { label: "", value: "" } }] },
       { id: "activities", title: "Four capabilities", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], collections: [{ k: "items", label: "Activities", fields: [F("kicker", "Kicker"), F("title", "Title"), F("desc", "Description", "textarea"), F("tags", "Tags (comma-separated)", "taglist"), F("href", "Link"), F("accent", "Accent", "select", ACCENT_BG)], tmpl: { kicker: "", title: "", desc: "", tags: [], href: "/work", accent: "burgundy" } }] },
       { id: "approach", title: "How I Approach", fields: [F("eyebrow", "Eyebrow"), F("title", "Title")], collections: [{ k: "steps", label: "Steps", fields: [F("num", "Number"), F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { num: "", title: "", desc: "" } }] },
@@ -68,12 +72,12 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     work: { title: "Media Work", kind: "page", page: "work", sections: [
       { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
       { id: "photography", title: "Photography", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Photography portfolio (blank URL = hidden)"]], images: [["image", "Image"]], collections: [{ k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } }, { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } }] },
-      { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("casesTitle", "Selected work title"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Full video portfolio"]], collections: [{ k: "cases", label: "Video portfolio", fields: [F("id", "ID"), F("title", "Title"), F("year", "Year (optional)"), F("role", "Your role"), F("desc", "Context", "textarea"), F("format", "Format"), F("href", "Video or playlist HTTPS URL"), F("linkLabel", "Link label")], images: [["image", "Thumbnail"]], tmpl: { id: "", title: "", year: "", role: "", desc: "", format: "", href: "", linkLabel: "Watch film", image: "" } }, { k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
+      { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("casesTitle", "Selected work title"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Full video portfolio"]], collections: [{ k: "cases", label: "Video portfolio", fields: VIDEO_FIELDS, images: VIDEO_IMAGES, galleries: PREVIEW_GALLERIES, tmpl: VIDEO_TMPL }, { k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
     dev: { title: "Dev Work", kind: "page", page: "dev", sections: [
       { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")], collections: [{ k: "principles", label: "Principles", fields: [F("num", "Number"), F("title", "Title"), F("desc", "Description", "textarea")], tmpl: { num: "", title: "", desc: "" } }] },
-      { id: "sites", title: "Live websites", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Websites (top card first)", fields: WEBSITE_FIELDS, images: WEBSITE_IMAGES, tmpl: WEBSITE_TMPL }] },
+      { id: "sites", title: "Live websites", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Websites (top card first)", fields: WEBSITE_FIELDS, images: WEBSITE_IMAGES, galleries: PREVIEW_GALLERIES, tmpl: WEBSITE_TMPL }] },
       { id: "vibecoding", title: "AI in Practice", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "items", label: "Projects", fields: [F("slug", "Project ID"), F("href", "Project HTTPS URL (optional)"), F("title", "Title"), F("desc", "Description"), F("status", "Status", "select", STATUS), F("accent", "Accent", "select", ACCENT_NG)], images: [["image", "Image"]], tmpl: { slug: "", href: "", title: "", desc: "", status: "Prototype", accent: "neutral", image: "" } }] },
       { id: "lecture", title: "AX Consulting & Workshops", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea")], collections: [{ k: "topics", label: "Topics", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
@@ -325,11 +329,58 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-row2" }, [a, b])]);
   }
 
+  function syncProjectImageField(source, key, value) {
+    if (!source.id || !content || !content.pages) return;
+    var home = content.pages.home && content.pages.home.sections && content.pages.home.sections.selected;
+    var work = content.pages.work && content.pages.work.sections && content.pages.work.sections.video;
+    var dev = content.pages.dev && content.pages.dev.sections && content.pages.dev.sections.sites;
+    var lists = [home && home.sites, home && home.cases, work && work.cases, dev && dev.items];
+    lists.forEach(function (list) {
+      if (!Array.isArray(list)) return;
+      list.forEach(function (item) {
+        if (item !== source && item.id === source.id && Object.prototype.hasOwnProperty.call(item, key)) item[key] = clone(value);
+      });
+    });
+  }
+
   function imageEl(obj, key, label) {
     var thumb = el("div", { class: "ad-imgthumb" });
     if (obj[key]) thumb.style.backgroundImage = "url('" + obj[key] + "')";
-    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; thumb.style.backgroundImage = url ? "url('" + url + "')" : ""; btn.textContent = url ? "Change" : "Set image"; schedulePreview(); }); } });
-    return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-imgpick" }, [thumb, btn])]);
+    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; syncProjectImageField(obj, key, url); thumb.style.backgroundImage = url ? "url('" + url + "')" : ""; btn.textContent = url ? "Change" : "Set image"; remove.disabled = !url; schedulePreview(); }); } });
+    var remove = el("button", { class: "ad-mini del", text: "Remove", onclick: function () { if (!obj[key]) return; obj[key] = ""; syncProjectImageField(obj, key, ""); renderEditor(); schedulePreview(); } });
+    if (!obj[key]) remove.disabled = true;
+    return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-imgpick" }, [thumb, el("div", { class: "grp" }, [btn, remove])])]);
+  }
+
+  function galleryEl(obj, gallery) {
+    var arr = Array.isArray(obj[gallery.k]) ? obj[gallery.k] : (obj[gallery.k] = []);
+    var box = el("div", { class: "ad-field ad-gallery" });
+    box.appendChild(el("label", { class: "ad-label", text: gallery.label + " (" + arr.length + ")" }));
+    if (gallery.help) box.appendChild(el("p", { class: "ad-sub", text: gallery.help }));
+    var grid = el("div", { class: "ad-gallery-grid" });
+    arr.forEach(function (url, idx) {
+      var card = el("div", { class: "ad-gallery-item" }, [
+        el("img", { src: url, alt: "Preview " + (idx + 1), loading: "lazy" }),
+        el("div", { class: "ad-gallery-bar" }, [
+          el("span", { text: String(idx + 1) }),
+          el("button", { class: "ad-mini", title: "Move earlier", text: "↑", onclick: function () { if (!idx) return; var t = arr[idx - 1]; arr[idx - 1] = arr[idx]; arr[idx] = t; syncProjectImageField(obj, gallery.k, arr); renderEditor(); schedulePreview(); } }),
+          el("button", { class: "ad-mini", title: "Move later", text: "↓", onclick: function () { if (idx >= arr.length - 1) return; var t = arr[idx + 1]; arr[idx + 1] = arr[idx]; arr[idx] = t; syncProjectImageField(obj, gallery.k, arr); renderEditor(); schedulePreview(); } }),
+          el("button", { class: "ad-mini del", title: "Remove from previews", text: "Remove", onclick: function () { arr.splice(idx, 1); syncProjectImageField(obj, gallery.k, arr); renderEditor(); schedulePreview(); } }),
+        ]),
+      ]);
+      grid.appendChild(card);
+    });
+    if (arr.length) box.appendChild(grid);
+    var add = el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">add_photo_alternate</span>' + (arr.length >= gallery.max ? 'Maximum reached' : 'Add preview image'), onclick: function () {
+      if (arr.length >= gallery.max) return;
+      openPicker(function (url) {
+        if (!url || arr.indexOf(url) >= 0) return;
+        arr.push(url); syncProjectImageField(obj, gallery.k, arr); renderEditor(); schedulePreview();
+      });
+    } });
+    if (arr.length >= gallery.max) add.disabled = true;
+    box.appendChild(add);
+    return box;
   }
 
   // One-line summary for a collapsed collection item — first non-empty of a few
@@ -347,7 +398,9 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   // ── CSV helpers (per-collection bulk import / export / template) ───────────
   // A collection's CSV columns are its field keys + image keys, in schema order.
   function csvKeys(col) {
-    return (col.fields || []).map(function (f) { return f.k; }).concat((col.images || []).map(function (im) { return im[0]; }));
+    return (col.fields || []).map(function (f) { return f.k; })
+      .concat((col.images || []).map(function (im) { return im[0]; }))
+      .concat((col.galleries || []).map(function (gallery) { return gallery.k; }));
   }
   function isTagField(col, k) {
     var f = (col.fields || []).filter(function (x) { return x.k === k; })[0];
@@ -355,12 +408,14 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   }
   function cellOut(col, item, k) {
     if (isTagField(col, k)) return (item[k] || []).map(function (t) { return typeof t === "string" ? t : (t.text || ""); }).join("; ");
+    if ((col.galleries || []).some(function (gallery) { return gallery.k === k; })) return (item[k] || []).join("; ");
     var v = item[k];
     return v == null ? "" : String(v);
   }
   function cellIn(col, k, raw) {
     raw = raw == null ? "" : String(raw).trim();
     if (isTagField(col, k)) return raw ? raw.split(/[;,]/).map(function (s) { return s.trim(); }).filter(Boolean).map(function (s) { return { text: s }; }) : [];
+    if ((col.galleries || []).some(function (gallery) { return gallery.k === k; })) return raw ? raw.split(";").map(function (s) { return s.trim(); }).filter(Boolean) : [];
     return raw;
   }
   function csvCell(s) { s = String(s == null ? "" : s); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
@@ -479,6 +534,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       var body = el("div", { class: "ad-acc-body" });
       (col.fields || []).forEach(function (f) { body.appendChild(fieldEl(item, f)); });
       (col.images || []).forEach(function (im) { body.appendChild(imageEl(item, im[0], im[1])); });
+      (col.galleries || []).forEach(function (gallery) { body.appendChild(galleryEl(item, gallery)); });
       // keep the collapsed summary in sync as the headline fields are edited
       body.addEventListener("input", function () { sumText.textContent = itemSummary(item); });
       det.appendChild(body);

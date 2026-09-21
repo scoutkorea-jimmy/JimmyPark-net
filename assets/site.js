@@ -287,16 +287,22 @@
 
 
   // collection item templates (markup mirrors the static seeds / design.md)
-  function caseMedia(primary, images, alt, width, height) {
-    var frames = [primary].concat(Array.isArray(images) ? images : []).filter(function (src, index, all) {
+  function mediaFrames(primary, images) {
+    return [primary].concat(Array.isArray(images) ? images : []).filter(function (src, index, all) {
       return src && all.indexOf(src) === index;
     });
-    if (!frames.length) return '';
-    var cycle = frames.length > 1 ? ' case-media--cycle' : '';
-    return '<div class="case-media' + cycle + '">' + frames.map(function (src, index) {
+  }
+  function frameImages(frames, alt, width, height) {
+    return frames.map(function (src, index) {
       return '<img src="' + esc(src) + '" alt="' + (index ? '' : esc(alt)) + '"' + (index ? ' aria-hidden="true"' : '') +
         ' loading="lazy" decoding="async" width="' + width + '" height="' + height + '">';
-    }).join('') + '</div>';
+    }).join('');
+  }
+  function caseMedia(primary, images, alt, width, height) {
+    var frames = mediaFrames(primary, images);
+    if (!frames.length) return '';
+    var cycle = frames.length > 1 ? ' case-media--cycle' : '';
+    return '<div class="case-media' + cycle + '">' + frameImages(frames, alt, width, height) + '</div>';
   }
 
   var TT = {
@@ -322,7 +328,9 @@
     siteShowcase: function (s) {
       var href = /^https:\/\//.test(s.href || "") ? s.href : "";
       var domain = href.replace(/^https:\/\//, "").replace(/\/$/, "");
-      var screen = s.image ? '<img src="' + esc(s.image) + '" alt="Desktop homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="1280" height="720">' : '<span class="case-placeholder">' + esc(s.title) + '</span>';
+      var screens = mediaFrames(s.image, s.images);
+      var screen = screens.length ? frameImages(screens, 'Desktop homepage of ' + s.title, 1280, 720) : '<span class="case-placeholder">' + esc(s.title) + '</span>';
+      var screenCycle = screens.length > 1 ? ' case-media--cycle' : '';
       var phone = s.mobileImage ? '<div class="phone-frame"><img src="' + esc(s.mobileImage) + '" alt="Mobile homepage of ' + esc(s.title) + '" loading="lazy" decoding="async" width="360" height="780"></div>' : '';
       var facts = [['The need', s.need], ['What I built', s.built], ['Role', s.role]].filter(function (f) { return f[1]; })
         .map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('');
@@ -338,7 +346,7 @@
         (stats ? '<div class="stat-chips">' + stats + '</div>' : '') + '</div><details class="backend-details" open><summary class="backend-toggle"><span class="backend-toggle-show">Show admin features' + (adminShot ? ' &amp; screenshot' : '') + '</span><span class="backend-toggle-hide">Hide admin features</span><span class="msym" aria-hidden="true">expand_more</span></summary><div class="backend-grid' + (adminShot ? ' has-shot' : '') + '">' + adminShot +
         (backendItems.length ? '<ul class="backend-list">' + backendItems.map(function (t) { return '<li><span class="msym" aria-hidden="true">check_circle</span><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' : '') + '</div></details></div>' : '';
       return '<article class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
-        (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen">' + screen + '</div></div>' + phone + '</div>' +
+        (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen' + screenCycle + '">' + screen + '</div></div>' + phone + '</div>' +
         '<div class="showcase-body"><div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(s.title) + '</h3>' + (s.summary ? '<p class="showcase-summary">' + esc(s.summary) + '</p>' : '') +
         (facts ? '<dl class="showcase-facts">' + facts + '</dl>' : '') + (stack ? '<div class="tag-list">' + stack + '</div>' : '') +

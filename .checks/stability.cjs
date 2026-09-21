@@ -61,6 +61,7 @@ function between(source, start, end) {
   await check('Unsafe navigation and asset URLs reject with no persistence',async()=>{
     const setters=[
       d=>{d.pages.home.sections.hero.ctaPrimary.href='javascript:alert(1)';},
+      d=>{d.pages.work.sections.video.cases[0].images[0]='javascript:alert(1)';},
       d=>{d.pages.home.sections.activities.items[0].href='data:text/html,test';},
       d=>{d.pages.home.sections.projects.items[0].href='//outside.example/path';},
       d=>{d.global.contact.linkedin='javascript:alert(1)';},

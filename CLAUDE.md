@@ -356,6 +356,10 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   known remote YouTube thumbnails with local representatives, and removes the hero's forced newline.
   Preserve owner-supplied galleries. Hover/focus crossfades must not run on touch-only or
   reduced-motion contexts; the representative image remains the stable fallback.
+- Schema v41 exposes the same galleries on Media Work and Dev Work. The admin keeps each representative
+  image separate from an ordered list of up to three additional previews, with direct add, remove and
+  reorder controls. Matching Home/full-page project IDs synchronize image edits in the admin. Preserve
+  owner-managed arrays when migrating.
 
 ### Article scheduling and collections (v0.20.0, 2026-09-21)
 - `/insights` keeps published articles above a separately labelled `Upcoming Articles` collection.

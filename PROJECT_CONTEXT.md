@@ -1,11 +1,11 @@
 # Current work
 
-Selected work v0.23.0 keeps the six existing homepage cards and their current representative images,
-then adds three local archive frames to every website and film card. Hover and keyboard focus trigger
-a slow crossfade; touch and reduced-motion contexts keep the representative frame. A reproducible
-capture script refreshes the web and public-video stills, while local assets protect the portfolio
-against expiring sites and links. Schema v40 adds galleries and localizes known remote thumbnails.
-The hero no longer carries a forced newline; CSS balances its two- or three-line wrap by viewport.
+Preview galleries v0.24.0 appear consistently on Home, Media Work, and Dev Work. Each card keeps its
+representative image first and can store up to three additional preview frames. Hover and keyboard
+focus trigger the slow crossfade; touch and reduced-motion contexts keep the representative frame.
+The admin exposes representative and preview images separately, with add, remove, and reorder controls;
+matching Home and full-page rows synchronize by project ID.
+Schema v41 carries the existing homepage galleries into the corresponding full-page work entries.
 
 Homepage hero v0.22.3 replaces the abstract `I choose the right medium` claim with a visitor-centred
 promise: people do not need to arrive with all the answers. The supporting copy states the concrete

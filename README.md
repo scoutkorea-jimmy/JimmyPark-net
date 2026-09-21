@@ -5,11 +5,11 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
-The v0.23.0 selected-work galleries keep each existing card image as its representative frame and
-add three locally archived frames per featured website and film. Hovering a card, or focusing its
-link by keyboard, crossfades through the archive; touch devices and reduced-motion users retain the
-stable representative image. Local copies preserve the portfolio if a live site or media link changes
-or expires. The homepage hero now uses balanced wrapping instead of a forced line break.
+The v0.24.0 preview galleries keep each card's representative image first and make the same hover or
+keyboard-focus crossfade available on Home, Media Work, and Dev Work. The admin separates the
+representative image from up to three reorderable additional previews, with direct add and remove
+controls; matching Home and full-page projects stay synchronized by project ID. Touch devices and reduced-motion users retain the stable representative image. Local copies
+preserve the portfolio if a live site or media link changes or expires.
 
 The v0.22.3 homepage hero starts with reassurance instead of an abstract claim about choosing a
 medium. It tells visitors they do not need to arrive with all the answers, then explains Jimmy's

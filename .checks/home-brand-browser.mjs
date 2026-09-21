@@ -1,13 +1,17 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 
 const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const origin = process.argv[2] || 'http://127.0.0.1:4173';
 const port = 9328;
+const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'jimmypark-home-brand-'));
 const processHandle = spawn(chrome, [
   '--headless=new', '--disable-gpu', '--hide-scrollbars', `--remote-debugging-port=${port}`,
-  '--user-data-dir=/tmp/jimmypark-home-brand-chrome', 'about:blank',
+  `--user-data-dir=${profile}`, 'about:blank',
 ], { stdio: 'ignore' });
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -67,8 +71,28 @@ try {
   await wait(3400);
   const cycle = await client.send('Runtime.evaluate', { expression: `Array.from(document.querySelector('.selected-work-grid .case-media--cycle').querySelectorAll('img')).map(img => Number(getComputedStyle(img).opacity))`, returnByValue: true });
   assert.ok(cycle.result.value.slice(1).some(opacity => opacity > 0.5), 'Desktop focus must advance from the representative image');
+
+  for (const check of [
+    { path: '/work.html', selector: '.video-case .case-media--cycle', expected: 3, link: '.video-case .card-link' },
+    { path: '/dev.html', selector: '.site-showcase .browser-screen.case-media--cycle', expected: 3, link: '.site-showcase .site-button' },
+  ]) {
+    await client.send('Page.navigate', { url: `${origin}${check.path}` });
+    await wait(900);
+    const galleries = await client.send('Runtime.evaluate', { expression: `document.querySelectorAll(${JSON.stringify(check.selector)}).length`, returnByValue: true });
+    assert.equal(galleries.result.value, check.expected, `${check.path} must show the saved preview galleries`);
+    await client.send('Runtime.evaluate', { expression: `(() => { const card=document.querySelector(${JSON.stringify(check.selector)}).closest('.project-card, .site-showcase'); card.scrollIntoView({block:'center'}); card.querySelector(${JSON.stringify(check.link)}).focus(); })()` });
+    await wait(3400);
+    const pageCycle = await client.send('Runtime.evaluate', { expression: `Array.from(document.querySelector(${JSON.stringify(check.selector)}).querySelectorAll('img')).map(img => Number(getComputedStyle(img).opacity))`, returnByValue: true });
+    assert.ok(pageCycle.result.value.slice(1).some(opacity => opacity > 0.5), `${check.path} focus must advance from the representative image`);
+  }
   client.close();
-  console.log('PASS: 2–3 line hero wrapping and six four-frame selected-work galleries hold from 1440px to 390px; focus advances the archive.');
+  console.log('PASS: responsive homepage plus full Work and Dev preview galleries render and advance on focus.');
 } finally {
   processHandle.kill('SIGTERM');
+  await new Promise(resolve => {
+    if (processHandle.exitCode !== null) return resolve();
+    processHandle.once('exit', resolve);
+    setTimeout(resolve, 1000);
+  });
+  fs.rmSync(profile, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
 }

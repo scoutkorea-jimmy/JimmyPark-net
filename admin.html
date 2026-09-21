@@ -8,7 +8,7 @@
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.23.0">
+<link rel="stylesheet" href="/assets/site.css?v=0.24.0">
 <style>
   /* Admin and the portfolio share the owner-selected Wanted Sans family. */
   body { background: #f7f6f3; font-family: 'Wanted Sans Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
@@ -84,7 +84,17 @@
   .ad-coltools .ad-mini[disabled] { cursor: default; }
   .ad-coltools .ad-mini.del:not([disabled]):hover { background: #f6edee; color: #7a1e2c; border-color: #e7c9cd; }
   .ad-imgpick { display: flex; align-items: center; gap: 10px; }
+  .ad-imgpick .grp { display: flex; flex-wrap: wrap; gap: 6px; }
   .ad-imgthumb { width: 56px; height: 44px; border-radius: 8px; border: 1px solid #e6e1da; background: #efeae2 center/cover no-repeat; flex: none; }
+  .ad-gallery .ad-sub { margin: -2px 0 9px; }
+  .ad-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 9px; margin-bottom: 10px; }
+  .ad-gallery-item { border: 1px solid #e6e1da; border-radius: 11px; overflow: hidden; background: #fff; }
+  .ad-gallery-item img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #efeae2; }
+  .ad-gallery-bar { display: flex; align-items: center; gap: 4px; padding: 6px; }
+  .ad-gallery-bar > span { min-width: 16px; margin-right: auto; color: #9a948b; font-size: 11px; font-weight: 700; text-align: center; }
+  .ad-gallery-bar .ad-mini { padding-inline: 6px; }
+  .ad-gallery-bar .del { font-size: 10px; }
+  .ad-mini[disabled] { opacity: .4; cursor: default; }
   .ad-hide { opacity: .5; }
   /* preview */
   .ad-previewwrap { position: sticky; top: 16px; }
@@ -210,6 +220,6 @@
 
 <input id="file-input" type="file" accept="image/*" multiple style="display:none;">
 <script src="/assets/insights-admin.js?v=0.22.0" defer></script>
-<script src="/assets/admin.js?v=0.22.0" defer></script>
+<script src="/assets/admin.js?v=0.24.0" defer></script>
 </body>
 </html>

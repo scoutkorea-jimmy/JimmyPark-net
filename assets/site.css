@@ -333,15 +333,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .case-media--cycle { position: relative; }
 .portfolio .case-media--cycle img { position: absolute; inset: 0; opacity: 0; transition: opacity 650ms var(--md-ease-standard); }
 .portfolio .case-media--cycle img:first-child { position: relative; opacity: 1; }
+.portfolio .case-media--cycle img:nth-child(n+5) { display: none; }
 @keyframes portfolio-frame-cycle {
   0%, 20% { opacity: 1; }
   26%, 100% { opacity: 0; }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .portfolio .project-card:is(:hover, :focus-within) .case-media--cycle img { animation: portfolio-frame-cycle 12s infinite; }
-  .portfolio .project-card:is(:hover, :focus-within) .case-media--cycle img:nth-child(2) { animation-delay: 3s; }
-  .portfolio .project-card:is(:hover, :focus-within) .case-media--cycle img:nth-child(3) { animation-delay: 6s; }
-  .portfolio .project-card:is(:hover, :focus-within) .case-media--cycle img:nth-child(4) { animation-delay: 9s; }
+  .portfolio :is(.project-card, .site-showcase):is(:hover, :focus-within) .case-media--cycle img { animation: portfolio-frame-cycle 12s infinite; }
+  .portfolio :is(.project-card, .site-showcase):is(:hover, :focus-within) .case-media--cycle img:nth-child(2) { animation-delay: 3s; }
+  .portfolio :is(.project-card, .site-showcase):is(:hover, :focus-within) .case-media--cycle img:nth-child(3) { animation-delay: 6s; }
+  .portfolio :is(.project-card, .site-showcase):is(:hover, :focus-within) .case-media--cycle img:nth-child(4) { animation-delay: 9s; }
 }
 .portfolio .case-placeholder { padding: var(--space-32); max-width: 20ch; color: var(--accent); font-size: var(--title-section); line-height: 1.2; font-weight: 700; text-align: center; }
 .portfolio .case-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-12); margin-bottom: var(--space-16); width: 100%; }

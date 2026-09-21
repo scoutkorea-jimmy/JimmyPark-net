@@ -544,6 +544,8 @@ these roles; new rules should use the `--md-*` names directly.
   archive frames may crossfade on hover or keyboard focus. Keep the representative static for touch
   and reduced-motion users, and keep all archived frames local so expired external links do not erase
   the portfolio evidence. Hero headings use balanced wrapping, not authored hard line breaks.
+- Apply the same preview sequence to full Media Work cards and Dev Work browser frames. In the admin,
+  keep the representative image separate from the ordered list of up to three additional previews.
 
 ## 20. Article collections and pagination (v0.20.0)
 - The Articles index presents `Published Articles` first and a clearly separated `Upcoming Articles`
