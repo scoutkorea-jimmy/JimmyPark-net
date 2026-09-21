@@ -594,6 +594,9 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
   social-preview format while preserving Jimmy Park's photography and burgundy/green/purple roles.
 - Bump the query value on every OG/Twitter image URL when artwork changes; social crawlers cache
   images independently from the page response.
+- v0.22.1: keep `Jimmy Park.` and `jimmypark.net` together in the top-left brand lockup. Never place
+  the domain on a photo, tonal symbol pane, rounded corner or bottom edge. Each card is rendered in
+  an isolated browser target so font repaints cannot leave a partially painted PNG.
 
 ## Required Cloudflare config (don't commit secrets)
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,

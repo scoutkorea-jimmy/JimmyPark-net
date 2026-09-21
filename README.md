@@ -5,6 +5,10 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.22.1 OG refinement removes the domain label from photo and symbol panes. `Jimmy Park.` and
+`jimmypark.net` now form one top-left brand lockup with a divider and a full 64px safe area. Cards
+are rendered as ordinary HTML/CSS in isolated browser targets to avoid partial SVG/font captures.
+
 The v0.22.0 OG set is rendered from the site's Material 3 tokens. It uses Google Sans Flex,
 official Material Symbols, the M3 display/label hierarchy, color roles, 28px/full shapes and the
 8px spacing system. The generator waits for and verifies both Google font families before capture;

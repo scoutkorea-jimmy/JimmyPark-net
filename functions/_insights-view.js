@@ -64,11 +64,11 @@ const SERIES = {
   'if-people-cannot-understand-it-little-remains': { name: 'The Work Behind the Work', part: 4 },
 };
 const PAGE_SIZE = 5;
-const DEFAULT_IMAGE = 'https://jimmypark.net/assets/img/og/articles.png?v=0.22.0';
+const DEFAULT_IMAGE = 'https://jimmypark.net/assets/img/og/articles.png?v=0.22.1';
 
 function articleImage(post) {
   const value = String(post?.image || '').trim();
-  if (/^\/assets\/img\/[A-Za-z0-9._/-]+$/u.test(value)) return 'https://jimmypark.net' + value + (value.startsWith('/assets/img/og/') ? '?v=0.22.0' : '');
+  if (/^\/assets\/img\/[A-Za-z0-9._/-]+$/u.test(value)) return 'https://jimmypark.net' + value + (value.startsWith('/assets/img/og/') ? '?v=0.22.1' : '');
   if (/^https:\/\/[^\s]+$/u.test(value)) return value;
   return DEFAULT_IMAGE;
 }

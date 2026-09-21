@@ -1,5 +1,9 @@
 # Current work
 
+OG cards v0.22.1 correct the careless floating domain treatment: the URL no longer sits on the
+bottom edge of photo or symbol panes. Identity and domain are grouped in a deliberate top-left
+brand lockup, and isolated HTML/CSS browser rendering prevents partial text paint during generation.
+
 OG cards v0.22.0 replace the earlier M3-inspired artwork with a token-based Material 3 system:
 Google Sans Flex, official Material Symbols, M3 type hierarchy, color roles, spacing and shapes.
 The deterministic generator verifies the required fonts before capture. Versioned image URLs force

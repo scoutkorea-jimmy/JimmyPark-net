@@ -569,6 +569,8 @@ these roles; new rules should use the `--md-*` names directly.
   use one large tonal supporting pane and a single semantically relevant Material Symbol.
 - Keep `jimmypark.net`, series/section label, title and identity text inside the 64px safe area.
   Regenerate and visually inspect long titles after any copy or font change.
+- v0.22.1 groups `Jimmy Park.` and `jimmypark.net` in a single top-left lockup separated by an
+  outline-variant rule. The URL must never float over the bottom of a photo or symbol pane.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

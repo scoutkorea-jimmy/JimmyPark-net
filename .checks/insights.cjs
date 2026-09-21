@@ -41,8 +41,8 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   assert.equal(structured['@type'], 'BlogPosting');
   assert.equal(structured.author['@id'], 'https://jimmypark.net/#person');
   assert.equal(structured.headline, current.title);
-  assert.deepEqual(Array.from(structured.image), ['https://jimmypark.net/assets/img/og/ax-1.png?v=0.22.0']);
-  assert.match(detail.html, /<meta property="og:image" content="https:\/\/jimmypark.net\/assets\/img\/og\/ax-1.png\?v=0.22.0">/);
+  assert.deepEqual(Array.from(structured.image), ['https://jimmypark.net/assets/img/og/ax-1.png?v=0.22.1']);
+  assert.match(detail.html, /<meta property="og:image" content="https:\/\/jimmypark.net\/assets\/img\/og\/ax-1.png\?v=0.22.1">/);
   assert.match(detail.html, /<meta property="og:image:alt" content="AX article cover">/);
   assert.match(detail.html, /class="insight-cover"/);
   assert.match(detail.html, /facebook\.com\/sharer\/sharer\.php\?u=https%3A%2F%2Fjimmypark\.net%2Finsights%2Ftest-note/);
