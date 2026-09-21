@@ -5,6 +5,10 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.22.3 homepage hero starts with reassurance instead of an abstract claim about choosing a
+medium. It tells visitors they do not need to arrive with all the answers, then explains Jimmy's
+role in turning complex ideas into work people can understand, use, and keep using.
+
 The v0.22.2 article-detail refinement replaces the understated text link with one clear
 `View all articles` back button. Series chips remain available as filters on the Articles index,
 but no longer repeat above the title on individual article pages.
@@ -32,8 +36,8 @@ of five. Future-dated published entries expose only their title, summary and 9:0
 time until the exact scheduled instant, while drafts remain private.
 
 The v0.19.0 homepage positions Jimmy Park as a producer, platform builder and applied-AI
-practitioner. It explains the distinguishing method—start with people and purpose, choose the
-right medium, then carry the work through delivery—and connects that claim to selected work,
+practitioner. It explains the distinguishing method—listen first, connect the disciplines a complex
+brief needs, then carry the work through delivery and handover—and connects that claim to selected work,
 documented roles and published Articles. Schema v38 migrates recognized v37 public copy while
 preserving owner-edited alternatives.
 

@@ -531,8 +531,9 @@ these roles; new rules should use the `--md-*` names directly.
 
 ## 19. Personal-brand homepage (v0.19.0)
 - The first viewport identifies Jimmy before listing services: producer, platform builder and
-  applied-AI practitioner. Its value statement is the ability to choose the right medium and carry
-  the work through, followed immediately by selected-work evidence.
+  applied-AI practitioner. Its visitor-centred value statement removes the pressure to arrive with
+  every answer, then explains how listening, cross-discipline judgment, delivery and handover turn
+  complex ideas into work people can understand and keep using. Selected-work evidence follows.
 - `activities` remains the stable CMS section key but presents four reasons to work with Jimmy:
   judgment, ownership, range and context. Do not turn it back into a second service catalogue.
 - The primary hero path is selected work; the secondary path is Articles. Contact remains in the

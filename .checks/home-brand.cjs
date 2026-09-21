@@ -1,4 +1,4 @@
-// Focused regression check for the v38 personal-brand homepage migration.
+// Focused regression check for the personal-brand homepage migrations.
 const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
@@ -39,20 +39,29 @@ async function migrate(value) {
   Object.assign(old.pages.home.sections.projects, { eyebrow: 'Stay connected', title: 'Network, background, and next roles.' });
   old.pages.home.sections.projects.items[2] = copy(api.oldHiring);
 
-  assert.deepEqual(await migrate(old), defaults, 'Recognized v37 live copy must become the v38 defaults');
+  assert.deepEqual(await migrate(old), defaults, 'Recognized v37 live copy must become the current defaults');
   const custom = copy(old);
   custom.pages.home.sections.hero.title = 'My own positioning';
   custom.pages.home.sections.projects.items[2].desc = 'Custom hiring copy';
   const upgraded = await migrate(custom);
   assert.equal(upgraded.pages.home.sections.hero.title, 'My own positioning');
   assert.equal(upgraded.pages.home.sections.projects.items[2].desc, 'Custom hiring copy');
-  assert.deepEqual(await migrate(upgraded), upgraded, 'v38 migration must be idempotent');
+  assert.deepEqual(await migrate(upgraded), upgraded, 'Homepage migrations must be idempotent');
+
+  const previous = copy(defaults);
+  previous.version = 38;
+  previous.pages.home.sections.hero.title = 'I choose the right medium—\nand carry the work through.';
+  previous.pages.home.sections.hero.lead = 'I’m Jimmy Park, a Korea-based producer and builder. I begin with the people and purpose, then take the work from first brief to finished film, working platform, or practical AI workflow. The value I bring is not one tool; it is the judgment to connect the right ones.';
+  assert.deepEqual(await migrate(previous), defaults, 'The exact v38 hero must migrate to the new copy');
+  previous.pages.home.sections.hero.title = 'Owner-written hero';
+  assert.equal((await migrate(previous)).pages.home.sections.hero.title, 'Owner-written hero');
 
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const runtime = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
   assert.match(html, /Why work with Jimmy/);
-  assert.match(html, /I choose the right medium/);
+  assert.match(html, /You do not need to arrive/);
+  assert.match(html, /work people can understand, use, and keep using/);
   assert.match(html, /Read my articles/);
   assert.match(runtime, /See the evidence/);
-  console.log('PASS: v38 homepage positioning, live-copy migration, custom-copy preservation and static/runtime brand links.');
+  console.log('PASS: homepage positioning, v38 hero migration, custom-copy preservation and static/runtime brand links.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

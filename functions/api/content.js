@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 38,
+  "version": 39,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -53,8 +53,8 @@ const DEFAULT = {
       "sections": {
         "hero": {
           "eyebrow": "Producer · Platform builder · Applied AI practitioner",
-          "title": "I choose the right medium—\nand carry the work through.",
-          "lead": "I’m Jimmy Park, a Korea-based producer and builder. I begin with the people and purpose, then take the work from first brief to finished film, working platform, or practical AI workflow. The value I bring is not one tool; it is the judgment to connect the right ones.",
+          "title": "You do not need to arrive\nwith all the answers.",
+          "lead": "I’m Jimmy Park, a Korea-based producer, platform builder, and applied AI practitioner. I help turn complex or unfinished ideas into work people can understand, use, and keep using—by listening first, connecting the right disciplines, and staying through delivery and handover.",
           "ctaPrimary": {
             "label": "View selected work",
             "href": "#selected"
@@ -3552,6 +3552,20 @@ function migrateTo38(doc) {
   return doc;
 }
 
+// v39: make the hero begin with reassurance and a concrete, useful outcome.
+// Only the exact v38 hero copy changes; owner-written alternatives remain intact.
+function migrateTo39(doc) {
+  const hero = doc.pages && doc.pages.home && doc.pages.home.sections && doc.pages.home.sections.hero;
+  if (hero && hero.title === "I choose the right medium—\nand carry the work through.") {
+    hero.title = DEFAULT.pages.home.sections.hero.title;
+  }
+  if (hero && hero.lead === "I’m Jimmy Park, a Korea-based producer and builder. I begin with the people and purpose, then take the work from first brief to finished film, working platform, or practical AI workflow. The value I bring is not one tool; it is the judgment to connect the right ones.") {
+    hero.lead = DEFAULT.pages.home.sections.hero.lead;
+  }
+  doc.version = 39;
+  return doc;
+}
+
 
 
 
@@ -3624,7 +3638,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3633,7 +3647,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3641,7 +3655,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3678,6 +3692,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 36) doc = migrateTo36(doc);
   if ((doc.version || 0) < 37) doc = migrateTo37(doc);
   if ((doc.version || 0) < 38) doc = migrateTo38(doc);
+  if ((doc.version || 0) < 39) doc = migrateTo39(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3736,12 +3751,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 36) migrateTo36(incoming);
   if (incoming.version < 37) migrateTo37(incoming);
   if (incoming.version < 38) migrateTo38(incoming);
+  if (incoming.version < 39) migrateTo39(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 38;
+  doc.version = 39;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

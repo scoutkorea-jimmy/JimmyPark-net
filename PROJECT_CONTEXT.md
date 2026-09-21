@@ -1,5 +1,10 @@
 # Current work
 
+Homepage hero v0.22.3 replaces the abstract `I choose the right medium` claim with a visitor-centred
+promise: people do not need to arrive with all the answers. The supporting copy states the concrete
+value—listening, connecting disciplines, and staying through delivery and handover so the result can
+be understood, used, and kept in use. Schema v39 migrates only the exact v38 hero copy.
+
 Article detail pages v0.22.2 begin with one clear `View all articles` back button. Series chips are
 index-level discovery controls and do not repeat inside published or scheduled article pages.
 
