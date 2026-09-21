@@ -540,5 +540,13 @@ these roles; new rules should use the `--md-*` names directly.
 - The identity section combines claims with dated roles, and the lower project cards connect the
   work to professional network, international record and published perspective.
 
+## 20. Article collections and pagination (v0.20.0)
+- The Articles index presents `Published Articles` first and a clearly separated `Upcoming Articles`
+  collection below it. Upcoming cards expose metadata and schedule only; article bodies remain hidden.
+- Published order controls use `Newest first` and `Oldest first`. Both collections paginate in groups
+  of five with independent previous/next controls and an explicit page count.
+- Reuse the existing chips, dividers, type roles and spacing tokens. The upcoming boundary uses a
+  top divider and larger section spacing rather than a new color surface.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.

@@ -1,5 +1,10 @@
 # Current work
 
+Articles v0.20.0 separates published and future-scheduled writing, provides newest/oldest published
+ordering, and paginates each collection independently at five items. Scheduled entries reveal only
+metadata until exactly 9:00 AM KST on their date; draft entries remain private. The four-part
+`The Work Behind the Work` series is scheduled for 28 and 30 September and 2 and 4 October 2026.
+
 Homepage v0.19.0 / content schema v38 shifts the lead from a repeated service list to Jimmy Park's
 personal method and evidence. The hero now says why his cross-medium range matters: he starts with
 people and purpose, chooses the fitting medium, and carries work through as a finished film, working

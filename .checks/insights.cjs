@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const strip = source => source.replace(/^import .*;\n/gm, '').replace(/\bexport /g, '');
 const source = ['functions/api/_lib.js','functions/api/_posts.js','functions/_insights-shell.js','functions/_insights-view.js'].map(file => strip(read(file))).join('\n');
-const api = vm.runInNewContext(source + '; ({ managePosts, renderInsights, issueSession });', { Response, Request, TextEncoder, Uint8Array, DataView, ArrayBuffer, crypto: require('node:crypto').webcrypto, btoa });
+const api = vm.runInNewContext(source + '; ({ managePosts, renderInsights, issueSession, publicationTime });', { Response, Request, URL, TextEncoder, Uint8Array, DataView, ArrayBuffer, crypto: require('node:crypto').webcrypto, btoa });
 const copy = value => JSON.parse(JSON.stringify(value));
 let saved = null, writes = 0;
 const env = { TOTP_SECRET: 'isolated-test-secret', JP_KV: { get: async key => { assert.equal(key, 'insights:v1'); return saved && copy(saved); }, put: async (key,value) => { assert.equal(key,'insights:v1'); writes++; saved = JSON.parse(value); } } };
@@ -43,14 +43,14 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   assert.equal(structured.headline, current.title);
   assert.match(detail.html, /What do you think\?/);
   assert.ok((await page()).html.includes('/insights/test-note'));
-  const controls = (await page(undefined, '?sort=latest')).html;
+  const controls = (await page(undefined, '?sort=asc')).html;
   assert.match(controls, /aria-label="Sort articles"/);
-  assert.match(controls, /Series order/);
-  assert.match(controls, /Latest published/);
-  assert.match(controls, /sort=latest/);
-  const filteredLatest = (await page(undefined, '?series=AX%20Series&sort=latest')).html;
-  assert.match(filteredLatest, /href="\/insights\?series=AX%20Series"/);
-  assert.match(filteredLatest, /href="\/insights\?series=AX%20Series&amp;sort=latest"/);
+  assert.match(controls, /Newest first/);
+  assert.match(controls, /Oldest first/);
+  assert.match(controls, /sort=asc/);
+  const filteredOldest = (await page(undefined, '?series=AX%20Series&sort=asc')).html;
+  assert.match(filteredOldest, /href="\/insights\?sort=asc"/);
+  assert.match(filteredOldest, /href="\/insights\?series=AX%20Series&amp;sort=asc"/);
   const before = writes;
   assert.equal((await manage('POST',{revision:store.revision,post:{...post,status:'published'}})).status,409);
   for (const invalid of [{slug:'../bad'},{date:'2026-02-30'},{title:''},{body:''},{title:'x'.repeat(161)},{status:'unknown'}]) {
@@ -62,6 +62,28 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   assert.ok(!(await page()).html.includes('/insights/test-note'));
   assert.equal((await manage('DELETE',{revision:store.revision,post:store.posts[0]})).status,200);
   assert.equal(saved.posts.length,0);
+  assert.equal(api.publicationTime({ date: '2026-09-28' }), Date.UTC(2026, 8, 28, 0, 0, 0));
+  const sample = (id, title, slug, date, status = 'published') => ({ id, title, slug, date, status, category: 'Practice', summary: title + ' summary', hashtags: '', body: title + ' private body', updatedAt: Number(id.replace(/\D/g, '')) || 1 });
+  saved = { revision: 'paging', posts: [
+    ...Array.from({length:6}, (_,i) => sample('p' + (i + 1), 'Past ' + (i + 1), 'past-' + (i + 1), '2026-01-0' + (i + 1))),
+    ...Array.from({length:6}, (_,i) => sample('u' + (i + 1), 'Upcoming ' + (i + 1), i === 0 ? 'expertise-should-not-make-people-feel-small' : 'upcoming-' + (i + 1), '2099-01-0' + (i + 1))),
+    sample('d1', 'Private draft', 'private-draft', '2099-02-01', 'draft'),
+  ] };
+  const firstPage = (await page()).html;
+  assert.match(firstPage, /Published Articles/); assert.match(firstPage, /Upcoming Articles/);
+  assert.match(firstPage, /Past 6/); assert.ok(!firstPage.includes('Past 1 summary'));
+  assert.match(firstPage, /Upcoming 1/); assert.ok(!firstPage.includes('Upcoming 6 summary'));
+  assert.match(firstPage, /Published article pages/); assert.match(firstPage, /Upcoming article pages/);
+  assert.ok(!firstPage.includes('Private draft'));
+  const secondPage = (await page(undefined, '?page=2&upcomingPage=2')).html;
+  assert.match(secondPage, /Past 1/); assert.match(secondPage, /Upcoming 6/);
+  const oldestFirst = (await page(undefined, '?sort=asc')).html;
+  assert.match(oldestFirst, /Past 1/); assert.ok(!oldestFirst.includes('Past 6 summary'));
+  const futureDetail = await page('expertise-should-not-make-people-feel-small');
+  assert.match(futureDetail.html, /The Work Behind the Work · Part 1 of 4/);
+  assert.match(futureDetail.html, /Scheduled article/);
+  assert.ok(!futureDetail.html.includes('Upcoming 1 private body'));
+  assert.equal((await page('private-draft')).status, 404);
   assert.ok(!read('assets/site.js').includes('var meta = pd.meta || g.seo'));
   const publicHTML = ['index.html','work.html','dev.html','scouting.html','contact.html','insights.html','404.html'];
   for (const file of publicHTML) {
@@ -71,5 +93,5 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   const offline = { ...env, JP_KV: { get: async () => { throw new Error('offline'); } } };
   const unavailable = await api.renderInsights({env:offline});
   assert.equal(unavailable.status,503); assert.match(await unavailable.text(), /will be back shortly/);
-  console.log('PASS: real session auth, draft privacy, server-rendered list/detail, publish/unpublish/delete, validation, slug conflicts, stale revisions, escaping, no-store and navigation.');
+  console.log('PASS: auth, draft privacy, exact 9 AM scheduling, published/upcoming grouping, ascending/descending order, five-item pagination, detail rendering, validation and navigation.');
 })().catch(error=>{ console.error(error); process.exitCode=1; });

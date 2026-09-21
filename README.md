@@ -5,6 +5,11 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.20.0 Articles index separates published writing from scheduled `Upcoming Articles`.
+Published articles can be ordered newest-first or oldest-first; each collection is paged in groups
+of five. Future-dated published entries expose only their title, summary and 9:00 AM KST release
+time until the exact scheduled instant, while drafts remain private.
+
 The v0.19.0 homepage positions Jimmy Park as a producer, platform builder and applied-AI
 practitioner. It explains the distinguishing method—start with people and purpose, choose the
 right medium, then carry the work through delivery—and connects that claim to selected work,

@@ -7,9 +7,12 @@ export async function readPosts(env) {
   if (typeof saved.revision !== 'string' || !Array.isArray(saved.posts)) throw new Error('invalid_post_store');
   return saved;
 }
+export function publicationTime(post) {
+  return new Date(post.date + 'T09:00:00+09:00').getTime();
+}
 export function publishedPosts(store) {
-  const todayKST = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date());
-  return store.posts.filter(p => p.status === 'published' && p.date <= todayKST)
+  const now = Date.now();
+  return store.posts.filter(p => p.status === 'published' && publicationTime(p) <= now)
     .sort((a, b) => b.date.localeCompare(a.date) || b.updatedAt - a.updatedAt);
 }
 export async function managePosts({ request, env }) {

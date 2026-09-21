@@ -350,6 +350,15 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   hero positioning, custom capability collections and custom card copy. Static HTML, `DEFAULT`, the
   renderer, metadata and live KV must remain aligned.
 
+### Article scheduling and collections (v0.20.0, 2026-09-21)
+- `/insights` keeps published articles above a separately labelled `Upcoming Articles` collection.
+  Drafts never appear publicly; future-dated `published` entries show title, summary and release time
+  but withhold the body until exactly 9:00 AM KST on the stored date.
+- Published writing can be ordered newest-first or oldest-first. Published and upcoming collections
+  paginate independently at five items while preserving the series filter and selected order.
+- `The Work Behind the Work` is a four-part personal-practice series scheduled every two days from
+  28 September through 4 October 2026 at 9:00 AM KST.
+
 ## Golden rules
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,

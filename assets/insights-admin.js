@@ -10,6 +10,7 @@
     return fetch('/api/posts', { method: method, headers: Object.assign({ 'content-type': 'application/json' }, auth()), body: data ? JSON.stringify(data) : undefined })
       .then(function (r) { if (r.status === 401) { expired(); throw new Error('unauthorized'); } return r.json().then(function (j) { if (!r.ok || !j.ok) throw new Error(j.error || 'network'); return j; }); });
   }
+  function isFuture(post) { return post.status === 'published' && new Date(post.date + 'T09:00:00+09:00').getTime() > Date.now(); }
   function discard() { return !dirty || window.confirm('Discard unsaved article changes?'); }
   function choose(post) { if (busy || !discard()) return; selected = JSON.parse(JSON.stringify(post)); dirty = false; render(); }
   function field(form, label, key, type, max) {
@@ -30,7 +31,7 @@
     card.appendChild(add);
     var list = node('div', '', 'insight-admin-list');
     (store.posts || []).slice().sort(function (a,b) { return b.updatedAt - a.updatedAt; }).forEach(function (p) {
-      var future = p.status === 'published' && p.date > new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
+      var future = isFuture(p);
       var state = future ? 'Scheduled' : p.status === 'published' ? 'Published' : 'Draft';
       var btn = node('button', p.title + ' · ' + state, 'ad-btn ad-btn-ghost ad-btn-sm'); btn.type = 'button';
       btn.setAttribute('aria-pressed', String(!!selected && p.id === selected.id)); btn.onclick = function () { choose(p); }; list.appendChild(btn);
@@ -39,7 +40,7 @@
     card.appendChild(list); panel.appendChild(card);
     if (!selected) return;
     var editor = node('form', '', 'ad-card'), fields = node('fieldset', '', 'insight-fields');
-    var selectedFuture = selected.status === 'published' && selected.date > new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
+    var selectedFuture = isFuture(selected);
     editor.appendChild(node('h2', selectedFuture ? 'Edit scheduled article' : selected.status === 'published' ? 'Edit published article' : 'Edit draft', 'ad-h'));
     field(fields, 'Title', 'title', 'text', 160);
     field(fields, 'Article URL · /insights/', 'slug', 'text', 100);
@@ -64,7 +65,8 @@
         store = await request(method, { revision: store.revision, post: outgoing });
         selected = method === 'DELETE' ? null : JSON.parse(JSON.stringify(store.posts.find(function (p) { return outgoing.id ? p.id === outgoing.id : p.slug === outgoing.slug.trim(); })));
         dirty = false; render();
-        var done = node('p', method === 'DELETE' ? 'Article deleted.' : outgoing.status === 'published' ? 'Published. Your article is live.' : 'Draft saved. Only you can see it.', 'ad-msg ad-ok'); done.setAttribute('role','status'); panel.appendChild(done);
+        var doneText = method === 'DELETE' ? 'Article deleted.' : outgoing.status === 'published' && isFuture(outgoing) ? 'Scheduled. The full article stays private until 9:00 AM KST on the selected date.' : outgoing.status === 'published' ? 'Published. Your article is live.' : 'Draft saved. Only you can see it.';
+        var done = node('p', doneText, 'ad-msg ad-ok'); done.setAttribute('role','status'); panel.appendChild(done);
       } catch (err) { status.textContent = errorText(err.message); status.className = 'ad-msg ad-err'; }
       finally { busy = false; fields.disabled = false; add.disabled = false; list.inert = false; }
     }
