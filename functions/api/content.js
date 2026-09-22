@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 41,
+  "version": 42,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -582,6 +582,54 @@ const DEFAULT = {
               "image": "https://i.ytimg.com/vi/HCb285yis9M/hqdefault.jpg",
               "images": [],
               "format": "University · Event film",
+              "linkLabel": "Watch film"
+            },
+            {
+              "id": "yugadang-heungbu",
+              "title": "YUGADANG — Swallow and Goblin",
+              "year": "",
+              "role": "On-set Assistant Director & Audio Director",
+              "desc": "On-set assistant direction and audio direction for YUGADANG’s fashion art film inspired by the Korean folk tale Heungbujeon.",
+              "href": "https://www.youtube.com/watch?v=LGLSqTFWIRk",
+              "image": "/assets/img/video/yugadang-heungbu.jpg",
+              "images": [
+                "/assets/img/video/yugadang-heungbu-02.jpg",
+                "/assets/img/video/yugadang-heungbu-03.jpg",
+                "/assets/img/video/yugadang-heungbu-04.jpg"
+              ],
+              "format": "Fashion · Art film",
+              "linkLabel": "Watch film"
+            },
+            {
+              "id": "yugadang-sugungga",
+              "title": "YUGADANG — Sugungga",
+              "year": "",
+              "role": "On-set Assistant Director & Editor",
+              "desc": "On-set assistant direction and editing for YUGADANG’s fashion art film inspired by the Korean folk tale Sugungga.",
+              "href": "https://www.youtube.com/watch?v=VPvDYQCul9M",
+              "image": "/assets/img/video/yugadang-sugungga.jpg",
+              "images": [
+                "/assets/img/video/yugadang-sugungga-02.jpg",
+                "/assets/img/video/yugadang-sugungga-03.jpg",
+                "/assets/img/video/yugadang-sugungga-04.jpg"
+              ],
+              "format": "Fashion · Art film",
+              "linkLabel": "Watch film"
+            },
+            {
+              "id": "seocho-culture-2020",
+              "title": "Seocho Cultural Foundation — 2020 Promotional Film",
+              "year": "2020",
+              "role": "Planning & Editing Lead",
+              "desc": "Led planning and editing for the foundation’s 2020 promotional film, restructuring existing source footage into a new film for the updated edition.",
+              "href": "https://www.youtube.com/watch?v=ZwaZT02tZnQ",
+              "image": "/assets/img/video/seocho-culture-2020.jpg",
+              "images": [
+                "/assets/img/video/seocho-culture-2020-02.jpg",
+                "/assets/img/video/seocho-culture-2020-03.jpg",
+                "/assets/img/video/seocho-culture-2020-04.jpg"
+              ],
+              "format": "Culture · Promotional film",
               "linkLabel": "Watch film"
             }
           ],
@@ -3691,6 +3739,30 @@ function migrateTo41(doc) {
   return doc;
 }
 
+// v42: add three owner-supplied credits without replacing existing rows or ordering.
+// Explicitly empty collections remain empty; later v42 deletions stay deleted.
+function migrateTo42(doc) {
+  const cases = doc.pages?.work?.sections?.video?.cases;
+  const videoId = href => {
+    try {
+      const url = new URL(href);
+      if (url.hostname === 'youtu.be') return url.pathname.slice(1);
+      if (['youtube.com', 'www.youtube.com'].includes(url.hostname)) return url.searchParams.get('v');
+    } catch (_) { /* An invalid/empty custom URL is not a matching video. */ }
+    return null;
+  };
+  if (Array.isArray(cases) && cases.length) {
+    for (const id of ['yugadang-heungbu', 'yugadang-sugungga', 'seocho-culture-2020']) {
+      const next = DEFAULT.pages.work.sections.video.cases.find(item => item.id === id);
+      if (!cases.some(item => item.id === id || videoId(item.href) === videoId(next.href))) {
+        cases.push(JSON.parse(JSON.stringify(next)));
+      }
+    }
+  }
+  doc.version = 42;
+  return doc;
+}
+
 
 
 
@@ -3769,7 +3841,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3778,7 +3850,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3786,7 +3858,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3826,6 +3898,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 39) doc = migrateTo39(doc);
   if ((doc.version || 0) < 40) doc = migrateTo40(doc);
   if ((doc.version || 0) < 41) doc = migrateTo41(doc);
+  if ((doc.version || 0) < 42) doc = migrateTo42(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3887,12 +3960,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 39) migrateTo39(incoming);
   if (incoming.version < 40) migrateTo40(incoming);
   if (incoming.version < 41) migrateTo41(incoming);
+  if (incoming.version < 42) migrateTo42(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 41;
+  doc.version = 42;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

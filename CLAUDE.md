@@ -10,6 +10,16 @@ AI Practitioner · AX Consultant · Global Collaborator.
 Live at **https://jimmypark.net**. **Vanilla HTML/CSS/JS, no build step, no framework.**
 Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-gated admin.
 
+### Added media credits (v0.24.2)
+- Media Work now has thirteen default cases, including two YUGADANG fashion art films and
+  the Seocho Cultural Foundation's 2020 film rebuilt from existing footage.
+- Keep the owner-supplied credits exact: on-set assistant direction plus audio direction for
+  *Swallow and Goblin*; on-set assistant direction plus editing for *Sugungga*;
+  planning/editing lead for Seocho. Do not imply full-film direction or new filming.
+- YUGADANG production years are unconfirmed; public upload dates are provenance only.
+- Schema v42 adds missing cases by stable ID or YouTube ID, preserves custom rows and empty
+  collections, and never persists a GET migration. New images use the existing admin gallery fields.
+
 ### Portfolio positioning (v0.5.0)
 - Home leads with four capabilities, then dated experience, selected projects, process, and contact.
 - Work order: content strategy (`#video`), AI practice (`#vibecoding`), AX consulting and workshops
@@ -538,7 +548,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 40`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 42`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

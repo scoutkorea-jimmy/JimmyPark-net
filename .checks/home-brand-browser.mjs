@@ -73,7 +73,7 @@ try {
   assert.ok(cycle.result.value.slice(1).some(opacity => opacity > 0.5), 'Desktop focus must advance from the representative image');
 
   for (const check of [
-    { path: '/work.html', selector: '.video-case .case-media--cycle', expected: 3, link: '.video-case .card-link' },
+    { path: '/work.html', selector: '.video-case .case-media--cycle', expected: 6, link: '.video-case .card-link' },
     { path: '/dev.html', selector: '.site-showcase .browser-screen.case-media--cycle', expected: 3, link: '.site-showcase .site-button' },
   ]) {
     await client.send('Page.navigate', { url: `${origin}${check.path}` });

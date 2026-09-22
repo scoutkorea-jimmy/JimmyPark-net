@@ -415,7 +415,7 @@ protect the documented contract; they do not replace visual review of real conte
 
 ## 11. Evidence and travel (v0.7.0)
 
-- Work shows ten owner-supplied video projects before the expandable format list. Each case
+- Work shows thirteen owner-supplied video projects before the expandable format list. Each case
   has format, optional year, title, explicit production credit, context and a direct video/playlist
   link. Use a 16:9 thumbnail or a complete text cover, never an empty image slot. Two columns
   become one at 600px. Keep actual roles separate from project/client context; do not imply

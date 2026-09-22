@@ -107,7 +107,7 @@ async function get(value) {
     legacy.global.contact.email = 'custom@example.test'; home.hero.image = '/custom-portrait.jpg'; home.hero.title = 'Custom headline';
     work.vibecoding.items[0].desc = 'Custom beta description'; sc.roles.items[0].title = 'Custom role'; legacy.pages.scouting.hidden = ['gallery'];
     const result = await get(legacy);
-    assert.equal(result.version, 41);
+    assert.equal(result.version, 42);
     assert.equal(result.pages.work.sections.video.cases.length, defaults.pages.work.sections.video.cases.length);
     assert.equal(result.pages.scouting.sections.travel.items.length, 19);
     assert.match(result.pages.work.sections.photography.portfolio.href, /^https:\/\/drive\.google\.com\/drive\/folders\//);
@@ -432,12 +432,12 @@ async function get(value) {
   }
 };
   const refreshed = await get(legacy6);
-  assert.equal(refreshed.version, 41);
+  assert.equal(refreshed.version, 42);
   assert.deepEqual(refreshed.pages.work.order, defaults.pages.work.order);
   assert.deepEqual(refreshed.pages.dev.order, defaults.pages.dev.order);
   assert.deepEqual(refreshed.pages.home.sections.activities.items, defaults.pages.home.sections.activities.items);
   assert.ok(!/\/work#(?:vibecoding|lecture)/.test(JSON.stringify(refreshed)), 'Links must follow the moved sections');
-  assert.equal(refreshed.pages.work.sections.video.cases.length, 10);
+  assert.equal(refreshed.pages.work.sections.video.cases.length, 13);
   assert.equal(refreshed.pages.home.sections.selected.cases.length, 3);
   assert.deepEqual(refreshed.pages.home.order, defaults.pages.home.order);
   assert.match(refreshed.pages.home.sections.snapshot.body, /박지민/);
@@ -531,7 +531,7 @@ async function get(value) {
   custom9.pages.home.sections.hero.title = 'Custom headline';
   custom9.pages.contact.sections.intro.lead = 'Custom contact lead';
   const upgraded = await get(custom9);
-  assert.equal(upgraded.version, 41);
+  assert.equal(upgraded.version, 42);
   assert.deepEqual(upgraded.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0], 'Unchanged v9 rows gain the showcase fields');
   const customRow = upgraded.pages.dev.sections.sites.items.find(row => row.id === 'charmjt');
   assert.equal(customRow.backend, '', 'Custom rows must not inherit another site’s back-end list');
@@ -555,7 +555,7 @@ async function get(value) {
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
   const backed = await get(custom10);
-  assert.equal(backed.version, 41);
+  assert.equal(backed.version, 42);
   const nfee = backed.pages.dev.sections.sites.items.find(row => row.id === 'nfee');
   assert.equal(nfee.summary, 'Custom nfee summary');
   assert.equal(nfee.backend, '');
@@ -577,7 +577,7 @@ async function get(value) {
   custom11.pages.home.sections.selected.cases = custom11.pages.home.sections.selected.cases.slice(0, 1);
   custom11.pages.dev.sections.sites.items[0] = { ...custom11.pages.dev.sections.sites.items[0], summary: 'Custom KDP summary' };
   const owned = await get(custom11);
-  assert.equal(owned.version, 41);
+  assert.equal(owned.version, 42);
   assert.equal(owned.pages.dev.sections.vibecoding.sub, 'Custom tools subtitle');
   assert.equal(owned.pages.work.meta.desc, 'Custom work description');
   assert.equal(owned.pages.home.sections.selected.cases.length, 1);
@@ -594,7 +594,7 @@ async function get(value) {
   custom12.pages.dev.sections.sites.items.reverse();
   custom12.pages.home.sections.selected.sites = custom12.pages.home.sections.selected.sites.slice(0, 2);
   const media = await get(custom12);
-  assert.equal(media.version, 41);
+  assert.equal(media.version, 42);
   const ids = media.pages.dev.sections.sites.items.map(row => row.id);
   assert.equal(ids.filter(id => id === 'bp-media').length, 1, 'BP Media is added exactly once');
   assert.equal(ids.indexOf('bp-media'), ids.indexOf('korea-dream-path') + 1, 'BP Media follows Korea Dream Path in a custom order');
@@ -610,7 +610,7 @@ async function get(value) {
   const uploaded = asV13(defaults);
   uploaded.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image = '/api/image?id=owner-upload';
   const stills = await get(uploaded);
-  assert.equal(stills.version, 41);
+  assert.equal(stills.version, 42);
   assert.equal(stills.pages.work.sections.video.cases.find(row => row.id === 'samsung-keynote').image, '/api/image?id=owner-upload');
   assert.equal(stills.pages.home.sections.selected.cases.find(row => row.id === 'samsung-keynote').image, '/assets/img/video/samsung-keynote.jpg');
   assert.deepEqual(await get(stills), stills, 'v14 normalization must be idempotent');
@@ -620,7 +620,7 @@ async function get(value) {
   const kbUpload = asV14(defaults);
   kbUpload.pages.work.sections.video.cases.find(row => row.id === 'kb-life').image = '/api/image?id=kb-upload';
   const filled = await get(kbUpload);
-  assert.equal(filled.version, 41);
+  assert.equal(filled.version, 42);
   assert.equal(filled.pages.work.sections.video.cases.find(row => row.id === 'kb-life').image, '/api/image?id=kb-upload');
   assert.equal(filled.pages.work.sections.video.cases.find(row => row.id === 'korean-jamboree-opening').image, '/assets/img/video/korean-jamboree-opening.jpg');
   assert.ok(defaults.pages.work.sections.video.cases.every(row => row.image), 'Every video card has a still');
@@ -633,7 +633,7 @@ async function get(value) {
   const bpUpload = asV15(defaults);
   bpUpload.pages.scouting.sections.mediaprojects.feature.image = '/api/image?id=bp-upload';
   const bpFilled = await get(bpUpload);
-  assert.equal(bpFilled.version, 41);
+  assert.equal(bpFilled.version, 42);
   assert.equal(bpFilled.pages.scouting.sections.mediaprojects.feature.image, '/api/image?id=bp-upload');
   assert.equal(bpFilled.pages.home.sections.projects.feature.image, bpImage);
   assert.deepEqual(await get(bpFilled), bpFilled, 'v16 normalization must be idempotent');

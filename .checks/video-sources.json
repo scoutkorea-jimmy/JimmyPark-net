@@ -113,5 +113,73 @@
     "file": "assets/img/video/korean-jamboree-opening.jpg",
     "tiles": "Frames at 3s, 17s, 30s and 51s of [AI/기획/편집] 26-AUG_제16회한국잼버리-개영식.mp4 (the file was downloaded, sampled and deleted)",
     "id": "16a40q_FxOuc2uRkgvGlNhAWhrSeogo-W"
+  },
+  "youtubeAdditions20260922": {
+    "checked": "2026-09-22",
+    "basis": "Titles, channels, runtimes and publication timestamps verified using public YouTube oEmbed and watch-page player metadata. Individual roles are owner-supplied; the video descriptions do not list Jimmy's credits. Videos were sampled for preview frames, not watched in full.",
+    "imageMethod": "Official maxresdefault YouTube thumbnails saved as local representatives. Three additional frames per video captured from muted public YouTube embeds through Chrome at explicit timestamps; playback controls and automatic captions hidden. Full video files were not downloaded. Capture command: node scripts/capture-portfolio-stills.mjs --only=yugadang-heungbu,yugadang-sugungga,seocho-culture-2020",
+    "imageQuality": "All 12 JPEG files are 1280x720. Official representative thumbnails use YouTube's maxres assets. Playback source dimensions were 640x360 for eight preview frames and 1280x720 for yugadang-heungbu-04.jpg, so output dimensions do not imply native HD detail. All final representatives and frames were visually inspected; no playback controls, loading errors or automatic captions remained.",
+    "videos": [
+      {
+        "id": "yugadang-heungbu",
+        "url": "https://www.youtube.com/watch?v=LGLSqTFWIRk",
+        "youtubeTitle": "유가당 YUGADANG 전래동화보집 Ep.3 흥부전 l Swallow and Goblin l Fashion art film",
+        "channel": "유가당YUGADANG",
+        "channelUrl": "https://www.youtube.com/@yugadang",
+        "publishedAt": "2023-11-01T08:14:14-07:00",
+        "durationSeconds": 475,
+        "productionYear": null,
+        "dateNote": "Publication timestamp only; no separate production-year evidence.",
+        "ownerCredit": "On-set Assistant Director & Audio Director",
+        "ownerCreditKorean": "현장 조연출 및 오디오 감독",
+        "image": "assets/img/video/yugadang-heungbu.jpg",
+        "thumbnailSource": "https://i.ytimg.com/vi/LGLSqTFWIRk/maxresdefault.jpg",
+        "previews": [
+          { "path": "assets/img/video/yugadang-heungbu-02.jpg", "seconds": 90 },
+          { "path": "assets/img/video/yugadang-heungbu-03.jpg", "seconds": 220 },
+          { "path": "assets/img/video/yugadang-heungbu-04.jpg", "seconds": 350 }
+        ]
+      },
+      {
+        "id": "yugadang-sugungga",
+        "url": "https://www.youtube.com/watch?v=VPvDYQCul9M",
+        "youtubeTitle": "유가당 YUGADANG 전래동화보집 Ep.2 수궁가 l Sugungga l Fashion art film",
+        "channel": "유가당YUGADANG",
+        "channelUrl": "https://www.youtube.com/@yugadang",
+        "publishedAt": "2023-10-31T04:52:59-07:00",
+        "durationSeconds": 170,
+        "productionYear": null,
+        "dateNote": "Publication timestamp only; no separate production-year evidence.",
+        "ownerCredit": "On-set Assistant Director & Editor",
+        "ownerCreditKorean": "현장 조연출 및 편집",
+        "image": "assets/img/video/yugadang-sugungga.jpg",
+        "thumbnailSource": "https://i.ytimg.com/vi/VPvDYQCul9M/maxresdefault.jpg",
+        "previews": [
+          { "path": "assets/img/video/yugadang-sugungga-02.jpg", "seconds": 35 },
+          { "path": "assets/img/video/yugadang-sugungga-03.jpg", "seconds": 90 },
+          { "path": "assets/img/video/yugadang-sugungga-04.jpg", "seconds": 125 }
+        ]
+      },
+      {
+        "id": "seocho-culture-2020",
+        "url": "https://www.youtube.com/watch?v=ZwaZT02tZnQ",
+        "youtubeTitle": "2020년 서초문화재단 홍보영상",
+        "channel": "서초문화재단 Seocho Cultural Foundation",
+        "channelUrl": "https://www.youtube.com/@seochocf",
+        "publishedAt": "2020-11-02T21:18:09-08:00",
+        "durationSeconds": 206,
+        "productionYear": 2020,
+        "dateNote": "The 2020 edition is identified by both the public video title and the owner.",
+        "ownerCredit": "Planning Lead & Editing Lead",
+        "ownerCreditKorean": "기존 소스를 기반으로 2020년 버전 홍보영상 재제작; 편집 총괄 및 기획 총괄",
+        "image": "assets/img/video/seocho-culture-2020.jpg",
+        "thumbnailSource": "https://i.ytimg.com/vi/ZwaZT02tZnQ/maxresdefault.jpg",
+        "previews": [
+          { "path": "assets/img/video/seocho-culture-2020-02.jpg", "seconds": 35 },
+          { "path": "assets/img/video/seocho-culture-2020-03.jpg", "seconds": 95 },
+          { "path": "assets/img/video/seocho-culture-2020-04.jpg", "seconds": 155 }
+        ]
+      }
+    ]
   }
 }

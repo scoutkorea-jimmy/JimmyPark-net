@@ -5,6 +5,12 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.24.2 Media Work update adds YUGADANG's *Swallow and Goblin* and *Sugungga*, plus the
+Seocho Cultural Foundation's 2020 promotional film. Each preserves the owner's specific credits
+and has a local representative image with three editable preview stills. Schema v42 appends
+only missing entries while preserving customized rows, ordering and explicitly empty collections.
+YouTube upload dates are not treated as production dates; the two YUGADANG year fields stay blank.
+
 The v0.24.1 homepage hero uses a wider 1280px desktop canvas. Below 840px, the headline may grow to
 24ch and the portrait can grow to 560px, removing the narrow tablet presentation while
 preserving the existing reading width for supporting copy.

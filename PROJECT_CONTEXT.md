@@ -1,5 +1,13 @@
 # Current work
 
+Media Work v0.24.2 adds three owner-supplied YouTube films with precise assistant-director,
+audio-director, editor and planning/editing-lead credits. Seocho's 2020 edition explicitly
+describes reworking existing footage; YUGADANG's production years are unconfirmed and omitted.
+Schema v42 appends missing cases without changing existing copy, order, hidden sections or
+empty collections. Representative images and three previews per film remain editable in Admin.
+Known pre-existing checks: content.cjs fails Scouting custom-role preservation, and design.py
+finds Scouting timeline static/runtime drift. These are outside this video-only change.
+
 Homepage hero v0.24.1 expands only the hero canvas to 1280px. At the single-column breakpoint, the
 headline cap grows from 18ch to 24ch and the portrait may grow from 440px to 560px. Supporting
 copy and all non-hero section widths remain unchanged.

@@ -24,8 +24,24 @@ const allTargets = [
   ['assets/img/video/daekyo-newif-02.jpg', 'https://www.youtube-nocookie.com/embed/DJcwT3V79B0?autoplay=1&mute=1&controls=0&start=8', 6200],
   ['assets/img/video/daekyo-newif-03.jpg', 'https://www.youtube-nocookie.com/embed/DJcwT3V79B0?autoplay=1&mute=1&controls=0&start=18', 6200],
   ['assets/img/video/daekyo-newif-04.jpg', 'https://www.youtube-nocookie.com/embed/DJcwT3V79B0?autoplay=1&mute=1&controls=0&start=28', 6200],
+  ['assets/img/video/yugadang-heungbu-02.jpg', 'https://www.youtube-nocookie.com/embed/LGLSqTFWIRk?autoplay=1&mute=1&controls=0&start=90', 6200],
+  ['assets/img/video/yugadang-heungbu-03.jpg', 'https://www.youtube-nocookie.com/embed/LGLSqTFWIRk?autoplay=1&mute=1&controls=0&start=220', 6200],
+  ['assets/img/video/yugadang-heungbu-04.jpg', 'https://www.youtube-nocookie.com/embed/LGLSqTFWIRk?autoplay=1&mute=1&controls=0&start=350', 6200],
+  ['assets/img/video/yugadang-sugungga-02.jpg', 'https://www.youtube-nocookie.com/embed/VPvDYQCul9M?autoplay=1&mute=1&controls=0&start=35', 6200],
+  ['assets/img/video/yugadang-sugungga-03.jpg', 'https://www.youtube-nocookie.com/embed/VPvDYQCul9M?autoplay=1&mute=1&controls=0&start=90', 6200],
+  ['assets/img/video/yugadang-sugungga-04.jpg', 'https://www.youtube-nocookie.com/embed/VPvDYQCul9M?autoplay=1&mute=1&controls=0&start=125', 6200],
+  ['assets/img/video/seocho-culture-2020-02.jpg', 'https://www.youtube-nocookie.com/embed/ZwaZT02tZnQ?autoplay=1&mute=1&controls=0&start=35', 6200],
+  ['assets/img/video/seocho-culture-2020-03.jpg', 'https://www.youtube-nocookie.com/embed/ZwaZT02tZnQ?autoplay=1&mute=1&controls=0&start=95', 6200],
+  ['assets/img/video/seocho-culture-2020-04.jpg', 'https://www.youtube-nocookie.com/embed/ZwaZT02tZnQ?autoplay=1&mute=1&controls=0&start=155', 6200],
 ];
-const targets = process.argv.includes('--video-only') ? allTargets.filter(([file]) => file.includes('/video/')) : allTargets;
+// Example: --only=yugadang-heungbu,yugadang-sugungga,seocho-culture-2020
+// Matching filename prefixes lets a new project be captured without overwriting existing archives.
+const only = process.argv.find(arg => arg.startsWith('--only='))?.slice(7).split(',').filter(Boolean);
+const targets = allTargets.filter(([file]) =>
+  (!process.argv.includes('--video-only') || file.includes('/video/')) &&
+  (!only || only.some(prefix => path.basename(file).startsWith(`${prefix}-`)))
+);
+if (!targets.length) throw new Error('No capture targets matched');
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 async function connect(url) {
@@ -72,6 +88,40 @@ try {
   for (const [file, url, settle] of targets) {
     await client.send('Page.navigate', { url });
     await wait(settle);
+    if (new URL(url).hostname === 'www.youtube-nocookie.com') {
+      const time = Number(new URL(url).searchParams.get('start'));
+      let ready = false;
+      for (let attempt = 0; attempt < 30; attempt += 1) {
+        const state = await client.send('Runtime.evaluate', {
+          expression: '(() => { const v = document.querySelector("video"); return Boolean(v && v.readyState >= 2 && v.videoWidth > 0 && !v.error); })()',
+          returnByValue: true,
+        });
+        if (state.result.value) { ready = true; break; }
+        await wait(500);
+      }
+      if (!ready) throw new Error(`Video did not become ready: ${url}`);
+      const seek = await client.send('Runtime.evaluate', {
+        expression: `(async () => {
+          const video = document.querySelector('video');
+          video.pause();
+          if (Math.abs(video.currentTime - ${time}) > 0.04) video.currentTime = ${time};
+          const deadline = Date.now() + 20000;
+          while (video.seeking || video.readyState < 2 || Math.abs(video.currentTime - ${time}) > 0.1) {
+            if (Date.now() > deadline) throw new Error('Video seek timed out');
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+          const style = document.createElement('style');
+          style.textContent = '.ytp-chrome-top,.ytp-chrome-bottom,.ytp-gradient-top,.ytp-gradient-bottom,.ytp-pause-overlay-container,.ytp-watermark,.ytp-bezel,.ytp-cued-thumbnail-overlay,.ytp-caption-window-container { display: none !important; }';
+          document.head.appendChild(style);
+          return { currentTime: video.currentTime, width: video.videoWidth, height: video.videoHeight };
+        })()`,
+        awaitPromise: true,
+        returnByValue: true,
+      });
+      if (seek.exceptionDetails) throw new Error(`Video seek failed: ${JSON.stringify(seek.exceptionDetails)}`);
+      console.log(`Frame ${JSON.stringify(seek.result.value)}`);
+      await wait(350);
+    }
     const jpeg = file.endsWith('.jpg');
     const shot = await client.send('Page.captureScreenshot', { format: jpeg ? 'jpeg' : 'png', quality: jpeg ? 84 : undefined, fromSurface: true, captureBeyondViewport: false });
     const output = path.join(root, file);
