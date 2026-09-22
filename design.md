@@ -546,6 +546,8 @@ these roles; new rules should use the `--md-*` names directly.
   the portfolio evidence. Hero headings use balanced wrapping, not authored hard line breaks.
 - Apply the same preview sequence to full Media Work cards and Dev Work browser frames. In the admin,
   keep the representative image separate from the ordered list of up to three additional previews.
+- The homepage hero alone may use a 1280px container. Below 840px, let the title grow to 24ch and
+  allow the portrait to grow to 560px; keep supporting copy at its readable measure.
 
 ## 20. Article collections and pagination (v0.20.0)
 - The Articles index presents `Published Articles` first and a clearly separated `Upcoming Articles`

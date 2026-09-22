@@ -1,5 +1,9 @@
 # Current work
 
+Homepage hero v0.24.1 expands only the hero canvas to 1280px. At the single-column breakpoint, the
+headline cap grows from 18ch to 24ch and the portrait may grow from 440px to 560px. Supporting
+copy and all non-hero section widths remain unchanged.
+
 Preview galleries v0.24.0 appear consistently on Home, Media Work, and Dev Work. Each card keeps its
 representative image first and can store up to three additional preview frames. Hover and keyboard
 focus trigger the slow crossfade; touch and reduced-motion contexts keep the representative frame.

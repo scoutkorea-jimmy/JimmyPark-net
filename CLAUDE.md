@@ -360,6 +360,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   image separate from an ordered list of up to three additional previews, with direct add, remove and
   reorder controls. Matching Home/full-page project IDs synchronize image edits in the admin. Preserve
   owner-managed arrays when migrating.
+- Homepage hero v0.24.1 may use a 1280px container while other sections stay on the standard measure.
+  Below 840px the title cap grows to 24ch and the portrait may grow to 560px.
 
 ### Article scheduling and collections (v0.20.0, 2026-09-21)
 - `/insights` keeps published articles above a separately labelled `Upcoming Articles` collection.

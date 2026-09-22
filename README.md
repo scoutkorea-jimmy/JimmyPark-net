@@ -5,6 +5,10 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.24.1 homepage hero uses a wider 1280px desktop canvas. Below 840px, the headline may grow to
+24ch and the portrait can grow to 560px, removing the narrow tablet presentation while
+preserving the existing reading width for supporting copy.
+
 The v0.24.0 preview galleries keep each card's representative image first and make the same hover or
 keyboard-focus crossfade available on Home, Media Work, and Dev Work. The admin separates the
 representative image from up to three reorderable additional previews, with direct add and remove
