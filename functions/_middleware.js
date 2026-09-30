@@ -15,6 +15,15 @@ export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
   const path = url.pathname;
+  if (path === "/quotly" || path === "/quotly/") {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "https://github.com/scoutkorea-jimmy/usagebar-releases/releases/latest",
+        "Cache-Control": "no-store",
+      },
+    });
+  }
   if (path === "/setukor" || path === "/setukor/") {
     return new Response(null, {
       status: 302,
