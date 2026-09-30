@@ -62,6 +62,11 @@ const SERIES = {
   'delivery-is-a-date-not-the-end': { name: 'The Work Behind the Work', part: 2 },
   'when-experts-are-everywhere-we-need-connection': { name: 'The Work Behind the Work', part: 3 },
   'if-people-cannot-understand-it-little-remains': { name: 'The Work Behind the Work', part: 4 },
+  'looking-again-at-what-we-already-have': { name: 'Choices That Shape Good Work', part: 1, total: 5 },
+  'when-the-plan-changes-what-do-we-keep': { name: 'Choices That Shape Good Work', part: 2, total: 5 },
+  'whose-budget-whose-purpose': { name: 'Choices That Shape Good Work', part: 3, total: 5 },
+  'what-can-i-responsibly-take-on': { name: 'Choices That Shape Good Work', part: 4, total: 5 },
+  'so-we-can-work-together-again': { name: 'Choices That Shape Good Work', part: 5, total: 5 },
 };
 const PAGE_SIZE = 5;
 const DEFAULT_IMAGE = 'https://jimmypark.net/assets/img/og/articles.png?v=0.22.1';
@@ -158,7 +163,7 @@ function postList(items, scheduled = false) {
   return items.map(p => {
     const part = seriesPart(p);
     const info = seriesInfo(p);
-    const label = info ? info.name + ' · Part ' + part + ' of 4' : (p.category || 'Notes');
+    const label = info ? info.name + ' · Part ' + part + ' of ' + (info.total || 4) : (p.category || 'Notes');
     const action = scheduled ? 'View schedule' : (info ? 'Read Part ' + part : 'Read article');
     return '<article class="insight-list-item"><div class="insight-list-meta"><span class="eyebrow">' + escapeHTML(label) + '</span><time datetime="' + escapeHTML(p.date + 'T09:00:00+09:00') + '">' + escapeHTML(displayDate(p)) + '</time></div><div class="insight-list-content"><h2><a class="lnk" href="/insights/' + escapeHTML(p.slug) + '">' + escapeHTML(p.title) + '</a></h2><p>' + escapeHTML(p.summary || p.body.slice(0, 180)) + '</p><a class="card-link" href="/insights/' + escapeHTML(p.slug) + '" aria-label="' + escapeHTML(action + ': ' + p.title) + '">' + action + '<span class="msym" aria-hidden="true">arrow_forward</span></a></div></article>';
   }).join('');
@@ -188,12 +193,12 @@ export async function renderInsights({ env, request }, slug) {
   } else if (post && scheduled) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
-    const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
+    const seriesLabel = info ? info.name + ' · Part ' + part + ' of ' + (info.total || 4) : e(post.category || 'Notes');
     content = '<article class="site-section"><div class="site-container insight-reading-layout insight-reading-layout--scheduled"><div class="insight-reading"><a class="btn btn-secondary site-button insight-back-button" href="/insights"><span class="msym" aria-hidden="true">arrow_back</span>View all articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-scheduled"><p class="eyebrow">Scheduled article</p><h2>This article will be published on ' + e(displayDate(post)) + '.</h2><p>The full text will be available here when the article goes live.</p></div></div></div></article>';
   } else if (post) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
-    const seriesLabel = info ? info.name + ' · Part ' + part + ' of 4' : e(post.category || 'Notes');
+    const seriesLabel = info ? info.name + ' · Part ' + part + ' of ' + (info.total || 4) : e(post.category || 'Notes');
     content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="btn btn-secondary site-button insight-back-button" href="/insights"><span class="msym" aria-hidden="true">arrow_back</span>View all articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + shareLinks(url, post.title) + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Article%20response">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
   } else {
     const matchesSeries = p => !seriesFilter || seriesInfo(p)?.name === seriesFilter;

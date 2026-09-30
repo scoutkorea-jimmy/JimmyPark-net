@@ -8,6 +8,13 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+Articles v0.26.0 publishes *Choices That Shape Good Work*, five English essays, together on
+30 September 2026. Owner-approved experiences include the Seocho first-cut direction mismatch,
+subsequent alignment and client satisfaction; directing responsibility on many sets; the relational
+cost of overcommitment; and the emotional difficulty of necessary conversations. Five distinct M3
+covers accompany the posts. Preserve the two remaining Work Behind the Work release dates and all
+existing drafts. `.checks/insights.cjs` covers five-part list/detail/scheduled labels and filtering.
+
 Dev Work v0.25.0 adds Soulter Sheltered Workshop (soulland4567.com) as a social-contribution
 showcase with local captures. Schema v43 appends it once; `.checks/site-additions.cjs` covers it.
 

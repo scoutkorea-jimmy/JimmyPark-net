@@ -43,6 +43,11 @@ const articles = [
   ['work-behind-2.png', 'THE WORK BEHIND THE WORK · PART 2 OF 4', 'Delivery Is a Date, Not the End of the Work', 'menu_book', 'primary'],
   ['work-behind-3.png', 'THE WORK BEHIND THE WORK · PART 3 OF 4', 'When Experts Are Everywhere, We Need an Eye for Connection', 'hub', 'primary'],
   ['work-behind-4.png', 'THE WORK BEHIND THE WORK · PART 4 OF 4', 'If People Cannot Understand It, Little Remains', 'sync_alt', 'primary'],
+  ['choices-1.png', 'CHOICES THAT SHAPE GOOD WORK · 1 OF 5', 'Looking Again at\nWhat We Already Have', 'filter_frames', 'tertiary'],
+  ['choices-2.png', 'CHOICES THAT SHAPE GOOD WORK · 2 OF 5', 'When the Plan Changes,\nWhat Do We Keep?', 'alt_route', 'tertiary'],
+  ['choices-3.png', 'CHOICES THAT SHAPE GOOD WORK · 3 OF 5', 'Whose Budget,\nWhose Purpose?', 'my_location', 'tertiary'],
+  ['choices-4.png', 'CHOICES THAT SHAPE GOOD WORK · 4 OF 5', 'What Can I\nResponsibly Take On?', 'crop_free', 'tertiary'],
+  ['choices-5.png', 'CHOICES THAT SHAPE GOOD WORK · 5 OF 5', 'So We Can Work\nTogether Again', 'handshake', 'tertiary'],
 ].map(([file, label, title, symbol, color]) => ({ file, label, title, symbol, color }));
 
 function palette(name) {
@@ -135,7 +140,9 @@ try {
   for (let attempt = 0; attempt < 50; attempt += 1) {
     try { await fetch(`http://127.0.0.1:${port}/json/version`); break; } catch (_) { await wait(100); }
   }
-  const items = [...pages.map(item => ({ ...item, markup: pageMarkup(item) })), ...articles.map(item => ({ ...item, markup: articleMarkup(item) }))];
+  const items = [...pages.map(item => ({ ...item, markup: pageMarkup(item) })), ...articles.map(item => ({ ...item, markup: articleMarkup(item) }))]
+    .filter(item => !process.argv[2] || item.file.startsWith(process.argv[2]));
+  if (!items.length) throw new Error('No images match the requested filename prefix');
   for (const item of items) {
     const target = await (await fetch(`http://127.0.0.1:${port}/json/new?${encodeURIComponent(item.file)}`, { method: 'PUT' })).json();
     const client = await socket(target.webSocketDebuggerUrl);

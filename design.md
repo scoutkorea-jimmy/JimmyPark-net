@@ -33,6 +33,11 @@ where the two differ, this file wins and the difference is recorded here.
   Earlier default section orders also migrate when a subsequently added section was absent.
 
 ### Insights and real photography (v0.8.0)
+- `Choices That Shape Good Work` (v0.26.0) uses five 1200×630 M3 cover cards, with the site's
+  tertiary palette and distinct Material Symbols for existing material, changing plans, client
+  purpose, responsible scope and collaboration. Deliberate title line breaks keep phrases intact.
+  Covers appear above the article body and supply OG/Twitter metadata; image and alt text stay editable.
+  Series count labels must reflect five parts while existing four-part series remain unchanged.
 - Add Insights consistently to desktop, mobile and footer navigation. Its list uses the
   shared container, burgundy identity and a two-column article grid (one below 600px).
   The article view has an 850px maximum container, 17px body text at 1.85 leading, and the

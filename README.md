@@ -5,6 +5,12 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.26.0 Articles update introduces the five-part personal-practice series
+*Choices That Shape Good Work*. Its English essays are published together on 30 September 2026,
+with five distinct Material 3 covers. Series labels support five parts without changing existing
+four-part series. Generate only these covers with `node scripts/generate-og-images.mjs choices-`.
+Article text remains editable in the remote Insights store, not in static fallback pages.
+
 The v0.25.0 Dev Work update adds Soulter Sheltered Workshop (soulland4567.com), a
 social-contribution website for a disability workshop, built on imweb. Schema v43 appends it once.
 

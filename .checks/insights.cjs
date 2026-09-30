@@ -98,6 +98,16 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   assert.ok(!futureDetail.html.includes('facebook.com/sharer'));
   assert.ok(!futureDetail.html.includes('Upcoming 1 private body'));
   assert.equal((await page('private-draft')).status, 404);
+  const choices = ['looking-again-at-what-we-already-have', 'when-the-plan-changes-what-do-we-keep', 'whose-budget-whose-purpose', 'what-can-i-responsibly-take-on', 'so-we-can-work-together-again'];
+  saved.posts.push(...choices.map((slug, i) => sample('c' + (i + 1), 'Choice ' + (i + 1), slug, '2026-01-01')));
+  const choicesIndex = (await page(undefined, '?series=Choices%20That%20Shape%20Good%20Work&sort=asc')).html;
+  assert.equal((choicesIndex.match(/class="insight-list-item"/g) || []).length, 5);
+  for (let i = 0; i < choices.length; i++) {
+    assert.match(choicesIndex, new RegExp('Choices That Shape Good Work · Part ' + (i + 1) + ' of 5'));
+    assert.match((await page(choices[i])).html, new RegExp('Choices That Shape Good Work · Part ' + (i + 1) + ' of 5'));
+  }
+  saved.posts.find(post => post.slug === choices[4]).date = '2099-01-01';
+  assert.match((await page(choices[4])).html, /Choices That Shape Good Work · Part 5 of 5/);
   assert.ok(!read('assets/site.js').includes('var meta = pd.meta || g.seo'));
   const publicHTML = ['index.html','work.html','dev.html','scouting.html','contact.html','insights.html','404.html'];
   for (const file of publicHTML) {
