@@ -10,6 +10,19 @@ AI Practitioner · AX Consultant · Global Collaborator.
 Live at **https://jimmypark.net**. **Vanilla HTML/CSS/JS, no build step, no framework.**
 Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-gated admin.
 
+### Social-contribution website (v0.25.0, 2026-09-30)
+- Owner request: add soulland4567.com to the portfolio as a social-contribution site the owner
+  developed. It is the sixth Dev Work showcase (`id: soulland`), after BANGINOJA; Home is unchanged.
+- Soulter Sheltered Workshop (소울터보호작업장, Geumcheon-gu) is a workshop for adults with
+  disabilities. The site runs on the imweb builder, so the row has no "Behind the site" block; the
+  `sites.desc` line now says "Most run on an admin console and back end I built". Year 2023 comes
+  from the site's footer and builder IDs, not from the owner; correct it if the owner says otherwise.
+- Images captured 2026-09-30 in headless Chrome: `soulland.jpg`, `soulland-mobile.jpg` and three
+  public-page previews (`scripts/capture-portfolio-stills.mjs --only=soulland`). No gallery photos
+  of members were captured. Schema v43 appends the row once unless a row already points to the
+  domain or the list is empty, and replaces only the unchanged old `sites.desc`.
+  Check: `node .checks/site-additions.cjs`.
+
 ### Added media credits (v0.24.2)
 - Media Work now has thirteen default cases, including two YUGADANG fashion art films and
   the Seocho Cultural Foundation's 2020 film rebuilt from existing footage.
@@ -548,7 +561,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 42`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 43`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.
@@ -654,3 +667,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://jimmypark.net/api/content   # e
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
+
+## Quotly release shortcut
+
+`https://jimmypark.net/quotly` (also `/quotly/`) returns a non-cached302 to the latest Quotly release page. The target is maintained in `functions/_middleware.js`. Check with `node .checks/quotly-redirect.cjs`; preserve the existing `/kotma` static mount when deploying.

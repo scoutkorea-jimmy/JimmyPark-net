@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 42,
+  "version": 43,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -689,7 +689,7 @@ const DEFAULT = {
           "kicker": "01 / Websites",
           "title": "Live Websites",
           "sub": "Built around each organization’s need",
-          "desc": "Each site began with what its users and team needed to do, and each runs on its own admin console and back end. Every one is live and in use.",
+          "desc": "Each site began with what its users and team needed to do. Most run on an admin console and back end I built. Every one is live and in use.",
           "items": [
             {
               "id": "korea-dream-path",
@@ -800,6 +800,30 @@ const DEFAULT = {
               "image": "/assets/img/dev/banginoja.jpg",
               "images": [],
               "mobileImage": "/assets/img/dev/banginoja-mobile.jpg",
+              "adminImage": "",
+              "adminCaption": ""
+            },
+            {
+              "id": "soulland",
+              "title": "Soulter Sheltered Workshop",
+              "format": "Social contribution · Disability services",
+              "year": "2023",
+              "role": "Website development · Social contribution project",
+              "summary": "The website of a sheltered workshop in Geumcheon-gu, Seoul, where adults with disabilities work and train together.",
+              "need": "One place for the workshop to explain its work, share news and photos with families, take volunteer and student-placement applications and sell the products its members make.",
+              "built": "Introduction and operations pages, work-programme pages, news, gallery and press boards, volunteer and social-work placement applications, and an online shop for its toilet paper and rice snacks.",
+              "stack": "imweb",
+              "backend": "",
+              "stats": "",
+              "href": "https://soulland4567.com",
+              "linkLabel": "Visit soulland4567.com",
+              "image": "/assets/img/dev/soulland.jpg",
+              "images": [
+                "/assets/img/dev/soulland-about.png",
+                "/assets/img/dev/soulland-programs.png",
+                "/assets/img/dev/soulland-market.png"
+              ],
+              "mobileImage": "/assets/img/dev/soulland-mobile.jpg",
               "adminImage": "",
               "adminCaption": ""
             }
@@ -3763,6 +3787,19 @@ function migrateTo42(doc) {
   return doc;
 }
 
+// v43: add the owner's social-contribution website once, after any existing rows.
+// A row already pointing at soulland4567.com, or an explicitly empty list, is left alone.
+function migrateTo43(doc) {
+  const sites = doc.pages?.dev?.sections?.sites;
+  if (Array.isArray(sites?.items) && sites.items.length &&
+      !sites.items.some(item => item.id === 'soulland' || /(^|\/\/|\.)soulland4567\.com/.test(item.href || ''))) {
+    sites.items.push(JSON.parse(JSON.stringify(DEFAULT.pages.dev.sections.sites.items.find(item => item.id === 'soulland'))));
+  }
+  if (sites?.desc === 'Each site began with what its users and team needed to do, and each runs on its own admin console and back end. Every one is live and in use.') sites.desc = DEFAULT.pages.dev.sections.sites.desc;
+  doc.version = 43;
+  return doc;
+}
+
 
 
 
@@ -3841,7 +3878,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3850,7 +3887,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3858,7 +3895,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3899,6 +3936,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 40) doc = migrateTo40(doc);
   if ((doc.version || 0) < 41) doc = migrateTo41(doc);
   if ((doc.version || 0) < 42) doc = migrateTo42(doc);
+  if ((doc.version || 0) < 43) doc = migrateTo43(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -3961,12 +3999,13 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 40) migrateTo40(incoming);
   if (incoming.version < 41) migrateTo41(incoming);
   if (incoming.version < 42) migrateTo42(incoming);
+  if (incoming.version < 43) migrateTo43(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 42;
+  doc.version = 43;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

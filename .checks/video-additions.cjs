@@ -60,7 +60,7 @@ function collectionHtml(html) {
 }
 
 (async () => {
-  assert.equal(defaults.version, 42);
+  assert.equal(defaults.version, 43);
   assert.deepEqual(additions.map(row => row.id), ids);
   assert.deepEqual(additions.map(row => row.href), [
     'https://www.youtube.com/watch?v=LGLSqTFWIRk',
@@ -88,7 +88,7 @@ function collectionHtml(html) {
   const old = asV41();
   const originalRows = copy(rows(old));
   const upgraded = await get(old);
-  assert.equal(upgraded.version, 42);
+  assert.equal(upgraded.version, 43);
   assert.equal(rows(upgraded).length, originalRows.length + 3);
   assert.deepEqual(rows(upgraded), [...originalRows, ...additions], 'v41 appends exactly the three new rows in supplied order');
   assert.equal(upgraded.updatedAt, old.updatedAt);
@@ -102,7 +102,7 @@ function collectionHtml(html) {
   Object.assign(rows(custom)[0], { title: 'Owner title', role: 'Owner role', desc: '', image: '', images: [] });
   rows(custom).splice(2, 1);
   const expectedCustom = copy(custom);
-  expectedCustom.version = 42;
+  expectedCustom.version = 43;
   rows(expectedCustom).push(...copy(additions));
   assert.deepEqual(await get(custom), expectedCustom, 'Custom rows, row/page order, deletions, hidden sections and intentionally empty values survive');
 
@@ -116,7 +116,7 @@ function collectionHtml(html) {
   const longUrlMatch = { ...copy(additions[2]), id: 'owner-long-link', href: 'https://youtube.com/watch?v=ZwaZT02tZnQ&feature=shared', desc: 'Owner-managed description' };
   rows(deduped).splice(1, 0, idMatch, urlMatch, longUrlMatch);
   const dedupedExpected = copy(deduped);
-  dedupedExpected.version = 42;
+  dedupedExpected.version = 43;
   assert.deepEqual(await get(deduped), dedupedExpected, 'ID or equivalent YouTube URL matches must preserve owner rows without duplicates');
 
   const deleted = copy(upgraded);
@@ -135,7 +135,7 @@ function collectionHtml(html) {
   assert.equal(saved.status, 200, 'The current schema must be accepted by the administrator save');
   assert.equal(saved.body.ok, true);
   assert.equal(storage.writes.length, 1);
-  assert.equal(saved.body.content.version, 42);
+  assert.equal(saved.body.content.version, 43);
   assert.ok(saved.body.content.updatedAt > old.updatedAt);
   assert.deepEqual(copy(rows(saved.body.content)), rows(editorDoc), 'Administrator image changes, reordering and deletion must round-trip');
   const reloaded = await api.get({ env: storage.env });

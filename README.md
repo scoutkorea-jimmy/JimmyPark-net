@@ -5,6 +5,9 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+The v0.25.0 Dev Work update adds Soulter Sheltered Workshop (soulland4567.com), a
+social-contribution website for a disability workshop, built on imweb. Schema v43 appends it once.
+
 The v0.24.2 Media Work update adds YUGADANG's *Swallow and Goblin* and *Sugungga*, plus the
 Seocho Cultural Foundation's 2020 promotional film. Each preserves the owner's specific credits
 and has a local representative image with three editable preview stills. Schema v42 appends
@@ -213,3 +216,7 @@ Unknown KOTMA content paths are served with KOTMA's `/kotma/coming-soon/` tempor
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
+
+## Quotly release shortcut
+
+`https://jimmypark.net/quotly` (also `/quotly/`) returns a non-cached302 to the latest Quotly release page. The target is maintained in `functions/_middleware.js`. Check with `node .checks/quotly-redirect.cjs`; preserve the existing `/kotma` static mount when deploying.

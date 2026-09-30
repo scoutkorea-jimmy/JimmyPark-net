@@ -1,4 +1,15 @@
+# Quotly release shortcut
+
+Target updated: /quotly and /quotly/ return302/no-store to GitHub releases/latest. Route checks, JS syntax and diff checks pass. Existing Scouting design-check failure remains unchanged. No commit created.
+
+`/quotly` and `/quotly/` redirect (302, no-store) to the latest public Quotly release page.
+GitHub releases/latest follows the latest public release without changing the shared URL.
+Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve the deployed `/kotma` static mount during deployment.
+
 # Current work
+
+Dev Work v0.25.0 adds Soulter Sheltered Workshop (soulland4567.com) as a social-contribution
+showcase with local captures. Schema v43 appends it once; `.checks/site-additions.cjs` covers it.
 
 Media Work v0.24.2 adds three owner-supplied YouTube films with precise assistant-director,
 audio-director, editor and planning/editing-lead credits. Seocho's 2020 edition explicitly
