@@ -8,8 +8,10 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
-Articles v0.26.0 publishes *Choices That Shape Good Work*, five English essays, together on
-30 September 2026. Owner-approved experiences include the Seocho first-cut direction mismatch,
+Articles v0.26.0 schedules *Choices That Shape Good Work*, five English essays, for
+6, 8, 10, 12 and 14 October 2026 at 9:00 AM KST. The owner corrected the initial immediate
+publication on 30 September; the five public bodies were withdrawn through future dates,
+without altering content or images. Owner-approved experiences include the Seocho first-cut direction mismatch,
 subsequent alignment and client satisfaction; directing responsibility on many sets; the relational
 cost of overcommitment; and the emotional difficulty of necessary conversations. Five distinct M3
 covers accompany the posts. Preserve the two remaining Work Behind the Work release dates and all

@@ -6,7 +6,7 @@ is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanill
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
 The v0.26.0 Articles update introduces the five-part personal-practice series
-*Choices That Shape Good Work*. Its English essays are published together on 30 September 2026,
+*Choices That Shape Good Work*. Its English essays are scheduled for 6, 8, 10, 12 and 14 October 2026 at 9:00 AM KST,
 with five distinct Material 3 covers. Series labels support five parts without changing existing
 four-part series. Generate only these covers with `node scripts/generate-og-images.mjs choices-`.
 Article text remains editable in the remote Insights store, not in static fallback pages.

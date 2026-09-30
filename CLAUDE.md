@@ -387,8 +387,8 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   Below 840px the title cap grows to 24ch and the portrait may grow to 560px.
 
 ### Article scheduling and collections (v0.20.0, 2026-09-21)
-- v0.26.0 adds `Choices That Shape Good Work`, five English essays published together on
-  30 September 2026 at the owner's request. The series map uses `total: 5`; legacy entries default
+- v0.26.0 adds `Choices That Shape Good Work`, five English essays scheduled for
+  6, 8, 10, 12 and 14 October 2026 at 9:00 AM KST. The series map uses `total: 5`; legacy entries default
   to four. Preserve existing schedules and private drafts. Five topic-specific M3 cards live at
   `assets/img/og/choices-1.png` through `choices-5.png`; regenerate only these with the `choices-`
   filename prefix. Bodies and editable cover descriptions stay in remote `insights:v1`.
