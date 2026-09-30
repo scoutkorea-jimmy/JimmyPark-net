@@ -647,6 +647,9 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
 # From repo root (static + functions deploy together):
 wrangler pages deploy . --project-name jimmypark-net --branch main
 ```
+- **`deploy .` alone deletes the `/kotma` static mount.** Use `scripts/deploy-kotma-preview.sh`, or, when
+  KOTMA's tree does not build, stage this repo plus `KOTMA/apps/web/out/` as `kotma/` after confirming
+  that export matches live `/kotma` byte for byte (Cloudflare email obfuscation aside) — done 2026-09-30.
 - Pages project: **`jimmypark-net`** → `jimmypark-net.pages.dev`.
 - Custom domains **jimmypark.net** + **www.jimmypark.net** are attached to this project, with
   proxied CNAME DNS records → `jimmypark-net.pages.dev`. (Note: `scoutingapp.net` lives on a
