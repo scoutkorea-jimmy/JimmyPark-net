@@ -2,6 +2,14 @@
 
 ## Site search (v0.27.0)
 
+v0.27.1: ordinary search entry points open a native modal on the current page. Use a maximum
+960px surface, 28px corners, 16px viewport clearance, shared scrim, sticky 40px close control,
+24px padding (16px compact), and internal scrolling. Escape/backdrop/close restore opener focus.
+The icon-only link must override `.nav-link` padding and explicitly center the 24px symbol;
+desktop and compact targets remain 40×40. No-JS users retain the server-rendered search fallback.
+Below 600px, search category chips form one horizontally scrollable row, with non-shrinking
+labels, focus clearance and the selected chip kept in view after a result refresh.
+
 The shared app bar has a 40px Material `search` icon; compact screens keep it beside the menu.
 `/search` uses a labelled native search input, GET submission, existing assist chips, vertical
 results with optional representative thumbnails, and ten results per page. The same shared

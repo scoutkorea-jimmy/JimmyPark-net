@@ -46,6 +46,81 @@
     });
   }
 
+  // Site search stays on the current page; native dialog supplies focus containment and Escape.
+  var searchDialog, searchPanel, searchOpener, searchAbort, searchOverflow;
+  async function loadSearch(url, focusInput) {
+    if (searchAbort) searchAbort.abort();
+    var controller = new AbortController();
+    searchAbort = controller;
+    searchPanel.setAttribute('aria-busy', 'true');
+    url.searchParams.set('fragment', '1');
+    try {
+      var response = await fetch(url.pathname + url.search, { signal: controller.signal });
+      var html = await response.text();
+      if (controller.signal.aborted || !searchDialog.open) return;
+      if (!response.ok && response.status !== 503) throw new Error('search_unavailable');
+      searchPanel.innerHTML = html;
+      var field = searchPanel.querySelector('input[type="search"]');
+      if (field) {
+        field.id = 'modal-search-q';
+        searchPanel.querySelector('label').htmlFor = field.id;
+      }
+      searchDialog.scrollTop = 0;
+      var filters = searchPanel.querySelector('.insight-series-chips');
+      if (filters && filters.scrollWidth > filters.clientWidth) {
+        var selected = filters.querySelector('.is-selected');
+        if (selected) filters.scrollLeft = Math.max(0, selected.offsetLeft - 16);
+      }
+      if (focusInput && field) field.focus();
+      else { var status = searchPanel.querySelector('.search-status'); if (status) { status.tabIndex = -1; status.focus(); } }
+    } catch (error) {
+      if (controller.signal.aborted) return;
+      searchPanel.innerHTML = '<p role="alert">Search could not be loaded. Please close and try again.</p>';
+    } finally { if (searchAbort === controller) searchPanel.removeAttribute('aria-busy'); }
+  }
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href]');
+    if (!link || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || url.pathname !== '/search' || !window.HTMLDialogElement) return;
+    event.preventDefault();
+    if (!searchDialog) {
+      searchDialog = document.createElement('dialog');
+      searchDialog.className = 'search-modal';
+      searchDialog.setAttribute('aria-label', 'Search website');
+      searchDialog.innerHTML = '<div class="search-modal-top"><button type="button" class="btn nav-link search-close" aria-label="Close search"><span class="msym" aria-hidden="true">close</span></button></div><div data-search-panel></div>';
+      document.body.appendChild(searchDialog);
+      searchPanel = searchDialog.querySelector('[data-search-panel]');
+      searchDialog.querySelector('.search-close').onclick = function () { searchDialog.close(); };
+      searchDialog.addEventListener('click', function (e) {
+        if (e.target !== searchDialog) return;
+        var rect = searchDialog.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) searchDialog.close();
+      });
+      searchDialog.addEventListener('close', function () {
+        if (searchAbort) searchAbort.abort();
+        document.body.style.overflow = searchOverflow;
+        var opener = searchOpener && searchOpener.getClientRects().length ? searchOpener : document.querySelector('.search-mobile');
+        if (opener) opener.focus();
+      });
+      searchDialog.addEventListener('submit', function (e) {
+        if (!e.target.matches('.site-search-form')) return;
+        e.preventDefault();
+        var target = new URL('/search', window.location.origin);
+        target.search = new URLSearchParams(new FormData(e.target)).toString();
+        loadSearch(target, false);
+      });
+    }
+    if (!searchDialog.open) {
+      searchOpener = link;
+      searchOverflow = document.body.style.overflow;
+      searchPanel.innerHTML = '<p role="status">Loading search…</p>';
+      searchDialog.showModal();
+      document.body.style.overflow = 'hidden';
+    }
+    loadSearch(url, !searchDialog.contains(link));
+  });
+
   // M3 top app bar: the surface tones up once content scrolls beneath it; a linear progress
   // indicator on its lower edge follows the reading position.
   var appBar = document.querySelector(".site-header");

@@ -40,6 +40,8 @@ doc.pages.work.hidden=[];doc.pages.work.sections.video.cases=[];assert.equal(api
   const html=await response.text();assert.ok(html.includes('&quot;&gt;&lt;script&gt;'));assert.ok(!html.includes('"><script>'));
   assert.ok(html.includes('role="search"'));assert.ok(html.includes('noindex,follow'));
   const empty=await api.onRequestGet({env:{},request:new Request('https://example.test/search')});assert.equal(empty.status,200);
+  const fragment=await api.onRequestGet({env:{},request:new Request('https://example.test/search?fragment=1')});
+  const partial=await fragment.text();assert.equal(fragment.status,200);assert.ok(partial.includes('site-search-form'));assert.ok(!partial.includes('<header'));assert.ok(!partial.includes('<script'));assert.equal(fragment.headers.get('x-robots-tag'),'noindex');
   for(const file of ['index.html','work.html','dev.html','lecture.html','scouting.html','contact.html','insights.html','404.html']) assert.ok(fs.readFileSync(file,'utf8').includes('aria-label="Search website"'),file);
   console.log('PASS: search ranking, Korean aliases, filters, publication boundary, no draft/future leakage, escaping and offline state.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

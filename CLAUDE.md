@@ -403,6 +403,10 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.27.1: site search opens a native dialog, not a new page, for ordinary site search clicks.
+Reuse `/search?fragment=1`; intercept forms/filter/pagination, abort stale requests, restore scroll
+and focus on close. Keep the full page for no-JS/direct links. Icon-only links explicitly override
+nav padding, center a 24px symbol in a 40px target, and retain M3 hover/focus states.
 v0.27.0: `/search` is a noindex, server-rendered GET form. Read current sanitized CMS and
 public static assets, apply copy overrides and remove hidden sections/collections before indexing
 remaining page copy. Index each visible collection row separately. Exclude drafts and future bodies.

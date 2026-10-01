@@ -106,6 +106,7 @@ export async function onRequestGet({ env, request }) {
     (pages > 1 ? '<nav class="insight-pagination" aria-label="Search result pages">' + (page > 1 ? '<a class="insight-chip" href="' + escapeHTML(url(group, page - 1)) + '">Previous</a>' : '') + '<span>Page ' + page + ' of ' + pages + '</span>' + (page < pages ? '<a class="insight-chip" href="' + escapeHTML(url(group, page + 1)) + '">Next</a>' : '') + '</nav>' : '') +
     '<p class="contact-note">Upcoming articles are searchable by their public title and summary only. Unpublished text and drafts stay private.</p></div></section>';
   const values = { TITLE: 'Search | Jimmy Park', DESC: 'Search Jimmy Park’s projects, articles, lectures and website copy.', URL: 'https://jimmypark.net/search', TYPE: 'website', IMAGE: 'https://jimmypark.net/assets/img/og/home.png?v=0.22.1', IMAGE_ALT: 'Jimmy Park', ROBOTS: '<meta name="robots" content="noindex,follow">', CONTENT: body };
+  if (params.get('fragment') === '1') return new Response(body, { status: unavailable ? 503 : 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex', 'x-content-type-options': 'nosniff' } });
   const html = INSIGHTS_SHELL.replace('data-page="insights"', 'data-page="search"').replace(/__(TITLE|DESC|URL|TYPE|IMAGE|IMAGE_ALT|ROBOTS|CONTENT)__/g, (_, key) => values[key]);
   return new Response(html, { status: unavailable ? 503 : 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' } });
 }

@@ -1149,7 +1149,21 @@ body.portfolio[data-page="home"] .body-copy {
 .portfolio .search-result h2 { font-size: var(--title-card); line-height: 1.3; margin-block: var(--space-8) var(--space-12); overflow-wrap: anywhere; }
 .portfolio .search-result p { color: var(--md-on-surface-variant); }
 .portfolio .search-page > .contact-note { margin-top: var(--space-32); }
+.portfolio .nav-link.nav-search { padding: 0; justify-content: center; gap: 0; }
+.portfolio .nav-search .msym { display: block; width: 24px; height: 24px; line-height: 1; }
+.portfolio .search-modal { width: min(960px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: var(--space-24); border: 0; border-radius: var(--md-shape-xl); background: var(--md-surface); color: var(--md-on-surface); overflow: auto; overscroll-behavior: contain; }
+.portfolio .search-modal::backdrop { background: var(--md-scrim); }
+.portfolio .search-modal-top { position: sticky; top: 0; z-index: 2; display: flex; justify-content: flex-end; background: var(--md-surface); }
+.portfolio .search-close { width: var(--control-size); height: var(--control-size); padding: 0; justify-content: center; background: transparent; }
+.portfolio .search-close .msym { font-size: 24px; line-height: 1; }
+.portfolio .search-modal .site-section, .portfolio .search-modal .site-container { padding: 0; }
+.portfolio .search-modal .page-heading { margin-top: 0; }
+.portfolio .search-modal .search-result img { flex-shrink: 0; }
 @media (max-width: 599px) {
+  .portfolio .search-modal { padding: var(--space-16); }
+  .portfolio .search-page .insight-series-chips { position: relative; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; padding: var(--space-4); margin-inline: calc(-1 * var(--space-4)); scrollbar-width: none; }
+  .portfolio .search-page .insight-series-chips::-webkit-scrollbar { display: none; }
+  .portfolio .search-page .insight-series-chips .insight-chip { flex: 0 0 auto; white-space: nowrap; scroll-snap-align: start; }
   .portfolio .search-result { gap: var(--space-12); }
   .portfolio .site-search-controls .site-button { width: 100%; }
   /* Override earlier body-large downgrade for homepage hero lead only */

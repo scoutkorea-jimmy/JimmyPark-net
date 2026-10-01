@@ -8,6 +8,12 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+v0.27.1 corrects the shifted icon (later nav-link padding rule) and opens search in a native
+dialog over the unchanged current URL. Type filters/pagination stay inside it. Browser verified
+desktop symbol center offset 0/0, search, filter, Escape, focus restoration and 320px layout.
+Tests: `.checks/search.cjs` and `.checks/search-modal.cjs`. No CMS or scheduled post changes.
+Search categories use one horizontal swipe row below 600px, retaining the active chip in view.
+
 v0.27.0 adds public `/search` for project results, current website copy, lectures and articles.
 It reuses the CMS reader, article scheduling rule and public shell. No draft/future body indexing,
 no KV writes or external search service. Work/Dev results deep-link to stable case anchors;

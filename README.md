@@ -1,5 +1,12 @@
 # JimmyPark.net — Jimmy Park
 
+v0.27.1 opens site search in a native modal above the current page. Compact category chips scroll
+horizontally in one row and keep the selected category in view. Queries, type filters and
+pagination refresh only the dialog; results navigate to their destination. Search icon buttons
+override nav-link padding explicitly. Escape/close/backdrop restore focus and page scrolling.
+`/search` remains a no-JS/direct-link fallback; `?fragment=1` returns only public search content.
+Checks: `node .checks/search.cjs` and `node .checks/search-modal.cjs`.
+
 v0.27.0 adds `/search`: server-rendered search of current public CMS copy, project results,
 lecture records and public articles. Korean aliases cover selected project names/role terms.
 Upcoming entries index only their public metadata, never bodies; drafts and hidden sections are excluded.
