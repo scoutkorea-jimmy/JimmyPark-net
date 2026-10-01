@@ -1,5 +1,9 @@
 # JimmyPark.net — Jimmy Park
 
+v0.28.0 adds Admin → Analytics for daily KST browser counts, page views and acquisition sources.
+Collection starts with this release; reports cover the last 90 days. See PROJECT_CONTEXT.md
+for metric definitions/privacy and `node .checks/traffic.cjs` for the runnable check.
+
 v0.27.1 opens site search in a native modal above the current page. Compact category chips scroll
 horizontally in one row and keep the selected category in view. Queries, type filters and
 pagination refresh only the dialog; results navigate to their destination. Search icon buttons

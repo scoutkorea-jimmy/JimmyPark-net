@@ -9,5 +9,10 @@ pages_build_output_dir = "."
 binding = "JP_KV"
 id = "501190e45d5942e995ed362ae8258ce7"
 
+[[d1_databases]]
+binding = "JP_TRAFFIC"
+database_name = "jimmypark-traffic"
+database_id = "87c060a8-4bab-48ca-970a-e99d89f31933"
+
 # Secrets (set in Cloudflare Pages → Settings → Environment variables):
 #   TOTP_SECRET   base32 secret shared with your authenticator app (admin login)

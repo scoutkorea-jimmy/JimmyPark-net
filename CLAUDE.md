@@ -657,6 +657,14 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
   an isolated browser target so font repaints cannot leave a partially painted PNG.
 
 ## Required Cloudflare config (don't commit secrets)
+- **D1 `JP_TRAFFIC`** — `jimmypark-traffic`, binding in wrangler.toml; initialize with
+  `wrangler d1 execute jimmypark-traffic --remote --file scripts/traffic-schema.sql`.
+  `/api/traffic` POST stores daily random browser ID + first source/landing, and separate
+  deduplicated pageview events. GET requires existing isAdmin auth; no row identifiers returned.
+  Only canonical public portfolio paths are tracked. No IP/full referrer/query collection.
+  Admin Analytics uses first-touch daily attribution and a 90-day report window; old records
+  are purged on the next recorded visit. Preview deployments cannot write production traffic.
+  Local checks: `node .checks/traffic.cjs` (Node built-in SQLite, no package).
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,
   `img:*`, `media:index`, `rl:login:*`.
 - **Env var `TOTP_SECRET`** (base32) — set in Pages → Settings → Environment variables, and

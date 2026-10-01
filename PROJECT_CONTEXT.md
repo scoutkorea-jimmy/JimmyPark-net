@@ -8,6 +8,15 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+v0.28.0 adds TOTP-gated Admin Analytics: KST date selection, unique daily browsers,
+page views, first-touch source share, first landing pages and a 14-day table. First-party
+records use JP_TRAFFIC D1 (scripts/traffic-schema.sql); 90-day report window, old raw rows
+purged on the next recorded visit. No historical backfill. Browser IDs rotate daily;
+no IP/name/full referrer/query stored. Recognized utm_source labels are limited to major
+search/social sources. Previews/admin sessions, DNT/GPC and known bot UAs are excluded;
+counts are approximate browser counts, not people. Tests: node .checks/traffic.cjs.
+Do not use KV read-modify-write for concurrent visitor counts or change Saju's counter.
+
 v0.27.1 corrects the shifted icon (later nav-link padding rule) and opens search in a native
 dialog over the unchanged current URL. Type filters/pagination stay inside it. Browser verified
 desktop symbol center offset 0/0, search, filter, Escape, focus restoration and 320px layout.

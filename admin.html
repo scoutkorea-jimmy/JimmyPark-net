@@ -8,7 +8,7 @@
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.24.1">
+<link rel="stylesheet" href="/assets/site.css?v=0.27.1">
 <style>
   /* Admin and the portfolio share the owner-selected Wanted Sans family. */
   body { background: #f7f6f3; font-family: 'Wanted Sans Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
@@ -46,6 +46,17 @@
   .ad-noprev .ad-previewwrap { display: none; }
   .ad-writing .ad-shell { grid-template-columns: minmax(0, 880px); justify-content: center; }
   .ad-writing .ad-previewwrap { display: none; }
+  .ad-traffic-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ad-traffic-controls .ad-in { width: auto; max-width: 100%; }
+  .ad-traffic-number { font-size: 36px; font-weight: 700; margin: 8px 0 0; }
+  .ad-traffic-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; }
+  .ad-traffic-table th, .ad-traffic-table td { padding: 12px 8px; border-bottom: 1px solid var(--md-outline-variant); text-align: right; overflow-wrap: anywhere; }
+  .ad-traffic-table th:first-child, .ad-traffic-table td:first-child { text-align: left; width: 55%; }
+  @media (max-width: 600px) {
+    .ad-topbar { height: auto !important; display: grid !important; padding: 12px 0; gap: 12px !important; }
+    .ad-brand .pill { display: none; }
+    .ad-actions { flex-wrap: wrap; }
+  }
   .ad-noprev #editor, .ad-noprev #media-panel { column-width: 460px; column-gap: 16px; }
   .ad-noprev .ad-sec, .ad-noprev #media-panel .ad-card { break-inside: avoid; }
   #prev-toggle[aria-pressed="true"] { background: #7a1e2c; color: #fff; border-color: #7a1e2c; }
@@ -137,13 +148,13 @@
 <div id="dash" style="display:none;">
   <header style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid #ece8e1;">
     <div class="ad-wrap" style="padding-top:0; padding-bottom:0;">
-      <div style="height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
-        <div style="display:flex; align-items:center; gap:10px;">
+      <div class="ad-topbar" style="height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+        <div class="ad-brand" style="display:flex; align-items:center; gap:10px;">
           <img src="/assets/img/logo.svg?v=0.9.0" alt="Jimmy Park" width="140" height="28" style="height:28px; width:auto; display:block;">
           <strong style="font-size:15px;">Admin</strong>
           <span class="pill" style="background:#f2f0ec; color:#66615c;">jimmypark.net</span>
         </div>
-        <div style="display:flex; align-items:center; gap:10px;">
+        <div class="ad-actions" style="display:flex; align-items:center; gap:10px;">
           <span id="idle" class="pill" style="background:#f2f0ec; color:#66615c;" title="Auto sign-out timer"></span>
           <span id="save-msg" class="ad-msg"></span>
           <button id="prev-toggle" class="ad-btn ad-btn-ghost ad-btn-sm" aria-pressed="false" title="Hide preview"><span class="msym" aria-hidden="true" style="font-size:17px;">space_dashboard</span></button>
@@ -163,6 +174,7 @@
       <div>
         <div id="editor"></div>
         <div id="insights-panel" hidden></div>
+        <div id="analytics-panel" hidden></div>
 
         <!-- MEDIA PANEL (shown on Media tab) -->
         <div id="media-panel" style="display:none;">
@@ -220,6 +232,6 @@
 
 <input id="file-input" type="file" accept="image/*" multiple style="display:none;">
 <script src="/assets/insights-admin.js?v=0.26.1" defer></script>
-<script src="/assets/admin.js?v=0.26.1" defer></script>
+<script src="/assets/admin.js?v=0.28.0" defer></script>
 </body>
 </html>

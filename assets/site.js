@@ -8,6 +8,24 @@
 (function () {
   "use strict";
 
+  // First-party daily browser counts; no IP, full referrer, query or cross-day identity.
+  (function recordVisit() {
+    if (!/^(www\.)?jimmypark\.net$/.test(location.hostname) || window.top !== window || new URLSearchParams(location.search).has('preview') || navigator.doNotTrack === '1' || navigator.globalPrivacyControl || !crypto.randomUUID) return;
+    var path = location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+    if (!/^\/(?:work|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/.test(path)) return;
+    try {
+      var admin = JSON.parse(localStorage.getItem('jp:admin-session') || 'null');
+      if (admin && admin.exp > Date.now()) return;
+      var day = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+      var visitor = JSON.parse(localStorage.getItem('jp:daily-visitor') || 'null');
+      if (!visitor || visitor.day !== day) { visitor = { day: day, id: crypto.randomUUID() }; localStorage.setItem('jp:daily-visitor', JSON.stringify(visitor)); }
+      var referrer = ''; try { referrer = new URL(document.referrer).origin; } catch (_) {}
+      var utm = new URLSearchParams(location.search).get('utm_source') || '';
+      if (!/^(google|naver|bing|instagram|linkedin|facebook|youtube)$/.test(utm)) utm = '';
+      fetch('/api/traffic', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ visitor: visitor.id, event: crypto.randomUUID(), path: path, referrer: referrer, utm: utm }), keepalive: true }).catch(function () {});
+    } catch (_) { /* Storage-disabled browsers are not counted; the website still works. */ }
+  })();
+
   var page = document.body.getAttribute("data-page") || "home";
   var motionOK = !!(window.IntersectionObserver && window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches);
   if (motionOK) document.documentElement.classList.add("motion");

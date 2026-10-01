@@ -195,7 +195,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   // site-wide / shared content (Global + Media) separated as its own group.
   var TAB_GROUPS = [
     { label: "Pages", tabs: ["home", "work", "dev", "lecture", "scouting", "contact", "insights"] },
-    { label: "Site-wide", tabs: ["global", "media"] },
+    { label: "Site-wide", tabs: ["global", "media", "analytics"] },
   ];
   function buildTabs() {
     var bar = $("tabs"); bar.innerHTML = "";
@@ -203,7 +203,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       if (gi) bar.appendChild(el("span", { class: "ad-tab-div", "aria-hidden": "true" }));
       bar.appendChild(el("span", { class: "ad-tab-grp", text: g.label }));
       g.tabs.forEach(function (t) {
-        var label = t === "media" ? "Media" : t === "insights" ? "Insights" : SCHEMA[t] ? SCHEMA[t].title : t;
+        var label = t === "analytics" ? "Analytics" : t === "media" ? "Media" : t === "insights" ? "Insights" : SCHEMA[t] ? SCHEMA[t].title : t;
         bar.appendChild(el("button", { class: "ad-tab" + (t === activeTab ? " active" : ""), text: label, "data-tab": t, onclick: function () { selectTab(t); } }));
       });
     });
@@ -213,11 +213,13 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     activeTab = t;
     Array.prototype.forEach.call($("tabs").children, function (b) { b.classList.toggle("active", b.getAttribute("data-tab") === t); });
     $("media-panel").style.display = t === "media" ? "block" : "none";
-    $("editor").style.display = t === "media" || t === "insights" ? "none" : "block";
+    $("editor").style.display = t === "media" || t === "insights" || t === "analytics" ? "none" : "block";
+    $("analytics-panel").hidden = t !== "analytics";
     $("insights-panel").hidden = t !== "insights";
-    $("save").hidden = t === "insights";
-    $("prev-toggle").hidden = t === "insights";
-    document.body.classList.toggle('ad-writing', t === 'insights');
+    $("save").hidden = t === "insights" || t === "analytics";
+    $("prev-toggle").hidden = t === "insights" || t === "analytics";
+    document.body.classList.toggle('ad-writing', t === 'insights' || t === 'analytics');
+    if (t === "analytics") { renderAnalytics(); return; }
     if (t === "insights") { window.JPInsights.open($("insights-panel"), authHeader, function () { clearSession(); showGate('Session expired — enter a new code.'); }); return; }
     if (t === "media") { loadMedia(); return; }
     if (SCHEMA[t] && SCHEMA[t].kind === "page") { if (previewPage !== t) { previewPage = t; setPreviewSrc(); } }
@@ -225,6 +227,50 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   }
 
   // ── editor rendering ──────────────────────────────────────────────────────
+  var trafficDate = '', trafficRequest = 0;
+  function renderAnalytics() {
+    var root = $("analytics-panel"), today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+    root.innerHTML = '';
+    if (!trafficDate) trafficDate = today;
+    var card = el('section', { class: 'ad-card ad-sec' });
+    card.appendChild(el('h2', { class: 'ad-h', text: 'Daily visitors & acquisition' }));
+    card.appendChild(el('p', { class: 'ad-sub', text: 'Korea Standard Time (UTC+9). Daily visitors are unique browsers, not verified people. Each browser is attributed to its first visit of the day. Data is retained for 90 days.' }));
+    var form = el('form', { class: 'ad-traffic-controls', onsubmit: function (e) { e.preventDefault(); trafficDate = input.value; load(); } });
+    var input = el('input', { id: 'traffic-date', type: 'date', class: 'ad-in', value: trafficDate, min: new Date(Date.now() + 9 * 3600000 - 89 * 86400000).toISOString().slice(0, 10), max: today, required: true });
+    form.appendChild(el('label', { for: 'traffic-date', text: 'Date (KST)' })); form.appendChild(input);
+    var refresh = el('button', { type: 'submit', class: 'ad-btn ad-btn-ghost', text: 'Refresh' }); form.appendChild(refresh); card.appendChild(form);
+    var status = el('p', { class: 'ad-sub', role: 'status', 'aria-live': 'polite' }); card.appendChild(status); root.appendChild(card);
+    var results = el('div', {}); root.appendChild(results);
+    function table(title, headings, rows) {
+      var box = el('section', { class: 'ad-card ad-sec' }); box.appendChild(el('h3', { class: 'ad-h', text: title }));
+      if (!rows.length) { box.appendChild(el('p', { class: 'ad-sub', text: 'No recorded visits for this date.' })); results.appendChild(box); return; }
+      var tbl = el('table', { class: 'ad-traffic-table' }), head = el('tr', {}), body = el('tbody', {});
+      headings.forEach(function (label) { head.appendChild(el('th', { scope: 'col', text: label })); }); tbl.appendChild(el('thead', {}, [head]));
+      rows.forEach(function (values) { var row = el('tr', {}); values.forEach(function (v) { row.appendChild(el('td', { text: String(v) })); }); body.appendChild(row); });
+      tbl.appendChild(body); box.appendChild(tbl); results.appendChild(box);
+    }
+    function load() {
+      var sequence = ++trafficRequest; refresh.disabled = true; results.innerHTML = ''; status.textContent = 'Loading statistics…';
+      fetch('/api/traffic?date=' + encodeURIComponent(trafficDate), { headers: authHeader(), cache: 'no-store' }).then(function (r) {
+        if (r.status === 401) { clearSession(); showGate('Session expired — enter a new code.'); throw new Error('Session expired.'); }
+        if (!r.ok) throw new Error(r.status === 400 ? 'Choose a date within the last 90 days, up to today.' : 'Statistics are temporarily unavailable. Please try again.');
+        return r.json();
+      }).then(function (data) {
+        if (sequence !== trafficRequest || activeTab !== 'analytics') return;
+        status.textContent = data.started ? 'Collection started ' + data.started + ' (KST). Earlier dates have no historical data.' : 'Collection is ready. No visits have been recorded yet.';
+        var summary = el('div', { class: 'ad-row2 ad-sec' });
+        var recorded = data.started && data.day >= data.started;
+        [['Daily visitors', recorded ? data.visitors : '—'], ['Page views', recorded ? data.views : '—']].forEach(function (item) { summary.appendChild(el('section', { class: 'ad-card' }, [el('h3', { class: 'ad-h', text: item[0] }), el('p', { class: 'ad-traffic-number', text: String(item[1]) })])); }); results.appendChild(summary);
+        table('Acquisition sources', ['Source', 'Visitors', 'Share'], data.sources.map(function (r) { return [r.source, r.visitors, (data.visitors ? r.visitors * 100 / data.visitors : 0).toFixed(1) + '%']; }));
+        table('First landing pages', ['Page', 'Visitors'], data.landings.map(function (r) { return [r.path, r.visitors]; }));
+        table('Page views', ['Page', 'Views'], data.pages.map(function (r) { return [r.path, r.views]; }));
+        table('14 days ending on the selected date', ['Date (KST)', 'Visitors', 'Views'], data.daily.map(function (r) { var available = data.started && r.day >= data.started && r.day >= data.availableSince; return [r.day, available ? r.visitors : '—', available ? r.views : '—']; }));
+        results.appendChild(el('p', { class: 'ad-sub', text: 'Direct / unknown includes bookmarks, typed links and visits without a referrer. Tagged links use recognized utm_source values. Counts exclude admin previews, known bots and browsers requesting Do Not Track / Global Privacy Control; blocked scripts or storage can also reduce counts. No names, IP addresses, full referrer URLs or search queries are stored.' }));
+      }).catch(function (err) { if (sequence === trafficRequest) status.textContent = err.message; }).finally(function () { if (sequence === trafficRequest) refresh.disabled = false; });
+    }
+    load();
+  }
+
   function renderEditor() {
     var root = $("editor"); root.innerHTML = "";
     var sc = SCHEMA[activeTab];

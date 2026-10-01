@@ -1,5 +1,13 @@
 # Design System — JimmyPark.net
 
+## Admin Analytics (v0.28.0)
+
+Reuse the single 880px writing column without a preview or Save control. Use a labelled native
+date input, existing outlined Refresh button, two equal-height metric cards (stack under 600px)
+and semantic tables for source share, landing pages, page views and a 14-day readout.
+Use shared M3 surface/outline/type roles; wrap long paths, keep missing historical data as a dash
+and explain KST, daily browser attribution, collection start and measurement limitations.
+
 ## Site search (v0.27.0)
 
 v0.27.1: ordinary search entry points open a native modal on the current page. Use a maximum
