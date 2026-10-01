@@ -62,10 +62,11 @@ async function portfolioEntries(env, request, doc) {
 export function findResults(entries, query, group = 'all') {
   const terms = normalize(query).split(' ').filter(Boolean);
   if (!terms.length) return [];
+  const matches = (text, term) => term.length <= 2 && /^[a-z0-9]+$/.test(term) ? new RegExp('(?:^| )' + term + '(?: |$|[0-9])').test(text) : text.includes(term);
   // ponytail: linear scan suits the bounded portfolio/200-post store; use a search index if that limit grows.
   return entries.map(entry => {
     const title = normalize(entry.title), text = normalize(entry.text);
-    return { ...entry, score: terms.every(term => text.includes(term) || title.includes(term)) ? terms.reduce((score, term) => score + (title.includes(term) ? 5 : 1), 0) : 0 };
+    return { ...entry, score: terms.every(term => matches(text, term) || matches(title, term)) ? terms.reduce((score, term) => score + (matches(title, term) ? 5 : 1), 0) : 0 };
   }).filter(entry => entry.score && (group === 'all' || entry.group === group))
     .sort((a, b) => (a.group === 'upcoming') - (b.group === 'upcoming') || b.score - a.score || a.title.localeCompare(b.title));
 }

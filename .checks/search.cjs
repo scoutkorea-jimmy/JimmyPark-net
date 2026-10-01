@@ -27,6 +27,8 @@ assert.equal(api.findResults(projects,'삼성','dev').length,1);
 assert.equal(api.findResults(projects,'no-match').length,0);
 assert.equal(api.findResults(projects,'  ').length,0);
 assert.equal(api.normalize('ＡＩ － 영상'),'ai video');
+assert.equal(api.findResults([{title:'Chair',text:'Planning a chair',group:'pages'}],'AI').length,0);
+assert.equal(api.findResults([{title:'AI2RE',text:'Technology film',group:'work'}],'AI').length,1);
 const doc={pages:{work:{hidden:[],sections:{video:{cases:[{id:'film',title:'CUSTOM-COPY',role:'Editing',image:'/assets/img/private-file.jpg',images:['/assets/img/preview-secret.jpg']}]}}}}};
 const visible=api.collectionEntries(doc,'work','video.cases');assert.equal(visible[0].href,'/work#case-film');
 assert.equal(api.findResults(visible,'CUSTOM-COPY').length,1);assert.equal(api.findResults(visible,'preview-secret').length,0);
