@@ -1,5 +1,10 @@
 # JimmyPark.net — Jimmy Park
 
+v0.27.0 adds `/search`: server-rendered search of current public CMS copy, project results,
+lecture records and public articles. Korean aliases cover selected project names/role terms.
+Upcoming entries index only their public metadata, never bodies; drafts and hidden sections are excluded.
+No packages or search service are added. Run `node .checks/search.cjs` and local Pages HTTP checks.
+
 Personal portfolio for a solution maker working across content, web and AI.
 Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgundy `#7a1e2c`
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**

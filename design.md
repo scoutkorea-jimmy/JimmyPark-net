@@ -1,5 +1,15 @@
 # Design System — JimmyPark.net
 
+## Site search (v0.27.0)
+
+The shared app bar has a 40px Material `search` icon; compact screens keep it beside the menu.
+`/search` uses a labelled native search input, GET submission, existing assist chips, vertical
+results with optional representative thumbnails, and ten results per page. The same shared
+type, burgundy/surface roles, focus rings and spacing tokens apply. No new font or dependency.
+Search works without JavaScript. All returned strings are escaped; drafts/future bodies are excluded.
+Work and Dev links target their result cards, with the header clear of the target. A targeted
+non-pinned video is revealed in addition to the normal four pins, then excluded from later batches.
+
 > The single source of truth for how the site looks and feels.
 > Visual language: **warm-minimal, English-first, soft rounded corners.**
 > Identity (v0.12.0): *Solution maker — the right way to reach the client’s goal, through content, web & AI.*

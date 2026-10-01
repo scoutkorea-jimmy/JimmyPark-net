@@ -21,7 +21,12 @@ for (const [page, file] of Object.entries(pages)) {
     const items = match[1].split('.').reduce((value, key) => value[key], defaults.pages[page].sections);
     const render = templates[match[2]];
     if (!render || !Array.isArray(items)) throw new Error(`Invalid collection ${page}:${match[1]}`);
-    collections[match[1]] = items.map((item, i) => render(item, i, items)).join('\n');
+    if (page === 'work' && match[1] === 'video.cases') {
+      // Static SEO fallback uses the four pinned cases then all other cases in stored order.
+      const pins = ['samsung-keynote','ai2re','kb-life','seocho-culture-2020'];
+      const ordered = pins.map(id => items.find(row => row.id === id)).filter(Boolean).concat(items.filter(row => !pins.includes(row.id)));
+      collections[match[1]] = ordered.map(item => render(item).replace('<article ', pins.includes(item.id) ? '<article ' : '<article hidden ')).join('\n');
+    } else collections[match[1]] = items.map((item, i) => render(item, i, items)).join('\n');
   }
   result[file] = { order: defaults.pages[page].order, collections };
 }

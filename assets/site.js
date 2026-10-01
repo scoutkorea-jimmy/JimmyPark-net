@@ -312,7 +312,7 @@
     videoCases: function (v) {
       var href = /^https:\/\//.test(v.href || "") ? v.href : "";
       var media = v.image ? caseMedia(v.image, v.images, 'Video still: ' + v.title, 640, 360) : '<div class="case-media"><span class="case-placeholder">' + esc(v.title) + '</span></div>';
-      return '<article class="card project-card video-case">' + media + '<div class="card-body">' +
+      return '<article id="case-' + esc(v.id) + '" class="card project-card video-case">' + media + '<div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(v.format) + '</span>' + (v.year ? '<span class="tag">' + esc(v.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(v.title) + '</h3><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((v.linkLabel || 'Watch film') + ': ' + v.title) + '">' + esc(v.linkLabel || 'Watch film') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
@@ -345,7 +345,7 @@
       var backend = backendItems.length || adminShot ? '<div class="showcase-backend"><div class="backend-head"><span class="eyebrow">Behind the site</span><h4 class="backend-title">Admin console &amp; back end</h4>' +
         (stats ? '<div class="stat-chips">' + stats + '</div>' : '') + '</div><details class="backend-details" open><summary class="backend-toggle"><span class="backend-toggle-show">Show admin features' + (adminShot ? ' &amp; screenshot' : '') + '</span><span class="backend-toggle-hide">Hide admin features</span><span class="msym" aria-hidden="true">expand_more</span></summary><div class="backend-grid' + (adminShot ? ' has-shot' : '') + '">' + adminShot +
         (backendItems.length ? '<ul class="backend-list">' + backendItems.map(function (t) { return '<li><span class="msym" aria-hidden="true">check_circle</span><span>' + esc(t) + '</span></li>'; }).join('') + '</ul>' : '') + '</div></details></div>' : '';
-      return '<article class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
+      return '<article id="case-' + esc(s.id) + '" class="site-showcase"><div class="showcase-stage' + (phone ? ' has-phone' : '') + '"><div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span>' +
         (domain ? '<span class="browser-url">' + esc(domain) + '</span>' : '') + '</div><div class="browser-screen' + screenCycle + '">' + screen + '</div></div>' + phone + '</div>' +
         '<div class="showcase-body"><div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
         '<h3>' + esc(s.title) + '</h3>' + (s.summary ? '<p class="showcase-summary">' + esc(s.summary) + '</p>' : '') +
@@ -481,6 +481,8 @@
 
   function renderSelectedVideos(el, rows) {
     var queue = videoQueue(rows);
+    var targetIndex = queue.remaining.findIndex(function (row) { return '#case-' + row.id === window.location.hash; });
+    if (targetIndex >= 0) queue.first.push(queue.remaining.splice(targetIndex, 1)[0]);
     el.innerHTML = queue.first.map(TT.videoCases).join('');
     var more = document.querySelector('[data-video-more]');
     if (!more) return;
@@ -644,6 +646,10 @@
     });
     compactDetails();
     registerReveals();
+    if (/^#case-[a-z0-9-]+$/.test(window.location.hash)) {
+      var target = document.getElementById(window.location.hash.slice(1));
+      if (target) { target.classList.add('is-revealed'); target.scrollIntoView({ block: 'start' }); }
+    }
   }
 
   // Phones: long back-end lists start collapsed; the facts (chips) stay visible. Without JS they stay open.

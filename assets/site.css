@@ -434,10 +434,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio [data-optional-link][hidden] { display: none; }
 
 /* The full app bar switches to the M3 navigation drawer before labels collide. */
+.portfolio .nav-search.search-mobile { display: none; }
+.portfolio .nav-search { width: var(--control-size); height: var(--control-size); padding: 0; flex-shrink: 0; }
+.portfolio .nav-search .msym { font-size: 24px; }
+.portfolio [id^="case-"] { scroll-margin-top: var(--space-96); }
+.portfolio [id^="case-"][hidden]:target { display: block !important; }
 .nav-toggle { display: none; }
 @media (max-width: 1099px) {
   .desktop-nav { display: none !important; }
   .nav-toggle { display: inline-flex !important; }
+  .portfolio .nav-search.search-mobile { display: inline-flex; margin-inline-start: auto; }
+  .portfolio .header-inner { gap: var(--space-8); }
 }
 .mobile-menu { display: none; }
 .mobile-menu.open { display: block; }
@@ -1128,7 +1135,23 @@ body.portfolio[data-page="home"] .body-copy {
     border-radius: var(--md-shape-xl);
   }
 }
+.portfolio .search-page { max-width: var(--content-width); }
+.portfolio .site-search-form { margin-block: var(--space-32); }
+.portfolio .site-search-form label { display: block; margin-bottom: var(--space-8); color: var(--md-on-surface); }
+.portfolio .site-search-controls { display: flex; flex-wrap: wrap; gap: var(--space-12); }
+.portfolio .site-search-controls input { flex: 1 1 240px; min-width: 0; min-height: 56px; padding: var(--space-16); border: 1px solid var(--md-outline); border-radius: var(--radius-control); background: var(--md-surface-container-low); color: var(--md-on-surface); font: inherit; }
+.portfolio .site-search-controls input::placeholder { color: var(--md-on-surface-variant); }
+.portfolio .search-status { margin-block: var(--space-24); color: var(--md-on-surface-variant); }
+.portfolio .search-results { list-style: none; margin: 0; padding: 0; }
+.portfolio .search-result { display: flex; align-items: flex-start; gap: var(--space-24); padding-block: var(--space-24); border-bottom: 1px solid var(--md-outline-variant); }
+.portfolio .search-result img { width: 160px; max-width: 25%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: var(--radius-control); }
+.portfolio .search-result > div { min-width: 0; }
+.portfolio .search-result h2 { font-size: var(--title-card); line-height: 1.3; margin-block: var(--space-8) var(--space-12); overflow-wrap: anywhere; }
+.portfolio .search-result p { color: var(--md-on-surface-variant); }
+.portfolio .search-page > .contact-note { margin-top: var(--space-32); }
 @media (max-width: 599px) {
+  .portfolio .search-result { gap: var(--space-12); }
+  .portfolio .site-search-controls .site-button { width: 100%; }
   /* Override earlier body-large downgrade for homepage hero lead only */
   .portfolio[data-page="home"] .hero-lead,
   .portfolio .portfolio-hero .hero-lead {

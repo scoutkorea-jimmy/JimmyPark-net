@@ -403,6 +403,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.27.0: `/search` is a noindex, server-rendered GET form. Read current sanitized CMS and
+public static assets, apply copy overrides and remove hidden sections/collections before indexing
+remaining page copy. Index each visible collection row separately. Exclude drafts and future bodies.
+Project search links use `#case-ID`; targeted non-pinned videos are revealed without randomizing pins.
+Keep schema v44 and all article schedules untouched. Check `node .checks/search.cjs` plus local HTTP.
+
 v0.26.1 / schema v44: Instagram is an editable HTTPS contact link (blank hides it). The owner's
 publication title is an explicit language exception: original Korean title, then English in
 parentheses. The standard home portrait uses one unversioned asset URL; preserve custom portraits.

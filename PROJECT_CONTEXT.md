@@ -8,6 +8,13 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+v0.27.0 adds public `/search` for project results, current website copy, lectures and articles.
+It reuses the CMS reader, article scheduling rule and public shell. No draft/future body indexing,
+no KV writes or external search service. Work/Dev results deep-link to stable case anchors;
+targeted hidden video cases are included when arriving from search. Schema and schedules unchanged.
+VibePrompt navigation reference was attempted but unavailable; retained existing M3 navigation/chips.
+Commit remains subject to the owner's current approval rule.
+
 v0.26.1 / schema v44: editable Instagram link, original book title with English translation,
 and one canonical home portrait URL with no redundant CSS image reassignment. Media Work initially
 shows Samsung, AI2RE, KB Life and Seocho; each Show more adds four unseen random cases, until exhausted.
