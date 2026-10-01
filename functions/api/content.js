@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 43,
+  "version": 44,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -27,6 +27,7 @@ const DEFAULT = {
       "email": "scoutkorea@kakao.com",
       "phone": "+82 10.5418.6124",
       "linkedin": "https://www.linkedin.com/in/jimmy1420",
+      "instagram": "https://www.instagram.com/jimmypark.0206/",
       "location": "Korea · Korean / English"
     },
     "seo": {
@@ -63,7 +64,7 @@ const DEFAULT = {
             "label": "Read my thinking",
             "href": "/insights"
           },
-          "image": "/assets/img/jimmy-park-portrait-960.jpg?v=0.14.0",
+          "image": "/assets/img/jimmy-park-portrait-960.jpg",
           "badge": "Jimmy Park",
           "caption": "Film · Learning platforms · AI workflows",
           "captionRight": "Based in Korea"
@@ -989,7 +990,7 @@ const DEFAULT = {
             {
               "year": "2021",
               "category": "Publication",
-              "title": "Influencer, Becoming the Trend of the Era (1): Lecture Edition",
+              "title": "인플루언서, 시대의 트렌드가 되다 (1)강의편 (Influencer, Becoming the Trend of the Era (1): Lecture Edition)",
               "org": "Publication",
               "role": "Author",
               "summary": "2021 · Authored the lecture edition of the book on influencers and contemporary media trends.",
@@ -3835,6 +3836,19 @@ function migrateTo43(doc) {
 
 
 
+// Preserve custom portraits and explicitly hidden social links.
+function migrateTo44(doc) {
+  const contact = doc.global?.contact;
+  if (contact && contact.instagram === undefined) contact.instagram = DEFAULT.global.contact.instagram;
+  const hero = doc.pages?.home?.sections?.hero;
+  if (hero && /^\/assets\/img\/jimmy-park-portrait-960\.jpg(?:\?v=[\d.]+)?$/.test(hero.image || '')) hero.image = DEFAULT.pages.home.sections.hero.image;
+  for (const item of doc.pages?.lecture?.sections?.talks?.items || []) {
+    if (item.category === 'Publication' && item.title === 'Influencer, Becoming the Trend of the Era (1): Lecture Edition') item.title = DEFAULT.pages.lecture.sections.talks.items.find(row => row.category === 'Publication').title;
+  }
+  doc.version = 44;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -3856,8 +3870,8 @@ function cleanUrls(value, errors, path = '') {
   if (!value || typeof value !== 'object') return value;
   for (const key of Object.keys(value)) {
     const current = value[key], location = path ? path + '.' + key : key;
-    if (['href','image','linkedin'].includes(key) && typeof current === 'string') {
-      const safe = safeSiteUrl(current, key === 'linkedin');
+    if (['href','image','linkedin','instagram'].includes(key) && typeof current === 'string') {
+      const safe = safeSiteUrl(current, key === 'linkedin' || key === 'instagram');
       if (current.trim() && !safe && errors) errors.push(location);
       value[key] = safe;
     } else if (key === 'images' && Array.isArray(current)) {
@@ -3878,7 +3892,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3887,7 +3901,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   return parsed;
 }
@@ -3895,7 +3909,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3937,6 +3951,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 41) doc = migrateTo41(doc);
   if ((doc.version || 0) < 42) doc = migrateTo42(doc);
   if ((doc.version || 0) < 43) doc = migrateTo43(doc);
+  if ((doc.version || 0) < 44) doc = migrateTo44(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -4005,7 +4020,7 @@ export async function onRequestPut({ request, env }) {
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 43;
+  doc.version = 44;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });

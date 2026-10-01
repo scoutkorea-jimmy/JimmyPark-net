@@ -5,6 +5,12 @@ Warm-minimal, English-first, with Material Design 3 interaction patterns. Burgun
 is the core accent, with a purple `#622599` theme on Global & Scouting. **Vanilla HTML/CSS/JS — no build step.**
 Google Sans Flex is the default typeface, with Pretendard/system fallbacks.
 
+v0.26.1 / schema v44 adds the owner's Instagram to editable contact links and profile identity,
+keeps the publication's original Korean title with an English translation, and aligns the initial
+home portrait URL with CMS hydration to avoid requesting two cache-key variants. Media Work starts
+with Samsung, AI2RE, KB Life and Seocho; Show more appends four unseen random projects at a time.
+Without JavaScript, the complete static video portfolio remains accessible.
+
 The v0.26.0 Articles update introduces the five-part personal-practice series
 *Choices That Shape Good Work*. Its English essays are scheduled for 6, 8, 10, 12 and 14 October 2026 at 9:00 AM KST,
 with five distinct Material 3 covers. Series labels support five parts without changing existing

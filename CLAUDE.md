@@ -403,6 +403,11 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.26.1 / schema v44: Instagram is an editable HTTPS contact link (blank hides it). The owner's
+publication title is an explicit language exception: original Korean title, then English in
+parentheses. The standard home portrait uses one unversioned asset URL; preserve custom portraits.
+Media Work pins Samsung, AI2RE, KB Life and Seocho first; append four random unseen cases per click.
+Never randomize or remove the existing cards when adding another batch. No-JS users retain all cases.
 1. **No build step, no dependencies.** Don't add npm packages or bundlers. Fonts are the
    approved set only — **Google Sans Flex** (primary since v0.17.0, owner-selected, Google Fonts,
    weights 1–1000), **Pretendard** (fallback), Material Symbols Outlined (icons, weight 400); don't add others. Everything ships as

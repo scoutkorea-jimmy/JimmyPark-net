@@ -8,6 +8,11 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+v0.26.1 / schema v44: editable Instagram link, original book title with English translation,
+and one canonical home portrait URL with no redundant CSS image reassignment. Media Work initially
+shows Samsung, AI2RE, KB Life and Seocho; each Show more adds four unseen random cases, until exhausted.
+Preserve existing preview images, custom CMS data and the October article schedule.
+
 Articles v0.26.0 schedules *Choices That Shape Good Work*, five English essays, for
 6, 8, 10, 12 and 14 October 2026 at 9:00 AM KST. The owner corrected the initial immediate
 publication on 30 September; the five public bodies were withdrawn through future dates,

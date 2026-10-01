@@ -59,4 +59,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.24.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.26.1" defer></script></body></html>`;

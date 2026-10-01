@@ -451,10 +451,49 @@
   function cleanPreviewUrls(value) {
     if (!value || typeof value !== 'object') return value;
     Object.keys(value).forEach(function (key) {
-      if (['href','image','linkedin'].indexOf(key) >= 0 && typeof value[key] === 'string') value[key] = safeSiteUrl(value[key], key === 'linkedin');
+      if (['href','image','linkedin','instagram'].indexOf(key) >= 0 && typeof value[key] === 'string') value[key] = safeSiteUrl(value[key], key === 'linkedin' || key === 'instagram');
       else if (value[key] && typeof value[key] === 'object') cleanPreviewUrls(value[key]);
     });
     return value;
+  }
+
+  function applyBackgroundImage(el, value, position) {
+    var next = value ? 'url(' + JSON.stringify(value) + ')' : '';
+    if (el.style.backgroundImage !== next) el.style.backgroundImage = next;
+    if (value) { el.style.backgroundSize = 'cover'; el.style.backgroundPosition = position || 'center'; }
+  }
+
+  function videoQueue(rows, random) {
+    var pinned = ['samsung-keynote', 'ai2re', 'kb-life', 'seocho-culture-2020'];
+    var seen = new Set(), unique = rows.filter(function (row) {
+      var key = row.id || row.href || row.title;
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+    var first = pinned.map(function (id) { return unique.find(function (row) { return row.id === id; }); }).filter(Boolean);
+    var remaining = unique.filter(function (row) { return first.indexOf(row) < 0; });
+    for (var i = remaining.length - 1; i > 0; i--) {
+      var j = Math.floor((random || Math.random)() * (i + 1));
+      var swap = remaining[i]; remaining[i] = remaining[j]; remaining[j] = swap;
+    }
+    return { first: first, remaining: remaining };
+  }
+
+  function renderSelectedVideos(el, rows) {
+    var queue = videoQueue(rows);
+    el.innerHTML = queue.first.map(TT.videoCases).join('');
+    var more = document.querySelector('[data-video-more]');
+    if (!more) return;
+    more.hidden = !queue.remaining.length;
+    more.onclick = function () {
+      var batch = queue.remaining.splice(0, 4);
+      el.insertAdjacentHTML('beforeend', batch.map(TT.videoCases).join(''));
+      more.hidden = !queue.remaining.length;
+      var status = document.querySelector('[data-video-status]');
+      if (status) status.textContent = batch.length + ' more projects shown. ' + queue.remaining.length + ' remaining.';
+      if (more.hidden) { el.lastElementChild.querySelector('a')?.focus(); }
+      registerReveals();
+    };
   }
 
   function applyDoc(content) {
@@ -490,7 +529,7 @@
           person.name = (g.brand || {}).name || person.name;
           person.description = (sd.snapshot || {}).body || person.description;
           if ((sd.hero || {}).image) person.image = new URL(sd.hero.image, 'https://jimmypark.net').href;
-          person.sameAs = (g.contact || {}).linkedin ? [g.contact.linkedin] : [];
+          person.sameAs = [(g.contact || {}).linkedin, (g.contact || {}).instagram].filter(Boolean);
           if ((g.contact || {}).email) person.email = g.contact.email;
           personNode.textContent = JSON.stringify(person).replace(/</g, '\\u003c');
         }
@@ -505,16 +544,14 @@
     document.querySelectorAll("[data-img]").forEach(function (el) {
       var path = el.getAttribute("data-img");
       var v = (path.charAt(0) === "@" ? get(g, path.slice(1)) : get(sd, path)) || el.getAttribute('data-default-image');
-      if (v) { el.style.backgroundImage = "url('" + v + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = "center"; }
-      else { el.style.backgroundImage = ""; }
+      applyBackgroundImage(el, v);
       var fallback = el.querySelector("[data-image-fallback]");
       if (fallback) fallback.hidden = !!v;
     });
     // hero image back-compat
     document.querySelectorAll("[data-hero-image]").forEach(function (el) {
       var hero = sd.hero || {};
-      if (hero.image) { el.style.backgroundImage = "url('" + hero.image + "')"; el.style.backgroundSize = "cover"; el.style.backgroundPosition = el.getAttribute("data-image-position") || "center"; }
-      else { el.style.backgroundImage = ""; }
+      applyBackgroundImage(el, hero.image, el.getAttribute("data-image-position"));
     });
 
     // link hrefs — data-href="section.field.href"
@@ -533,7 +570,8 @@
       var tmplName = el.getAttribute("data-template");
       var t = TT[tmplName];
       if (!Array.isArray(arr) || !t) return;
-      if (tmplName === "timeline") el.innerHTML = renderTimelineByYear(arr);
+      if (page === 'work' && el.getAttribute('data-collection') === 'video.cases') renderSelectedVideos(el, arr);
+      else if (tmplName === "timeline") el.innerHTML = renderTimelineByYear(arr);
       else el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
     });
 
@@ -569,6 +607,14 @@
           if (lbl) lbl.textContent = c.linkedin.replace(/^https?:\/\//, "").replace(/\/$/, "");
         }
       } else { li.style.display = "none"; }
+    }
+    var ig = document.querySelector('[data-ig-block]');
+    if (ig) {
+      ig.hidden = !c.instagram;
+      if (c.instagram) {
+        ig.querySelector('a').href = c.instagram;
+        ig.querySelector('[data-ig-label]').textContent = c.instagram.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      }
     }
 
     // section order + visibility

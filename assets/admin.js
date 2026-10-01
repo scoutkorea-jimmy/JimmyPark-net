@@ -56,7 +56,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       groups: [
         { title: "Brand", path: ["global", "brand"], fields: [F("name", "Name"), F("roleline", "Role line")] },
         { title: "Footer", path: ["global", "footer"], fields: [F("tagline", "Tagline"), F("copyright", "Copyright")] },
-        { title: "Contact (site-wide)", path: ["global", "contact"], fields: [F("email", "Email"), F("phone", "Phone"), F("linkedin", "LinkedIn URL (blank = hidden)"), F("location", "Location / language")] },
+        { title: "Contact (site-wide)", path: ["global", "contact"], fields: [F("email", "Email"), F("phone", "Phone"), F("linkedin", "LinkedIn URL (blank = hidden)"), F("instagram", "Instagram URL (blank = hidden)"), F("location", "Location / language")] },
         { title: "Default SEO", path: ["global", "seo"], fields: [F("title", "Default title"), F("desc", "Default description", "textarea")] },
       ],
     },

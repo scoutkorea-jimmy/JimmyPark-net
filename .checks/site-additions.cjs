@@ -33,7 +33,7 @@ function asV42(edit) {
 
 (async () => {
   const added = await get(asV42());
-  assert.equal(added.version, 43);
+  assert.equal(added.version, 44);
   assert.deepEqual(sites(added).items.map(row => row.id).slice(-2), ['banginoja', 'soulland']);
   assert.equal(sites(added).desc, sites(api.defaults).desc);
 

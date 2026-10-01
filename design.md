@@ -338,6 +338,9 @@ Chips over an image (feature-card badge and sub line) use a white 90% fill, 12px
 
 ## 7. Language rule
 
+v0.26.1 owner exception: publication titles retain the original Korean title followed by an English
+translation in parentheses. Other portfolio labels and descriptions remain English-first.
+
 **English-first.** A limited v0.9.0 exception allows `박지민` in the home identity line, biography and metadata for name disambiguation. All remaining portfolio copy stays English. The site carries no other Korean text — no companion lines, no `*Ko` content
 fields, no `박지민` alongside the name. (The site was bilingual through v0.2.x; v0.3.0
 removed all Korean. The content schema's `dekoreanize` migration strips any residual
