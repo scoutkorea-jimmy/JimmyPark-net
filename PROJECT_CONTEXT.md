@@ -8,6 +8,26 @@ Verify with `node .checks/quotly-redirect.cjs` and public HTTP checks. Preserve 
 
 # Current work
 
+2026-10-04: five English essays, `Learning in an Age of Easy Answers`, are stored in
+remote `insights:v1`, scheduled for 16, 18, 20, 22 and 24 October 2026 at 09:00 KST.
+Bodies contain 7,363 / 7,486 / 7,746 / 7,825 / 8,614 characters including spaces.
+All prior 17 article records and dates were preserved exactly. Covers are
+`assets/img/og/learning-1.png` through `learning-5.png` (1200x630). Each category identifies
+the series and part via the existing CMS field; titles, summaries, covers and schedules
+are public, bodies remain withheld until release. Live details and private-body search
+exclusion were checked. Editorial source and proofs are outside this public repository.
+Do not name Korea Dream Path in this series; Part 5 mentions recent educational-business
+background without a product name or promotional CTA.
+
+Additional SERIES-map/filter and OG-generator data rows remain local, uncommitted and
+NOT in the final production release: current-batch Solar Pro 4 review was blocked by an
+explicit Freebuff 0/40 credit refusal. Existing insights/search tests pass, but TCDD for
+that supplementary code batch is incomplete. Do not silently include it in another release.
+For a frozen release directory, run Wrangler FROM that directory: Pages can compile
+Functions from the process working directory instead of the positional asset directory.
+Final content-only deployment: `78d8e129.jimmypark-net.pages.dev`, built from tracked HEAD
+plus the five PNGs, preserving the existing KOTMA export and all Saju routes.
+
 v0.28.0 adds TOTP-gated Admin Analytics: KST date selection, unique daily browsers,
 page views, first-touch source share, first landing pages and a 14-day table. First-party
 records use JP_TRAFFIC D1 (scripts/traffic-schema.sql); 90-day report window, old raw rows
