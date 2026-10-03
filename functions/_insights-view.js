@@ -67,6 +67,11 @@ const SERIES = {
   'whose-budget-whose-purpose': { name: 'Choices That Shape Good Work', part: 3, total: 5 },
   'what-can-i-responsibly-take-on': { name: 'Choices That Shape Good Work', part: 4, total: 5 },
   'so-we-can-work-together-again': { name: 'Choices That Shape Good Work', part: 5, total: 5 },
+  'more-answers-but-is-learning-easier': { name: 'Learning in an Age of Easy Answers', part: 1, total: 5 },
+  'mistaking-what-ai-knows-for-what-i-understand': { name: 'Learning in an Age of Easy Answers', part: 2, total: 5 },
+  'the-same-ai-does-not-mean-the-same-opportunity-to-learn': { name: 'Learning in an Age of Easy Answers', part: 3, total: 5 },
+  'what-we-need-to-learn-beyond-using-ai': { name: 'Learning in an Age of Easy Answers', part: 4, total: 5 },
+  'how-shall-we-learn-and-live-with-ai': { name: 'Learning in an Age of Easy Answers', part: 5, total: 5 },
 };
 const PAGE_SIZE = 5;
 const DEFAULT_IMAGE = 'https://jimmypark.net/assets/img/og/articles.png?v=0.22.1';

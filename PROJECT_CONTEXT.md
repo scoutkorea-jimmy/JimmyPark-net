@@ -19,13 +19,16 @@ exclusion were checked. Editorial source and proofs are outside this public repo
 Do not name Korea Dream Path in this series; Part 5 mentions recent educational-business
 background without a product name or promotional CTA.
 
-Additional SERIES-map/filter and OG-generator data rows remain local, uncommitted and
-NOT in the final production release: current-batch Solar Pro 4 review was blocked by an
-explicit Freebuff 0/40 credit refusal. Existing insights/search tests pass, but TCDD for
-that supplementary code batch is incomplete. Do not silently include it in another release.
+2026-10-04 follow-up: the owner explicitly requested the new series filter chip and
+directed proceeding when the reviewer has no remaining quota. The five SERIES entries,
+cover-generator definitions and isolated filter tests are released under this quota
+exception; no Solar Pro 4 review completion is claimed. Prior normal CLI confirmed an
+explicit 0/40 refusal. Insights, search and search-modal tests pass. Reuse the existing
+chip styling, selection state and independent five-item pagination. No new dependency,
+data write, permission or publication-date change is involved.
 For a frozen release directory, run Wrangler FROM that directory: Pages can compile
 Functions from the process working directory instead of the positional asset directory.
-Final content-only deployment: `78d8e129.jimmypark-net.pages.dev`, built from tracked HEAD
+Previous content-only deployment: `78d8e129.jimmypark-net.pages.dev`, built from tracked HEAD
 plus the five PNGs, preserving the existing KOTMA export and all Saju routes.
 
 v0.28.0 adds TOTP-gated Admin Analytics: KST date selection, unique daily browsers,

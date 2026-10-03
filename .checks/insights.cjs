@@ -109,6 +109,26 @@ async function page(slug, query = '') { const res = await api.renderInsights({en
   saved.posts.find(post => post.slug === choices[4]).date = '2099-01-01';
   assert.match((await page(choices[4])).html, /Choices That Shape Good Work · Part 5 of 5/);
   assert.ok(!read('assets/site.js').includes('var meta = pd.meta || g.seo'));
+  const learning = ['more-answers-but-is-learning-easier', 'mistaking-what-ai-knows-for-what-i-understand', 'the-same-ai-does-not-mean-the-same-opportunity-to-learn', 'what-we-need-to-learn-beyond-using-ai', 'how-shall-we-learn-and-live-with-ai'];
+  saved.posts.push(...learning.map((slug, i) => sample('l' + (i + 1), 'Learning ' + (i + 1), slug, '2099-10-' + (16 + i * 2))));
+  const learningIndex = (await page(undefined, '?series=Learning%20in%20an%20Age%20of%20Easy%20Answers')).html;
+  assert.equal((learningIndex.match(/class="insight-list-item"/g) || []).length, 5);
+  assert.match(learningIndex, /class="insight-chip is-selected" href="\/insights\?series=Learning%20in%20an%20Age%20of%20Easy%20Answers"/);
+  assert.ok(!learningIndex.includes('Choice 1 summary'));
+  assert.ok(!learningIndex.includes('Upcoming 1 summary'));
+  for (let i = 0; i < learning.length; i++) {
+    const expected = new RegExp('Learning in an Age of Easy Answers · Part ' + (i + 1) + ' of 5');
+    assert.match(learningIndex, expected);
+    const future = (await page(learning[i])).html;
+    assert.match(future, expected);
+    assert.match(future, /Scheduled article/);
+    assert.ok(!future.includes('Learning ' + (i + 1) + ' private body'));
+    assert.equal(api.publicationTime({date: '2026-10-' + (16 + i * 2)}), Date.UTC(2026, 9, 16 + i * 2));
+    saved.posts.find(post => post.slug === learning[i]).date = '2026-01-01';
+    const published = (await page(learning[i])).html;
+    assert.match(published, expected);
+    assert.ok(published.includes('Learning ' + (i + 1) + ' private body'));
+  }
   const publicHTML = ['index.html','work.html','dev.html','scouting.html','contact.html','insights.html','404.html'];
   for (const file of publicHTML) {
     const html=read(file); assert.match(html,/data-nav="insights"/,'Insights is visible in navigation after publication'); assert.match(html,/id="main-content"/);

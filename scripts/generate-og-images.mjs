@@ -48,6 +48,11 @@ const articles = [
   ['choices-3.png', 'CHOICES THAT SHAPE GOOD WORK · 3 OF 5', 'Whose Budget,\nWhose Purpose?', 'my_location', 'tertiary'],
   ['choices-4.png', 'CHOICES THAT SHAPE GOOD WORK · 4 OF 5', 'What Can I\nResponsibly Take On?', 'crop_free', 'tertiary'],
   ['choices-5.png', 'CHOICES THAT SHAPE GOOD WORK · 5 OF 5', 'So We Can Work\nTogether Again', 'handshake', 'tertiary'],
+  ['learning-1.png', 'LEARNING IN AN AGE OF EASY ANSWERS · 1 OF 5', 'More Answers,\nBut Is Learning Easier?', 'school', 'primary'],
+  ['learning-2.png', 'LEARNING IN AN AGE OF EASY ANSWERS · 2 OF 5', 'What AI Knows.\nWhat I Understand.', 'psychology', 'primary'],
+  ['learning-3.png', 'LEARNING IN AN AGE OF EASY ANSWERS · 3 OF 5', 'The Same AI.\nDifferent Opportunities.', 'diversity_3', 'primary'],
+  ['learning-4.png', 'LEARNING IN AN AGE OF EASY ANSWERS · 4 OF 5', 'Beyond\nUsing AI', 'fact_check', 'primary'],
+  ['learning-5.png', 'LEARNING IN AN AGE OF EASY ANSWERS · 5 OF 5', 'Learning and\nLiving with AI', 'explore', 'primary'],
 ].map(([file, label, title, symbol, color]) => ({ file, label, title, symbol, color }));
 
 function palette(name) {
