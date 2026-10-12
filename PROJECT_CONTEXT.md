@@ -1,8 +1,10 @@
-# Internal traffic exclusion (2026-10-13, release prepared)
+# Internal traffic exclusion (2026-10-13, deployed)
 
 Admin visits set a one-year browser-specific analytics exclusion cookie and localStorage preference; Analytics offers a toggle. Other owner/AI review browsers start at `https://jimmypark.net/?internal=1` before opening public pages. `?internal=0` clears the preference. Client and traffic API exclude marked browsers; no login permissions change. Unmarked automation may still count. Analytics labels counts as reader candidates and flags 2026-10-09 in the daily detail and history as possibly mixed owner/AI work traffic, preserving 82 visitors/112 views. SQLite/client regression, admin-save, syntax and whitespace checks pass. Original production traffic records remain unchanged. Deployment verification is recorded separately. Existing unrelated working changes are preserved.
 
 Next: review scoped diff of assets/site.js, assets/admin.js, functions/api/traffic.js and .checks/traffic.cjs; run `node .checks/traffic.cjs` and `node .checks/admin-save.cjs`. Freeze only this change onto the verified production baseline and preserve /kotma before a release; do not deploy the whole dirty working tree.
+
+Release verified: feature commit 1489aee, cache-refresh commit 3f3e4d8; https://839c8f1a.jimmypark-net.pages.dev. Production Admin shows internal exclusion checked and October 9 warning with original 82/112. Excluded traffic POST returns 204 without recording; /api/posts remains 401; Home, Insights, Admin, Saju and KOTMA return 200. Isolated traffic/admin-save/Insights checks pass. Release preserved previously deployed schema45/contact files and KOTMA, excluded pending shared-core work. No production DB edits.
 
 # Quotly release shortcut
 
