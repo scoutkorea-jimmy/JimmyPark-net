@@ -617,3 +617,6 @@ these roles; new rules should use the `--md-*` names directly.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
+# Analytics data quality (2026-10-13)
+
+Keep the existing card/table layout. Analytics shows a labelled browser-exclusion checkbox and calls visitor counts reader candidates. The 2026-10-09 detail has a visible warning; the 14-day table includes a data-quality column. Original counts remain visible. English-only site convention is preserved.

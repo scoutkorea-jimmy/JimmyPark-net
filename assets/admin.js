@@ -228,6 +228,10 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
 
   // ── editor rendering ──────────────────────────────────────────────────────
   var trafficDate = '', trafficRequest = 0;
+  function excludeInternalTraffic(exclude) {
+    try { localStorage.setItem('jp:traffic-exclude', exclude ? '1' : '0'); } catch (_) {}
+    document.cookie = 'jp_internal=' + (exclude ? '1' : '0') + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
+  }
   function renderAnalytics() {
     var root = $("analytics-panel"), today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
     root.innerHTML = '';
@@ -235,6 +239,11 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     var card = el('section', { class: 'ad-card ad-sec' });
     card.appendChild(el('h2', { class: 'ad-h', text: 'Daily visitors & acquisition' }));
     card.appendChild(el('p', { class: 'ad-sub', text: 'Korea Standard Time (UTC+9). Daily visitors are unique browsers, not verified people. Each browser is attributed to its first visit of the day. Data is retained for 90 days.' }));
+    var excluded = /(?:^|;\s*)jp_internal=1(?:;|$)/.test(document.cookie || '');
+    var internalToggle = el('input', { type: 'checkbox', onchange: function () { excludeInternalTraffic(internalToggle.checked); } });
+    internalToggle.checked = excluded;
+    card.appendChild(el('label', { class: 'ad-sub' }, [internalToggle, document.createTextNode(' Exclude this browser from visitor counts, including after sign-out.')]));
+    card.appendChild(el('p', { class: 'ad-sub', text: 'For owner or AI review in another browser, first open https://jimmypark.net/?internal=1. The preference applies only to that browser and lasts one year. Counts are reader candidates, not verified humans; unrecognized automation can remain.' }));
     var form = el('form', { class: 'ad-traffic-controls', onsubmit: function (e) { e.preventDefault(); trafficDate = input.value; load(); } });
     var input = el('input', { id: 'traffic-date', type: 'date', class: 'ad-in', value: trafficDate, min: new Date(Date.now() + 9 * 3600000 - 89 * 86400000).toISOString().slice(0, 10), max: today, required: true });
     form.appendChild(el('label', { for: 'traffic-date', text: 'Date (KST)' })); form.appendChild(input);
@@ -258,13 +267,14 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       }).then(function (data) {
         if (sequence !== trafficRequest || activeTab !== 'analytics') return;
         status.textContent = data.started ? 'Collection started ' + data.started + ' (KST). Earlier dates have no historical data.' : 'Collection is ready. No visits have been recorded yet.';
+        if (data.day === '2026-10-09') results.appendChild(el('p', { class: 'ad-msg ad-err', role: 'note', text: '2026-10-09: owner/AI work access may be mixed into these counts. Original observations are preserved; do not treat this date as confirmed reader acquisition or a clean comparison baseline.' }));
         var summary = el('div', { class: 'ad-row2 ad-sec' });
         var recorded = data.started && data.day >= data.started;
-        [['Daily visitors', recorded ? data.visitors : '—'], ['Page views', recorded ? data.views : '—']].forEach(function (item) { summary.appendChild(el('section', { class: 'ad-card' }, [el('h3', { class: 'ad-h', text: item[0] }), el('p', { class: 'ad-traffic-number', text: String(item[1]) })])); }); results.appendChild(summary);
+        [['Reader candidates (browsers)', recorded ? data.visitors : '—'], ['Page views', recorded ? data.views : '—']].forEach(function (item) { summary.appendChild(el('section', { class: 'ad-card' }, [el('h3', { class: 'ad-h', text: item[0] }), el('p', { class: 'ad-traffic-number', text: String(item[1]) })])); }); results.appendChild(summary);
         table('Acquisition sources', ['Source', 'Visitors', 'Share'], data.sources.map(function (r) { return [r.source, r.visitors, (data.visitors ? r.visitors * 100 / data.visitors : 0).toFixed(1) + '%']; }));
         table('First landing pages', ['Page', 'Visitors'], data.landings.map(function (r) { return [r.path, r.visitors]; }));
         table('Page views', ['Page', 'Views'], data.pages.map(function (r) { return [r.path, r.views]; }));
-        table('14 days ending on the selected date', ['Date (KST)', 'Visitors', 'Views'], data.daily.map(function (r) { var available = data.started && r.day >= data.started && r.day >= data.availableSince; return [r.day, available ? r.visitors : '—', available ? r.views : '—']; }));
+        table('14 days ending on the selected date', ['Date (KST)', 'Visitors', 'Views', 'Data quality'], data.daily.map(function (r) { var available = data.started && r.day >= data.started && r.day >= data.availableSince; return [r.day, available ? r.visitors : '—', available ? r.views : '—', r.day === '2026-10-09' ? 'Possible owner/AI work access' : 'Browser counts; humans not verified']; }));
         results.appendChild(el('p', { class: 'ad-sub', text: 'Direct / unknown includes bookmarks, typed links and visits without a referrer. Tagged links use recognized utm_source values. Counts exclude admin previews, known bots and browsers requesting Do Not Track / Global Privacy Control; blocked scripts or storage can also reduce counts. No names, IP addresses, full referrer URLs or search queries are stored.' }));
       }).catch(function (err) { if (sequence === trafficRequest) status.textContent = err.message; }).finally(function () { if (sequence === trafficRequest) refresh.disabled = false; });
     }
@@ -769,6 +779,8 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   });
 
   // ── init ──────────────────────────────────────────────────────────────────
+  // Visiting Admin marks this browser as internal without changing its login/session.
+  excludeInternalTraffic(true);
   wire();
   session = loadSession();
   if (session) {

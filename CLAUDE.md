@@ -1,5 +1,7 @@
 # CLAUDE.md — JimmyPark.net
 
+Internal analytics review (2026-10-13): Admin marks its browser with `jp_internal=1` (one year) and `jp:traffic-exclude`; Analytics offers a toggle. Owner/AI browsers use `/?internal=1` before review (`internal=0` resumes recording). Both client and traffic API exclude the marker without granting authentication. Unmarked automation remains a limitation; browser counts are reader candidates. Flag 2026-10-09 as possibly mixed work traffic without deleting or subtracting observations. Test with `node .checks/traffic.cjs`.
+
 Operating manual for working in this repo. Read this and [design.md](design.md) before editing.
 Keep both in sync with reality when you change how the site works.
 

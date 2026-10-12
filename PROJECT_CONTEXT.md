@@ -1,3 +1,9 @@
+# Internal traffic exclusion (2026-10-13, release prepared)
+
+Admin visits set a one-year browser-specific analytics exclusion cookie and localStorage preference; Analytics offers a toggle. Other owner/AI review browsers start at `https://jimmypark.net/?internal=1` before opening public pages. `?internal=0` clears the preference. Client and traffic API exclude marked browsers; no login permissions change. Unmarked automation may still count. Analytics labels counts as reader candidates and flags 2026-10-09 in the daily detail and history as possibly mixed owner/AI work traffic, preserving 82 visitors/112 views. SQLite/client regression, admin-save, syntax and whitespace checks pass. Original production traffic records remain unchanged. Deployment verification is recorded separately. Existing unrelated working changes are preserved.
+
+Next: review scoped diff of assets/site.js, assets/admin.js, functions/api/traffic.js and .checks/traffic.cjs; run `node .checks/traffic.cjs` and `node .checks/admin-save.cjs`. Freeze only this change onto the verified production baseline and preserve /kotma before a release; do not deploy the whole dirty working tree.
+
 # Quotly release shortcut
 
 Target updated: /quotly and /quotly/ return302/no-store to GitHub releases/latest. Route checks, JS syntax and diff checks pass. Existing Scouting design-check failure remains unchanged. No commit created.

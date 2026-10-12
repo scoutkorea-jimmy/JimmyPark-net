@@ -19,7 +19,7 @@ export function sourceOf(referrer, utm) {
 export async function onRequestPost({ request, env }) {
   const origin = new URL(request.url).origin;
   if (!/^(www\.)?jimmypark\.net$|^localhost$|^127\.0\.0\.1$/.test(new URL(origin).hostname) || request.headers.get('Origin') !== origin || !request.headers.get('content-type')?.startsWith('application/json')) return json({ error: 'invalid_request' }, 403);
-  if (request.headers.get('DNT') === '1' || request.headers.get('Sec-GPC') === '1' || bot.test(request.headers.get('User-Agent') || '') || await isAdmin(request, env)) return new Response(null, { status: 204 });
+  if (/(?:^|;\s*)jp_internal=1(?:;|$)/.test(request.headers.get('Cookie') || '') || request.headers.get('DNT') === '1' || request.headers.get('Sec-GPC') === '1' || bot.test(request.headers.get('User-Agent') || '') || await isAdmin(request, env)) return new Response(null, { status: 204 });
   if (!env.JP_TRAFFIC) return json({ error: 'not_configured' }, 503);
   let input;
   try {

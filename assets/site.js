@@ -10,10 +10,18 @@
 
   // First-party daily browser counts; no IP, full referrer, query or cross-day identity.
   (function recordVisit() {
+    // Internal review links persist per browser; this is an analytics preference, not authentication.
+    var internal = new URLSearchParams(location.search).get('internal');
+    if (internal === '1' || internal === '0') {
+      try { localStorage.setItem('jp:traffic-exclude', internal); } catch (_) {}
+      document.cookie = 'jp_internal=' + internal + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
+    }
+    if (/(?:^|;\s*)jp_internal=1(?:;|$)/.test(document.cookie || '')) return;
     if (!/^(www\.)?jimmypark\.net$/.test(location.hostname) || window.top !== window || new URLSearchParams(location.search).has('preview') || navigator.doNotTrack === '1' || navigator.globalPrivacyControl || !crypto.randomUUID) return;
     var path = location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
     if (!/^\/(?:work|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/.test(path)) return;
     try {
+      if (localStorage.getItem('jp:traffic-exclude') === '1') return;
       var admin = JSON.parse(localStorage.getItem('jp:admin-session') || 'null');
       if (admin && admin.exp > Date.now()) return;
       var day = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);

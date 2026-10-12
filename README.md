@@ -248,3 +248,7 @@ Unknown KOTMA content paths are served with KOTMA's `/kotma/coming-soon/` tempor
 ## Quotly release shortcut
 
 `https://jimmypark.net/quotly` (also `/quotly/`) returns a non-cached302 to the latest Quotly release page. The target is maintained in `functions/_middleware.js`. Check with `node .checks/quotly-redirect.cjs`; preserve the existing `/kotma` static mount when deploying.
+
+# Owner/AI traffic exclusion (2026-10-13)
+
+Before review in each browser, open `https://jimmypark.net/?internal=1`; the one-year preference excludes later public-page visits even after sign-out. Visiting Admin enables this preference automatically. Analytics has a browser-specific toggle; `?internal=0` resumes recording. This does not authenticate or change API access. Existing known-bot/admin/preview exclusions remain. Unmarked automated visits may still count, so Analytics reports reader candidates rather than verified humans. October 9, 2026 is flagged as possible work-traffic contamination; original records are preserved.
