@@ -154,6 +154,8 @@ Validation passed on isolated release: content-revision, stability11/11, insight
 Next: read this release section before modifying the homepage. Start with node .checks/content-revision.cjs and inspect the affected public page. No pending homepage deployment or CMS save remains. Physical mobile devices and conversion/bounce changes were not measured.
 
 
-## Phone number replacement 2026-10-20 (local, release pending)
+## Phone number replacement 2026-10-20 (deployed)
 
 Owner contact changes from 010-5418-6124 to 010-2646-1635. Home Person JSON-LD, Contact display/copy/tel, CMS default and read/save normalization now use +82 10.2646.1635 / tel:+821026461635. Only the retired domestic/international digits migrate; custom or empty values remain unchanged and GET never writes KV. Historical migration seeds remain intact. Content revision regression verifies old formats, custom/blank preservation, read-only GET and legacy editor saves. No production content write or release has been performed for this change. Existing unrelated work remains uncommitted. Next: review this contact-only diff and run node .checks/content-revision.cjs; user approval is required before commit/push/deploy, preserving /kotma and excluding unrelated shared-core/wiki work.
+
+Release approved by owner: commit1b8f5d8 pushed to main and deployed to a59a7582.jimmypark-net.pages.dev. Live public API, Contact display/tel and Home Person JSON-LD show the new number. /kotma and /saju return200; KOTMA export retained with matching production Next.js chunk set and version. No remote KV mutation; retired number normalizes on read/save. Existing unrelated working changes remain excluded. Browser accessibility verifies the new phone; screenshot capture was unavailable.
