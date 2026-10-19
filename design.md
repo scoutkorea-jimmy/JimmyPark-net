@@ -472,8 +472,8 @@ custom value/order preservation, idempotence, explicit empty edits, and no GET w
 
 
 ### Contact phone formatting
-Since v0.12.0 display and copy the owner’s international formatting (`+82 10.5418.6124`). Use an
-international dial target (`tel:+821054186124`) for the link. The renderer strips separators for
+Since v0.12.0 display and copy the owner’s international formatting (`+82 10.2646.1635`). Use an
+international dial target (`tel:+821026461635`) for the link. The renderer strips separators for
 dialing and still converts an 11-digit Korean 010 number to +82 if the CMS holds one.
 
 ## 12. Evidence-led homepage (v0.9.0)

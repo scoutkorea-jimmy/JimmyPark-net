@@ -25,7 +25,7 @@ const DEFAULT = {
     },
     "contact": {
       "email": "hello@jimmypark.net",
-      "phone": "+82 10.5418.6124",
+      "phone": "+82 10.2646.1635",
       "linkedin": "https://www.linkedin.com/in/jimmy1420",
       "instagram": "https://www.instagram.com/jimmypark.0206/",
       "location": "Korea · Korean / English"
@@ -3921,6 +3921,11 @@ async function storedContent(env) {
   parsed.updatedAt = contentRevision(parsed.updatedAt);
   return parsed;
 }
+function updateOwnerPhone(doc) {
+  const digits = String(doc.global.contact.phone || "").replace(/\D/g, "");
+  if (digits === "01054186124" || digits === "821054186124") doc.global.contact.phone = DEFAULT.global.contact.phone;
+}
+
 export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
@@ -3969,6 +3974,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 43) doc = migrateTo43(doc);
   if ((doc.version || 0) < 44) doc = migrateTo44(doc);
   if ((doc.version || 0) < 45) doc = migrateTo45(doc);
+  updateOwnerPhone(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -4035,6 +4041,7 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 43) migrateTo43(incoming);
   if (incoming.version < 44) migrateTo44(incoming);
   if (incoming.version < 45) migrateTo45(incoming);
+  updateOwnerPhone(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);

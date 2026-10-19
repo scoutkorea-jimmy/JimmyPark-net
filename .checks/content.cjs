@@ -547,7 +547,7 @@ async function get(value) {
   assert.equal(upgraded.pages.home.sections.hero.lead, defaults.pages.home.sections.hero.lead);
   assert.deepEqual(upgraded.pages.home.sections.selected.sites, defaults.pages.home.sections.selected.sites);
   assert.deepEqual(await get(upgraded), upgraded, 'v10 normalization must be idempotent');
-  assert.equal(defaults.global.contact.phone, '+82 10.5418.6124');
+  assert.equal(defaults.global.contact.phone, '+82 10.2646.1635');
 
   // v10 → v11: website rows gain back-end features, facts and admin screenshots.
   assert.deepEqual(await get(asV10(defaults)), defaults, 'An unchanged v10 document must upgrade to the v11 defaults');

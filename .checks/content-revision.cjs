@@ -33,5 +33,17 @@ const api = vm.runInNewContext(source + ';({ defaults: DEFAULT, get: onRequestGe
   assert.equal((await api.put({ env, request: request(invalid) })).error, 'invalid_revision');
   legacy.updatedAt = 'not-a-date'; stored = JSON.stringify(legacy);
   assert.equal((await api.get({ env })).error, 'storage_unavailable');
+  // Retired owner numbers migrate on read and save, while custom numbers remain editable.
+  for (const phone of ['01054186124', '010-5418-6124', '010.5418.6124', '+82 10.5418.6124', '+82-10-5418-6124', '+821054186124', '010-9999-8888', '']) {
+    const contactDoc = JSON.parse(JSON.stringify(api.defaults));
+    contactDoc.global.contact.phone = phone;
+    contactDoc.updatedAt = 123;
+    stored = JSON.stringify(contactDoc);
+    const expected = /5418/.test(phone) ? '+82 10.2646.1635' : phone;
+    const beforeWrites = writes;
+    assert.equal((await api.get({ env })).content.global.contact.phone, expected);
+    assert.equal(writes, beforeWrites, 'GET must not persist a migration');
+    assert.equal((await api.put({ env, request: request(contactDoc) })).content.global.contact.phone, expected);
+  }
   console.log('Content revision: legacy ISO save, numeric readback, stale conflict and invalid storage checks passed.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

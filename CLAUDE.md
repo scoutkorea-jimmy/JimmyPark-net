@@ -204,7 +204,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   mobileImage (desktop 1280×720, mobile 360 wide; KDP mobile captured at 430px because its own
   header clips "Log in" at 390px — a Korea Dream Path issue, not fixed here). Role "Planning &
   development" follows the owner's statement that they judge needs and develop these sites.
-- Contact: email + copy, phone `+82 10.5418.6124` + copy, LinkedIn, languages, one "Email a project
+- Contact: email + copy, phone `+82 10.2646.1635` + copy, LinkedIn, languages, one "Email a project
   brief" mailto (Goal / Who it is for / Timing / Budget / References) and a five-point "What to
   include" list with "I can help with" tags. The introduction mail link was removed.
 - Schema v10 (`migrateTo10`): `V10_SEEDS` replace only unchanged v9 values (incl. phone); v9 website
@@ -598,7 +598,7 @@ reach it.** Page is chosen by `<body data-page>`; binds resolve against that pag
   `[data-href="section.field.href"]` sets a link target.
 - `[data-section="id"]` wrappers are reordered to match `pages.<page>.order` and hidden when
   in `pages.<page>.hidden`.
-- Contact phone (v0.12.0, owner request): display/copy `+82 10.5418.6124`; telephone links use `+821054186124`.
+- Contact phone (v0.12.0, owner request): display/copy `+82 10.2646.1635`; telephone links use `+821026461635`.
   Keep the static seed, Person JSON-LD, API default and live CMS contact field synchronized.
 - **Contact behaviors (from `global.contact`):** `a[data-mail]`→`mailto:`, `a[data-tel]`→`tel:`,
   `[data-copy-email]`/`[data-copy-phone]` get a `data-copy` value, `[data-li-block]` (LinkedIn)
