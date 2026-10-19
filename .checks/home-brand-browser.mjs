@@ -58,7 +58,7 @@ try {
     assert.ok(heroLines >= 2 && heroLines <= 3, `${viewport.width}px hero must wrap to two or three balanced lines; got ${heroLines}`);
     assert.equal(value.galleries, 6, `${viewport.width}px homepage must keep six selected-work galleries`);
     assert.ok(value.frameCounts.every(count => count === 4), `${viewport.width}px every selected-work gallery must include one representative and three archive frames`);
-    assert.match(value.title, /Producer, Platform Builder/);
+    assert.match(value.title, /Communications, Content Strategy and Production/);
     assert.match(value.why, /connect the brief/);
     const screenshot = await client.send('Page.captureScreenshot', { format: 'png' });
     assert.ok(screenshot.data.length > 1000, `${viewport.width}px screenshot capture failed`);

@@ -29,7 +29,7 @@ assert.equal(videoQueue([]).first.length,0);
   legacy.pages.lecture.sections.talks.items.find(row=>row.category==='Publication').title='Influencer, Becoming the Trend of the Era (1): Lecture Edition';
   const get=doc=>api.onRequestGet({env:{JP_KV:{get:async()=>JSON.stringify(doc),put:async()=>{throw Error('GET must not write');}}}});
   const next=(await get(legacy)).body.content;
-  assert.equal(next.version,44);assert.equal(next.global.contact.instagram,'https://www.instagram.com/jimmypark.0206/');
+  assert.equal(next.version,45);assert.equal(next.global.contact.instagram,'https://www.instagram.com/jimmypark.0206/');
   assert.equal(next.pages.home.sections.hero.image,'/assets/img/jimmy-park-portrait-960.jpg');
   assert.match(next.pages.lecture.sections.talks.items.find(row=>row.category==='Publication').title,/^인플루언서.*\(Influencer,/);
   legacy.global.contact.instagram='';legacy.pages.home.sections.hero.image='/assets/img/custom.jpg';

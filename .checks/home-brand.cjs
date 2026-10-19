@@ -74,8 +74,8 @@ async function migrate(value) {
   const runtime = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site.css'), 'utf8');
   assert.match(html, /Why work with Jimmy/);
-  assert.match(html, /You do not need to arrive/);
-  assert.match(html, /work people can understand, use, and keep using/);
+  assert.match(html, /Clear content for complex subjects/);
+  assert.match(html, /from strategy to video, photography and live broadcasts/);
   assert.equal((html.match(/case-media case-media--cycle/g) || []).length, 6);
   assert.ok(!html.includes('i.ytimg.com'), 'Homepage representative images must be local');
   assert.match(styles, /:is\(\.project-card, \.site-showcase\):is\(:hover, :focus-within\) \.case-media--cycle img/);

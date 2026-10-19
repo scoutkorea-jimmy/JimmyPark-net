@@ -13,33 +13,33 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 44,
+  "version": 45,
   "global": {
     "brand": {
       "name": "Jimmy Park",
-      "roleline": "Video producer · Platform builder · Applied AI · Global Scouting"
+      "roleline": "Communications & Marketing · Content Strategy & Production · Practical AI"
     },
     "footer": {
       "tagline": "PURPOSE FIRST. THE RIGHT MEDIUM. BUILT FOR USE.",
       "copyright": "© 2026 Jimmy Park"
     },
     "contact": {
-      "email": "scoutkorea@kakao.com",
+      "email": "hello@jimmypark.net",
       "phone": "+82 10.5418.6124",
       "linkedin": "https://www.linkedin.com/in/jimmy1420",
       "instagram": "https://www.instagram.com/jimmypark.0206/",
       "location": "Korea · Korean / English"
     },
     "seo": {
-      "title": "Jimmy Park (박지민) | Producer, Platform Builder & Applied AI Practitioner",
-      "desc": "Jimmy Park (박지민) is a Korea-based producer and builder who turns complex goals into films, learning platforms and practical AI workflows, supported by international collaboration."
+      "title": "Jimmy Park | Communications, Content Strategy and Production",
+      "desc": "Jimmy Park is a Korea-based communications and marketing professional connecting content strategy with video, photography and live broadcasts. He also builds websites and workflow tools with AI and works across international teams."
     }
   },
   "pages": {
     "home": {
       "meta": {
-        "title": "Jimmy Park (박지민) | Producer, Platform Builder & Applied AI Practitioner",
-        "desc": "Jimmy Park (박지민) is a Korea-based producer and builder who turns complex goals into films, learning platforms and practical AI workflows, supported by international collaboration."
+        "title": "Jimmy Park | Communications, Content Strategy and Production",
+        "desc": "Jimmy Park is a Korea-based communications and marketing professional connecting content strategy with video, photography and live broadcasts. He also builds websites and workflow tools with AI and works across international teams."
       },
       "order": [
         "hero",
@@ -53,20 +53,20 @@ const DEFAULT = {
       "hidden": [],
       "sections": {
         "hero": {
-          "eyebrow": "Producer · Platform builder · Applied AI practitioner",
-          "title": "You do not need to arrive with all the answers.",
-          "lead": "I’m Jimmy Park, a Korea-based producer, platform builder, and applied AI practitioner. I help turn complex or unfinished ideas into work people can understand, use, and keep using—by listening first, connecting the right disciplines, and staying through delivery and handover.",
+          "eyebrow": "Communications & Marketing",
+          "title": "Clear content for complex subjects.",
+          "lead": "I turn complex subjects into clear content, from strategy to video, photography and live broadcasts.",
           "ctaPrimary": {
-            "label": "View selected work",
-            "href": "#selected"
+            "label": "View media work",
+            "href": "/work"
           },
           "ctaGhost": {
-            "label": "Read my thinking",
-            "href": "/insights"
+            "label": "Websites & tools",
+            "href": "/dev"
           },
           "image": "/assets/img/jimmy-park-portrait-960.jpg",
           "badge": "Jimmy Park",
-          "caption": "Film · Learning platforms · AI workflows",
+          "caption": "Content strategy · Production · Practical AI",
           "captionRight": "Based in Korea"
         },
         "snapshot": {
@@ -102,8 +102,8 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based video producer, education platform builder, and applied AI practitioner. He leads Korea Dream Path as CEO, founded BP Media, and has worked across branded films, teaching, live web platforms, and international Scouting communication.",
-          "detail": "Across those fields, the method stays consistent: understand the people and purpose first, choose the medium second, and stay accountable for what gets delivered. He works in Korean and English; project credits and dated roles are documented across this site."
+          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, he managed filming and delivery for 385 closed schools. At Knowhow Media, he shaped channel formats around audience feedback and led production and publishing. SoulWorker subscribers grew from 2,500 to 4,400 in the first six months (+76%) during the team’s operation; this is a team channel result, not growth attributable to him alone.",
+          "detail": "He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organisational cultures. He works in Korean and English. Project credits and dated roles are documented across this site."
         },
         "activities": {
           "eyebrow": "Why work with Jimmy",
@@ -230,7 +230,7 @@ const DEFAULT = {
         },
         "selected": {
           "eyebrow": "Selected work",
-          "title": "Films, platforms, and AI in the field.",
+          "title": "Content, films and tools put into practice.",
           "sitesTitle": "Websites",
           "sites": [
             {
@@ -890,7 +890,6 @@ const DEFAULT = {
         }
       }
     },
-
     "lecture": {
       "meta": {
         "title": "Lectures & Workshops | Jimmy Park",
@@ -1074,7 +1073,7 @@ const DEFAULT = {
     "scouting": {
       "meta": {
         "title": "Global Scouting & International Collaboration | Jimmy Park",
-          "desc": "Explore Jimmy Park’s documented Scouting roles, Asia-Pacific Region service, World Scout Jamboree media work and international experience."
+        "desc": "Explore Jimmy Park’s documented Scouting roles, Asia-Pacific Region service, World Scout Jamboree media work and international experience."
       },
       "order": [
         "hero",
@@ -1771,8 +1770,8 @@ const DEFAULT = {
     },
     "contact": {
       "meta": {
-        "title": "Contact Jimmy Park | Video, Education & AI",
-        "desc": "Contact Jimmy Park by email or phone (+82). Share your brief for video, learning platforms, AI workflows or global collaboration."
+        "title": "Contact Jimmy Park | Communications and Content Production",
+        "desc": "Contact Jimmy Park about communications, content strategy and production, including films, photography, live broadcasts and practical AI workflow tools."
       },
       "order": [
         "intro"
@@ -1782,7 +1781,7 @@ const DEFAULT = {
         "intro": {
           "eyebrow": "Contact",
           "title": "Tell me what you need\nto achieve.",
-          "lead": "Email is the fastest way to reach me. Share your goal and I’ll suggest the most fitting way to get there, whether that is a film, a website, an AI workflow or an international connection."
+          "lead": "Share your audience, goal and timeline. I welcome communications, content strategy and production enquiries from businesses, public institutions and nonprofits, including international teams. Email or LinkedIn is a good place to start."
         }
       }
     }
@@ -3849,6 +3848,15 @@ function migrateTo44(doc) {
   return doc;
 }
 
+// Refresh the retired owner address while preserving other customized contacts.
+function migrateTo45(doc) {
+  if (doc.global?.contact?.email === 'scoutkorea@kakao.com') {
+    doc.global.contact.email = DEFAULT.global.contact.email;
+  }
+  doc.version = 45;
+  return doc;
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -3892,7 +3900,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 async function storedContent(env) {
@@ -3901,15 +3909,21 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
+  // Older CMS saves used ISO dates; compare the same numeric revision on reads and writes.
+  if (typeof parsed.updatedAt === 'string') {
+    const revision = Date.parse(parsed.updatedAt);
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(parsed.updatedAt) || !Number.isFinite(revision) || revision < 0) throw new Error('invalid_stored_revision');
+    parsed.updatedAt = revision;
+  }
   return parsed;
 }
 export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -3952,6 +3966,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 42) doc = migrateTo42(doc);
   if ((doc.version || 0) < 43) doc = migrateTo43(doc);
   if ((doc.version || 0) < 44) doc = migrateTo44(doc);
+  if ((doc.version || 0) < 45) doc = migrateTo45(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -4015,12 +4030,14 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 41) migrateTo41(incoming);
   if (incoming.version < 42) migrateTo42(incoming);
   if (incoming.version < 43) migrateTo43(incoming);
+  if (incoming.version < 44) migrateTo44(incoming);
+  if (incoming.version < 45) migrateTo45(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 44;
+  doc.version = 45;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
