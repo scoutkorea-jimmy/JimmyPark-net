@@ -3903,6 +3903,12 @@ function validDocument(value) {
   return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
+function contentRevision(value) {
+  if (typeof value !== 'string') return value;
+  const revision = Date.parse(value);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) || !Number.isFinite(revision) || revision < 0) throw new Error('invalid_revision');
+  return revision;
+}
 async function storedContent(env) {
   const raw = await env.JP_KV.get(KEY);
   if (raw === null || raw === undefined) return null;
@@ -3912,11 +3918,7 @@ async function storedContent(env) {
   const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   // Older CMS saves used ISO dates; compare the same numeric revision on reads and writes.
-  if (typeof parsed.updatedAt === 'string') {
-    const revision = Date.parse(parsed.updatedAt);
-    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(parsed.updatedAt) || !Number.isFinite(revision) || revision < 0) throw new Error('invalid_stored_revision');
-    parsed.updatedAt = revision;
-  }
+  parsed.updatedAt = contentRevision(parsed.updatedAt);
   return parsed;
 }
 export async function onRequestGet({ env }) {
@@ -3983,6 +3985,7 @@ export async function onRequestPut({ request, env }) {
   const incoming = body && (body.content || body);
   if (!validDocument(incoming)) return json({ ok: false, error: 'invalid_content' }, 400);
   if (incoming.version !== DEFAULT.version) return json({ ok: false, error: 'schema_changed' }, 409);
+  try { incoming.updatedAt = contentRevision(incoming.updatedAt); } catch (_) { return json({ ok: false, error: 'invalid_revision' }, 400); }
   if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
   if (incoming.updatedAt !== undefined && (!Number.isFinite(incoming.updatedAt) || incoming.updatedAt < 0)) return json({ ok: false, error: 'invalid_revision' }, 400);
   let previous;

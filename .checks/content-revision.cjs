@@ -23,6 +23,14 @@ const api = vm.runInNewContext(source + ';({ defaults: DEFAULT, get: onRequestGe
   assert.equal((await api.put({ env, request: request(incoming) })).error, 'conflict');
   assert.equal(writes, 1);
   assert.equal((await api.get({ env })).content.updatedAt, saved.content.updatedAt);
+  // A tab opened before deployment still sends its original ISO revision.
+  stored = JSON.stringify(legacy);
+  const oldClient = { ...read.content, updatedAt: legacy.updatedAt };
+  const legacySave = await api.put({ env, request: request(oldClient) });
+  assert.equal(legacySave.ok, true, JSON.stringify(legacySave));
+  assert.equal((await api.put({ env, request: request(oldClient) })).error, 'conflict');
+  const invalid = { ...oldClient, updatedAt: 'invalid-date' };
+  assert.equal((await api.put({ env, request: request(invalid) })).error, 'invalid_revision');
   legacy.updatedAt = 'not-a-date'; stored = JSON.stringify(legacy);
   assert.equal((await api.get({ env })).error, 'storage_unavailable');
   console.log('Content revision: legacy ISO save, numeric readback, stale conflict and invalid storage checks passed.');
