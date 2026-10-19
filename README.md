@@ -252,3 +252,5 @@ Unknown KOTMA content paths are served with KOTMA's `/kotma/coming-soon/` tempor
 # Owner/AI traffic exclusion (2026-10-13)
 
 Before review in each browser, open `https://jimmypark.net/?internal=1`; the one-year preference excludes later public-page visits even after sign-out. Visiting Admin enables this preference automatically. Analytics has a browser-specific toggle; `?internal=0` resumes recording. This does not authenticate or change API access. Existing known-bot/admin/preview exclusions remain. Unmarked automated visits may still count, so Analytics reports reader candidates rather than verified humans. October 9, 2026 is flagged as possible work-traffic contamination; original records are preserved.
+
+Released2026-10-20: a compact communications/content homepage, aligned profile metadata and social card, and legacy ISO CMS revision compatibility. Production CMS save and public readback are verified. See PROJECT_CONTEXT.md for release evidence and existing out-of-scope check failures. Run `node .checks/content-revision.cjs` for the save regression check.
