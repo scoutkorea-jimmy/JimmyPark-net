@@ -405,6 +405,11 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.27.2 / schema v46: ORCID (`global.contact.orcid`, default `https://orcid.org/0009-0000-5227-620X`) is an editable
+HTTPS contact link like Instagram (blank hides it). It renders in the Contact block (`[data-orcid-block]`, `rel="me"`)
+and joins Person JSON-LD `sameAs` (static seed and runtime). migrateTo46 fills it only when the key is missing, so an
+explicitly cleared link stays hidden. Check: `node .checks/orcid.cjs`. Pre-existing failures at this release, not caused
+by it: `.checks/design.py` and `.checks/og-images.cjs` (scouting `timeline.items` static/runtime drift) and `.checks/content.cjs`.
 v0.27.1: site search opens a native dialog, not a new page, for ordinary site search clicks.
 Reuse `/search?fragment=1`; intercept forms/filter/pagination, abort stale requests, restore scroll
 and focus on close. Keep the full page for no-JS/direct links. Icon-only links explicitly override
@@ -583,7 +588,7 @@ VERSION         site version string (currently mirrored in ?v= asset query strin
 
 ## Content hydration (admin overrides)
 The content doc is a **full-site document** (`global` + `pages.<page>.sections`, see
-content.js `DEFAULT`, schema `version: 43`). `site.js` renders the static seed first, then
+content.js `DEFAULT`, schema `version: 46`). `site.js` renders the static seed first, then
 fetches `/api/content` (and also accepts a live-preview doc from `/admin` via `postMessage`)
 and overrides the seed through these markup hooks — **add them to new markup so admin edits
 reach it.** Page is chosen by `<body data-page>`; binds resolve against that page's sections.

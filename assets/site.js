@@ -552,7 +552,7 @@
   function cleanPreviewUrls(value) {
     if (!value || typeof value !== 'object') return value;
     Object.keys(value).forEach(function (key) {
-      if (['href','image','linkedin','instagram'].indexOf(key) >= 0 && typeof value[key] === 'string') value[key] = safeSiteUrl(value[key], key === 'linkedin' || key === 'instagram');
+      if (['href','image','linkedin','instagram','orcid'].indexOf(key) >= 0 && typeof value[key] === 'string') value[key] = safeSiteUrl(value[key], key === 'linkedin' || key === 'instagram' || key === 'orcid');
       else if (value[key] && typeof value[key] === 'object') cleanPreviewUrls(value[key]);
     });
     return value;
@@ -632,7 +632,7 @@
           person.name = (g.brand || {}).name || person.name;
           person.description = (sd.snapshot || {}).body || person.description;
           if ((sd.hero || {}).image) person.image = new URL(sd.hero.image, 'https://jimmypark.net').href;
-          person.sameAs = [(g.contact || {}).linkedin, (g.contact || {}).instagram].filter(Boolean);
+          person.sameAs = [(g.contact || {}).linkedin, (g.contact || {}).instagram, (g.contact || {}).orcid].filter(Boolean);
           if ((g.contact || {}).email) person.email = g.contact.email;
           personNode.textContent = JSON.stringify(person).replace(/</g, '\\u003c');
         }
@@ -717,6 +717,14 @@
       if (c.instagram) {
         ig.querySelector('a').href = c.instagram;
         ig.querySelector('[data-ig-label]').textContent = c.instagram.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      }
+    }
+    var orcid = document.querySelector('[data-orcid-block]');
+    if (orcid) {
+      orcid.hidden = !c.orcid;
+      if (c.orcid) {
+        orcid.querySelector('a').href = c.orcid;
+        orcid.querySelector('[data-orcid-label]').textContent = c.orcid.replace(/^https?:\/\//, '').replace(/\/$/, '');
       }
     }
 

@@ -1,0 +1,27 @@
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const root = path.resolve(__dirname, '..');
+const read = file => fs.readFileSync(path.join(root, file), 'utf8');
+const source = read('functions/api/content.js').replace(/^import .*;\n/gm, '').replace(/export async function/g, 'async function');
+const api = vm.runInNewContext(source + ';({DEFAULT,onRequestGet,onRequestPut});', {URL,TextEncoder,isAdmin:async()=>true,json:(body,status=200)=>({body,status})});
+const ORCID = 'https://orcid.org/0009-0000-5227-620X';
+const get = doc => api.onRequestGet({env:{JP_KV:{get:async()=>JSON.stringify(doc),put:async()=>{throw Error('GET must not write');}}}});
+(async () => {
+  assert.equal(api.DEFAULT.version, 46);
+  assert.equal(api.DEFAULT.global.contact.orcid, ORCID);
+  const legacy = JSON.parse(JSON.stringify(api.DEFAULT)); legacy.version = 45; delete legacy.global.contact.orcid;
+  const upgraded = (await get(legacy)).body.content;
+  assert.equal(upgraded.version, 46); assert.equal(upgraded.global.contact.orcid, ORCID);
+  legacy.global.contact.orcid = '';
+  assert.equal((await get(legacy)).body.content.global.contact.orcid, '');
+  const bad = JSON.parse(JSON.stringify(api.DEFAULT)); bad.global.contact.orcid = 'javascript:alert(1)';
+  const rejected = await api.onRequestPut({env:{JP_KV:{get:async()=>null,put:async()=>{throw Error('Unsafe URL must not write');}}},request:{text:async()=>JSON.stringify(bad)}});
+  assert.equal(rejected.status, 400); assert.equal(rejected.body.error, 'invalid_url');
+  assert.ok(read('contact.html').includes('href="' + ORCID + '"'));
+  assert.ok(read('index.html').includes('"' + ORCID + '"'));
+  assert.ok(read('assets/site.js').includes('[data-orcid-block]'));
+  assert.ok(read('assets/admin.js').includes('F("orcid"'));
+  console.log('PASS: ORCID default, v45→v46 migration, cleared link preserved, unsafe URL rejected, static seed + JSON-LD + admin field present.');
+})().catch(error => { console.error(error); process.exitCode = 1; });
