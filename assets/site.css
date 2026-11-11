@@ -429,6 +429,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .expect-list { display: flex; flex-direction: column; gap: var(--space-12); margin: var(--space-12) 0 0; padding: 0; list-style: none; }
 .portfolio .expect-list strong { display: block; font-size: 1rem; line-height: 1.5; }
 .portfolio .expect-list span { display: block; margin-top: var(--space-4); font-size: .9375rem; line-height: 1.6; color: var(--md-on-surface-variant); }
+.portfolio .contact-layout > .enquiry-card { grid-column: 1 / -1; scroll-margin-top: 92px; }
+.portfolio .enquiry-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-16); margin-top: var(--space-16); }
+.portfolio .enquiry-field { display: flex; flex-direction: column; gap: var(--space-8); }
+.portfolio .enquiry-field--wide, .portfolio .enquiry-actions { grid-column: 1 / -1; }
+.portfolio .enquiry-field label { font-size: .9375rem; font-weight: 600; color: var(--md-on-surface); }
+.portfolio .enquiry-optional { font-weight: 400; color: var(--md-on-surface-variant); }
+.portfolio .enquiry-field :is(input, textarea) { width: 100%; min-height: 48px; padding: var(--space-12) var(--space-16); font: inherit; color: var(--md-on-surface); background: var(--md-surface); border: 1px solid var(--md-outline); border-radius: var(--radius-control); }
+.portfolio .enquiry-field textarea { resize: vertical; line-height: 1.6; }
+.portfolio .enquiry-field :is(input, textarea):focus-visible { outline: 2px solid var(--md-primary); outline-offset: 1px; border-color: var(--md-primary); }
+.portfolio .enquiry-field :is(input, textarea)[aria-invalid="true"] { border-color: var(--md-primary); }
+.portfolio .enquiry-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.portfolio .enquiry-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-16); }
+.portfolio .enquiry-status { margin: 0; font-size: .9375rem; color: var(--md-on-surface-variant); }
+.portfolio .enquiry-status[data-state="error"] { color: var(--md-primary); }
 .portfolio .help-list { margin-top: var(--space-24); padding-top: var(--space-16); border-top: 1px solid #e6e1da; }
 .portfolio .help-list .tag-list { margin-top: var(--space-12); }
 .portfolio .format-details { border-color: #e6e1da; }
@@ -474,6 +488,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 839px) {
   .portfolio .travel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portfolio :is(.project-grid, .selected-work-grid, .principle-grid, .contact-layout) { grid-template-columns: 1fr; }
+  .portfolio .enquiry-form { grid-template-columns: 1fr; }
   .portfolio .site-showcase, .portfolio .site-showcase:nth-child(even) { grid-template-columns: 1fr; }
   .portfolio .backend-grid.has-shot, .portfolio .site-showcase:nth-child(even) .backend-grid.has-shot, .portfolio .backend-list { grid-template-columns: minmax(0, 1fr); }
   .portfolio .site-showcase:nth-child(even) .backend-shot { order: 0; }

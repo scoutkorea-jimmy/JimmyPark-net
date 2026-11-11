@@ -427,7 +427,15 @@ v0.29.0 (2026-11-12), owner-approved operations, security and article release. S
   `sitemap.xml`) with each such release. `/insights` and `/sitemap` move forward when a newer article goes live.
 - **Contact:** `What to expect` (`#what-to-expect`) states the owner's terms exactly: reply within two business days;
   deliverables vary by project; no fixed rate, fees open to discussion; reduced rates for NGOs and nonprofits. Static copy like
-  `What to include`; do not add prices, turnaround promises or a form without the owner. English remains the only site language.
+  `What to include`; do not add prices or turnaround promises without the owner. English remains the only site language.
+- **Contact form (owner-approved 2026-11-12):** `#message` (`[data-enquiry]`) ships `hidden`; `site.js` shows it only when
+  `GET /api/enquiry` reports `enabled`, so the page is safe before mail is configured and the mailto links stay primary.
+  `POST /api/enquiry` validates, drops honeypot hits silently, limits 5 messages per hashed address per hour (fails closed) and
+  sends one plain-text email through Resend to `hello@jimmypark.net` with the visitor as reply-to. Messages are not stored.
+  Requires Pages secret `RESEND_API_KEY` and jimmypark.net verified as a sending domain in Resend; optional `ENQUIRY_TO`,
+  `ENQUIRY_FROM`. Never commit the key. Check: `node .checks/enquiry.cjs`.
+- **Positioning (owner decision 2026-11-12):** Home copy is the reference. Social channels and ORCID may differ; do not
+  rewrite Home to match them.
 v0.27.2 / schema v46: ORCID (`global.contact.orcid`, default `https://orcid.org/0009-0000-5227-620X`) is an editable
 HTTPS contact link like Instagram (blank hides it). It renders in the Contact block (`[data-orcid-block]`, `rel="me"`)
 and joins Person JSON-LD `sameAs` (static seed and runtime). migrateTo46 fills it only when the key is missing, so an
@@ -697,6 +705,7 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
   Local checks: `node .checks/traffic.cjs` (Node built-in SQLite, no package).
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,
   `img:*`, `media:index`, `rl:login:*`.
+- **Secret `RESEND_API_KEY`** — Resend API key for the Contact form (`/api/enquiry`). Without it the form stays hidden.
 - **Env var `TOTP_SECRET`** (base32) — set in Pages → Settings → Environment variables, and
   registered in the authenticator app. Admin login returns 503 `not_configured` until it's set.
 

@@ -791,4 +791,47 @@
       try { applyDoc(e.data.content); } catch (_) {}
     }
   });
+
+  // ── Contact form ───────────────────────────────────────────────────────────
+  // The form is hidden in the markup and shown only when the server reports that
+  // message delivery is configured. Email links above it always work without it.
+  (function () {
+    var card = document.querySelector("[data-enquiry]");
+    var form = card && card.querySelector("[data-enquiry-form]");
+    if (!form || !window.fetch) return;
+    var status = card.querySelector("[data-enquiry-status]");
+    var button = form.querySelector('button[type="submit"]');
+    var MESSAGES = {
+      invalid_name: "Please enter your name.",
+      invalid_email: "Please enter a valid email address.",
+      invalid_message: "Please write a message of at least 10 characters.",
+      invalid_organization: "Please shorten the organization name.",
+      rate_limited: "Too many messages from this connection. Please email me directly.",
+      too_large: "That message is too long. Please shorten it or email me directly."
+    };
+    var FALLBACK = "The message could not be sent. Please email me directly.";
+    function say(text, state) { status.textContent = text; if (state) status.setAttribute("data-state", state); else status.removeAttribute("data-state"); }
+    function mark(name, bad) { var el = form.elements[name]; if (el) { if (bad) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid"); } }
+    fetch("/api/enquiry", { headers: { Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.enabled) card.hidden = false; })
+      .catch(function () {});
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (button.disabled) return;
+      var data = {};
+      ["name", "email", "organization", "message", "website"].forEach(function (k) { data[k] = (form.elements[k].value || "").trim(); mark(k, false); });
+      var problem = !data.name ? "invalid_name" : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email) ? "invalid_email" : data.message.length < 10 ? "invalid_message" : "";
+      if (problem) { var field = problem.replace("invalid_", ""); mark(field, true); form.elements[field].focus(); say(MESSAGES[problem], "error"); return; }
+      button.disabled = true; say("Sending…");
+      fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, error: d.error }; }); })
+        .then(function (res) {
+          if (res.ok) { form.reset(); say("Thank you. Your message has been sent, and I will reply within two business days."); }
+          else { if (/^invalid_/.test(res.error || "")) mark(res.error.replace("invalid_", ""), true); say(MESSAGES[res.error] || FALLBACK, "error"); }
+        })
+        .catch(function () { say(FALLBACK, "error"); })
+        .then(function () { button.disabled = false; });
+    });
+  })();
 })();

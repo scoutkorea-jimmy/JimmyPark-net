@@ -141,6 +141,21 @@ Timeline:
           <div class="tag-list"><span class="tag">Films &amp; video</span><span class="tag">Websites &amp; web tools</span><span class="tag">AI workflows &amp; workshops</span><span class="tag">Global &amp; Scouting projects</span></div>
         </div>
       </div>
+      <div class="card card--compact enquiry-card" id="message" data-enquiry hidden>
+        <div class="contact-label">Send a message</div>
+        <p class="contact-note">Your message is emailed to Jimmy and is not stored on this site.</p>
+        <form class="enquiry-form" data-enquiry-form novalidate>
+          <div class="enquiry-field"><label for="enquiry-name">Name</label><input id="enquiry-name" name="name" type="text" autocomplete="name" maxlength="100" required></div>
+          <div class="enquiry-field"><label for="enquiry-email">Email</label><input id="enquiry-email" name="email" type="email" autocomplete="email" maxlength="200" required></div>
+          <div class="enquiry-field enquiry-field--wide"><label for="enquiry-organization">Organization <span class="enquiry-optional">(optional)</span></label><input id="enquiry-organization" name="organization" type="text" autocomplete="organization" maxlength="150"></div>
+          <div class="enquiry-field enquiry-field--wide"><label for="enquiry-message">Message</label><textarea id="enquiry-message" name="message" rows="6" maxlength="4000" required></textarea></div>
+          <div class="enquiry-trap" aria-hidden="true"><label for="enquiry-website">Leave this field empty</label><input id="enquiry-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <div class="enquiry-actions">
+            <button type="submit" class="btn btn-primary site-button">Send message<span class="msym" aria-hidden="true">send</span></button>
+            <p class="enquiry-status" data-enquiry-status role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>

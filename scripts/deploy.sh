@@ -74,6 +74,7 @@ check "/insights/feed.xml" 200 https://jimmypark.net/insights/feed.xml
 check "/sitemap.xml"     200 https://jimmypark.net/sitemap.xml
 check "/kotma/"          200 https://jimmypark.net/kotma/
 check "/saju"            200 https://jimmypark.net/saju
+check "/api/enquiry"     200 https://jimmypark.net/api/enquiry
 check "/api/posts"       401 https://jimmypark.net/api/posts
 check "/.env.example"    404 https://jimmypark.net/.env.example
 check "/VERSION"         404 https://jimmypark.net/VERSION

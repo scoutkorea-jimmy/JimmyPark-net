@@ -7,7 +7,9 @@ Golden rules, v0.29.0. Not yet merged to main or deployed when this note was wri
 console on each public page, Admin, `/saju` and `/kotma` and review Content-Security-Policy-Report-Only violations before
 enforcing that policy. Checks added: `.checks/security.cjs`, `.checks/article-extras.cjs`. Pre-existing failures unchanged:
 `.checks/design.py`, `.checks/og-images.cjs` (Scouting timeline drift) and `.checks/content.cjs`.
-Open with the owner: one positioning line across Home, social channels and ORCID; a contact form (needs a delivery method).
+Owner decisions 2026-11-12: copy approved; KOTMA deploys together from its existing export; Home copy is the positioning
+reference; Contact form delivers by email to hello@jimmypark.net (Resend, `/api/enquiry`, hidden until `RESEND_API_KEY` is set).
+Owner still has to create the Resend account, verify the domain (DNS records) and add the secret, then deploy.
 
 # Internal traffic exclusion (2026-10-13, deployed)
 

@@ -623,6 +623,9 @@ these roles; new rules should use the `--md-*` names directly.
 - `.insight-feed` is one `card-link` under the Articles lead: `Follow by RSS` with `rss_feed`.
 - Contact `.expect-block` / `.expect-list` sits between `What to include` and `I can help with`: a top divider, the
   `contact-label`, then unnumbered term/description rows matching `.brief-list` type sizes. Both Contact cards keep one height.
+- Contact `.enquiry-card` spans both columns below the two cards and is hidden until delivery is configured. Two-column
+  field grid (one column at the phone breakpoint), 48px outlined inputs with `--radius-control`, primary focus outline,
+  primary `Send message` button and an inline `role="status"` line. Errors use the primary colour; no new hues.
 
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
