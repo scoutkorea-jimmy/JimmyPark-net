@@ -68,7 +68,17 @@ fi
 
 echo "Checking the live site..."
 status() { curl -s -o /dev/null -w '%{http_code}' "$@"; }
-check() { local got; got="$(status "${@:3}")"; [[ "$got" == "$2" ]] && echo "  ok   $1 → $got" || { echo "  FAIL $1 → $got (expected $2)"; bad=1; }; }
+# A new deployment takes a few seconds to reach every edge location, so each check
+# is retried before it counts as a failure.
+check() {
+  local got attempt
+  for attempt in 1 2 3 4 5 6; do
+    got="$(status "${@:3}")"
+    [[ "$got" == "$2" ]] && { echo "  ok   $1 → $got"; return; }
+    sleep 5
+  done
+  echo "  FAIL $1 → $got (expected $2)"; bad=1
+}
 bad=0
 check "/"                200 https://jimmypark.net/
 check "/api/content"     200 https://jimmypark.net/api/content
