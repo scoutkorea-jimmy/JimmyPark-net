@@ -226,7 +226,7 @@ computed foreground/background contrast is below WCAG AA. It does not write site
 4. Add custom domain **jimmypark.net**.
 
 Or deploy from CLI:
-`wrangler pages deploy . --project-name jimmypark-net --branch main`
+`scripts/deploy.sh   # committed main + KOTMA export; never deploy the folder directly`
 
 ## KOTMA temporary preview
 

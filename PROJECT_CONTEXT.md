@@ -1,3 +1,14 @@
+# Operations, security and article release 2026-11-12 (v0.29.0, branch `improve/ops-security-articles-contact`)
+
+Owner approved: move the checkout to `~/Developer/jimmypark-net`, keep Desktop work as local branch
+`wip/local-desktop-20261112`, one deploy script, re-apply the 2026-09-19 security findings, article series list, per-series
+closing invitation, copy link, RSS, HEAD parity, sitemap dates and the Contact `What to expect` block. Details: CLAUDE.md
+Golden rules, v0.29.0. Not yet merged to main or deployed when this note was written. After deployment, open the browser
+console on each public page, Admin, `/saju` and `/kotma` and review Content-Security-Policy-Report-Only violations before
+enforcing that policy. Checks added: `.checks/security.cjs`, `.checks/article-extras.cjs`. Pre-existing failures unchanged:
+`.checks/design.py`, `.checks/og-images.cjs` (Scouting timeline drift) and `.checks/content.cjs`.
+Open with the owner: one positioning line across Home, social channels and ORCID; a contact form (needs a delivery method).
+
 # Internal traffic exclusion (2026-10-13, deployed)
 
 Admin visits set a one-year browser-specific analytics exclusion cookie and localStorage preference; Analytics offers a toggle. Other owner/AI review browsers start at `https://jimmypark.net/?internal=1` before opening public pages. `?internal=0` clears the preference. Client and traffic API exclude marked browsers; no login permissions change. Unmarked automation may still count. Analytics labels counts as reader candidates and flags 2026-10-09 in the daily detail and history as possibly mixed owner/AI work traffic, preserving 82 visitors/112 views. SQLite/client regression, admin-save, syntax and whitespace checks pass. Original production traffic records remain unchanged. Deployment verification is recorded separately. Existing unrelated working changes are preserved.

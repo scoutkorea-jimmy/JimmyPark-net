@@ -425,6 +425,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .brief-list li::before { content: counter(brief, decimal-leading-zero); font-size: .875rem; font-weight: 700; color: var(--eyebrow-color); }
 .portfolio .brief-list strong { display: block; font-size: 1rem; line-height: 1.5; }
 .portfolio .brief-list span { display: block; margin-top: var(--space-4); font-size: .9375rem; line-height: 1.6; color: var(--md-on-surface-variant); }
+.portfolio .expect-block { margin-bottom: var(--space-24); padding-top: var(--space-16); border-top: 1px solid var(--md-outline-variant); scroll-margin-top: 92px; }
+.portfolio .expect-list { display: flex; flex-direction: column; gap: var(--space-12); margin: var(--space-12) 0 0; padding: 0; list-style: none; }
+.portfolio .expect-list strong { display: block; font-size: 1rem; line-height: 1.5; }
+.portfolio .expect-list span { display: block; margin-top: var(--space-4); font-size: .9375rem; line-height: 1.6; color: var(--md-on-surface-variant); }
 .portfolio .help-list { margin-top: var(--space-24); padding-top: var(--space-16); border-top: 1px solid #e6e1da; }
 .portfolio .help-list .tag-list { margin-top: var(--space-12); }
 .portfolio .format-details { border-color: #e6e1da; }
@@ -596,6 +600,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .insight-tags { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-32); }
 .insight-tags .tag { color: var(--md-on-surface-variant); background: var(--md-surface-container); }
 .insight-share { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-12); margin-top: var(--space-32); padding-top: var(--space-24); border-top: 1px solid var(--md-outline-variant); }
+.insight-series { margin-top: var(--space-48); padding: var(--space-32); background: var(--md-surface-container); border-radius: var(--md-shape-large); }
+.insight-series h2 { margin: var(--space-8) 0 var(--space-16); font-size: var(--md-headline-small); }
+.insight-series-list { list-style: none; margin: 0; padding: 0; }
+.insight-series-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-4) var(--space-12); padding: var(--space-12) 0; border-top: 1px solid var(--md-outline-variant); }
+.insight-series-part { flex: 0 0 auto; min-width: 3.5rem; color: var(--md-on-surface-variant); font-size: var(--md-label-large); font-weight: 600; }
+.insight-series-title { flex: 1 1 16rem; }
+.insight-series-list .is-current .insight-series-title { font-weight: 600; }
+.insight-series-note { flex: 0 0 auto; color: var(--md-on-surface-variant); font-size: var(--md-label-large); }
+.insight-feed { margin: var(--space-16) 0 0; }
 .insight-scheduled { margin-top: var(--space-48); padding: var(--space-32); background: var(--md-surface-container); border-radius: var(--md-shape-large); }
 .insight-scheduled h2 { margin: var(--space-8) 0 var(--space-12); font-size: var(--md-headline-small); }
 .insight-scheduled p:not(.eyebrow) { margin: 0; color: var(--md-on-surface-variant); }

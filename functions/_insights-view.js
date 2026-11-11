@@ -93,7 +93,34 @@ function shareLinks(url, title) {
   const encodedURL = encodeURIComponent(url);
   return '<nav class="insight-share" aria-label="Share this article"><span class="insight-control-label">Share this article</span>' +
     '<a class="btn btn-secondary site-button" href="https://www.facebook.com/sharer/sharer.php?u=' + encodedURL + '" target="_blank" rel="noopener noreferrer" aria-label="Share ' + escapeHTML(title) + ' on Facebook">Facebook<span class="msym" aria-hidden="true">open_in_new</span></a>' +
-    '<a class="btn btn-secondary site-button" href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodedURL + '" target="_blank" rel="noopener noreferrer" aria-label="Share ' + escapeHTML(title) + ' on LinkedIn">LinkedIn<span class="msym" aria-hidden="true">open_in_new</span></a></nav>';
+    '<a class="btn btn-secondary site-button" href="https://www.linkedin.com/sharing/share-offsite/?url=' + encodedURL + '" target="_blank" rel="noopener noreferrer" aria-label="Share ' + escapeHTML(title) + ' on LinkedIn">LinkedIn<span class="msym" aria-hidden="true">open_in_new</span></a>' +
+    '<button type="button" class="btn btn-secondary site-button" data-copy="' + escapeHTML(url) + '" aria-label="Copy the link to ' + escapeHTML(title) + '">Copy link<span class="msym" aria-hidden="true">content_copy</span></button></nav>';
+}
+
+// What the closing invitation asks about, per series. Unlisted articles use the neutral default.
+const SERIES_TOPICS = {
+  'AX Series': 'working with AI',
+  'Message in Motion': 'media and video',
+  'The Work Behind the Work': 'how the work gets done',
+  'Choices That Shape Good Work': 'the choices behind good work',
+  'Learning in an Age of Easy Answers': 'learning with AI',
+};
+function responseTopic(post) {
+  return SERIES_TOPICS[seriesInfo(post)?.name] || 'this topic';
+}
+// Every part of the current article's series, in order. Published parts link to the
+// article, scheduled parts to their schedule page; the current part is marked, not linked.
+function seriesList(post, posts) {
+  const info = seriesInfo(post);
+  if (!info) return '';
+  const parts = posts.filter(p => seriesInfo(p)?.name === info.name).sort((a, b) => seriesPart(a) - seriesPart(b));
+  if (parts.length < 2) return '';
+  const items = parts.map(p => {
+    const label = '<span class="insight-series-part">Part ' + seriesPart(p) + '</span>';
+    if (p.slug === post.slug) return '<li class="is-current" aria-current="page">' + label + '<span class="insight-series-title">' + escapeHTML(p.title) + '</span><span class="insight-series-note">Reading now</span></li>';
+    return '<li>' + label + '<a class="lnk insight-series-title" href="/insights/' + escapeHTML(p.slug) + '">' + escapeHTML(p.title) + '</a>' + (isScheduled(p) ? '<span class="insight-series-note">' + escapeHTML(displayDate(p)) + '</span>' : '') + '</li>';
+  }).join('');
+  return '<nav class="insight-series" aria-labelledby="insight-series-heading"><p class="eyebrow">In this series</p><h2 id="insight-series-heading">' + escapeHTML(info.name) + '</h2><ol class="insight-series-list">' + items + '</ol></nav>';
 }
 
 function seriesPart(post) {
@@ -204,7 +231,7 @@ export async function renderInsights({ env, request }, slug) {
     const part = seriesPart(post);
     const info = seriesInfo(post);
     const seriesLabel = info ? info.name + ' · Part ' + part + ' of ' + (info.total || 4) : e(post.category || 'Notes');
-    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="btn btn-secondary site-button insight-back-button" href="/insights"><span class="msym" aria-hidden="true">arrow_back</span>View all articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + shareLinks(url, post.title) + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of media and video.</p><a class="btn btn-primary site-button" href="/contact?subject=Article%20response">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
+    content = '<article class="site-section"><div class="site-container insight-reading-layout">' + articleToc(post.body) + '<div class="insight-reading"><a class="btn btn-secondary site-button insight-back-button" href="/insights"><span class="msym" aria-hidden="true">arrow_back</span>View all articles</a><div class="insight-meta"><span class="eyebrow">' + e(seriesLabel) + '</span><time datetime="' + e(post.date + 'T09:00:00+09:00') + '">' + e(displayDate(post)) + '</time><a class="lnk" rel="author" href="/#snapshot">By Jimmy Park</a></div><h1 class="heading page-heading">' + e(post.title) + '</h1>' + (post.summary ? '<p class="hero-lead">' + e(post.summary) + '</p>' : '') + articleCover(post) + '<div class="insight-body">' + articleBody(post.body) + '</div>' + (post.hashtags ? '<div class="insight-tags" aria-label="Tags">' + hashtags(post.hashtags) + '</div>' : '') + shareLinks(url, post.title) + seriesList(post, posts) + '<aside class="insight-cta"><p class="eyebrow">Keep the conversation going</p><h2>What do you think?</h2><p>Share your perspective, questions, or a different experience of ' + e(responseTopic(post)) + '.</p><a class="btn btn-primary site-button" href="/contact?subject=Article%20response">Share your thoughts<span class="msym" aria-hidden="true">arrow_forward</span></a></aside></div></div></article>';
   } else {
     const matchesSeries = p => !seriesFilter || seriesInfo(p)?.name === seriesFilter;
     const orderedLive = livePosts.filter(matchesSeries).sort((a, b) => {
@@ -222,7 +249,7 @@ export async function renderInsights({ env, request }, slug) {
     const upcomingBlock = orderedUpcoming.length
       ? '<section class="insight-collection insight-collection--upcoming" aria-labelledby="upcoming-articles"><p class="eyebrow">Scheduled writing</p><h2 id="upcoming-articles" class="insight-collection-title">Upcoming Articles</h2><p class="insight-collection-intro">Titles and summaries are available now. Full articles open at 9:00 AM KST on the date shown.</p><div class="insights-list">' + postList(upcomingPage.items, true) + '</div>' + pagination('Upcoming article pages', upcomingPage.page, upcomingPage.pages, 'upcomingPage', upcomingParams) + '</section>'
       : '';
-    content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p>' + articleControls(posts, { series: seriesFilter, sort }) + publishedBlock + upcomingBlock + '</div></section>';
+    content = '<section class="site-section"><div class="site-container insight-index"><p class="eyebrow">Notes from practice</p><h1 class="heading page-heading">Articles</h1><p class="hero-lead">Practical articles on media, web development, applied AI, and Scouting communication.</p><p class="insight-feed"><a class="card-link" href="/insights/feed.xml" type="application/rss+xml">Follow by RSS<span class="msym" aria-hidden="true">rss_feed</span></a></p>' + articleControls(posts, { series: seriesFilter, sort }) + publishedBlock + upcomingBlock + '</div></section>';
   }
   if (post && !scheduled) {
     const structured = { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': url + '#article', mainEntityOfPage: url, headline: post.title, description: desc, datePublished: post.date + 'T09:00:00+09:00', dateModified: new Date(post.updatedAt).toISOString(), author: { '@type': 'Person', '@id': 'https://jimmypark.net/#person', name: 'Jimmy Park', url: 'https://jimmypark.net/#snapshot' } };

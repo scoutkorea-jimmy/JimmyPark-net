@@ -405,6 +405,29 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.29.0 (2026-11-12), owner-approved operations, security and article release. Schema stays v46.
+- **Checkout location:** work in `~/Developer/jimmypark-net`. The old `~/Desktop/VS_Code/JimmyPark-net` folder is iCloud-synced
+  (files and Git objects were evicted there) and is kept only as an archive. Its uncommitted work (saju rework, `wiki/`,
+  shared-core, agent guide) is the local-only branch `wip/local-desktop-20261112`; it is not on GitHub and must not be deployed.
+- **Deploy only with `scripts/deploy.sh`** (see Deploy). It publishes committed `origin/main` plus the KOTMA export and refuses a
+  dirty tree, another branch, a cloud-synced checkout or a missing KOTMA export. Never run `wrangler pages deploy .` by hand.
+- **Security:** middleware also blocks `.env*`, `scripts/`, `VERSION`, `design/`, `.impeccable/`; adds HSTS, `X-Frame-Options: SAMEORIGIN`
+  (Admin previews pages in a same-origin iframe, so never `DENY`), Permissions-Policy and an enforced CSP limited to
+  `frame-ancestors 'self'; base-uri 'self'; object-src 'none'`. The script/style/connect policy ships as
+  `Content-Security-Policy-Report-Only`: promote it to enforced only after the browser console shows no violations on every
+  public page, Admin, `/saju` and `/kotma`. Login rate limiting fails closed (503 `storage_unavailable`). CORS headers are
+  removed from `/api/*` only. HEAD requests to non-API routes return the GET status and headers with no body.
+  Check: `node .checks/security.cjs`.
+- **Articles:** a published article in a series shows `In this series` (every part in order, current part marked, scheduled parts
+  dated) between the share row and the closing invitation. This is a reading aid, not the index filter chips, which stay on
+  `/insights` only. The invitation names the series topic through `SERIES_TOPICS` in `_insights-view.js`; add a line there with
+  each new series (default `this topic`). Share row adds `Copy link`. `/insights/feed.xml` is RSS 2.0 with titles, links,
+  summaries and dates of published articles only (no bodies, drafts or future posts). Check: `node .checks/article-extras.cjs`.
+- **Sitemap:** `SITE_UPDATED` in `functions/sitemap.xml.js` is the last release date that changed public pages; update it (and
+  `sitemap.xml`) with each such release. `/insights` and `/sitemap` move forward when a newer article goes live.
+- **Contact:** `What to expect` (`#what-to-expect`) states the owner's terms exactly: reply within two business days;
+  deliverables vary by project; no fixed rate, fees open to discussion; reduced rates for NGOs and nonprofits. Static copy like
+  `What to include`; do not add prices, turnaround promises or a form without the owner. English remains the only site language.
 v0.27.2 / schema v46: ORCID (`global.contact.orcid`, default `https://orcid.org/0009-0000-5227-620X`) is an editable
 HTTPS contact link like Instagram (blank hides it). It renders in the Contact block (`[data-orcid-block]`, `rel="me"`)
 and joins Person JSON-LD `sameAs` (static seed and runtime). migrateTo46 fills it only when the key is missing, so an
@@ -679,12 +702,15 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
 
 ## Deploy
 ```bash
-# From repo root (static + functions deploy together):
-wrangler pages deploy . --project-name jimmypark-net --branch main
+# From ~/Developer/jimmypark-net, on a clean main that matches origin/main:
+scripts/deploy.sh                 # committed main + existing KOTMA export, then live checks
+DRY_RUN=1 scripts/deploy.sh       # build the staging folder only
+KOTMA_BUILD=1 scripts/deploy.sh   # rebuild the KOTMA export first
 ```
-- **`deploy .` alone deletes the `/kotma` static mount.** Use `scripts/deploy-kotma-preview.sh`, or, when
-  KOTMA's tree does not build, stage this repo plus `KOTMA/apps/web/out/` as `kotma/` after confirming
-  that export matches live `/kotma` byte for byte (Cloudflare email obfuscation aside) — done 2026-09-30.
+- The script stages `git archive HEAD` (committed files only), removes development-only files, copies the KOTMA export to
+  `kotma/`, runs Wrangler from inside the staging folder, then checks live status codes including `/kotma/`, `/saju`,
+  HEAD on `/insights`, the feed and the blocked files. `KOTMA_OUT` / `KOTMA_ROOT` override the KOTMA location.
+- **Never `wrangler pages deploy .`**: it uploads the working folder as it is and deletes the `/kotma` static mount.
 - Pages project: **`jimmypark-net`** → `jimmypark-net.pages.dev`.
 - Custom domains **jimmypark.net** + **www.jimmypark.net** are attached to this project, with
   proxied CNAME DNS records → `jimmypark-net.pages.dev`. (Note: `scoutingapp.net` lives on a

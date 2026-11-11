@@ -4,9 +4,10 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <meta property="og:type" content="__TYPE__"><meta property="og:site_name" content="Jimmy Park"><meta property="og:title" content="__TITLE__"><meta property="og:description" content="__DESC__"><meta property="og:url" content="__URL__">
 <meta property="og:image" content="__IMAGE__"><meta property="og:image:secure_url" content="__IMAGE__"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="__IMAGE_ALT__">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="__IMAGE__"><meta name="twitter:image:alt" content="__IMAGE_ALT__"><meta name="twitter:title" content="__TITLE__"><meta name="twitter:description" content="__DESC__">__ROBOTS__
+<link rel="alternate" type="application/rss+xml" title="Jimmy Park — Articles" href="https://jimmypark.net/insights/feed.xml">
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.27.2"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.29.0"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -43,7 +44,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     <div class="footer-main">
       <div class="footer-brand">
         <a href="/" class="brand"><img src="/assets/img/logo.svg?v=0.9.0" alt="Jimmy Park" width="190" height="38"></a>
-        <p data-gbind="brand.roleline">Video producer · Platform builder · Applied AI · Global Scouting</p>
+        <p data-gbind="brand.roleline">Communications &amp; Marketing · Content Strategy &amp; Production · Practical AI</p>
       </div>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="/" class="lnk">Home</a>
@@ -63,4 +64,5 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=0.28.1" defer></script></body></html>`;
+<div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
+<script src="/assets/site.js?v=0.29.0" defer></script></body></html>`;

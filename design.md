@@ -615,6 +615,15 @@ these roles; new rules should use the `--md-*` names directly.
 - v0.22.1 groups `Jimmy Park.` and `jimmypark.net` in a single top-left lockup separated by an
   outline-variant rule. The URL must never float over the bottom of a photo or symbol pane.
 
+## 23. Article series list and Contact expectations (v0.29.0)
+- `.insight-series` sits between `.insight-share` and `.insight-cta`: surface-container panel, large shape, eyebrow
+  `In this series`, the series name as H2 and an ordered list with one row per part (`Part n` label, title, optional note).
+  The current part is bold text with `Reading now`, never a link; scheduled parts show their release time.
+- `.insight-share` adds a `Copy link` secondary button (`content_copy`) that uses the shared `[data-copy]` toast.
+- `.insight-feed` is one `card-link` under the Articles lead: `Follow by RSS` with `rss_feed`.
+- Contact `.expect-block` / `.expect-list` sits between `What to include` and `I can help with`: a top divider, the
+  `contact-label`, then unnumbered term/description rows matching `.brief-list` type sizes. Both Contact cards keep one height.
+
 ## SETUKOR connection (2026-09-16)
 `/setukor` and `/setukor/` redirect (302) to `https://setukor-learning.jimmy-park.chatgpt.site/`, preserving the query string. Handled in `functions/_middleware.js`.
 # Analytics data quality (2026-10-13)

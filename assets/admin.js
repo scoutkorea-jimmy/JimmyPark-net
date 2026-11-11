@@ -129,7 +129,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
           $("gate-msg").textContent = ""; showDash(); boot();
         } else {
           var e = res.j && res.j.error;
-          $("gate-msg").textContent = e === "rate_limited" ? "Too many attempts. Try again later." : e === "not_configured" ? "Server not configured (TOTP_SECRET missing)." : "Incorrect or expired code.";
+          $("gate-msg").textContent = e === "rate_limited" ? "Too many attempts. Try again later." : e === "not_configured" ? "Server not configured (TOTP_SECRET missing)." : e === "storage_unavailable" ? "Sign-in is temporarily unavailable. Try again shortly." : "Incorrect or expired code.";
         }
       })
       .catch(function () { $("gate-msg").textContent = "Network error. Try again."; });
