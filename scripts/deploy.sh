@@ -46,7 +46,11 @@ if [[ "${KOTMA_BUILD:-0}" == "1" ]]; then
 fi
 [[ -f "$KOTMA_OUT/index.html" ]] || fail "KOTMA export not found at $KOTMA_OUT. Deploying without it would delete /kotma. Set KOTMA_OUT or run with KOTMA_BUILD=1."
 mkdir -p "$STAGING_DIR/kotma"
-rsync -a --delete --exclude '.DS_Store' "$KOTMA_OUT/" "$STAGING_DIR/kotma/"
+# A cloud-synced KOTMA folder can hold conflict copies such as "page 2.html". They are
+# never part of the export, so they are left out; any unreadable file stops the deploy.
+rsync -a --delete --exclude '.DS_Store' --exclude '* [2-9].*' "$KOTMA_OUT/" "$STAGING_DIR/kotma/" \
+  || fail "the KOTMA export could not be read completely (is it still downloading from iCloud?). Nothing was deployed."
+[[ -z "$(find "$STAGING_DIR/kotma" -type f -size 0 -name '*.html' -print -quit)" ]] || fail "the KOTMA export contains empty pages."
 
 for required in index.html insights.html _headers wrangler.toml functions/_middleware.js kotma/index.html assets/site.css; do
   [[ -s "$STAGING_DIR/$required" ]] || fail "staging is missing $required."
