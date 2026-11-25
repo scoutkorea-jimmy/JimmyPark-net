@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 47,
+  "version": 48,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -471,6 +471,13 @@ const DEFAULT = {
                   "href": "https://www.domin.co.kr/news/articleView.html?idxno=1570849"
                 }
               ]
+            },
+            {
+              "name": "Nepal Flood Response: Field Media",
+              "date": "2026-08-29",
+              "endDate": "2026-09-05",
+              "role": "Photographed flood damage and relief work in Nepal for Good Neighbors International. Filmed interviews with the local team for fundraising campaigns.",
+              "articles": []
             },
             {
               "name": "16th Korea Jamboree",
@@ -4154,6 +4161,20 @@ function migrateTo47(doc) {
   }
 }
 
+// Add the Nepal assignment once, retaining owner-maintained rows and ordering.
+function migrateTo48(doc) {
+  const projects = doc.pages?.work?.sections?.photography?.projects;
+  doc.version = 48;
+  if (!Array.isArray(projects) || !projects.length || projects.length >= MAXARR) return;
+  const seed = DEFAULT.pages.work.sections.photography.projects.find(row => row.date === '2026-08-29');
+  const exists = projects.some(row => row?.name === seed.name ||
+    (row?.date === seed.date && row.endDate === seed.endDate && /\bNepal\b/i.test(row.name + ' ' + row.role)));
+  if (exists) return;
+  const chronological = projects.every((row, i) => row?.date && (!i || row.date <= projects[i - 1].date));
+  const index = chronological ? projects.findIndex(row => row.date < seed.date) : -1;
+  projects.splice(index < 0 ? projects.length : index, 0, seed);
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -4198,7 +4219,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 function contentRevision(value) {
@@ -4213,7 +4234,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   // Older CMS saves used ISO dates; compare the same numeric revision on reads and writes.
   parsed.updatedAt = contentRevision(parsed.updatedAt);
@@ -4261,7 +4282,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -4307,6 +4328,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 45) doc = migrateTo45(doc);
   if ((doc.version || 0) < 46) doc = migrateTo46(doc);
   if (doc.version < 47) migrateTo47(doc);
+  if (doc.version < 48) migrateTo48(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
@@ -4331,6 +4353,7 @@ export async function onRequestPut({ request, env }) {
   try { previous = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   const photography = incoming.pages.work.sections.photography;
   if (previous && previous.version < 47) migrateTo47(previous);
+  if (previous && previous.version < 48) migrateTo48(previous);
   preparePhotoProjects(photography, previous?.pages?.work?.sections?.photography?.projects);
   if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
   const publicationKinds = ['', 'press', 'organization', 'brand', 'blog'];

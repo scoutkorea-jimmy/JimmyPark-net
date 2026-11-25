@@ -54,13 +54,13 @@ const onDate = (rows, date) => {
   const save = content => api.put({ env, request: { text: async () => JSON.stringify({ content }) } });
   const initial = await read();
   const seed = photo(initial).projects;
-  assert.equal(initial.version, 47);
-  assert.equal(seed.length, 9);
+  assert.equal(initial.version, 48);
+  assert.equal(seed.length, 10);
   assert.equal(seed.flatMap(project => project.articles).length, 14);
   assert.ok(seed.every(project => !/[가-힣]/u.test([project.name, project.role,
     ...project.articles.flatMap(article => [article.title, article.outlet])].join(' '))));
   const additions = seed.filter(project => !legacyWording[project.date]);
-  assert.equal(additions.length, 3);
+  assert.equal(additions.length, 4);
   const muju = additions.find(project => /muju/i.test(project.name));
   assert.ok(muju, 'Muju photography project');
   assert.match(muju.role, /photograph.*Muju/i);
@@ -70,6 +70,19 @@ const onDate = (rows, date) => {
   const seoulTour = onDate(additions, '2026-10-02');
   assert.match(seoulTour.name, /Hyochang Park/i);
   assert.equal(seoulTour.articles.length, 1);
+  const nepal = seed.find(project => project.name === 'Nepal Flood Response: Field Media');
+  assert.ok(nepal);
+  assert.equal(nepal.date, '2026-08-29');
+  assert.equal(nepal.endDate, '2026-09-05');
+  assert.deepEqual(nepal.articles, []);
+  assert.match(nepal.role, /photographed flood damage and relief work in Nepal.*Good Neighbors International.*filmed interviews.*fundraising/i);
+  const { renderPressProjects } = await import('../assets/press-view.mjs');
+  const renderedAssignment = renderPressProjects([nepal]);
+  assert.match(renderedAssignment, /Other photography assignments/);
+  assert.ok(renderedAssignment.includes(nepal.name));
+  assert.match(renderedAssignment, /<time datetime="2026-08-29"/);
+  assert.match(renderedAssignment, /<time datetime="2026-09-05"/);
+  assert.doesNotMatch(renderedAssignment, /<img|<a\s/i);
   const aprConference = onDate(seed, '2025-10-12');
   assert.equal(aprConference.name, '28th Asia-Pacific Regional Scout Conference');
   assert.equal(aprConference.endDate, '2025-10-17');
@@ -108,6 +121,26 @@ const onDate = (rows, date) => {
   assert.equal(kelty.articles[0].kind, 'brand');
   assert.equal(ksop.articles[0].date, '2026-11-09');
   assert.equal(ksop.articles[0].href, 'https://www.socialimpactnews.net/news/articleView.html?idxno=7827');
+  // The v47 document may already contain unrelated edits, a custom order or a manually created Nepal entry.
+  const v47 = structuredClone(initial);
+  v47.version = 47;
+  photo(v47).projects = seed.filter(row => row.name !== nepal.name).map(row => structuredClone(row));
+  stored = JSON.stringify(v47);
+  assert.deepEqual(photo(await read()).projects, seed);
+  assert.equal((await save(v47)).error, 'schema_changed');
+  const manual = { ...nepal, name: 'Nepal field photographs', role: 'Custom credit' };
+  photo(v47).projects = [manual, historyWorkshop];
+  stored = JSON.stringify(v47);
+  assert.deepEqual(photo(await read()).projects, [manual, historyWorkshop]);
+  photo(v47).projects = [kelty, historyWorkshop];
+  stored = JSON.stringify(v47);
+  assert.deepEqual(photo(await read()).projects, [kelty, historyWorkshop, nepal]);
+  photo(v47).projects = Array.from({ length: 60 }, (_, i) => ({ ...kelty, name: 'Owner assignment ' + i }));
+  stored = JSON.stringify(v47);
+  assert.deepEqual(photo(await read()).projects, photo(v47).projects);
+  photo(v47).projects = [];
+  stored = JSON.stringify(v47);
+  assert.deepEqual(photo(await read()).projects, []);
   const v46 = previousEdition(initial);
   stored = JSON.stringify(v46);
   const v46Raw = stored;
@@ -141,15 +174,25 @@ const onDate = (rows, date) => {
   assert.equal(partialArticle.outlet, 'My publication');
   assert.equal(writes, 0);
 
-  // Explicitly retain a hand-edited title (even the old seed wording) once the document is v47.
+  // Explicitly retain a hand-edited title (even the old seed wording) once the document is current.
   onDate(migratedProjects, partial.date).name = '제16회 한국잼버리';
-  const saved47 = await save(migrated);
-  assert.equal(saved47.status, 200);
+  const saved = await save(migrated);
+  assert.equal(saved.status, 200);
   assert.deepEqual(photo(await read()).projects, migratedProjects);
   const withoutConference = await read();
   photo(withoutConference).projects = photo(withoutConference).projects.filter(project => project.name !== aprConference.name);
   assert.equal((await save(withoutConference)).status, 200);
   assert.deepEqual(photo(await read()).projects, photo(withoutConference).projects);
+  const editNepal = await read();
+  const editableNepal = photo(editNepal).projects.find(project => project.name === nepal.name);
+  editableNepal.name = 'Field photography in Nepal';
+  editableNepal.role = 'Owner-edited credit';
+  assert.equal((await save(editNepal)).status, 200);
+  assert.deepEqual(photo(await read()).projects, photo(editNepal).projects);
+  const removeNepal = await read();
+  photo(removeNepal).projects = photo(removeNepal).projects.filter(project => project.name !== editableNepal.name);
+  assert.equal((await save(removeNepal)).status, 200);
+  assert.deepEqual(photo(await read()).projects, photo(removeNepal).projects);
   const noProjects46 = structuredClone(v46);
   photo(noProjects46).projects = [];
   stored = JSON.stringify(noProjects46);

@@ -9,11 +9,11 @@ const api = vm.runInNewContext(source + ';({DEFAULT,onRequestGet,onRequestPut});
 const ORCID = 'https://orcid.org/0009-0000-5227-620X';
 const get = doc => api.onRequestGet({env:{JP_KV:{get:async()=>JSON.stringify(doc),put:async()=>{throw Error('GET must not write');}}}});
 (async () => {
-  assert.equal(api.DEFAULT.version, 47);
+  assert.equal(api.DEFAULT.version, 48);
   assert.equal(api.DEFAULT.global.contact.orcid, ORCID);
   const legacy = JSON.parse(JSON.stringify(api.DEFAULT)); legacy.version = 45; delete legacy.global.contact.orcid;
   const upgraded = (await get(legacy)).body.content;
-  assert.equal(upgraded.version, 47); assert.equal(upgraded.global.contact.orcid, ORCID);
+  assert.equal(upgraded.version, 48); assert.equal(upgraded.global.contact.orcid, ORCID);
   legacy.global.contact.orcid = '';
   assert.equal((await get(legacy)).body.content.global.contact.orcid, '');
   const bad = JSON.parse(JSON.stringify(api.DEFAULT)); bad.global.contact.orcid = 'javascript:alert(1)';
