@@ -546,6 +546,35 @@ const DEFAULT = {
               ]
             },
             {
+              "name": "28th Asia-Pacific Regional Scout Conference",
+              "date": "2025-10-12",
+              "endDate": "2025-10-17",
+              "role": "Official photographer for the Korean delegation at the conference, held 12–17 October in Kaohsiung, Taiwan.",
+              "articles": [
+                {
+                  "title": "Korea Scout Association President Lee Chan-hee Receives Taiwan Scouts’ Highest Honor",
+                  "outlet": "Electronic Times (ETNews)",
+                  "kind": "press",
+                  "date": "2025-10-14",
+                  "href": "https://www.etnews.com/20251014000143"
+                },
+                {
+                  "title": "Korea Scout Association President Lee Chan-hee Receives the Green Jade Great Wall Award from Taiwan Scouts",
+                  "outlet": "SBS News",
+                  "kind": "press",
+                  "date": "2025-10-14",
+                  "href": "https://news.sbs.co.kr/news/endPage.do?news_id=N1008291322"
+                },
+                {
+                  "title": "Lee Chan-hee, President of the Korea Scout Association, Receives Taiwan's Highest International Exchange Medal, the Green Jade Great Wall Award",
+                  "outlet": "Break News",
+                  "kind": "press",
+                  "date": "2025-10-14",
+                  "href": "https://www.breaknews.com/1153501"
+                }
+              ]
+            },
+            {
               "name": "2015 Seoul International Fireworks Festival with Hanwha",
               "date": "2015-10-03",
               "endDate": "",
@@ -4116,7 +4145,7 @@ function migrateTo47(doc) {
   }
   const chronological = projects.every((row, index) =>
     row?.date && (!index || row.date <= projects[index - 1].date));
-  for (const seed of defaults.filter(row => ['2026-10-30', '2026-10-02'].includes(row.date))) {
+  for (const seed of defaults.filter(row => ['2026-10-30', '2026-10-02', '2025-10-12'].includes(row.date))) {
     const exists = projects.some(row => row?.name === seed.name ||
       (Array.isArray(row?.articles) && row.articles.some(article => article?.href === seed.articles[0].href)));
     if (exists) continue;

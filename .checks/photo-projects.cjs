@@ -55,12 +55,12 @@ const onDate = (rows, date) => {
   const initial = await read();
   const seed = photo(initial).projects;
   assert.equal(initial.version, 47);
-  assert.equal(seed.length, 8);
-  assert.equal(seed.flatMap(project => project.articles).length, 11);
+  assert.equal(seed.length, 9);
+  assert.equal(seed.flatMap(project => project.articles).length, 14);
   assert.ok(seed.every(project => !/[가-힣]/u.test([project.name, project.role,
     ...project.articles.flatMap(article => [article.title, article.outlet])].join(' '))));
   const additions = seed.filter(project => !legacyWording[project.date]);
-  assert.equal(additions.length, 2);
+  assert.equal(additions.length, 3);
   const muju = additions.find(project => /muju/i.test(project.name));
   assert.ok(muju, 'Muju photography project');
   assert.match(muju.role, /photograph.*Muju/i);
@@ -70,6 +70,17 @@ const onDate = (rows, date) => {
   const seoulTour = onDate(additions, '2026-10-02');
   assert.match(seoulTour.name, /Hyochang Park/i);
   assert.equal(seoulTour.articles.length, 1);
+  const aprConference = onDate(seed, '2025-10-12');
+  assert.equal(aprConference.name, '28th Asia-Pacific Regional Scout Conference');
+  assert.equal(aprConference.endDate, '2025-10-17');
+  assert.match(aprConference.role, /official photographer for the Korean delegation/i);
+  assert.deepEqual(aprConference.articles.map(article => article.href), [
+    'https://www.etnews.com/20251014000143',
+    'https://news.sbs.co.kr/news/endPage.do?news_id=N1008291322',
+    'https://www.breaknews.com/1153501',
+  ]);
+  assert.ok(aprConference.articles.every(article => article.date === '2025-10-14'));
+  assert.ok(aprConference.articles.every(article => article.kind === 'press'));
   assert(seed.every(project => !Object.hasOwn(project, 'album')));
   assert.equal(photo(initial).portfolio.href, 'https://drive.google.com/drive/folders/1XE1JhGKa6l0uvWVANd-9_h2QIQwmrkY0');
   const historyWorkshop = onDate(seed, '2026-11-11');
@@ -135,6 +146,10 @@ const onDate = (rows, date) => {
   const saved47 = await save(migrated);
   assert.equal(saved47.status, 200);
   assert.deepEqual(photo(await read()).projects, migratedProjects);
+  const withoutConference = await read();
+  photo(withoutConference).projects = photo(withoutConference).projects.filter(project => project.name !== aprConference.name);
+  assert.equal((await save(withoutConference)).status, 200);
+  assert.deepEqual(photo(await read()).projects, photo(withoutConference).projects);
   const noProjects46 = structuredClone(v46);
   photo(noProjects46).projects = [];
   stored = JSON.stringify(noProjects46);
