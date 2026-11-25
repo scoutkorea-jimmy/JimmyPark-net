@@ -93,7 +93,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
 - Empty Scouting gallery rows render nothing; hide the section until it has an image, while
   respecting CMS visibility. Uploaded images open in a native keyboard-accessible dialog.
 - Page save responses rebind controls only when no newer edits exist; preserve newer edits and
-  prevent duplicate saves. Preview messages require the same-origin parent and `?preview=1`;
+  prevent duplicate saves. Preview messages require the dedicated administrator origin and `?preview=1`;
   late live content cannot overwrite a received preview. Copy/upload success must be verified.
 - `404.html` stops nonexistent paths from returning the homepage with HTTP 200.
 - Required checks: `.checks/design.py`, `.checks/content.cjs`, `.checks/insights.cjs`,
@@ -420,11 +420,10 @@ v0.29.0 (2026-11-12), owner-approved operations, security and article release. S
   shared-core, agent guide) is the local-only branch `wip/local-desktop-20261112`; it is not on GitHub and must not be deployed.
 - **Deploy only with `scripts/deploy.sh`** (see Deploy). It publishes committed `origin/main` plus the KOTMA export and refuses a
   dirty tree, another branch, a cloud-synced checkout or a missing KOTMA export. Never run `wrangler pages deploy .` by hand.
-- **Security:** middleware also blocks `.env*`, `scripts/`, `VERSION`, `design/`, `.impeccable/`; adds HSTS, `X-Frame-Options: SAMEORIGIN`
-  (Admin previews pages in a same-origin iframe, so never `DENY`), Permissions-Policy and an enforced CSP limited to
-  `frame-ancestors 'self'; base-uri 'self'; object-src 'none'`. The script/style/connect policy ships as
-  `Content-Security-Policy-Report-Only`: promote it to enforced only after the browser console shows no violations on every
-  public page, Admin, `/saju` and `/kotma`. Login rate limiting fails closed (503 `storage_unavailable`). CORS headers are
+- **Security:** middleware blocks `.env*`, `scripts/`, `VERSION`, `design/`, `.impeccable/` and sets HSTS and Permissions-Policy.
+  The admin origin enforces its own CSP and denies framing. The seven editor previews allow the admin origin
+  as a frame ancestor on the canonical public host with `?preview=1`. Public pages enforce the baseline CSP
+  and use report-only directives for scripts and styles. Login rate limiting fails closed (503 `storage_unavailable`). CORS headers are
   removed from `/api/*` only. HEAD requests to non-API routes return the GET status and headers with no body.
   Check: `node .checks/security.cjs`.
 - **Articles:** a published article in a series shows `In this series` (every part in order, current part marked, scheduled parts
@@ -669,15 +668,15 @@ Routing: files under `functions/` map to paths; a leading `_` excludes a file fr
   KST 하루 1회, IP는 SHA-256 해시로만 · 12h TTL), `GET`/`POST` → `{day,today,total}`.
   KV: `sjv:d:<date>`(영구 보관 — 사용자 지시 2026-07-10) · `sjv:total` · `sjv:ip:<date>:<hash>`.
   사주 입력값 미전송.
-- `functions/api/login.js` — `POST {code}` verifies 6-digit TOTP, returns signed session.
-  Rate-limited: **10 failures / IP / 10 min** (KV `rl:login:<ip>`).
+- `functions/api/login.js` — `POST {code}` accepts a one-time authenticator code and issues
+  an HttpOnly, Secure, SameSite=Strict, host-only session cookie. D1 atomically enforces ten attempts
+  per edge client address in a ten-minute window and one login per accepted authenticator time step.
 - `functions/api/me.js` — `GET` → 200 if a valid admin session is presented.
-- `functions/api/_lib.js` — shared helpers: `json()`, TOTP verify, HMAC-signed sessions
-  (**12h TTL**, `Authorization: Bearer <token>`), `isAdmin()`. Sessions are keyed off
-  `TOTP_SECRET`, so rotating the secret invalidates all sessions.
-
-Auth model: admin logs in with a **TOTP code** (authenticator app) → gets a session token;
-all write/admin endpoints require `isAdmin()`. There are no passwords stored.
+- `functions/api/logout.js` — `POST` revokes the current session in D1 and expires its cookie.
+- `functions/api/_lib.js` checks a keyed digest of the session ID, the origin and server-side
+  expiry (12 hours absolute, 30 minutes idle). Rotating `TOTP_SECRET` invalidates existing sessions.
+  Apply `scripts/admin-session-schema.sql` to the bound `JP_TRAFFIC` database before release.
+  The public `/admin` redirects to https://admin.jimmypark.net/admin.
 
 ### Social previews and article sharing (v0.21.0, 2026-09-21)
 - Main public pages each use a distinct 1200×630 image from `assets/img/og/`, with matching
@@ -713,7 +712,7 @@ all write/admin endpoints require `isAdmin()`. There are no passwords stored.
   are purged on the next recorded visit. Preview deployments cannot write production traffic.
   Local checks: `node .checks/traffic.cjs` (Node built-in SQLite, no package).
 - **KV namespace `JP_KV`** — bound in `wrangler.toml` (`id` already set). Stores `content`,
-  `img:*`, `media:index`, `rl:login:*`.
+  `img:*` and `media:index`.
 - **Secret `RESEND_API_KEY`** — Resend API key for the Contact form (`/api/enquiry`). Without it the form stays hidden.
 - **Env var `TOTP_SECRET`** (base32) — set in Pages → Settings → Environment variables, and
   registered in the authenticator app. Admin login returns 503 `not_configured` until it's set.

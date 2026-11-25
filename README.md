@@ -113,7 +113,7 @@ admin.html      Hidden admin (/admin · noindex)
 assets/         site.css · site.js (public) · admin.js · img/ (favicon, logo, page/article OG images)
 functions/      Cloudflare Pages Functions (API)
   _middleware.js          block *.md / config files from public serving
-  api/_lib.js             TOTP verify + signed sessions
+  api/_lib.js             TOTP verification and server-side sessions
   api/login.js            POST {code} → session token
   api/me.js               GET → 200 if admin session valid
   api/content.js          GET (public) / PUT (admin) site content doc
@@ -181,10 +181,10 @@ scripts/        deterministic OG/social-image generator and deployment helpers
   fetched from `/api/content` — a **full-site content document** covering every page:
   per-page SEO, section text, repeatable collections, images, and section order /
   visibility. The static markup is the seed; `site.js` only overrides it.
-- Admin (`/admin`) logs in with a **6-digit TOTP** code (authenticator app), gets a
-  12h signed session, and edits the **whole site** through a schema-driven editor
-  (Global + one tab per page) with a live-preview iframe, section reorder/hide, and a
-  Media Library (uploads auto-resized to ≤1600px JPEG). 30-min idle auto sign-out.
+- Sign in at **https://admin.jimmypark.net/admin** with the six-digit code from your authenticator.
+  The editor opens a public-site preview for the selected page. Its Press tab lists assignments
+  and optional publication links. A server-side session expires after 30 minutes of inactivity
+  or 12 hours from sign-in. Sign out immediately ends that session.
 
 ## Design maintenance
 Shared layout tokens in `assets/site.css` control container width, gutters, section spacing,
@@ -223,7 +223,9 @@ computed foreground/background contrast is below WCAG AA. It does not write site
    `wrangler kv namespace create JP_KV`
 3. Set env var **`TOTP_SECRET`** (base32) in Pages → Settings → Environment variables,
    and register the same secret in your authenticator app.
-4. Add custom domain **jimmypark.net**.
+4. Connect **jimmypark.net** and **admin.jimmypark.net** to this Pages project.
+5. Initialize admin session storage on the bound D1 database with
+   `wrangler d1 execute jimmypark-traffic --remote --file=scripts/admin-session-schema.sql`.
 
 Or deploy from CLI:
 `scripts/deploy.sh   # committed main + KOTMA export; never deploy the folder directly`

@@ -5,11 +5,15 @@
 (function () {
   "use strict";
 
-  var SESS_KEY = "jp:admin-session";
+  var loopback = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+  var publicOrigin = loopback ? location.origin : "https://jimmypark.net";
+  var previewPages = ["home","work","press","dev","lecture","scouting","contact"];
+  var activityCheckAt = 0, sessionCheckPending = false, sessionEpoch = 0, loggingOut = false;
+  var frameReady = false, previewHeight = 0, previewPort = null;
   var IDLE_MS = 30 * 60 * 1000;
   var $ = function (id) { return document.getElementById(id); };
 
-  var session = null;       // { token, exp }
+  var session = null;       // Server-verified absolute expiry, in milliseconds.
   var content = null;       // working document (deep copy of server doc)
   var activeTab = "home";   // home | work | dev | lecture | scouting | contact | global | media
   var previewPage = "home"; // which page the iframe shows
@@ -31,6 +35,9 @@
     });
     (kids || []).forEach(function (c) { if (c) n.appendChild(c); });
     return n;
+  }
+  function editorImageUrl(value) {
+    return typeof value === "string" && value.startsWith("/assets/img/") ? new URL(value, publicOrigin).href : value;
   }
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
@@ -139,47 +146,108 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   };
 
   // ── session helpers ───────────────────────────────────────────────────────
-  function loadSession() {
-    try { var s = JSON.parse(localStorage.getItem(SESS_KEY) || "null"); if (s && s.token && s.exp && Date.now() < s.exp) return s; } catch (_) {}
-    return null;
+  function clearSession() {
+    session = null; sessionEpoch++; frameReady = false;
+    if (previewPort) { previewPort.close(); previewPort = null; }
   }
-  function saveSession(s) { session = s; try { localStorage.setItem(SESS_KEY, JSON.stringify(s)); } catch (_) {} }
-  function clearSession() { session = null; try { localStorage.removeItem(SESS_KEY); } catch (_) {} }
-  function authHeader() { return session ? { Authorization: "Bearer " + session.token } : {}; }
+  function acceptSession(data) {
+    if (!data || data.ok !== true || !Number.isFinite(data.exp) || data.exp <= Date.now()) return false;
+    session = { exp: data.exp }; activityCheckAt = Date.now();
+    return true;
+  }
 
   function showGate(msg) { stopIdle(); $("dash").style.display = "none"; $("gate").style.display = "flex"; $("gate-msg").textContent = msg || ""; var o = $("otp"); if (o) { o.value = ""; o.focus(); } }
   function showDash() { $("gate").style.display = "none"; $("dash").style.display = "block"; startIdle(); applyDevice(); }
 
   function login() {
+    if ($("otp-btn").disabled) return;
     var code = ($("otp").value || "").replace(/\D/g, "");
     if (code.length !== 6) { $("gate-msg").textContent = "Enter the 6-digit code."; return; }
-    $("gate-msg").textContent = "Checking…";
+    ++sessionEpoch; $("otp-btn").disabled = true; $("gate-msg").textContent = "Checking…";
     fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code: code }) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
-        if (res.ok && res.j && res.j.ok && res.j.token) {
-          saveSession({ token: res.j.token, exp: res.j.exp || (Date.now() + 12 * 3600 * 1000) });
+        if (res.ok && acceptSession(res.j)) {
+          $("otp").value = ""; setPreviewSrc();
           $("gate-msg").textContent = ""; showDash(); boot();
         } else {
           var e = res.j && res.j.error;
-          $("gate-msg").textContent = e === "rate_limited" ? "Too many attempts. Try again later." : e === "not_configured" ? "Server not configured (TOTP_SECRET missing)." : e === "storage_unavailable" ? "Sign-in is temporarily unavailable. Try again shortly." : "Incorrect or expired code.";
+          $("gate-msg").textContent = e === "rate_limited" ? "Too many attempts. Try again later." : e === "not_configured" ? "Sign-in is not configured." : e === "storage_unavailable" ? "Sign-in is temporarily unavailable. Try again shortly." : "Incorrect or expired code.";
         }
       })
-      .catch(function () { $("gate-msg").textContent = "Network error. Try again."; });
+      .catch(function () { $("gate-msg").textContent = "Network error. Try again."; })
+      .finally(function () { $("otp-btn").disabled = false; });
   }
-  function logout() { if (window.JPInsights && !window.JPInsights.canLeave()) return; clearSession(); if (window.JPInsights) window.JPInsights.reset(); showGate("Signed out."); }
-
-  // ── idle auto sign-out ────────────────────────────────────────────────────
+  async function endSession(idle) {
+    if (loggingOut || !session) return;
+    loggingOut = true;
+    if (idle) {
+      frameReady = false; $("preview").src = "about:blank"; showGate("Editor locked. Confirming sign-out…");
+      $("otp-btn").disabled = true;
+    }
+    var msg = idle ? "Session locked. Sign in again." : "Signed out.";
+    try {
+      var response = await fetch("/api/logout", { method: "POST", cache: "no-store", signal: AbortSignal.timeout(10000) });
+      if (response.status !== 401 && (!response.ok || (await response.json()).ok !== true)) throw new Error("logout");
+      clearSession();
+      if (!idle) {
+        if (window.JPInsights) window.JPInsights.reset();
+        clearTimeout(prevTimer); content = null; contentLoaded = false; editRevision = savedRevision = 0;
+        ["editor","media","insights-panel","analytics-panel","picker-grid"].forEach(function (id) { $(id).replaceChildren(); });
+      }
+      frameReady = false; $("preview").src = "about:blank"; showGate(msg);
+    } catch (_) {
+      if (idle) {
+        clearSession(); frameReady = false; $("preview").src = "about:blank";
+        showGate("Editor locked. The server could not confirm sign-out. Close this browser or sign in again and retry.");
+      } else {
+        $("save-msg").textContent = "Sign-out could not be confirmed. Try signing out again.";
+        $("save-msg").className = "ad-msg ad-err";
+      }
+    } finally { loggingOut = false; if (idle) $("otp-btn").disabled = false; }
+  }
+  function logout() {
+    if (saving || (window.JPInsights && !window.JPInsights.canLeave(true))) return;
+    if (contentLoaded && editRevision !== savedRevision && !window.confirm("Discard your unsaved page changes and sign out?")) return;
+    endSession(false);
+  }
+  var activityEvents = ["pointerdown", "keydown", "wheel", "touchstart", "input", "change"];
   function startIdle() {
-    resetIdle();
-    ["pointerdown", "keydown", "wheel", "touchstart", "input", "change"].forEach(function (ev) { document.addEventListener(ev, resetIdle, { passive: true, capture: true }); });
+    armIdle();
+    activityEvents.forEach(function (ev) { document.addEventListener(ev, recordActivity, { passive: true, capture: true }); });
     if (idleTick) clearInterval(idleTick); idleTick = setInterval(renderIdle, 1000); renderIdle();
   }
   function stopIdle() {
-    if (idleTimer) clearTimeout(idleTimer); if (idleTick) clearInterval(idleTick);
-    ["pointerdown", "keydown", "wheel", "touchstart", "input", "change"].forEach(function (ev) { document.removeEventListener(ev, resetIdle, { capture: true }); });
+    clearTimeout(idleTimer); clearInterval(idleTick);
+    activityEvents.forEach(function (ev) { document.removeEventListener(ev, recordActivity, { capture: true }); });
   }
-  function resetIdle() { idleDeadline = Date.now() + IDLE_MS; if (idleTimer) clearTimeout(idleTimer); idleTimer = setTimeout(function () { clearSession(); showGate("Signed out after 30 minutes of inactivity."); }, IDLE_MS); }
+  function armIdle() {
+    if (!session) return;
+    idleDeadline = Math.min(session.exp, Date.now() + IDLE_MS);
+    clearTimeout(idleTimer); idleTimer = setTimeout(function () { endSession(true); }, Math.max(0, idleDeadline - Date.now()));
+  }
+  function recordActivity(event) {
+    if (!event.isTrusted || !session || loggingOut) return;
+    if (Date.now() >= idleDeadline) { endSession(true); return; }
+    armIdle();
+    if (!sessionCheckPending && Date.now() - activityCheckAt >= 60000) checkSession(false);
+  }
+  async function checkSession(initial) {
+    var epoch = sessionEpoch; sessionCheckPending = true; activityCheckAt = Date.now();
+    try {
+      var response = await fetch("/api/me", { cache: "no-store" });
+      if (epoch !== sessionEpoch || loggingOut) return;
+      if (response.status === 401) { clearSession(); showGate(initial ? "" : "Session expired. Sign in again."); return; }
+      if (!response.ok) throw new Error("session");
+      var data = await response.json();
+      if (epoch !== sessionEpoch || loggingOut) return;
+      if (!acceptSession(data)) throw new Error("session");
+      if (initial) { setPreviewSrc(); showDash(); boot(); }
+      else armIdle();
+    } catch (_) {
+      if (initial && epoch === sessionEpoch) showGate("Could not check your session. Retry or sign in.");
+    } finally { sessionCheckPending = false; }
+  }
   function renderIdle() { var e = $("idle"); if (!e) return; var left = Math.max(0, idleDeadline - Date.now()); var m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000); e.textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s; e.style.color = left < 60000 ? "#7a1e2c" : "#66615c"; }
 
   // ── boot: load content + media + build UI ─────────────────────────────────
@@ -194,7 +262,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       });
     }).then(function (doc) {
       content = doc; contentLoaded = true; savedRevision = editRevision;
-      ensureShape(); buildTabs(); selectTab(activeTab); loadMedia();
+      ensureShape(); buildTabs(); selectTab(activeTab); loadMedia(); postPreview();
       $("save").disabled = false; $("save-msg").textContent = '';
     }).catch(function () {
       $("save").disabled = true; $("save-msg").className = 'ad-msg ad-err';
@@ -253,7 +321,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     $("prev-toggle").hidden = t === "insights" || t === "analytics";
     document.body.classList.toggle('ad-writing', t === 'insights' || t === 'analytics');
     if (t === "analytics") { renderAnalytics(); return; }
-    if (t === "insights") { window.JPInsights.open($("insights-panel"), authHeader, function () { clearSession(); showGate('Session expired — enter a new code.'); }); return; }
+    if (t === "insights") { window.JPInsights.open($("insights-panel"), publicOrigin, function () { clearSession(); showGate('Session expired — enter a new code.'); }); return; }
     if (t === "media") { loadMedia(); return; }
     if (SCHEMA[t] && (SCHEMA[t].kind === "page" || t === "press")) { if (previewPage !== t) { previewPage = t; setPreviewSrc(); } }
     renderEditor();
@@ -264,6 +332,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   function excludeInternalTraffic(exclude) {
     try { localStorage.setItem('jp:traffic-exclude', exclude ? '1' : '0'); } catch (_) {}
     document.cookie = 'jp_internal=' + (exclude ? '1' : '0') + '; Path=/; Max-Age=31536000; SameSite=Lax; Secure';
+    if (session) setPreviewSrc();
   }
   function renderAnalytics() {
     var root = $("analytics-panel"), today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
@@ -293,7 +362,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     }
     function load() {
       var sequence = ++trafficRequest; refresh.disabled = true; results.innerHTML = ''; status.textContent = 'Loading statistics…';
-      fetch('/api/traffic?date=' + encodeURIComponent(trafficDate), { headers: authHeader(), cache: 'no-store' }).then(function (r) {
+      fetch('/api/traffic?date=' + encodeURIComponent(trafficDate), { cache: 'no-store' }).then(function (r) {
         if (r.status === 401) { clearSession(); showGate('Session expired — enter a new code.'); throw new Error('Session expired.'); }
         if (!r.ok) throw new Error(r.status === 400 ? 'Choose a date within the last 90 days, up to today.' : 'Statistics are temporarily unavailable. Please try again.');
         return r.json();
@@ -444,8 +513,8 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
 
   function imageEl(obj, key, label) {
     var thumb = el("div", { class: "ad-imgthumb" });
-    if (obj[key]) thumb.style.backgroundImage = "url('" + obj[key] + "')";
-    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; syncProjectImageField(obj, key, url); thumb.style.backgroundImage = url ? "url('" + url + "')" : ""; btn.textContent = url ? "Change" : "Set image"; remove.disabled = !url; schedulePreview(); }); } });
+    if (obj[key]) thumb.style.backgroundImage = "url('" + editorImageUrl(obj[key]) + "')";
+    var btn = el("button", { class: "ad-mini", text: obj[key] ? "Change" : "Set image", onclick: function () { openPicker(function (url) { obj[key] = url; syncProjectImageField(obj, key, url); thumb.style.backgroundImage = url ? "url('" + editorImageUrl(url) + "')" : ""; btn.textContent = url ? "Change" : "Set image"; remove.disabled = !url; schedulePreview(); }); } });
     var remove = el("button", { class: "ad-mini del", text: "Remove", onclick: function () { if (!obj[key]) return; obj[key] = ""; syncProjectImageField(obj, key, ""); renderEditor(); schedulePreview(); } });
     if (!obj[key]) remove.disabled = true;
     return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), el("div", { class: "ad-imgpick" }, [thumb, el("div", { class: "grp" }, [btn, remove])])]);
@@ -459,7 +528,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     var grid = el("div", { class: "ad-gallery-grid" });
     arr.forEach(function (url, idx) {
       var card = el("div", { class: "ad-gallery-item" }, [
-        el("img", { src: url, alt: "Preview " + (idx + 1), loading: "lazy" }),
+        el("img", { src: editorImageUrl(url), alt: "Preview " + (idx + 1), loading: "lazy" }),
         el("div", { class: "ad-gallery-bar" }, [
           el("span", { text: String(idx + 1) }),
           el("button", { class: "ad-mini", title: "Move earlier", text: "↑", onclick: function () { if (!idx) return; var t = arr[idx - 1]; arr[idx - 1] = arr[idx]; arr[idx] = t; syncProjectImageField(obj, gallery.k, arr); renderEditor(); schedulePreview(); } }),
@@ -470,7 +539,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       grid.appendChild(card);
     });
     if (arr.length) box.appendChild(grid);
-    var add = el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">add_photo_alternate</span>' + (arr.length >= gallery.max ? 'Maximum reached' : 'Add preview image'), onclick: function () {
+    var add = el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">＋</span>' + (arr.length >= gallery.max ? 'Maximum reached' : 'Add preview image'), onclick: function () {
       if (arr.length >= gallery.max) return;
       openPicker(function (url) {
         if (!url || arr.indexOf(url) >= 0) return;
@@ -599,9 +668,9 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     function syncDel() { var n = selCount(); delBtn.textContent = "Delete selected (" + n + ")"; delBtn.disabled = !n; delBtn.style.opacity = n ? "1" : ".45"; }
     // Flat CSV exports cannot carry the articles nested under each project.
     var csvTools = col.collections ? [] : [
-      el("button", { class: "ad-mini", title: "Download a blank CSV template for this list", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">download</span>Template', onclick: function () { downloadTemplate(col); } }),
-      el("button", { class: "ad-mini", title: "Export the current rows to CSV", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">file_save</span>Export', onclick: function () { exportCsv(col, arr); } }),
-      el("button", { class: "ad-mini", title: "Bulk-add rows from a CSV file", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">upload</span>Import CSV', onclick: function () { pickCsv(function (text) { var n = importCsv(col, arr, text); renderEditor(); schedulePreview(); flash(n ? ("Imported " + n + " row" + (n > 1 ? "s" : "") + " — Save to publish") : "No rows found in CSV", !!n); }); } }),
+      el("button", { class: "ad-mini", title: "Download a blank CSV template for this list", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">↓</span>Template', onclick: function () { downloadTemplate(col); } }),
+      el("button", { class: "ad-mini", title: "Export the current rows to CSV", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">↓</span>Export', onclick: function () { exportCsv(col, arr); } }),
+      el("button", { class: "ad-mini", title: "Bulk-add rows from a CSV file", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">↑</span>Import CSV', onclick: function () { pickCsv(function (text) { var n = importCsv(col, arr, text); renderEditor(); schedulePreview(); flash(n ? ("Imported " + n + " row" + (n > 1 ? "s" : "") + " — Save to publish") : "No rows found in CSV", !!n); }); } }),
     ];
     var bar = el("div", { class: "ad-coltools" }, csvTools.concat([
       el("span", { style: "flex:1;" }),
@@ -644,7 +713,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       wrap.appendChild(det);
     });
     syncDel();
-    wrap.appendChild(el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">add</span>Add ' + col.label, onclick: function () { var t = clone(col.tmpl); t._open = true; arr.push(t); renderEditor(); schedulePreview(); focusNewItem(); } }));
+    wrap.appendChild(el("button", { class: "ad-btn ad-btn-ghost ad-btn-sm", html: '<span class="msym" aria-hidden="true" style="font-size:16px;">+</span>Add ' + col.label, onclick: function () { var t = clone(col.tmpl); t._open = true; arr.push(t); renderEditor(); schedulePreview(); focusNewItem(); } }));
     return wrap;
   }
   function moveItem(arr, idx, dir) { var j = idx + dir; if (j < 0 || j >= arr.length) return; var t = arr[idx]; arr[idx] = arr[j]; arr[j] = t; renderEditor(); schedulePreview(); }
@@ -671,10 +740,11 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     var d = DEVICE[deviceMode];
     var scale = Math.min(1, avail / d.w);
     frame.style.width = d.w + "px";
-    frame.style.height = d.h + "px";
+    var height = previewHeight ? Math.min(d.h, previewHeight) : d.h;
+    frame.style.height = height + "px";
     frame.style.transform = "scale(" + scale + ")";
     frame.style.marginLeft = Math.max(0, (avail - d.w * scale) / 2) + "px";
-    stage.style.height = Math.round(d.h * scale) + "px";
+    stage.style.height = Math.round(height * scale) + "px";
     lastAvail = avail;
   }
   function setDevice(mode) {
@@ -684,8 +754,51 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     applyDevice();
   }
   function previewPath() { return (previewPage === "home" ? "/" : "/" + previewPage) + "?preview=1"; }
-  function setPreviewSrc() { $("preview-page").textContent = previewPage; $("preview").src = previewPath(); }
-  function postPreview() { try { var f = $("preview"); if (f && f.contentWindow) f.contentWindow.postMessage({ type: "jp-preview", content: content }, location.origin); } catch (_) {} }
+  function setPreviewSrc() {
+    if (previewPort) { previewPort.close(); previewPort = null; }
+    frameReady = false; previewHeight = 0; $("preview-page").textContent = previewPage;
+    var url = new URL(previewPath(), publicOrigin);
+    url.searchParams.set("internal", /(?:^|;\s*)jp_internal=1(?:;|$)/.test(document.cookie) ? "1" : "0");
+    $("preview").src = url.href;
+  }
+  function previewData(page) {
+    var pages = {};
+    if (page === "press") {
+      var projects = content.pages.work.sections.photography.projects.map(function (project) {
+        return { name: project.name, date: project.date, endDate: project.endDate, role: project.role,
+          articles: (project.articles || []).map(function (item) {
+            return { title: item.title, outlet: item.outlet, date: item.date, href: item.href, kind: item.kind };
+          }) };
+      });
+      pages.work = { sections: { photography: { projects: projects } } };
+      return { pages: pages };
+    }
+    var source = content.pages[page], sections = Object.assign({}, source.sections);
+    (source.hidden || []).forEach(function (key) { delete sections[key]; });
+    if (page === "work" && sections.photography) {
+      sections.photography = Object.assign({}, sections.photography); delete sections.photography.projects;
+    }
+    pages[page] = { sections: sections, hidden: source.hidden, order: source.order, meta: source.meta };
+    return { global: content.global, pages: pages };
+  }
+  function postPreview() {
+    if (!frameReady || !previewPort || !content || !session) return;
+    var travel = content.pages.scouting && content.pages.scouting.sections.travel;
+    var travelCount = new Set((travel && travel.items || []).map(function (item) { return String(item.name || "").trim().toLowerCase(); }).filter(Boolean)).size;
+    previewPort.postMessage({ type: "jp-preview", page: previewPage, content: previewData(previewPage), travelCount: travelCount });
+  }
+  function previewMessage(event) {
+    var frame = $("preview"), data = event.data;
+    if (!session || event.origin !== publicOrigin || event.source !== frame.contentWindow || !data || data.page !== previewPage) return;
+    if (data.type === "jp-preview-ready" && event.ports.length === 1) {
+      if (previewPort) previewPort.close();
+      previewPort = event.ports[0]; frameReady = true; postPreview();
+    }
+    if (data.type === "jp-preview-height" && Number.isFinite(data.height) && data.height > 0) {
+      previewHeight = Math.min(50000, Math.ceil(data.height)); applyDevice();
+    }
+    if (data.type === "jp-preview-nav" && previewPages.includes(data.target)) selectTab(data.target);
+  }
   function schedulePreview() { editRevision++; clearTimeout(prevTimer); prevTimer = setTimeout(postPreview, 140); }
 
   // ── save ──────────────────────────────────────────────────────────────────
@@ -694,7 +807,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     saving = true; $("save").disabled = true;
     var revision = editRevision;
     var msg = $("save-msg"); msg.textContent = "Saving…"; msg.className = "ad-msg";
-    return fetch("/api/content", { method: "PUT", headers: Object.assign({ "content-type": "application/json" }, authHeader()), body: JSON.stringify({ content: content }) })
+    return fetch("/api/content", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ content: content }) })
       .then(function (r) { if (r.status === 401) { clearSession(); showGate("Session expired — enter a new code."); throw new Error("401"); } return r.json(); })
       .then(function (j) {
         if (j && j.ok) {
@@ -711,7 +824,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
 
   // ── media library ─────────────────────────────────────────────────────────
   function loadMedia() {
-    fetch("/api/image?list=1", { headers: authHeader() })
+    fetch("/api/image?list=1", { cache: "no-store" })
       .then(function (r) { if (r.status === 401) throw new Error("401"); return r.json(); })
       .then(function (j) { renderMedia((j && j.items) || []); }).catch(function () {});
   }
@@ -719,22 +832,27 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     $("media-count").textContent = String(items.length);
     var box = $("media"); box.innerHTML = "";
     items.forEach(function (m) {
-      var url = "/api/image?id=" + m.id;
-      box.appendChild(el("div", { class: "ad-mitem", html: '<img src="' + url + '" alt="" loading="lazy"><div class="ad-mbar"><button data-del="' + m.id + '" class="del">Delete</button></div>' }));
+      var url = "/api/image?id=" + encodeURIComponent(m.id);
+      box.appendChild(el("div", { class: "ad-mitem" }, [
+        el("img", { src: url, alt: "", loading: "lazy" }),
+        el("div", { class: "ad-mbar" }, [el("button", { "data-del": m.id, class: "del", text: "Delete" })])
+      ]));
     });
   }
   function renderPicker(items) {
     var grid = $("picker-grid"); grid.innerHTML = "";
     items.forEach(function (m) {
-      var url = "/api/image?id=" + m.id;
-      var cell = el("div", { class: "ad-mitem", style: "cursor:pointer;", html: '<img src="' + url + '" alt="" loading="lazy">' });
+      var url = "/api/image?id=" + encodeURIComponent(m.id);
+      var cell = el("button", { type: "button", class: "ad-mitem", "aria-label": m.name || "Choose image" }, [
+        el("img", { src: url, alt: "", loading: "lazy" })
+      ]);
       cell.addEventListener("click", function () { if (pendingPick) pendingPick(url); closePicker(); });
       grid.appendChild(cell);
     });
   }
   function openPicker(cb) {
     pendingPick = cb;
-    fetch("/api/image?list=1", { headers: authHeader() }).then(function (r) { return r.json(); }).then(function (j) { renderPicker((j && j.items) || []); }).catch(function () { renderPicker([]); });
+    fetch("/api/image?list=1", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (j) { renderPicker((j && j.items) || []); }).catch(function () { renderPicker([]); });
     $("picker").classList.add("open");
   }
   function closePicker() { $("picker").classList.remove("open"); }
@@ -755,7 +873,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     arr.forEach(function (f) {
       chain = chain.then(function () {
         return downscale(f, 1600, 0.85).then(function (blob) {
-          return fetch("/api/image", { method: "POST", headers: Object.assign({ "content-type": "image/jpeg", "X-Filename": encodeURIComponent(f.name || "image.jpg") }, authHeader()), body: blob })
+          return fetch("/api/image", { method: "POST", headers: { "content-type": "image/jpeg", "X-Filename": encodeURIComponent(f.name || "image.jpg") }, body: blob })
             .then(function (r) { if (r.status === 401) { clearSession(); showGate("Session expired — enter a new code."); throw new Error("401"); } if (!r.ok) throw new Error('upload'); return r.json(); })
             .then(function (j) { if (!j || !j.ok || !j.url) throw new Error('upload'); lastUrl = j.url; });
         });
@@ -769,7 +887,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   }
   function deleteMedia(id) {
     if (!confirm("Delete this image? This cannot be undone.")) return;
-    fetch("/api/image?id=" + encodeURIComponent(id), { method: "DELETE", headers: authHeader() })
+    fetch("/api/image?id=" + encodeURIComponent(id), { method: "DELETE" })
       .then(function (r) { if (r.status === 401) throw new Error("401"); return r.json(); }).then(function () { loadMedia(); }).catch(function () {});
   }
 
@@ -806,7 +924,8 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     $("dev-desktop").addEventListener("click", function () { setDevice("desktop"); });
     $("dev-mobile").addEventListener("click", function () { setDevice("mobile"); });
     $("prev-refresh").addEventListener("click", setPreviewSrc);
-    $("preview").addEventListener("load", function () { postPreview(); applyDevice(); });
+    window.addEventListener("message", previewMessage);
+    $("public-site").href = publicOrigin + "/";
     window.addEventListener("resize", applyDevice);
     // The editor fills the left column after the first paint, which reflows the preview
     // column to a narrower width *without* a window resize event — recompute the iframe
@@ -829,8 +948,5 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   // Visiting Admin marks this browser as internal without changing its login/session.
   excludeInternalTraffic(true);
   wire();
-  session = loadSession();
-  if (session) {
-    fetch("/api/me", { headers: authHeader() }).then(function (r) { return r.ok; }).then(function (ok) { if (ok) { showDash(); boot(); } else { clearSession(); showGate(); } }).catch(function () { showGate(); });
-  } else { showGate(); }
+  checkSession(true);
 })();

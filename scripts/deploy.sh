@@ -52,7 +52,7 @@ rsync -a --delete --exclude '.DS_Store' --exclude '* [2-9].*' "$KOTMA_OUT/" "$ST
   || fail "the KOTMA export could not be read completely (is it still downloading from iCloud?). Nothing was deployed."
 [[ -z "$(find "$STAGING_DIR/kotma" -type f -size 0 -name '*.html' -print -quit)" ]] || fail "the KOTMA export contains empty pages."
 
-for required in index.html insights.html _headers wrangler.toml functions/_middleware.js kotma/index.html assets/site.css; do
+for required in index.html insights.html admin.html _headers wrangler.toml functions/_middleware.js functions/api/login.js functions/api/logout.js kotma/index.html assets/site.css; do
   [[ -s "$STAGING_DIR/$required" ]] || fail "staging is missing $required."
 done
 echo "Staged $(git rev-parse --short HEAD) (v$(cat VERSION)) + KOTMA export at $STAGING_DIR"
@@ -82,6 +82,10 @@ check() {
 bad=0
 check "/"                200 https://jimmypark.net/
 check "/api/content"     200 https://jimmypark.net/api/content
+check "/press"           200 https://jimmypark.net/press
+check "old /admin"       302 https://jimmypark.net/admin
+check "admin login page" 200 https://admin.jimmypark.net/admin
+check "admin session"    401 https://admin.jimmypark.net/api/me
 check "/insights"        200 https://jimmypark.net/insights
 check "/insights (HEAD)" 200 -I https://jimmypark.net/insights
 check "/insights/feed.xml" 200 https://jimmypark.net/insights/feed.xml

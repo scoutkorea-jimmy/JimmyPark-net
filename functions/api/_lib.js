@@ -15,12 +15,10 @@ export function newId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-// ── TOTP (authenticator app) admin auth ─────────────────────────────────────
-// POST /api/login { code } verifies a 6-digit TOTP against env.TOTP_SECRET
-// (base32) and returns a signed session token. Admin endpoints require
-// "Authorization: Bearer <token>". Sessions are HMAC-signed with a key derived
-// from TOTP_SECRET, so rotating the secret invalidates every session.
-const SESSION_TTL = 12 * 3600; // seconds
+// Admin session dates are stored in UTC Unix seconds; the API reports expiry in milliseconds.
+export const ADMIN_COOKIE = '__Host-jp_admin';
+export const SESSION_SECONDS = 12 * 3600;
+export const IDLE_SECONDS = 30 * 60;
 
 function base32Decode(str) {
   const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
@@ -50,50 +48,63 @@ async function hotp(keyBytes, counter) {
   return (code % 1000000).toString().padStart(6, "0");
 }
 
-export async function verifyTotp(env, code) {
-  const secret = String(env.TOTP_SECRET || "").trim();
-  if (!secret) return false;
-  code = String(code || "").replace(/\D/g, "");
-  if (code.length !== 6) return false;
+export async function matchingTotpStep(secret, code, now) {
+  if (typeof code !== 'string' || !/^\d{6}$/.test(code)) return null;
   const key = base32Decode(secret);
-  if (!key.length) return false;
-  const t = Math.floor(Date.now() / 1000 / 30);
-  for (let i = -1; i <= 1; i++) {
-    if ((await hotp(key, t + i)) === code) return true;
+  if (!key.length) return null;
+  const step = Math.floor(now / 30);
+  for (const offset of [0, -1, 1]) {
+    if ((await hotp(key, step + offset)) === code) return step + offset;
   }
-  return false;
+  return null;
 }
 
-async function sessionKey(env) {
-  return crypto.subtle.importKey(
-    "raw", new TextEncoder().encode("sess:" + String(env.TOTP_SECRET || "")),
-    { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+export function sameOriginAdminRequest(request) {
+  const url = new URL(request.url);
+  const loopback = ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname) && ['http:', 'https:'].includes(url.protocol);
+  if (url.origin !== 'https://admin.jimmypark.net' && !loopback) return false;
+  const origin = request.headers.get('Origin');
+  const fetchSite = request.headers.get('Sec-Fetch-Site');
+  if (fetchSite && fetchSite !== 'same-origin' && fetchSite !== 'none') return false;
+  const safe = request.method === 'GET' || request.method === 'HEAD';
+  return (safe && !origin) || origin === url.origin;
 }
 
-export async function issueSession(env) {
-  const exp = Math.floor(Date.now() / 1000) + SESSION_TTL;
-  const key = await sessionKey(env);
-  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(String(exp))));
-  return { token: exp + "." + bytesToB64url(sig), exp: exp * 1000 };
+// A secret rotation still invalidates all sessions. D1 stores only keyed hashes.
+export async function adminDigest(secret, label, value) {
+  const utf8 = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', utf8.encode(secret), {name:'HMAC', hash:'SHA-256'}, false, ['sign']);
+  return bytesToB64url(new Uint8Array(await crypto.subtle.sign('HMAC', key, utf8.encode(label + ':' + value))));
 }
 
-async function verifySession(env, token) {
-  if (!env.TOTP_SECRET) return false;
-  const parts = String(token || "").split(".");
-  if (parts.length !== 2) return false;
-  const exp = parseInt(parts[0], 10);
-  if (!exp || Math.floor(Date.now() / 1000) >= exp) return false;
-  const key = await sessionKey(env);
-  const expected = bytesToB64url(new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(String(exp)))));
-  if (expected.length !== parts[1].length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ parts[1].charCodeAt(i);
-  return diff === 0;
+export function newSessionId() {
+  return bytesToB64url(crypto.getRandomValues(new Uint8Array(32)));
+}
+
+export function adminCookie(value, lifetime) {
+  return ADMIN_COOKIE + '=' + value + '; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=' + lifetime;
+}
+
+export async function sessionHash(request, secret) {
+  const cookie = request.headers.get('Cookie') || '';
+  const prefix = ADMIN_COOKIE + '=';
+  const values = cookie.split(';').map(part => part.trim()).filter(part => part.startsWith(prefix));
+  if (values.length !== 1 || !secret) return null;
+  const token = values[0].slice(prefix.length);
+  return /^[A-Za-z0-9_-]{43}$/.test(token) ? adminDigest(secret, 'admin-session', token) : null;
+}
+
+export async function readAdminSession(request, env) {
+  if (!sameOriginAdminRequest(request)) return null;
+  const hash = await sessionHash(request, env.TOTP_SECRET);
+  if (!hash) return null;
+  // Authenticate and extend the idle deadline in one write on the D1 primary.
+  return env.JP_TRAFFIC.prepare(
+    'UPDATE admin_sessions SET last_seen = max(last_seen, unixepoch()) ' +
+    'WHERE session_hash = ? AND expires_at > unixepoch() AND last_seen > unixepoch() - ? RETURNING expires_at'
+  ).bind(hash, IDLE_SECONDS).first();
 }
 
 export async function isAdmin(request, env) {
-  const auth = request.headers.get("Authorization") || "";
-  const m = auth.match(/^Bearer\s+(.+)$/i);
-  if (!m) return false;
-  return verifySession(env, m[1]);
+  try { return Boolean(await readAdminSession(request, env)); } catch { return false; }
 }

@@ -639,3 +639,10 @@ these roles; new rules should use the `--md-*` names directly.
 # Analytics data quality (2026-10-13)
 
 Keep the existing card/table layout. Analytics shows a labelled browser-exclusion checkbox and calls visitor counts reader candidates. The 2026-10-09 detail has a visible warning; the 14-day table includes a data-quality column. Original counts remain visible. English-only site convention is preserved.
+
+## Admin and Press previews
+
+The private editor lives at https://admin.jimmypark.net/admin. Preview frames use
+the public site's layout and show changes to the selected page before saving.
+The Press preview shows an English assignment list with dates, photography roles
+and optional publication links. An assignment can stand on its own without a link.

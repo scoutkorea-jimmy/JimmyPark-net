@@ -9,7 +9,7 @@ const elements={'save':{},'save-msg':{}};
 let resolveFetch,requests=[],input;
 const scope={
   content:{title:'initial',updatedAt:0},editRevision:0,saving:false,contentLoaded:true,savedRevision:0,
-  $:id=>elements[id],authHeader:()=>({}),ensureShape:()=>{},postPreview:()=>{},showGate:()=>{},clearSession:()=>{},
+  $:id=>elements[id],ensureShape:()=>{},postPreview:()=>{},showGate:()=>{},clearSession:()=>{},
   fetch:(url,opts)=>{requests.push(JSON.parse(opts.body).content);return new Promise(resolve=>{resolveFetch=()=>resolve({status:200,json:async()=>({ok:true,content:{...JSON.parse(opts.body).content,updatedAt:requests.length}})});});},
   wrapField:(label,control)=>control,
   el:(tag,props)=>({ ...props, value:'',style:{} }),

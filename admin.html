@@ -6,10 +6,9 @@
 <title>Admin · Jimmy Park</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v=0.29.0">
 <style>
+  .msym { font-family: system-ui,sans-serif; }
   /* Admin and the portfolio share the owner-selected Wanted Sans family. */
   body { background: #f7f6f3; font-family: 'Wanted Sans Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
   .ad-in, .ad-ta, .ad-tab, .ad-btn, .ad-mini, #otp, h1, h2 { font-family: inherit; }
@@ -135,11 +134,11 @@
 <!-- LOGIN GATE -->
 <div id="gate" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;">
   <div class="ad-card" style="max-width:380px; width:100%; text-align:center;">
-    <span class="msym" aria-hidden="true" style="font-size:32px; color:#7a1e2c;">lock</span>
+    <span class="msym" aria-hidden="true" style="font-size:32px; color:#7a1e2c;">▣</span>
     <h1 style="margin:14px 0 0; font-size:23px; font-weight:800;">Admin</h1>
     <p style="margin:8px 0 22px; font-size:13px; color:#66615c; line-height:1.6;">Private area. Enter the 6-digit code from your authenticator app.</p>
     <input id="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" style="width:100%; font-size:22px; letter-spacing:.3em; text-align:center; padding:13px 14px; border:1px solid #e6e1da; border-radius:12px;">
-    <div id="gate-msg" class="ad-msg ad-err" style="margin-top:10px; min-height:18px;"></div>
+    <div id="gate-msg" role="status" class="ad-msg ad-err" style="margin-top:10px; min-height:18px;"></div>
     <button id="otp-btn" class="ad-btn ad-btn-primary" style="margin-top:6px; width:100%; justify-content:center;">Login</button>
   </div>
 </div>
@@ -156,10 +155,10 @@
         </div>
         <div class="ad-actions" style="display:flex; align-items:center; gap:10px;">
           <span id="idle" class="pill" style="background:#f2f0ec; color:#66615c;" title="Auto sign-out timer"></span>
-          <span id="save-msg" class="ad-msg"></span>
-          <button id="prev-toggle" class="ad-btn ad-btn-ghost ad-btn-sm" aria-pressed="false" title="Hide preview"><span class="msym" aria-hidden="true" style="font-size:17px;">space_dashboard</span></button>
-          <button id="save" class="ad-btn ad-btn-primary ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:17px;">save</span>Save</button>
-          <a href="/" target="_blank" class="ad-btn ad-btn-ghost ad-btn-sm">View site</a>
+          <span id="save-msg" class="ad-msg" role="status"></span>
+          <button id="prev-toggle" class="ad-btn ad-btn-ghost ad-btn-sm" aria-pressed="false" title="Hide preview"><span class="msym" aria-hidden="true" style="font-size:17px;">▤</span></button>
+          <button id="save" class="ad-btn ad-btn-primary ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:17px;">✓</span>Save</button>
+          <a id="public-site" href="https://jimmypark.net/" target="_blank" rel="noopener" class="ad-btn ad-btn-ghost ad-btn-sm">View site</a>
           <button id="logout" class="ad-btn ad-btn-ghost ad-btn-sm">Sign out</button>
         </div>
       </div>
@@ -185,7 +184,7 @@
             </div>
             <p class="ad-sub">Upload images (auto-resized to ≤1600px). Use the "Set image" buttons in each section to attach one.</p>
             <div id="drop" class="ad-drop">
-              <span class="msym" aria-hidden="true" style="font-size:26px;">add_photo_alternate</span>
+              <span class="msym" aria-hidden="true" style="font-size:26px;">＋</span>
               <div style="font-size:12.5px; margin-top:6px; font-weight:600; color:#66615c;">Click or drop images here</div>
               <div style="font-size:11px; margin-top:2px;">JPEG / PNG · up to 5 MB each</div>
             </div>
@@ -201,12 +200,12 @@
           <div style="display:flex; gap:6px;">
             <button id="dev-desktop" class="ad-tab active" style="padding:6px 12px;">Desktop</button>
             <button id="dev-mobile" class="ad-tab" style="padding:6px 12px;">Mobile</button>
-            <button id="prev-refresh" class="ad-mini" title="Reload preview"><span class="msym" aria-hidden="true" style="font-size:15px; vertical-align:middle;">refresh</span></button>
+            <button id="prev-refresh" class="ad-mini" title="Reload preview"><span class="msym" aria-hidden="true" style="font-size:15px; vertical-align:middle;">↻</span></button>
           </div>
         </div>
         <div class="ad-prev-framewrap">
           <div id="preview-stage">
-            <iframe id="preview" src="/?preview=1" title="Preview"></iframe>
+            <iframe id="preview" src="about:blank" title="Preview"></iframe>
           </div>
         </div>
         <p style="font-size:11.5px; color:#9a948b; margin:10px 2px 0; line-height:1.5;">Changes preview instantly here. Click <strong>Save</strong> to publish them to the live site.</p>
@@ -223,7 +222,7 @@
       <button id="picker-close" class="ad-mini">Close</button>
     </div>
     <div style="display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
-      <button id="picker-upload" class="ad-btn ad-btn-ghost ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:16px;">cloud_upload</span>Upload new</button>
+      <button id="picker-upload" class="ad-btn ad-btn-ghost ad-btn-sm"><span class="msym" aria-hidden="true" style="font-size:16px;">↑</span>Upload new</button>
       <button id="picker-clear" class="ad-btn ad-btn-ghost ad-btn-sm">Remove image</button>
     </div>
     <div id="picker-grid" class="ad-media"></div>

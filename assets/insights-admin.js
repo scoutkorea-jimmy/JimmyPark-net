@@ -1,13 +1,13 @@
 /* Insights uses its own authenticated store; drafts never enter public content. */
 (function () {
   'use strict';
-  var panel, auth, expired, store, selected = null, dirty = false, busy = false, serial = 0;
+  var panel, publicOrigin, expired, store, selected = null, dirty = false, busy = false, serial = 0;
   function node(tag, text, cls) { var n = document.createElement(tag); if (text) n.textContent = text; if (cls) n.className = cls; return n; }
   function errorText(code) {
     return ({ conflict: 'This collection changed in another session. Your text is preserved. Copy it before reloading Insights.', slug_taken: 'That URL is already used by another article.', title_required: 'Add a title.', body_required: 'Add article text before publishing.', invalid_slug: 'Use lowercase letters, numbers and hyphens for the URL.', invalid_date: 'Enter a valid date.', invalid_image: 'Use an HTTPS image URL or a site image path beginning with /assets/img/.', unauthorized: 'Your session expired. Sign in again.' })[code] || 'Could not save. Check the fields and try again.';
   }
   function request(method, data) {
-    return fetch('/api/posts', { method: method, headers: Object.assign({ 'content-type': 'application/json' }, auth()), body: data ? JSON.stringify(data) : undefined })
+    return fetch('/api/posts', { method: method, headers: { 'content-type': 'application/json' }, body: data ? JSON.stringify(data) : undefined })
       .then(function (r) { if (r.status === 401) { expired(); throw new Error('unauthorized'); } return r.json().then(function (j) { if (!r.ok || !j.ok) throw new Error(j.error || 'network'); return j; }); });
   }
   function isFuture(post) { return post.status === 'published' && new Date(post.date + 'T09:00:00+09:00').getTime() > Date.now(); }
@@ -56,7 +56,7 @@
     var publish = node('button', selected.status === 'published' ? 'Unpublish' : 'Publish', 'ad-btn ad-btn-ghost ad-btn-sm'); publish.type = 'button';
     var remove = node('button', 'Delete article', 'ad-btn ad-btn-ghost ad-btn-sm'); remove.type = 'button'; remove.hidden = !selected.id;
     actions.append(save, publish, remove);
-    if (selected.status === 'published') { var link = node('a', 'View article', 'ad-btn ad-btn-ghost ad-btn-sm'); link.href = '/insights/' + selected.slug; link.target = '_blank'; link.rel = 'noopener'; actions.appendChild(link); }
+    if (selected.status === 'published') { var link = node('a', 'View article', 'ad-btn ad-btn-ghost ad-btn-sm'); link.href = new URL('/insights/' + encodeURIComponent(selected.slug), publicOrigin).href; link.target = '_blank'; link.rel = 'noopener'; actions.appendChild(link); }
     fields.appendChild(actions); editor.appendChild(fields);
     var status = node('p', '', 'ad-msg'); status.setAttribute('role','status'); status.setAttribute('aria-live','polite'); editor.appendChild(status); panel.appendChild(editor);
     async function persist(method, nextStatus) {
@@ -77,9 +77,9 @@
     remove.onclick = function () { if (window.confirm('Delete “' + selected.title + '”? This cannot be undone.')) persist('DELETE'); };
   }
   window.JPInsights = {
-    open: function (target, getAuth, onExpired) {
+    open: function (target, siteOrigin, onExpired) {
       if (busy) return;
-      panel = target; auth = getAuth; expired = onExpired;
+      panel = target; publicOrigin = siteOrigin; expired = onExpired;
       if (store) { render(); return; }
       var attempt = ++serial;
       panel.textContent = 'Loading articles…';
@@ -87,9 +87,9 @@
         panel.replaceChildren(node('p', 'Could not load articles. Reopen Insights to retry.', 'ad-msg ad-err'));
       });
     },
-    canLeave: function () {
+    canLeave: function (checkOnly) {
       if (busy || !discard()) return false;
-      if (dirty) { selected = null; dirty = false; }
+      if (dirty && !checkOnly) { selected = null; dirty = false; }
       return true;
     },
     reset: function () { ++serial; store = null; selected = null; dirty = false; }

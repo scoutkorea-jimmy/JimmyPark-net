@@ -38,20 +38,18 @@ const load = file => import('data:text/javascript;base64,' + Buffer.from(readFil
   assert.equal(missing.status, 404);
   assert.equal((await call('/quotly', { method: 'HEAD' }, () => { throw new Error('unexpected'); })).status, 302);
 
-  // Login limiter fails closed.
-  const lib = readFileSync('functions/api/_lib.js', 'utf8').replace(/\bexport /g, '');
-  const login = readFileSync('functions/api/login.js', 'utf8').replace(/^import .*;\n/m, '').replace(/\bexport /g, '');
-  const { onRequestPost } = await import('data:text/javascript;base64,' + Buffer.from(lib + '\n' + login + '\nexport { onRequestPost };').toString('base64'));
-  const post = env => onRequestPost({ env, request: new Request('https://jimmypark.net/api/login', { method: 'POST', body: JSON.stringify({ code: '000000' }), headers: { 'CF-Connecting-IP': '203.0.113.9' } }) });
-  const secret = 'JBSWY3DPEHPK3PXP';
-  assert.equal((await post({})).status, 503);
-  assert.equal((await post({ TOTP_SECRET: secret })).status, 503);
-  assert.equal((await post({ TOTP_SECRET: secret, JP_KV: { get: async () => { throw new Error('kv'); } } })).status, 503);
-  assert.equal((await post({ TOTP_SECRET: secret, JP_KV: { get: async () => null, put: async () => { throw new Error('kv'); } } })).status, 503);
-  let stored = null;
-  const kv = { get: async () => stored, put: async (_k, v) => { stored = v; }, delete: async () => { stored = null; } };
-  assert.equal((await post({ TOTP_SECRET: secret, JP_KV: kv })).status, 401); assert.equal(stored, '1');
-  stored = '10';
-  assert.equal((await post({ TOTP_SECRET: secret, JP_KV: kv })).status, 429);
+  // The login rate counter and session store are both authoritative on D1.
+  const { fixture, signIn } = require('./admin-session-fixture.cjs');
+  const { sql, env } = fixture();
+  assert.equal((await signIn({}, null)).status, 503);
+  assert.equal((await signIn({ TOTP_SECRET: env.TOTP_SECRET }, null)).status, 503);
+  assert.equal((await signIn({ ...env, JP_TRAFFIC: {} }, null)).status, 503);
+  const responses = await Promise.all(Array.from({ length: 11 }, () => signIn(env, null)));
+  assert.equal(responses.filter(res => res.status === 401).length, 10);
+  assert.equal(responses.filter(res => res.status === 429).length, 1);
+  assert.equal(sql.prepare('SELECT attempts FROM admin_login_windows').get().attempts, 10);
+  sql.exec('UPDATE admin_login_windows SET ends_at = unixepoch()');
+  assert.equal((await signIn(env, null)).status, 401);
+  assert.equal(sql.prepare('SELECT attempts FROM admin_login_windows').get().attempts, 1);
   console.log('PASS: blocklist, security headers, CSP split, HEAD parity and fail-closed login limiter.');
 })().catch(error => { console.error(error); process.exit(1); });

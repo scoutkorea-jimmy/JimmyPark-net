@@ -11,6 +11,7 @@
   // First-party daily browser counts; no IP, full referrer, query or cross-day identity.
   (function recordVisit() {
     // Internal review links persist per browser; this is an analytics preference, not authentication.
+    try { localStorage.removeItem('jp:admin-session'); } catch (_) {}
     var internal = new URLSearchParams(location.search).get('internal');
     if (internal === '1' || internal === '0') {
       try { localStorage.setItem('jp:traffic-exclude', internal); } catch (_) {}
@@ -22,8 +23,6 @@
     if (!/^\/(?:work|press|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/.test(path)) return;
     try {
       if (localStorage.getItem('jp:traffic-exclude') === '1') return;
-      var admin = JSON.parse(localStorage.getItem('jp:admin-session') || 'null');
-      if (admin && admin.exp > Date.now()) return;
       var day = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
       var visitor = JSON.parse(localStorage.getItem('jp:daily-visitor') || 'null');
       if (!visitor || visitor.day !== day) { visitor = { day: day, id: crypto.randomUUID() }; localStorage.setItem('jp:daily-visitor', JSON.stringify(visitor)); }
@@ -784,13 +783,46 @@
     .then(function (j) { if (!previewReceived && j && j.content) applyDoc(j.content); })
     .catch(function () {});
 
-  window.addEventListener("message", function (e) {
-    if (e.origin !== location.origin || window.parent === window || e.source !== window.parent || new URLSearchParams(location.search).get('preview') !== '1') return;
-    if (e.data && e.data.type === "jp-preview" && e.data.content) {
+  (function connectPreview() {
+    var routes = { "/": "home", "/work": "work", "/dev": "dev", "/press": "press", "/lecture": "lecture", "/scouting": "scouting", "/contact": "contact" };
+    var current = routes[location.pathname.replace(/\/$/, "") || "/"];
+    var local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+    if (!current || window.parent === window || (!local && location.origin !== "https://jimmypark.net") || new URLSearchParams(location.search).get("preview") !== "1") return;
+    var adminOrigin = local ? location.origin : "https://admin.jimmypark.net";
+    var channel = new MessageChannel();
+    function notify(type, fields) { window.parent.postMessage(Object.assign({ type: type, page: current }, fields), adminOrigin); }
+    function reportHeight() { notify("jp-preview-height", { height: Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) }); }
+    channel.port1.onmessage = function (e) {
+      var data = e.data;
+      if (!data || data.type !== "jp-preview" || data.page !== current || !data.content) return;
       previewReceived = true;
-      try { applyDoc(e.data.content); } catch (_) {}
+      if (current === "press") {
+        document.dispatchEvent(new CustomEvent("jp-press-preview", { detail: data.content }));
+      } else {
+        applyDoc(data.content);
+        if (Number.isSafeInteger(data.travelCount)) document.querySelectorAll("[data-travel-count]").forEach(function (node) { node.textContent = String(data.travelCount); });
+      }
+      reportHeight();
+    };
+    function ready() {
+      window.parent.postMessage({ type: "jp-preview-ready", page: current }, adminOrigin, [channel.port2]);
+      reportHeight();
+      if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
     }
-  });
+    if (document.readyState === "complete") ready(); else window.addEventListener("load", ready, { once: true });
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest && event.target.closest("a[href]");
+      if (!link || event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      var url = new URL(link.href);
+      if (url.origin === location.origin && url.pathname === location.pathname && url.hash) return;
+      var target = url.origin === location.origin && routes[url.pathname.replace(/\/$/, "") || "/"];
+      if (target) {
+        event.preventDefault(); notify("jp-preview-nav", { target: target });
+      } else {
+        link.target = "_blank"; link.rel = "noopener noreferrer";
+      }
+    }, true);
+  })();
 
   // ── Contact form ───────────────────────────────────────────────────────────
   // The form is hidden in the markup and shown only when the server reports that

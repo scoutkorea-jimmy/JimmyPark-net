@@ -1,7 +1,11 @@
-import { json, isAdmin } from "./_lib.js";
+import { json, readAdminSession } from "./_lib.js";
 
-// GET /api/me → { ok } when a valid admin session is presented, else 401.
 export async function onRequestGet({ request, env }) {
-  if (await isAdmin(request, env)) return json({ ok: true });
-  return json({ ok: false }, 401);
+  try {
+    const session = await readAdminSession(request, env);
+    if (session) return json({ ok: true, exp: session.expires_at * 1000 });
+    return json({ ok: false }, 401);
+  } catch {
+    return json({ ok: false, error: 'storage_unavailable' }, 503);
+  }
 }

@@ -7,17 +7,18 @@ const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const strip = source => source.replace(/^import .*;\n/gm, '').replace(/\bexport /g, '');
 const source = ['functions/api/_lib.js','functions/api/_posts.js','functions/_insights-shell.js','functions/_insights-view.js'].map(file => strip(read(file))).join('\n');
-const api = vm.runInNewContext(source + '; ({ managePosts, renderInsights, issueSession, publicationTime });', { Response, Request, URL, TextEncoder, Uint8Array, DataView, ArrayBuffer, crypto: require('node:crypto').webcrypto, btoa });
+const api = vm.runInNewContext(source + '; ({ managePosts, renderInsights, publicationTime });', { Response, Request, URL, TextEncoder, Uint8Array, DataView, ArrayBuffer, crypto: require('node:crypto').webcrypto, btoa });
+const { fixture, signInCookie } = require('./admin-session-fixture.cjs');
 const copy = value => JSON.parse(JSON.stringify(value));
 let saved = null, writes = 0;
-const env = { TOTP_SECRET: 'isolated-test-secret', JP_KV: { get: async key => { assert.equal(key, 'insights:v1'); return saved && copy(saved); }, put: async (key,value) => { assert.equal(key,'insights:v1'); writes++; saved = JSON.parse(value); } } };
-let token;
+const env = { ...fixture().env, JP_KV: { get: async key => { assert.equal(key, 'insights:v1'); return saved && copy(saved); }, put: async (key,value) => { assert.equal(key,'insights:v1'); writes++; saved = JSON.parse(value); } } };
+let cookie;
 async function manage(method, data, authorized = true) {
-  return api.managePosts({ env, request: new Request('https://example.test/api/posts', { method, headers: authorized ? { Authorization: 'Bearer ' + token } : {}, body: data === undefined ? undefined : typeof data === 'string' ? data : JSON.stringify(data) }) });
+  return api.managePosts({ env, request: new Request('https://admin.jimmypark.net/api/posts', { method, headers: authorized ? { Cookie: cookie, Origin: 'https://admin.jimmypark.net' } : {}, body: data === undefined ? undefined : typeof data === 'string' ? data : JSON.stringify(data) }) });
 }
 async function page(slug, query = '') { const res = await api.renderInsights({env,request:new Request('https://example.test/insights' + query)},slug); return { status:res.status, html:await res.text(), cache:res.headers.get('cache-control') }; }
 (async () => {
-  token = (await api.issueSession(env)).token;
+  cookie = await signInCookie(env);
   for (const method of ['GET','POST','DELETE']) assert.equal((await manage(method, method === 'GET' ? undefined : {}, false)).status,401);
   assert.equal((await manage('PUT',{})).status,405);
   const post = { id:'',title:'A <script> & "title"',slug:'test-note',category:'<img src=x>',summary:'<script>alert(1)</script>',body:'First paragraph.\n\n## A heading\n\n<script>alert(1)</script>',hashtags:'',image:'/assets/img/og/ax-1.png',imageAlt:'AX article cover',date:'2026-09-10',status:'draft' };

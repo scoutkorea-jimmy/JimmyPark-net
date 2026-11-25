@@ -19,8 +19,6 @@ const BLOCK = [
 
 // Baseline headers for every response. Middleware-wrapped static responses
 // ignore `_headers`, so this file is authoritative; keep `_headers` in sync.
-// The admin previews public pages in a same-origin iframe, so framing is
-// limited to this origin rather than denied.
 const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -43,15 +41,50 @@ const CSP_REPORT_ONLY = [
   "form-action 'self'",
 ].join("; ");
 
-function applySecurityHeaders(res, path) {
+const ADMIN_ORIGIN = "https://admin.jimmypark.net";
+const PUBLIC_ORIGIN = "https://jimmypark.net";
+const PREVIEW_PATHS = new Set(["/", "/work", "/press", "/dev", "/scouting", "/lecture", "/contact"]);
+const ADMIN_SHELL = new Set(["/admin", "/admin/", "/admin.html"]);
+const ADMIN_ASSETS = new Set(["/assets/admin.js", "/assets/insights-admin.js", "/assets/site.css", "/assets/img/logo.svg", "/assets/img/favicon.svg"]);
+const ADMIN_METHODS = new Map([
+  ["/api/login", ["POST"]], ["/api/logout", ["POST"]], ["/api/me", ["GET"]],
+  ["/api/content", ["GET", "PUT"]], ["/api/posts", ["GET", "POST", "DELETE"]],
+  ["/api/image", ["GET", "POST", "DELETE"]], ["/api/traffic", ["GET"]],
+]);
+const isLocal = url => ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+const readMethod = method => method === "GET" || method === "HEAD";
+
+function applySecurityHeaders(res, url) {
+  const path = url.pathname;
   const out = new Response(res.body, res);
-  // The admin calls /api/* from this origin with a Bearer token; no other
-  // origin needs to read API responses. Static assets keep the platform default.
   if (path.startsWith("/api/")) {
     out.headers.delete("Access-Control-Allow-Origin");
     out.headers.delete("Access-Control-Allow-Credentials");
   }
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) out.headers.set(key, value);
+  if (url.origin === ADMIN_ORIGIN || (isLocal(url) && ADMIN_SHELL.has(path))) {
+    const frameSource = isLocal(url) ? "'self'" : PUBLIC_ORIGIN;
+    out.headers.delete("Access-Control-Allow-Origin");
+    out.headers.delete("Access-Control-Allow-Credentials");
+    out.headers.set("Content-Security-Policy", [
+      "default-src 'none'", "script-src 'self'", "style-src 'self' 'unsafe-inline'",
+      "font-src 'self'", "img-src 'self' data: blob: https:", "connect-src 'self'",
+      "frame-src " + frameSource, "frame-ancestors 'none'", "base-uri 'none'", "object-src 'none'", "form-action 'self'",
+    ].join("; "));
+    out.headers.delete("Content-Security-Policy-Report-Only");
+    out.headers.set("X-Frame-Options", "DENY");
+    out.headers.set("Cache-Control", "no-store");
+    out.headers.set("Referrer-Policy", "no-referrer");
+    out.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return out;
+  }
+  if (url.origin === PUBLIC_ORIGIN && PREVIEW_PATHS.has(path) && url.searchParams.get("preview") === "1") {
+    out.headers.delete("X-Frame-Options");
+    out.headers.set("Content-Security-Policy", "frame-ancestors 'self' " + ADMIN_ORIGIN + "; base-uri 'self'; object-src 'none'");
+    out.headers.set("Content-Security-Policy-Report-Only", CSP_REPORT_ONLY);
+    out.headers.set("Cache-Control", "no-store");
+    return out;
+  }
   // Keep a stricter per-route policy (image serving sets default-src 'none').
   if (!out.headers.has("Content-Security-Policy")) {
     out.headers.set("Content-Security-Policy", CSP_ENFORCED);
@@ -60,10 +93,39 @@ function applySecurityHeaders(res, path) {
   return out;
 }
 
+function adminBoundary(url, request) {
+  const path = url.pathname;
+  const method = request.method;
+  const admin = url.origin === ADMIN_ORIGIN;
+  const local = isLocal(url);
+  const read = readMethod(method);
+  const apiMethods = ADMIN_METHODS.get(path.replace(/\/$/, ""));
+  const denied = () => Response.json({ ok: false, error: "unauthorized" }, {status: 401, headers: {"Cache-Control": "no-store"}});
+  if (admin) {
+    if (read && path === "/") return Response.redirect(ADMIN_ORIGIN + "/admin", 302);
+    if (read && path === "/robots.txt") return new Response("User-agent: *\nDisallow: /\n", {headers: {"Content-Type": "text/plain; charset=utf-8"}});
+    if (read && (ADMIN_SHELL.has(path) || ADMIN_ASSETS.has(path))) return null;
+    if (!apiMethods || !ADMIN_METHODS.has(path)) return new Response("Not found", {status: 404});
+    if (!apiMethods.includes(method)) return new Response(null, {status: 405, headers: {Allow: apiMethods.join(", ")}});
+    if (!read && request.headers.get("Origin") !== ADMIN_ORIGIN) return denied();
+  } else if (!local) {
+    if (read && ADMIN_SHELL.has(path)) return new Response(null, {status: 302, headers: {Location: ADMIN_ORIGIN + "/admin", "Cache-Control": "no-store"}});
+    if (apiMethods) {
+      const publicApi = (path === "/api/content" && read) ||
+        (path === "/api/image" && read && !url.searchParams.has("list")) ||
+        (path === "/api/traffic" && method === "POST");
+      if (!publicApi) return denied();
+    }
+  }
+  return null;
+}
+
 async function route(context, request) {
   const { next } = context;
   const url = new URL(request.url);
   const path = url.pathname;
+  const boundary = adminBoundary(url, request);
+  if (boundary) return boundary;
   if (path === "/quotly" || path === "/quotly/") {
     return new Response(null, {
       status: 302,
@@ -113,14 +175,15 @@ async function route(context, request) {
 
 export async function onRequest(context) {
   const { request } = context;
-  const path = new URL(request.url).pathname;
+  const url = new URL(request.url);
+  const path = url.pathname;
   // Server-rendered routes export GET handlers only, so a HEAD request used to
   // fall through to a 404 while GET returned 200. Link checkers and preview
   // bots rely on HEAD: answer it with the GET status and headers, no body.
   if (request.method === "HEAD" && !path.startsWith("/api/")) {
     const res = await route(context, new Request(request.url, { method: "GET", headers: request.headers }));
     const head = new Response(null, { status: res.status, headers: res.headers });
-    return applySecurityHeaders(head, path);
+    return applySecurityHeaders(head, url);
   }
-  return applySecurityHeaders(await route(context, request), path);
+  return applySecurityHeaders(await route(context, request), url);
 }
