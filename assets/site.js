@@ -19,7 +19,7 @@
     if (/(?:^|;\s*)jp_internal=1(?:;|$)/.test(document.cookie || '')) return;
     if (!/^(www\.)?jimmypark\.net$/.test(location.hostname) || window.top !== window || new URLSearchParams(location.search).has('preview') || navigator.doNotTrack === '1' || navigator.globalPrivacyControl || !crypto.randomUUID) return;
     var path = location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
-    if (!/^\/(?:work|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/.test(path)) return;
+    if (!/^\/(?:work|press|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/.test(path)) return;
     try {
       if (localStorage.getItem('jp:traffic-exclude') === '1') return;
       var admin = JSON.parse(localStorage.getItem('jp:admin-session') || 'null');

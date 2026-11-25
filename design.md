@@ -1,5 +1,12 @@
 # Design System — JimmyPark.net
 
+## Press photography (v0.30.0)
+
+Use text-only rows for photography credits. Show the assignment dates, project name and Jimmy's
+role together. Place the published headlines, outlets and publication dates beside them on wide
+screens and below them on mobile. An assignment without a publication displays its project
+details on their own. Keep the enlarged-photo viewer and album browser under Media Work.
+
 ## Admin Analytics (v0.28.0)
 
 Reuse the single 880px writing column without a preview or Save control. Use a labelled native

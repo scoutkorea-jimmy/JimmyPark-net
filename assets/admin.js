@@ -50,7 +50,31 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   var VIDEO_IMAGES = [["image", "Representative image (16:9)"]];
   var VIDEO_TMPL = { id: "", title: "", year: "", role: "", desc: "", format: "", href: "", linkLabel: "Watch film", image: "", images: [] };
 
+  var PHOTO_PROJECTS = {
+    k: "projects", label: "Photography projects",
+    fields: [
+      F("name", "Project name"), F("date", "Start date (optional)", "date"),
+      F("endDate", "End date (optional for a multi-day project)", "date"),
+      F("role", "Your project role (optional)")
+    ],
+    tmpl: { name: "", date: "", endDate: "", role: "", articles: [] },
+    collections: [{
+      k: "articles", label: "Related publications",
+      fields: [
+        F("title", "Article or post title"), F("outlet", "Publisher or channel"),
+        F("kind", "Publication type", "select", [
+          { v: "", t: "General publication" }, { v: "press", t: "Press coverage" },
+          { v: "organization", t: "Organization publication" }, { v: "brand", t: "Brand publication" },
+          { v: "blog", t: "Personal blog" }
+        ]),
+        F("date", "Publication date (optional)", "date"), F("href", "Publication HTTPS URL")
+      ],
+      tmpl: { title: "", outlet: "", kind: "", date: "", href: "" }
+    }]
+  };
+
   var SCHEMA = {
+    press: { title: "Press", kind: "press" },
     global: {
       title: "Global", kind: "global",
       groups: [
@@ -71,7 +95,16 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     ] },
     work: { title: "Media Work", kind: "page", page: "work", sections: [
       { id: "intro", title: "Intro", fields: [F("eyebrow", "Eyebrow"), F("title", "Title"), F("lead", "Lead", "textarea")] },
-      { id: "photography", title: "Photography", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Photography portfolio (blank URL = hidden)"]], images: [["image", "Image"]], collections: [{ k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } }, { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } }] },
+      {
+        id: "photography", title: "Photography",
+        fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("portfolioNote", "Portfolio note")],
+        links: [["portfolio", "Photography portfolio (blank URL = hidden)"]], images: [["image", "Image"]],
+        collections: [
+          { k: "deliverables", label: "Deliverables", fields: [F("text", "Text")], tmpl: { text: "" } },
+          { k: "usefulFor", label: "Useful for (pills)", fields: [F("text", "Text")], tmpl: { text: "" } },
+          PHOTO_PROJECTS
+        ]
+      },
       { id: "video", title: "Video", fields: [F("kicker", "Kicker"), F("title", "Title"), F("sub", "Sub-label"), F("desc", "Description", "textarea"), F("caption", "Caption"), F("casesTitle", "Selected work title"), F("portfolioNote", "Portfolio note")], links: [["portfolio", "Full video portfolio"]], collections: [{ k: "cases", label: "Video portfolio", fields: VIDEO_FIELDS, images: VIDEO_IMAGES, galleries: PREVIEW_GALLERIES, tmpl: VIDEO_TMPL }, { k: "formats", label: "Formats", fields: [F("name", "Name"), F("desc", "Description")], tmpl: { name: "", desc: "" } }] },
       { id: "cta", title: "CTA", fields: [F("title", "Title"), F("body", "Body", "textarea")], links: [["button", "Button"]] },
     ] },
@@ -194,7 +227,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
   // Two groups: the site's actual pages (in top-to-bottom nav order) first, then the
   // site-wide / shared content (Global + Media) separated as its own group.
   var TAB_GROUPS = [
-    { label: "Pages", tabs: ["home", "work", "dev", "lecture", "scouting", "contact", "insights"] },
+    { label: "Pages", tabs: ["home", "work", "press", "dev", "lecture", "scouting", "contact", "insights"] },
     { label: "Site-wide", tabs: ["global", "media", "analytics"] },
   ];
   function buildTabs() {
@@ -222,7 +255,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     if (t === "analytics") { renderAnalytics(); return; }
     if (t === "insights") { window.JPInsights.open($("insights-panel"), authHeader, function () { clearSession(); showGate('Session expired — enter a new code.'); }); return; }
     if (t === "media") { loadMedia(); return; }
-    if (SCHEMA[t] && SCHEMA[t].kind === "page") { if (previewPage !== t) { previewPage = t; setPreviewSrc(); } }
+    if (SCHEMA[t] && (SCHEMA[t].kind === "page" || t === "press")) { if (previewPage !== t) { previewPage = t; setPreviewSrc(); } }
     renderEditor();
   }
 
@@ -285,6 +318,16 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     var root = $("editor"); root.innerHTML = "";
     var sc = SCHEMA[activeTab];
     if (!sc) return;
+    if (sc.kind === "press") {
+      var photo = content.pages.work.sections.photography;
+      var pressCard = el("div", { class: "ad-card ad-sec" }, [
+        el("h2", { class: "ad-h", text: "Press" }),
+        el("p", { class: "ad-sub", text: "Edit photography projects, your role and links to published coverage." }),
+        collectionEl(photo, PHOTO_PROJECTS)
+      ]);
+      root.appendChild(pressCard);
+      return;
+    }
     if (sc.kind === "global") {
       sc.groups.forEach(function (g) {
         var obj = g.path.reduce(function (o, k) { return (o[k] = o[k] || {}); }, content);
@@ -373,7 +416,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       var ta = el("textarea", { class: "ad-ta", rows: "3", oninput: function () { obj[f.k] = ta.value; schedulePreview(); } }); ta.value = obj[f.k] || "";
       return wrapField(f.label, ta);
     }
-    var inp = el("input", { class: "ad-in", type: "text", oninput: function () { obj[f.k] = inp.value; schedulePreview(); } }); inp.value = obj[f.k] || "";
+    var inp = el("input", { class: "ad-in", type: f.type === "date" ? "date" : "text", oninput: function () { obj[f.k] = inp.value; schedulePreview(); } }); inp.value = obj[f.k] || "";
     return wrapField(f.label, inp);
   }
   function wrapField(label, control) { return el("div", { class: "ad-field" }, [el("label", { class: "ad-label", text: label }), control]); }
@@ -554,14 +597,17 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       renderEditor(); schedulePreview();
     } });
     function syncDel() { var n = selCount(); delBtn.textContent = "Delete selected (" + n + ")"; delBtn.disabled = !n; delBtn.style.opacity = n ? "1" : ".45"; }
-    var bar = el("div", { class: "ad-coltools" }, [
+    // Flat CSV exports cannot carry the articles nested under each project.
+    var csvTools = col.collections ? [] : [
       el("button", { class: "ad-mini", title: "Download a blank CSV template for this list", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">download</span>Template', onclick: function () { downloadTemplate(col); } }),
       el("button", { class: "ad-mini", title: "Export the current rows to CSV", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">file_save</span>Export', onclick: function () { exportCsv(col, arr); } }),
       el("button", { class: "ad-mini", title: "Bulk-add rows from a CSV file", html: '<span class="msym" aria-hidden="true" style="font-size:14px;vertical-align:-2px;">upload</span>Import CSV', onclick: function () { pickCsv(function (text) { var n = importCsv(col, arr, text); renderEditor(); schedulePreview(); flash(n ? ("Imported " + n + " row" + (n > 1 ? "s" : "") + " — Save to publish") : "No rows found in CSV", !!n); }); } }),
+    ];
+    var bar = el("div", { class: "ad-coltools" }, csvTools.concat([
       el("span", { style: "flex:1;" }),
       el("button", { class: "ad-mini", title: "Select / clear all", text: "Select all", onclick: function () { var all = arr.length && selCount() === arr.length; arr.forEach(function (it) { it._sel = !all; }); renderEditor(); } }),
       delBtn,
-    ]);
+    ]));
     wrap.appendChild(bar);
 
     arr.forEach(function (item, idx) {
@@ -591,6 +637,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       (col.fields || []).forEach(function (f) { body.appendChild(fieldEl(item, f)); });
       (col.images || []).forEach(function (im) { body.appendChild(imageEl(item, im[0], im[1])); });
       (col.galleries || []).forEach(function (gallery) { body.appendChild(galleryEl(item, gallery)); });
+      (col.collections || []).forEach(function (nested) { body.appendChild(collectionEl(item, nested)); });
       // keep the collapsed summary in sync as the headline fields are edited
       body.addEventListener("input", function () { sumText.textContent = itemSummary(item); });
       det.appendChild(body);
@@ -656,7 +703,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
           savedRevision = revision;
           msg.className = "ad-msg ad-ok"; postPreview();
         }
-        else { msg.textContent = j && (j.error === 'conflict' || j.error === 'schema_changed') ? 'Another save changed this page. Your edits are preserved here. Copy them before reloading.' : j && j.error === 'invalid_url' ? 'Use HTTPS or a site-relative URL. Check ' + j.field + '.' : j && j.error === 'invalid_email' ? 'Enter a valid email address.' : 'Save failed. Your edits are preserved; try again.'; msg.className = "ad-msg ad-err"; }
+        else { msg.textContent = j && (j.error === 'conflict' || j.error === 'schema_changed') ? 'Another save changed this page. Your edits are preserved here. Copy them before reloading.' : j && j.error === 'invalid_url' ? 'Use HTTPS or a site-relative URL. Check ' + j.field + '.' : j && j.error === 'invalid_publication_kind' ? 'Choose a listed publication type for each related article or post.' : j && j.error === 'invalid_photo_date' ? 'Use valid dates in YYYY-MM-DD format. For a date range, enter a start date on or before the end date.' : j && j.error === 'invalid_email' ? 'Enter a valid email address.' : 'Save failed. Your edits are preserved; try again.'; msg.className = "ad-msg ad-err"; }
       })
       .catch(function (e) { if (String(e.message) !== "401") { msg.textContent = "Save failed."; msg.className = "ad-msg ad-err"; } })
       .finally(function () { saving = false; $("save").disabled = !contentLoaded; });

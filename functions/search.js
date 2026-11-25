@@ -2,9 +2,10 @@ import { onRequestGet as readContent } from './api/content.js';
 import { readPosts, publicationTime } from './api/_posts.js';
 import { escapeHTML } from './_insights-view.js';
 import { INSIGHTS_SHELL } from './_insights-shell.js';
+import { pressProjectId, publishedLinks } from '../assets/press-view.mjs';
 
 const PAGES = { home: ['Home', '/'], work: ['Media Work', '/work'], dev: ['Dev Work', '/dev'], lecture: ['Lectures', '/lecture'], scouting: ['Global & Scouting', '/scouting'], contact: ['Contact', '/contact'] };
-const GROUPS = { all: 'All', articles: 'Articles', work: 'Media Work', dev: 'Dev Work', lecture: 'Lectures', pages: 'Pages & copy', upcoming: 'Upcoming Articles' };
+const GROUPS = { all: 'All', articles: 'Articles', press: 'Press', work: 'Media Work', dev: 'Dev Work', lecture: 'Lectures', pages: 'Pages & copy', upcoming: 'Upcoming Articles' };
 const ALIASES = { '삼성': 'samsung', '서초문화재단': 'seocho cultural foundation', '서초': 'seocho', '케이비': 'kb', '대교': 'daekyo', '소울터': 'soulter', '방기노자': 'banginoja', '영상': 'video', '편집': 'editing', '기획': 'planning', '연출': 'direction', '협업': 'collaboration', '강의': 'lecture', '스카우트': 'scout', '인공지능': 'ai', '웹사이트': 'website', '유가당': 'yugadang' };
 const OMIT = /^(id|href|image|images|mobileImage|adminImage|imagePosition|linkLabel|icon|color|order|hidden)$/;
 const at = (obj, path) => path.split('.').reduce((value, key) => value?.[key], obj);
@@ -28,13 +29,24 @@ function plainText(html) {
   return html.replace(/<[^>]*>/g, ' ').replace(/&#(x[\da-f]+|\d+);/gi, (_, n) => String.fromCodePoint(Math.min(0x10ffff, n[0].toLowerCase() === 'x' ? parseInt(n.slice(1), 16) : Number(n))))
     .replace(/&(amp|lt|gt|quot|apos|nbsp);/g, (_, entity) => ({ amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' })[entity]).replace(/\s+/g, ' ').trim();
 }
+export function pressEntries(doc) {
+  const projects = doc.pages?.work?.sections?.photography?.projects;
+  if (!Array.isArray(projects)) return [];
+  return projects.filter(project => typeof project?.name === 'string' && project.name.trim()).map(project => {
+    const title = project.name.trim();
+    const coverage = publishedLinks(project).flatMap(article => [article.title, article.outlet]);
+    return { title, text: [title, ...coverage].join(' · '), href: '/press#' + encodeURIComponent(pressProjectId(project)), group: 'press', label: 'Press' };
+  });
+}
 export function collectionEntries(doc, page, key) {
+  if (page === 'work' && key === 'photography.projects') return [];
   const [label, path] = PAGES[page], pd = doc.pages[page], section = key.split('.')[0], rows = at(pd.sections, key);
   if (pd.hidden.includes(section) || !Array.isArray(rows) || (page === 'home' && section === 'selected')) return [];
   return rows.filter(row => section !== 'gallery' || row.image).map(row => {
     const title = row.title || row.name || row.label || row.text || row.role || row.caption;
     const project = (page === 'work' && key === 'video.cases') || (page === 'dev' && key === 'sites.items');
-    const anchor = project && /^[a-z0-9-]+$/.test(row.id || '') ? 'case-' + row.id : section;
+    let anchor = section;
+    if (project && /^[a-z0-9-]+$/.test(row.id || '')) anchor = 'case-' + row.id;
     return { title, text: textFields(row), href: path + '#' + anchor, group: ['work', 'dev', 'lecture'].includes(page) ? page : 'pages', label, image: row.image };
   }).filter(row => row.title);
 }
@@ -91,7 +103,7 @@ export async function onRequestGet({ env, request }) {
       const [contentResponse, store] = await Promise.all([readContent({ env }), readPosts(env)]);
       if (!contentResponse.ok) throw new Error('content_unavailable');
       const { content } = await contentResponse.json();
-      results = findResults((await portfolioEntries(env, request, content)).concat(articleEntries(store)), query, group);
+      results = findResults((await portfolioEntries(env, request, content)).concat(pressEntries(content), articleEntries(store)), query, group);
     } catch (_) { unavailable = true; }
   }
   const pages = Math.max(1, Math.ceil(results.length / 10));

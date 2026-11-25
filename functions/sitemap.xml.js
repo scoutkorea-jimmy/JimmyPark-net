@@ -4,8 +4,8 @@ const SITE_ORIGIN = 'https://jimmypark.net';
 // Date of the last release that changed the public pages. Update it with every
 // release that touches page markup or copy; the Articles index also moves forward
 // whenever a newer article goes live.
-const SITE_UPDATED = '2026-11-12';
-const STATIC_PATHS = ['/', '/work', '/dev', '/lecture', '/scouting', '/contact', '/insights', '/sitemap'];
+const SITE_UPDATED = '2026-11-25';
+const STATIC_PATHS = ['/', '/work', '/press', '/dev', '/lecture', '/scouting', '/contact', '/insights', '/sitemap'];
 
 function urlEntry(path, lastmod) {
   return '<url><loc>' + SITE_ORIGIN + path + '</loc><lastmod>' + lastmod + '</lastmod></url>';

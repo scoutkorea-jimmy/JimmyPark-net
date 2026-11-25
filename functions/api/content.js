@@ -418,7 +418,119 @@ const DEFAULT = {
             "label": "Explore my photography portfolio",
             "href": "https://drive.google.com/drive/folders/1XE1JhGKa6l0uvWVANd-9_h2QIQwmrkY0"
           },
-          "portfolioNote": "An ongoing collection of my photography, updated with new work."
+          "portfolioNote": "An ongoing collection of my photography, updated with new work.",
+          "projects": [
+            {
+              "name": "성동광진 초등 역사교육 연수 「역사 속으로 걷다」",
+              "date": "2026-11-11",
+              "endDate": "",
+              "role": "행사 사진 촬영",
+              "articles": []
+            },
+            {
+              "name": "2026 KSoP 필란트로피포럼",
+              "date": "2026-11-05",
+              "endDate": "",
+              "role": "행사 사진 촬영",
+              "articles": [
+                {
+                  "title": "AI 시대 필란트로피, 중심은 ‘인간을 향한 공감과 진정성’",
+                  "outlet": "소셜임팩트뉴스",
+                  "kind": "press",
+                  "date": "2026-11-09",
+                  "href": "https://www.socialimpactnews.net/news/articleView.html?idxno=7827"
+                }
+              ]
+            },
+            {
+              "name": "제16회 한국잼버리",
+              "date": "2026-08-04",
+              "endDate": "2026-08-09",
+              "role": "한국스카우트연맹 홍보부 부장 · 사진 촬영 및 보도자료 작성",
+              "articles": [
+                {
+                  "title": "제16회 한국잼버리 개막…16개국 스카우트, 고성서 우정 나눈다",
+                  "outlet": "로리더",
+                  "kind": "press",
+                  "date": "2026-08-05",
+                  "href": "https://www.lawleader.co.kr/news/articleView.html?idxno=19649"
+                },
+                {
+                  "title": "“국경도 언어도 잊었다”…함께 뛰고 웃으며 하나 된 제16회 '한국잼버리'",
+                  "outlet": "한국NGO신문",
+                  "kind": "press",
+                  "date": "2026-08-08",
+                  "href": "https://www.ngonews.kr/news/articleView.html?idxno=234966"
+                },
+                {
+                  "title": "[포토뉴스]제16회 한국잼버리 리셉션 및 개영식",
+                  "outlet": "강원일보",
+                  "kind": "press",
+                  "date": "2026-08-06",
+                  "href": "https://www.kwnews.co.kr/article/20260806500334"
+                }
+              ]
+            },
+            {
+              "name": "Move to the Rhythm of Colombia",
+              "date": "2026-07-11",
+              "endDate": "",
+              "role": "프로콜롬비아 주관 · 한문화외교사절단 요청으로 행사 사진 촬영",
+              "articles": [
+                {
+                  "title": "[한문화외교사절단] 2026 콜롬비아 문화 교류 행사🇨🇴",
+                  "outlet": "whitelight_-",
+                  "kind": "blog",
+                  "date": "2026-07-31",
+                  "href": "https://blog.naver.com/whitelight_-/224364047111"
+                },
+                {
+                  "title": "[한문화외교사절단] 2026 콜롬비아 국경일 기념 행사",
+                  "outlet": "ynii_3311님의 블로그",
+                  "kind": "blog",
+                  "date": "2026-07-16",
+                  "href": "https://blog.naver.com/ynii_3311/224348606876"
+                },
+                {
+                  "title": "[한문화외교사절단 32기] 콜롬비아 문화교류 행사",
+                  "outlet": "sparks",
+                  "kind": "blog",
+                  "date": "2026-07-15",
+                  "href": "https://blog.naver.com/going_joyride/224347360167"
+                }
+              ]
+            },
+            {
+              "name": "기후대응센터 6월 라운드테이블",
+              "date": "2026-06-25",
+              "endDate": "",
+              "role": "행사 사진 촬영",
+              "articles": [
+                {
+                  "title": "제7차 기후대응 라운드테이블...'기후변화에 따른 도시의 생로병사' 20260625",
+                  "outlet": "기후대응센터",
+                  "kind": "organization",
+                  "date": "2026-06-30",
+                  "href": "https://www.cackorea.org/post/기후대응센터-6월-라운드테이블에서-미래도시-생존전략-제시"
+                }
+              ]
+            },
+            {
+              "name": "한화와 함께하는 2015 서울세계불꽃축제",
+              "date": "2015-10-03",
+              "endDate": "",
+              "role": "KELTY 브랜드 콘셉트 촬영",
+              "articles": [
+                {
+                  "title": "2015 서울세계불꽃축제, 카약 위에서 즐긴 골든티켓보다 값진 시간!",
+                  "outlet": "KELTY KOREA OFFICIAL BLOG",
+                  "kind": "brand",
+                  "date": "2015-10-08",
+                  "href": "https://blog.naver.com/keltykorea/220503003632"
+                }
+              ]
+            }
+          ]
         },
         "video": {
           "kicker": "01 / Content strategy",
@@ -1793,12 +1905,21 @@ const DEFAULT = {
 // ── generic validator: use DEFAULT as the schema, clamp strings/arrays ────────
 const LECTURE_TALK_SHAPE = { year: "", title: "", org: "", role: "", summary: "", href: "" };
 
+// An article is optional. Use an explicit row shape even when the first seeded
+// project contains no articles, and never fill an owner's record with seed text.
+const PHOTO_PROJECT_SHAPE = {
+  name: '', date: '', endDate: '', role: '',
+  articles: [{ title: '', outlet: '', kind: '', date: '', href: '' }],
+};
+function collectionTemplate(def) {
+  return def === DEFAULT.pages.work.sections.photography.projects ? PHOTO_PROJECT_SHAPE : def[0];
+}
 function sanitize(def, val) {
   if (typeof def === "string") return val == null ? def : String(val).slice(0, MAXSTR);
   if (typeof def === "number") { const n = Number(val); return Number.isFinite(n) ? n : def; }
   if (Array.isArray(def)) {
     if (!Array.isArray(val)) return JSON.parse(JSON.stringify(def));
-    const tmpl = def.length ? def[0] : null;
+    const tmpl = collectionTemplate(def);
     if (tmpl && typeof tmpl === "object" && tmpl !== null && !Array.isArray(tmpl)) {
       return val.slice(0, MAXARR).map((item) => sanitize(tmpl, item));
     }
@@ -3888,7 +4009,8 @@ function cleanUrls(value, errors, path = '') {
   for (const key of Object.keys(value)) {
     const current = value[key], location = path ? path + '.' + key : key;
     if (['href','image','linkedin','instagram','orcid'].includes(key) && typeof current === 'string') {
-      const safe = safeSiteUrl(current, key === 'linkedin' || key === 'instagram' || key === 'orcid');
+      const externalOnly = key === 'linkedin' || key === 'instagram' || key === 'orcid' || path.startsWith('pages.work.sections.photography.projects.');
+      const safe = safeSiteUrl(current, externalOnly);
       if (current.trim() && !safe && errors) errors.push(location);
       value[key] = safe;
     } else if (key === 'images' && Array.isArray(current)) {
@@ -3902,7 +4024,7 @@ function cleanUrls(value, errors, path = '') {
   return value;
 }
 function completeShape(def, value) {
-  if (Array.isArray(def)) return Array.isArray(value) && value.every(item => !def.length || completeShape(def[0], item));
+  if (Array.isArray(def)) return Array.isArray(value) && value.every(item => !def.length || completeShape(collectionTemplate(def), item));
   if (def && typeof def === 'object') return !!value && typeof value === 'object' && !Array.isArray(value) && Object.keys(def).every(key => completeShape(def[key], value[key]));
   if (typeof def === 'number') return typeof value === 'number' && Number.isFinite(value);
   return typeof value === typeof def;
@@ -3929,6 +4051,39 @@ async function storedContent(env) {
   // Older CMS saves used ISO dates; compare the same numeric revision on reads and writes.
   parsed.updatedAt = contentRevision(parsed.updatedAt);
   return parsed;
+}
+// Editors opened before photography projects were added omit this field.
+function preparePhotoProjects(photo, previous) {
+  if (!photo || typeof photo !== 'object') return;
+  if (photo.projects === undefined) {
+    photo.projects = previous ?? DEFAULT.pages.work.sections.photography.projects;
+  }
+  if (!Array.isArray(photo.projects)) return;
+  for (const project of photo.projects) {
+    if (!project || typeof project !== 'object') continue;
+    for (const field of ['date', 'endDate', 'role']) {
+      if (project[field] === undefined) project[field] = '';
+    }
+    if (project.articles === undefined) project.articles = [];
+    if (Array.isArray(project.articles)) {
+      const seed = DEFAULT.pages.work.sections.photography.projects.find(row => row.name === project.name);
+      const saved = Array.isArray(previous) && previous.find(row => row?.name === project.name);
+      for (const article of project.articles) {
+        if (!article || typeof article !== 'object') continue;
+        if (article.date === undefined) article.date = '';
+        if (article.kind === undefined) {
+          const match = rows => Array.isArray(rows) && rows.find(row => row?.href === article.href);
+          article.kind = match(saved?.articles)?.kind ?? match(seed?.articles)?.kind ?? '';
+        }
+      }
+    }
+  }
+}
+function validPhotoDate(date) {
+  if (date === '') return true;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
+  const timestamp = Date.parse(date + 'T00:00:00Z');
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === date;
 }
 function updateOwnerPhone(doc) {
   const digits = String(doc.global.contact.phone || "").replace(/\D/g, "");
@@ -3984,6 +4139,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 44) doc = migrateTo44(doc);
   if ((doc.version || 0) < 45) doc = migrateTo45(doc);
   if ((doc.version || 0) < 46) doc = migrateTo46(doc);
+  preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
@@ -4002,10 +4158,23 @@ export async function onRequestPut({ request, env }) {
   if (!validDocument(incoming)) return json({ ok: false, error: 'invalid_content' }, 400);
   if (incoming.version !== DEFAULT.version) return json({ ok: false, error: 'schema_changed' }, 409);
   try { incoming.updatedAt = contentRevision(incoming.updatedAt); } catch (_) { return json({ ok: false, error: 'invalid_revision' }, 400); }
-  if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
   if (incoming.updatedAt !== undefined && (!Number.isFinite(incoming.updatedAt) || incoming.updatedAt < 0)) return json({ ok: false, error: 'invalid_revision' }, 400);
   let previous;
   try { previous = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
+  const photography = incoming.pages.work.sections.photography;
+  preparePhotoProjects(photography, previous?.pages?.work?.sections?.photography?.projects);
+  if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
+  const publicationKinds = ['', 'press', 'organization', 'brand', 'blog'];
+  if (photography.projects.some(project => project.articles.some(article => !publicationKinds.includes(article.kind)))) {
+    return json({ ok: false, error: 'invalid_publication_kind' }, 400);
+  }
+  if (photography.projects.some(project =>
+    !validPhotoDate(project.date) || !validPhotoDate(project.endDate) ||
+    (project.endDate && (!project.date || project.endDate < project.date)) ||
+    project.articles.some(article => !validPhotoDate(article.date))
+  )) {
+    return json({ ok: false, error: 'invalid_photo_date' }, 400);
+  }
   // Optimistic conflict detection; KV is eventually consistent, so use one active editor.
   if ((incoming.updatedAt || 0) !== (previous && previous.updatedAt || 0)) return json({ ok: false, error: 'conflict' }, 409);
   if (incoming.version < 3) migrateTo3(incoming);

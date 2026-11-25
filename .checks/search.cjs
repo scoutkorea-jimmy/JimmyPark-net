@@ -4,7 +4,8 @@ const assert = require('node:assert/strict');
 const source = fs.readFileSync('functions/search.js', 'utf8').replace(/^import .*;\n/gm, '').replace(/export (async )?function/g, '$1function');
 const escapeHTML = value => String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[char]);
 const shell = fs.readFileSync('functions/_insights-shell.js','utf8').match(/`([\s\S]*)`;/)[1];
-const api = vm.runInNewContext(source + ';({normalize,articleEntries,collectionEntries,findResults,onRequestGet});', { URL, URLSearchParams, Response, escapeHTML, INSIGHTS_SHELL: shell, publicationTime: post => Date.parse(post.date+'T09:00:00+09:00'), readContent:async()=>{throw Error('offline');}, readPosts:async()=>{throw Error('offline');} });
+const context = { URL, URLSearchParams, Response, escapeHTML, INSIGHTS_SHELL: shell, publicationTime: post => Date.parse(post.date+'T09:00:00+09:00'), readContent:async()=>{throw Error('offline');}, readPosts:async()=>{throw Error('offline');} };
+const api = vm.runInNewContext(source + ';({normalize,articleEntries,collectionEntries,pressEntries,findResults,onRequestGet});', context);
 const store = { posts: [
   {title:'Draft secret',summary:'DRAFT-SENTINEL',body:'DRAFT-BODY',slug:'draft',status:'draft',date:'2026-01-01'},
   {title:'Upcoming planning',summary:'Public summary',body:'FUTURE-SENTINEL',hashtags:'#PRIVATE',slug:'future',status:'published',date:'2026-10-06'},
@@ -35,13 +36,46 @@ assert.equal(api.findResults(visible,'CUSTOM-COPY').length,1);assert.equal(api.f
 doc.pages.work.hidden=['video'];assert.equal(api.collectionEntries(doc,'work','video.cases').length,0);
 doc.pages.work.hidden=[];doc.pages.work.sections.video.cases=[];assert.equal(api.collectionEntries(doc,'work','video.cases').length,0);
 (async()=>{
+  const { pressProjectId, publishedLinks } = await import('../assets/press-view.mjs');
+  Object.assign(context, { pressProjectId, publishedLinks });
+  const named = { name: '  제16회 한국잼버리  ', date: '2026-08-04', articles: [
+    {title: '개영식 현장', outlet: '강원일보', href: 'https://example.test/story'},
+    {title: 'INCOMPLETE-STORY', outlet: '', href: 'https://example.test/hidden'},
+    {title: 'INVALID-STORY', outlet: 'HIDDEN-OUTLET', href: 'javascript:void(0)'}
+  ], role: 'ROLE-OMITTED', album: 'https://example.test/ALBUM-OMITTED' };
+  const other = { name: '성동광진 연수', articles: [] };
+  const pressDoc = { pages: { work: { hidden: ['photography'], sections: {
+    photography: { projects: [named, other, null, {name: '  ', articles: named.articles}] }
+  } } } };
+  const indexed = api.pressEntries(pressDoc);
+  assert.equal(indexed.length, 2);
+  assert.equal(api.findResults(indexed, '강원일보 개영식', 'press')[0].href,
+    '/press#' + encodeURIComponent('project-제16회-한국잼버리-2026-08-04'));
+  assert.equal(api.findResults(indexed, '성동광진', 'press')[0].title, other.name);
+  assert.equal(api.findResults(indexed, '잼버리', 'work').length, 0);
+  assert.ok(!/INCOMPLETE|INVALID|HIDDEN|OMITTED/.test(JSON.stringify(indexed)));
+  pressDoc.pages.work.hidden = [];
+  assert.equal(api.collectionEntries(pressDoc, 'work', 'photography.projects').length, 0);
+  assert.equal(api.pressEntries({pages:{}}).length, 0);
   const response=await api.onRequestGet({env:{},request:new Request('https://example.test/search?q=%22%3E%3Cscript%3E')});
   assert.equal(response.status,503);assert.equal(response.headers.get('cache-control'),'no-store');
   const html=await response.text();assert.ok(html.includes('&quot;&gt;&lt;script&gt;'));assert.ok(!html.includes('"><script>'));
   assert.ok(html.includes('role="search"'));assert.ok(html.includes('noindex,follow'));
   const empty=await api.onRequestGet({env:{},request:new Request('https://example.test/search')});assert.equal(empty.status,200);
   const fragment=await api.onRequestGet({env:{},request:new Request('https://example.test/search?fragment=1')});
-  const partial=await fragment.text();assert.equal(fragment.status,200);assert.ok(partial.includes('site-search-form'));assert.ok(!partial.includes('<header'));assert.ok(!partial.includes('<script'));assert.equal(fragment.headers.get('x-robots-tag'),'noindex');
+  const partial=await fragment.text();assert.equal(fragment.status,200);assert.ok(partial.includes('site-search-form'));assert.ok(partial.includes('type=press'));assert.ok(!partial.includes('<header'));assert.ok(!partial.includes('<script'));assert.equal(fragment.headers.get('x-robots-tag'),'noindex');
   for(const file of ['index.html','work.html','dev.html','lecture.html','scouting.html','contact.html','insights.html','404.html']) assert.ok(fs.readFileSync(file,'utf8').includes('aria-label="Search website"'),file);
-  console.log('PASS: search ranking, Korean aliases, filters, publication boundary, no draft/future leakage, escaping and offline state.');
+  // Isolate the /press route integration from the asset rewriter's portfolio extraction.
+  for (const page of ['home','dev','lecture','scouting','contact']) pressDoc.pages[page] = {hidden:[], sections:{}};
+  pressDoc.global = {};
+  context.readContent = async () => Response.json({content:pressDoc});
+  context.readPosts = async () => ({posts:[]});
+  context.HTMLRewriter = class { on() { return this; } transform(response) { return response; } };
+  const env = {ASSETS:{fetch:async () => new Response('<main></main>')}};
+  const found = await api.onRequestGet({env,request:new Request('https://example.test/search?q=강원일보&type=press')});
+  assert.equal(found.status, 200);
+  const result = await found.text();
+  assert.ok(result.includes('1 result for'));
+  assert.ok(result.includes(indexed[0].href));
+  console.log('PASS: search ranking, Korean aliases, filters, independent Press results, publication boundary, no draft/future leakage, escaping and offline state.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

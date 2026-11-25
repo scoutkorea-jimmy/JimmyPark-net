@@ -6,6 +6,13 @@ Operating manual for working in this repo. Read this and [design.md](design.md) 
 Keep both in sync with reality when you change how the site works.
 
 ## What this is
+The public `/press` page documents Jimmy's photography assignments. Edit the project name,
+assignment dates and role under Admin → Press. Each project can have zero or more publication
+links with an original title, outlet, publication type and publication date. Keep personal blogs
+and brand channels identified by source. The editor and server-rendered page share the collection
+at `pages.work.sections.photography.projects`. General photography albums remain under Media Work.
+Run `node .checks/photo-projects.cjs` and `node .checks/press-navigation.cjs` when editing this feature.
+
 Personal portfolio for **Jimmy Park / 박지민** — a **solution maker** who reaches the client’s goal in the most fitting way
 (content & video, websites built with AI, AI workflows, global Scouting). Earlier label (≤ v0.11): Content Strategist ·
 AI Practitioner · AX Consultant · Global Collaborator.

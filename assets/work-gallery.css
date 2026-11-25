@@ -1,0 +1,18 @@
+.work-album-preview { margin-block-start: 12px; }
+.work-album-preview[hidden] { display: none; }
+.work-album-preview summary { cursor: pointer; color: var(--md-primary, #80192e); font-weight: 600; padding-block: 12px; }
+.work-album-preview iframe { display: block; margin-block-start: 6px; width: 100%; height: min(54vh, 480px); min-height: 240px; border: 1px solid var(--md-outline-variant, #ded9d2); border-radius: var(--radius-card, 12px); background: white; }
+.photo-selection [aria-haspopup="dialog"] { position: relative; cursor: zoom-in; }
+.work-photo-zoom { position: absolute; inset: auto 8px 8px auto; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: white; background: #171717cc; pointer-events: none; font-size: 20px; }
+.work-photo-open { overflow: hidden; }
+.work-photo-viewer { box-sizing: border-box; width: min(960px, calc(100% - 24px)); max-width: none; max-height: calc(100% - 24px); margin: auto; padding: clamp(12px, 2vw, 24px); border: 0; border-radius: 16px; background: #171717; color: #fff; overflow: auto; }
+.work-photo-viewer::backdrop { background: #111d; }
+.work-photo-viewer figure { margin: 0; }
+.work-photo-full { display: block; width: 100%; height: min(63vh, 640px); height: min(63dvh, 640px); object-fit: contain; background: #111; }
+.work-photo-viewer figcaption { color: white; font-size: .9375rem; line-height: 1.45; padding-block: 10px; }
+.work-photo-tools, .work-photo-controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.work-photo-tools { padding-block-end: 10px; }
+.work-photo-viewer button, .work-photo-viewer a { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 44px; padding: 8px 14px; font: inherit; font-weight: 600; color: #fff; border: 1px solid #999; border-radius: 10px; background: transparent; cursor: pointer; text-decoration: none; }
+.work-photo-viewer :is(a, button):focus-visible { outline: 3px solid white; outline-offset: 2px; }
+.work-photo-viewer :is(a, button):hover { background: #383838; }
+@media (max-height: 480px) { .work-photo-full { height: 40vh; height: 40dvh; } }

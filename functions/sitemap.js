@@ -11,6 +11,7 @@ export async function onRequestGet({ env }) {
   const portfolio = [
     ['Home', '/', 'An overview of video, web development, applied AI, and global Scouting work.'],
     ['Media Work', '/work', 'Video production and field photography with credited roles.'],
+    ['Press', '/press', 'Published coverage and brand posts, grouped by project.'],
     ['Dev Work', '/dev', 'Websites, practical tools, and AI-supported workflows.'],
     ['Lectures & Workshops', '/lecture', 'Teaching and workshop formats for media, AI, and Scouting communication.'],
     ['Global & Scouting', '/scouting', 'International Scouting roles, communication work, and collaboration.'],

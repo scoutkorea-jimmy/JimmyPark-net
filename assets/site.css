@@ -1201,3 +1201,8 @@ body.portfolio[data-page="home"] .body-copy {
     line-height: 1.45;
   }
 }
+
+/* Keep the full navigation on one line near the desktop breakpoint. */
+@media (min-width: 1100px) and (max-width: 1149px) {
+  .portfolio .desktop-nav .nav-link:not(.nav-search) { padding-inline: var(--space-12); white-space: nowrap; }
+}

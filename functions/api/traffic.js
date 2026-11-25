@@ -2,7 +2,7 @@ import { json, isAdmin } from './_lib.js';
 
 export const dayAt = (time = Date.now()) => new Date(time + 9 * 3600000).toISOString().slice(0, 10);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const PATH = /^\/(?:work|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/;
+const PATH = /^\/(?:work|press|dev|lecture|scouting|contact|search|insights(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)?$/;
 const bot = /bot|crawler|spider|headless|lighthouse|preview/i;
 export function sourceOf(referrer, utm) {
   const known = { google: 'Google', naver: 'Naver', bing: 'Bing', instagram: 'Instagram', linkedin: 'LinkedIn', facebook: 'Facebook', youtube: 'YouTube' };
