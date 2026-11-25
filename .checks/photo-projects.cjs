@@ -9,6 +9,44 @@ const api = vm.runInNewContext(source + ';({get:onRequestGet, put:onRequestPut})
   URL, TextEncoder, isAdmin: async () => true, json: (data, status = 200) => ({ ...data, status }),
 });
 const photo = doc => doc.pages.work.sections.photography;
+// Published v46 wording, keyed by stable dates and source links rather than display order.
+const legacyWording = {
+  "2026-11-11": ["성동광진 초등 역사교육 연수 「역사 속으로 걷다」", "행사 사진 촬영"],
+  "2026-11-05": ["2026 KSoP 필란트로피포럼", "행사 사진 촬영"],
+  "2026-08-04": ["제16회 한국잼버리", "한국스카우트연맹 홍보부 부장 · 사진 촬영 및 보도자료 작성"],
+  "2026-07-11": ["Move to the Rhythm of Colombia", "프로콜롬비아 주관 · 한문화외교사절단 요청으로 행사 사진 촬영"],
+  "2026-06-25": ["기후대응센터 6월 라운드테이블", "행사 사진 촬영"],
+  "2015-10-03": ["한화와 함께하는 2015 서울세계불꽃축제", "KELTY 브랜드 콘셉트 촬영"],
+};
+const legacyArticles = {
+  "https://www.socialimpactnews.net/news/articleView.html?idxno=7827": ["AI 시대 필란트로피, 중심은 ‘인간을 향한 공감과 진정성’", "소셜임팩트뉴스"],
+  "https://www.lawleader.co.kr/news/articleView.html?idxno=19649": ["제16회 한국잼버리 개막…16개국 스카우트, 고성서 우정 나눈다", "로리더"],
+  "https://www.ngonews.kr/news/articleView.html?idxno=234966": ["“국경도 언어도 잊었다”…함께 뛰고 웃으며 하나 된 제16회 '한국잼버리'", "한국NGO신문"],
+  "https://www.kwnews.co.kr/article/20260806500334": ["[포토뉴스]제16회 한국잼버리 리셉션 및 개영식", "강원일보"],
+  "https://blog.naver.com/whitelight_-/224364047111": ["[한문화외교사절단] 2026 콜롬비아 문화 교류 행사🇨🇴", "whitelight_-"],
+  "https://blog.naver.com/ynii_3311/224348606876": ["[한문화외교사절단] 2026 콜롬비아 국경일 기념 행사", "ynii_3311님의 블로그"],
+  "https://blog.naver.com/going_joyride/224347360167": ["[한문화외교사절단 32기] 콜롬비아 문화교류 행사", "sparks"],
+  "https://www.cackorea.org/post/기후대응센터-6월-라운드테이블에서-미래도시-생존전략-제시": ["제7차 기후대응 라운드테이블...'기후변화에 따른 도시의 생로병사' 20260625", "기후대응센터"],
+  "https://blog.naver.com/keltykorea/220503003632": ["2015 서울세계불꽃축제, 카약 위에서 즐긴 골든티켓보다 값진 시간!", "KELTY KOREA OFFICIAL BLOG"],
+};
+function previousEdition(defaults) {
+  const doc = structuredClone(defaults);
+  doc.version = 46;
+  const section = photo(doc);
+  section.projects = section.projects.filter(project => legacyWording[project.date]);
+  for (const project of section.projects) {
+    [project.name, project.role] = legacyWording[project.date];
+    for (const article of project.articles) {
+      [article.title, article.outlet] = legacyArticles[article.href];
+    }
+  }
+  return doc;
+}
+const onDate = (rows, date) => {
+  const row = rows.find(item => item.date === date);
+  assert.ok(row, 'Missing project dated ' + date);
+  return row;
+};
 (async () => {
   let stored = null, writes = 0;
   const env = { JP_KV: { get: async () => stored, put: async (_, value) => { stored = value; writes++; } } };
@@ -16,10 +54,30 @@ const photo = doc => doc.pages.work.sections.photography;
   const save = content => api.put({ env, request: { text: async () => JSON.stringify({ content }) } });
   const initial = await read();
   const seed = photo(initial).projects;
-  assert.equal(seed.length, 6);
+  assert.equal(initial.version, 47);
+  assert.equal(seed.length, 8);
+  assert.equal(seed.flatMap(project => project.articles).length, 11);
+  assert.ok(seed.every(project => !/[가-힣]/u.test([project.name, project.role,
+    ...project.articles.flatMap(article => [article.title, article.outlet])].join(' '))));
+  const additions = seed.filter(project => !legacyWording[project.date]);
+  assert.equal(additions.length, 2);
+  const muju = additions.find(project => /muju/i.test(project.name));
+  assert.ok(muju, 'Muju photography project');
+  assert.match(muju.role, /photograph.*Muju/i);
+  assert.doesNotMatch(muju.role, /Jeonju/i);
+  assert.equal(muju.articles.length, 1);
+  assert.match(muju.articles[0].title, /Muju.*Jeonju/i);
+  const seoulTour = onDate(additions, '2026-10-02');
+  assert.match(seoulTour.name, /Hyochang Park/i);
+  assert.equal(seoulTour.articles.length, 1);
   assert(seed.every(project => !Object.hasOwn(project, 'album')));
   assert.equal(photo(initial).portfolio.href, 'https://drive.google.com/drive/folders/1XE1JhGKa6l0uvWVANd-9_h2QIQwmrkY0');
-  const [historyWorkshop, ksop, jamboree, colombia, climate, kelty] = seed;
+  const historyWorkshop = onDate(seed, '2026-11-11');
+  const ksop = onDate(seed, '2026-11-05');
+  const jamboree = onDate(seed, '2026-08-04');
+  const colombia = onDate(seed, '2026-07-11');
+  const climate = onDate(seed, '2026-06-25');
+  const kelty = onDate(seed, '2015-10-03');
   assert.equal(colombia.name, 'Move to the Rhythm of Colombia');
   assert.equal(colombia.date, '2026-07-11');
   assert.deepEqual(colombia.articles.map(article => article.kind), ['blog', 'blog', 'blog']);
@@ -33,12 +91,57 @@ const photo = doc => doc.pages.work.sections.photography;
   assert.equal(historyWorkshop.articles.length, 0);
   assert.equal(historyWorkshop.date, '2026-11-11');
   assert.equal(ksop.date, '2026-11-05');
-  assert.equal(ksop.role, '행사 사진 촬영');
+  assert.match(ksop.role, /photo/i);
   assert.equal(ksop.articles[0].kind, 'press');
   assert.equal(climate.articles[0].kind, 'organization');
   assert.equal(kelty.articles[0].kind, 'brand');
   assert.equal(ksop.articles[0].date, '2026-11-09');
   assert.equal(ksop.articles[0].href, 'https://www.socialimpactnews.net/news/articleView.html?idxno=7827');
+  const v46 = previousEdition(initial);
+  stored = JSON.stringify(v46);
+  const v46Raw = stored;
+  const upgradedProjects = photo(await read()).projects;
+  assert.equal(upgradedProjects.length, seed.length);
+  for (const project of seed) assert.deepEqual(onDate(upgradedProjects, project.date), project);
+  const stale = await save(v46);
+  assert.equal(stale.status, 409);
+  assert.equal(stale.error, 'schema_changed');
+  assert.equal(stored, v46Raw);
+  assert.equal(writes, 0);
+
+  const custom46 = structuredClone(v46);
+  const oldProjects = photo(custom46).projects;
+  const customProject = onDate(oldProjects, '2026-11-05');
+  customProject.name = 'My forum title';
+  customProject.role = 'Portrait photographer';
+  Object.assign(customProject.articles[0], {title:'My headline', outlet:'My outlet', href:'https://example.org/my-story'});
+  const partial = onDate(oldProjects, '2026-08-04');
+  const removedHref = partial.articles.pop().href;
+  partial.articles[0].outlet = 'My publication';
+  const removedProjectDate = '2026-11-11';
+  photo(custom46).projects = oldProjects.filter(project => project.date !== removedProjectDate);
+  stored = JSON.stringify(custom46);
+  const migrated = await read();
+  const migratedProjects = photo(migrated).projects;
+  assert.deepEqual(onDate(migratedProjects, customProject.date), customProject);
+  assert.equal(migratedProjects.some(project => project.date === removedProjectDate), false);
+  assert.equal(onDate(migratedProjects, partial.date).articles.some(article => article.href === removedHref), false);
+  const partialArticle = onDate(migratedProjects, partial.date).articles.find(article => article.href === partial.articles[0].href);
+  assert.equal(partialArticle.outlet, 'My publication');
+  assert.equal(writes, 0);
+
+  // Explicitly retain a hand-edited title (even the old seed wording) once the document is v47.
+  onDate(migratedProjects, partial.date).name = '제16회 한국잼버리';
+  const saved47 = await save(migrated);
+  assert.equal(saved47.status, 200);
+  assert.deepEqual(photo(await read()).projects, migratedProjects);
+  const noProjects46 = structuredClone(v46);
+  photo(noProjects46).projects = [];
+  stored = JSON.stringify(noProjects46);
+  const writesBeforeGet = writes;
+  assert.deepEqual(photo(await read()).projects, []);
+  assert.equal(writes, writesBeforeGet);
+  stored = null;
   const v45 = structuredClone(initial);
   v45.version = 45;
   delete v45.global.contact.orcid;
@@ -49,7 +152,7 @@ const photo = doc => doc.pages.work.sections.photography;
   delete photo(initial).projects;
   stored = JSON.stringify(initial);
   assert.deepEqual(photo(await read()).projects, seed);
-  assert.equal(writes, 0);
+  assert.equal(writes, writesBeforeGet);
 
   const edited = await read();
   const article = {title:'One', outlet:'Media', href:'https://example.org/one'};

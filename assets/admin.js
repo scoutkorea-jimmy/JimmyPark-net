@@ -61,7 +61,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
     collections: [{
       k: "articles", label: "Related publications",
       fields: [
-        F("title", "Article or post title"), F("outlet", "Publisher or channel"),
+        F("title", "Article or post title in English"), F("outlet", "Publisher or channel"),
         F("kind", "Publication type", "select", [
           { v: "", t: "General publication" }, { v: "press", t: "Press coverage" },
           { v: "organization", t: "Organization publication" }, { v: "brand", t: "Brand publication" },
@@ -322,7 +322,7 @@ const TIMELINE_KIND = ["participation","photography","instructor","award","leade
       var photo = content.pages.work.sections.photography;
       var pressCard = el("div", { class: "ad-card ad-sec" }, [
         el("h2", { class: "ad-h", text: "Press" }),
-        el("p", { class: "ad-sub", text: "Edit photography projects, your role and links to published coverage." }),
+        el("p", { class: "ad-sub", text: "Write project names, roles and headlines in English. Link each headline to the original story." }),
         collectionEl(photo, PHOTO_PROJECTS)
       ]);
       root.appendChild(pressCard);

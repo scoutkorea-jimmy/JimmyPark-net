@@ -8,7 +8,9 @@ Keep both in sync with reality when you change how the site works.
 ## What this is
 The public `/press` page documents Jimmy's photography assignments. Edit the project name,
 assignment dates and role under Admin → Press. Each project can have zero or more publication
-links with an original title, outlet, publication type and publication date. Keep personal blogs
+links with an English headline, outlet, publication type and publication date. Translate incoming
+Korean project names, roles and headlines before publication. Use the publisher's English name
+or a consistent transliteration and link to the original article. Keep personal blogs
 and brand channels identified by source. The editor and server-rendered page share the collection
 at `pages.work.sections.photography.projects`. General photography albums remain under Media Work.
 Run `node .checks/photo-projects.cjs` and `node .checks/press-navigation.cjs` when editing this feature.

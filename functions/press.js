@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
     '<p>Publication records are temporarily unavailable. Please try again shortly.</p>';
   const description = 'Photography assignments by Jimmy Park and the news stories, organizational reports and brand publications featuring his work.';
   const content = '<div class="site-container press-page"><h1 class="heading page-title">Press photography</h1>' +
-    '<p class="hero-lead">I photograph events for news coverage, press releases and partner publications. Here are my assignments and the published stories from each project.</p>' +
+    '<p class="hero-lead">I photograph events for news coverage and partner publications. Each project lists my role. Headlines appear in English and link to the original stories.</p>' +
     '<div id="press-records">' + listing + '</div></div>';
   const values = { TITLE: 'Press Photography | Jimmy Park', DESC: description, URL: 'https://jimmypark.net/press', TYPE: 'website',
     IMAGE: 'https://jimmypark.net/assets/img/og/media-work.png', IMAGE_ALT: 'Jimmy Park | Press photography',
@@ -24,4 +24,9 @@ export async function onRequestGet(context) {
   return new Response(shell.replace(/__(TITLE|DESC|URL|TYPE|IMAGE|IMAGE_ALT|ROBOTS|CONTENT)__/g, (_, key) => values[key]), {
     status: ok ? 200 : 503, headers: {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store'}
   });
+}
+
+export async function onRequestHead(context) {
+  const page = await onRequestGet(context);
+  return new Response(null, { status: page.status, headers: page.headers });
 }

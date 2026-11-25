@@ -13,7 +13,7 @@ const HANGUL = /[가-힣]/;
 const link = (label, href) => ({ label, href });
 
 const DEFAULT = {
-  "version": 46,
+  "version": 47,
   "global": {
     "brand": {
       "name": "Jimmy Park",
@@ -421,21 +421,21 @@ const DEFAULT = {
           "portfolioNote": "An ongoing collection of my photography, updated with new work.",
           "projects": [
             {
-              "name": "성동광진 초등 역사교육 연수 「역사 속으로 걷다」",
+              "name": "Walking Through History: A Workshop for Elementary Educators in Seongdong and Gwangjin",
               "date": "2026-11-11",
               "endDate": "",
-              "role": "행사 사진 촬영",
+              "role": "Event photography",
               "articles": []
             },
             {
-              "name": "2026 KSoP 필란트로피포럼",
+              "name": "2026 KSoP Philanthropy Forum",
               "date": "2026-11-05",
               "endDate": "",
-              "role": "행사 사진 촬영",
+              "role": "Event photography",
               "articles": [
                 {
-                  "title": "AI 시대 필란트로피, 중심은 ‘인간을 향한 공감과 진정성’",
-                  "outlet": "소셜임팩트뉴스",
+                  "title": "Philanthropy in the age of AI: empathy and sincerity at its heart",
+                  "outlet": "Social Impact News",
                   "kind": "press",
                   "date": "2026-11-09",
                   "href": "https://www.socialimpactnews.net/news/articleView.html?idxno=7827"
@@ -443,28 +443,58 @@ const DEFAULT = {
               ]
             },
             {
-              "name": "제16회 한국잼버리",
-              "date": "2026-08-04",
-              "endDate": "2026-08-09",
-              "role": "한국스카우트연맹 홍보부 부장 · 사진 촬영 및 보도자료 작성",
+              "name": "Walking Through Korea’s Independence Movement: Tour 10 in Muju",
+              "date": "2026-10-30",
+              "endDate": "",
+              "role": "Photographed only the Muju events on the Sinjisik Scholarship Foundation’s tenth tour.",
               "articles": [
                 {
-                  "title": "제16회 한국잼버리 개막…16개국 스카우트, 고성서 우정 나눈다",
-                  "outlet": "로리더",
+                  "title": "Sinjisik Scholarship Foundation visits Muju and Jeonju on its tenth independence movement tour",
+                  "outlet": "Jeonbuk Domin Ilbo",
+                  "kind": "press",
+                  "date": "2026-11-04",
+                  "href": "https://www.domin.co.kr/news/articleView.html?idxno=1574253"
+                }
+              ]
+            },
+            {
+              "name": "Walking Through Korea’s Independence Movement: Tour 7 at Hyochang Park",
+              "date": "2026-10-02",
+              "endDate": "",
+              "role": "Photographed the Sinjisik Scholarship Foundation’s visit to Hyochang Park in Seoul.",
+              "articles": [
+                {
+                  "title": "Sinjisik Scholarship Foundation holds seventh tour in its Walking Through Korea’s Independence Movement series",
+                  "outlet": "Jeonbuk Domin Ilbo",
+                  "kind": "press",
+                  "date": "2026-10-05",
+                  "href": "https://www.domin.co.kr/news/articleView.html?idxno=1570849"
+                }
+              ]
+            },
+            {
+              "name": "16th Korea Jamboree",
+              "date": "2026-08-04",
+              "endDate": "2026-08-09",
+              "role": "Head of Public Relations for the Jamboree, Korea Scout Association. Photographed the event and wrote press releases.",
+              "articles": [
+                {
+                  "title": "16th Korea Jamboree opens as Scouts from 16 countries gather in Goseong to build friendships",
+                  "outlet": "Law Leader",
                   "kind": "press",
                   "date": "2026-08-05",
                   "href": "https://www.lawleader.co.kr/news/articleView.html?idxno=19649"
                 },
                 {
-                  "title": "“국경도 언어도 잊었다”…함께 뛰고 웃으며 하나 된 제16회 '한국잼버리'",
-                  "outlet": "한국NGO신문",
+                  "title": "“We forgot about borders and languages”: Scouts run and laugh together at the 16th Korea Jamboree",
+                  "outlet": "Korea NGO News",
                   "kind": "press",
                   "date": "2026-08-08",
                   "href": "https://www.ngonews.kr/news/articleView.html?idxno=234966"
                 },
                 {
-                  "title": "[포토뉴스]제16회 한국잼버리 리셉션 및 개영식",
-                  "outlet": "강원일보",
+                  "title": "In photos: The reception and opening ceremony of the 16th Korea Jamboree",
+                  "outlet": "The Kangwon Ilbo",
                   "kind": "press",
                   "date": "2026-08-06",
                   "href": "https://www.kwnews.co.kr/article/20260806500334"
@@ -475,24 +505,24 @@ const DEFAULT = {
               "name": "Move to the Rhythm of Colombia",
               "date": "2026-07-11",
               "endDate": "",
-              "role": "프로콜롬비아 주관 · 한문화외교사절단 요청으로 행사 사진 촬영",
+              "role": "Photographed the event at the request of the Korean Culture Diplomatic Mission. Organized by ProColombia.",
               "articles": [
                 {
-                  "title": "[한문화외교사절단] 2026 콜롬비아 문화 교류 행사🇨🇴",
+                  "title": "Korean Culture Diplomatic Mission: 2026 Colombian cultural exchange event 🇨🇴",
                   "outlet": "whitelight_-",
                   "kind": "blog",
                   "date": "2026-07-31",
                   "href": "https://blog.naver.com/whitelight_-/224364047111"
                 },
                 {
-                  "title": "[한문화외교사절단] 2026 콜롬비아 국경일 기념 행사",
-                  "outlet": "ynii_3311님의 블로그",
+                  "title": "Korean Culture Diplomatic Mission: Colombia’s 2026 National Day celebration",
+                  "outlet": "ynii_3311’s blog",
                   "kind": "blog",
                   "date": "2026-07-16",
                   "href": "https://blog.naver.com/ynii_3311/224348606876"
                 },
                 {
-                  "title": "[한문화외교사절단 32기] 콜롬비아 문화교류 행사",
+                  "title": "Korean Culture Diplomatic Mission, 32nd cohort: Colombian cultural exchange event",
                   "outlet": "sparks",
                   "kind": "blog",
                   "date": "2026-07-15",
@@ -501,14 +531,14 @@ const DEFAULT = {
               ]
             },
             {
-              "name": "기후대응센터 6월 라운드테이블",
+              "name": "Climate Action Center of Korea: June Roundtable",
               "date": "2026-06-25",
               "endDate": "",
-              "role": "행사 사진 촬영",
+              "role": "Event photography",
               "articles": [
                 {
-                  "title": "제7차 기후대응 라운드테이블...'기후변화에 따른 도시의 생로병사' 20260625",
-                  "outlet": "기후대응센터",
+                  "title": "7th Climate Action Roundtable: The life cycle of cities in a changing climate (June 25, 2026)",
+                  "outlet": "Climate Action Center of Korea",
                   "kind": "organization",
                   "date": "2026-06-30",
                   "href": "https://www.cackorea.org/post/기후대응센터-6월-라운드테이블에서-미래도시-생존전략-제시"
@@ -516,13 +546,13 @@ const DEFAULT = {
               ]
             },
             {
-              "name": "한화와 함께하는 2015 서울세계불꽃축제",
+              "name": "2015 Seoul International Fireworks Festival with Hanwha",
               "date": "2015-10-03",
               "endDate": "",
-              "role": "KELTY 브랜드 콘셉트 촬영",
+              "role": "Brand concept photography for KELTY",
               "articles": [
                 {
-                  "title": "2015 서울세계불꽃축제, 카약 위에서 즐긴 골든티켓보다 값진 시간!",
+                  "title": "2015 Seoul International Fireworks Festival: A view from a kayak worth more than a golden ticket",
                   "outlet": "KELTY KOREA OFFICIAL BLOG",
                   "kind": "brand",
                   "date": "2015-10-08",
@@ -3987,6 +4017,114 @@ function migrateTo46(doc) {
   return doc;
 }
 
+const V46_PRESS_COPY = {
+  "2026-11-11": {
+    "name": "성동광진 초등 역사교육 연수 「역사 속으로 걷다」",
+    "role": "행사 사진 촬영",
+    "publications": {}
+  },
+  "2026-11-05": {
+    "name": "2026 KSoP 필란트로피포럼",
+    "role": "행사 사진 촬영",
+    "publications": {
+      "https://www.socialimpactnews.net/news/articleView.html?idxno=7827": {
+        "title": "AI 시대 필란트로피, 중심은 ‘인간을 향한 공감과 진정성’",
+        "outlet": "소셜임팩트뉴스"
+      }
+    }
+  },
+  "2026-08-04": {
+    "name": "제16회 한국잼버리",
+    "role": "한국스카우트연맹 홍보부 부장 · 사진 촬영 및 보도자료 작성",
+    "publications": {
+      "https://www.lawleader.co.kr/news/articleView.html?idxno=19649": {
+        "title": "제16회 한국잼버리 개막…16개국 스카우트, 고성서 우정 나눈다",
+        "outlet": "로리더"
+      },
+      "https://www.ngonews.kr/news/articleView.html?idxno=234966": {
+        "title": "“국경도 언어도 잊었다”…함께 뛰고 웃으며 하나 된 제16회 '한국잼버리'",
+        "outlet": "한국NGO신문"
+      },
+      "https://www.kwnews.co.kr/article/20260806500334": {
+        "title": "[포토뉴스]제16회 한국잼버리 리셉션 및 개영식",
+        "outlet": "강원일보"
+      }
+    }
+  },
+  "2026-07-11": {
+    "name": "Move to the Rhythm of Colombia",
+    "role": "프로콜롬비아 주관 · 한문화외교사절단 요청으로 행사 사진 촬영",
+    "publications": {
+      "https://blog.naver.com/whitelight_-/224364047111": {
+        "title": "[한문화외교사절단] 2026 콜롬비아 문화 교류 행사🇨🇴",
+        "outlet": "whitelight_-"
+      },
+      "https://blog.naver.com/ynii_3311/224348606876": {
+        "title": "[한문화외교사절단] 2026 콜롬비아 국경일 기념 행사",
+        "outlet": "ynii_3311님의 블로그"
+      },
+      "https://blog.naver.com/going_joyride/224347360167": {
+        "title": "[한문화외교사절단 32기] 콜롬비아 문화교류 행사",
+        "outlet": "sparks"
+      }
+    }
+  },
+  "2026-06-25": {
+    "name": "기후대응센터 6월 라운드테이블",
+    "role": "행사 사진 촬영",
+    "publications": {
+      "https://www.cackorea.org/post/기후대응센터-6월-라운드테이블에서-미래도시-생존전략-제시": {
+        "title": "제7차 기후대응 라운드테이블...'기후변화에 따른 도시의 생로병사' 20260625",
+        "outlet": "기후대응센터"
+      }
+    }
+  },
+  "2015-10-03": {
+    "name": "한화와 함께하는 2015 서울세계불꽃축제",
+    "role": "KELTY 브랜드 콘셉트 촬영",
+    "publications": {
+      "https://blog.naver.com/keltykorea/220503003632": {
+        "title": "2015 서울세계불꽃축제, 카약 위에서 즐긴 골든티켓보다 값진 시간!",
+        "outlet": "KELTY KOREA OFFICIAL BLOG"
+      }
+    }
+  }
+};
+
+// Translate the six previously published credits once. Match unchanged fields
+// individually, so renaming a headline never replaces an edited outlet or link.
+function migrateTo47(doc) {
+  const projects = doc.pages?.work?.sections?.photography?.projects;
+  doc.version = 47;
+  if (!Array.isArray(projects) || !projects.length) return;
+  const defaults = DEFAULT.pages.work.sections.photography.projects;
+  for (const project of projects) {
+    const old = V46_PRESS_COPY[project?.date];
+    if (!old) continue;
+    const seed = defaults.find(row => row.date === project.date);
+    if (!seed || (project.name !== old.name && project.name !== seed.name)) continue;
+    if (project.name === old.name) project.name = seed.name;
+    if (project.role === old.role) project.role = seed.role;
+    for (const article of Array.isArray(project.articles) ? project.articles : []) {
+      const prior = old.publications[article?.href];
+      if (!prior) continue;
+      const current = seed.articles.find(row => row.href === article.href);
+      if (!current) continue;
+      if (article.title === prior.title) article.title = current.title;
+      if (article.outlet === prior.outlet) article.outlet = current.outlet;
+    }
+  }
+  const chronological = projects.every((row, index) =>
+    row?.date && (!index || row.date <= projects[index - 1].date));
+  for (const seed of defaults.filter(row => ['2026-10-30', '2026-10-02'].includes(row.date))) {
+    const exists = projects.some(row => row?.name === seed.name ||
+      (Array.isArray(row?.articles) && row.articles.some(article => article?.href === seed.articles[0].href)));
+    if (exists) continue;
+    const index = chronological ? projects.findIndex(row => row.date < seed.date) : -1;
+    projects.splice(index < 0 ? projects.length : index, 0, seed);
+  }
+}
+
 function normalizeOrders(doc) {
   for (const p of Object.keys(DEFAULT.pages)) {
     if (doc.pages && doc.pages[p]) doc.pages[p].order = mergeOrder(DEFAULT.pages[p].order, doc.pages[p].order);
@@ -4031,7 +4169,7 @@ function completeShape(def, value) {
 }
 function validDocument(value) {
   const object = x => !!x && typeof x === 'object' && !Array.isArray(x);
-  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46].includes(value.version) && object(value.global) && object(value.pages) &&
+  return object(value) && [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(value.version) && object(value.global) && object(value.pages) &&
     ['home','work','scouting','contact'].every(page => object(value.pages[page]) && object(value.pages[page].sections));
 }
 function contentRevision(value) {
@@ -4046,7 +4184,7 @@ async function storedContent(env) {
   const parsed = JSON.parse(raw);
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('invalid_stored_content');
   const legacy = !parsed.pages && !parsed.global && ['seo','contact','hero'].some(key => parsed[key] && typeof parsed[key] === 'object' && !Array.isArray(parsed[key]));
-  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
+  const shaped = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(parsed.version) && parsed.global && typeof parsed.global === 'object' && parsed.pages && typeof parsed.pages === 'object' && ['home','work','scouting','contact'].some(key => parsed.pages[key] && parsed.pages[key].sections);
   if (!shaped && !legacy) throw new Error('invalid_stored_content');
   // Older CMS saves used ISO dates; compare the same numeric revision on reads and writes.
   parsed.updatedAt = contentRevision(parsed.updatedAt);
@@ -4094,7 +4232,7 @@ export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   if (!doc) return json({ ok: true, content: { ...DEFAULT, updatedAt: 0 } });
-  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46].includes(doc.version)) doc = fromV1(doc);
+  if (![2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47].includes(doc.version)) doc = fromV1(doc);
   if ((doc.version || 0) < 3) doc = migrateTo3(doc);
   if ((doc.version || 0) < 4) doc = migrateTo4(doc);
   if ((doc.version || 0) < 5) doc = migrateTo5(doc);
@@ -4139,6 +4277,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 44) doc = migrateTo44(doc);
   if ((doc.version || 0) < 45) doc = migrateTo45(doc);
   if ((doc.version || 0) < 46) doc = migrateTo46(doc);
+  if (doc.version < 47) migrateTo47(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
@@ -4162,6 +4301,7 @@ export async function onRequestPut({ request, env }) {
   let previous;
   try { previous = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   const photography = incoming.pages.work.sections.photography;
+  if (previous && previous.version < 47) migrateTo47(previous);
   preparePhotoProjects(photography, previous?.pages?.work?.sections?.photography?.projects);
   if (!completeShape(DEFAULT, incoming)) return json({ ok: false, error: 'incomplete_content' }, 400);
   const publicationKinds = ['', 'press', 'organization', 'brand', 'blog'];
@@ -4227,7 +4367,7 @@ export async function onRequestPut({ request, env }) {
   cleanUrls(doc, invalidUrls);
   if (invalidUrls.length) return json({ ok: false, error: 'invalid_url', field: invalidUrls[0] }, 400);
   if (!/^[^\s@?&#]+@[^\s@?&#]+\.[^\s@?&#]+$/.test(doc.global.contact.email)) return json({ ok: false, error: 'invalid_email' }, 400);
-  doc.version = 46;
+  doc.version = DEFAULT.version;
   doc.updatedAt = Math.max(Date.now(), (previous && previous.updatedAt || 0) + 1);
   try { await env.JP_KV.put(KEY, JSON.stringify(doc)); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
   return json({ ok: true, content: doc });
