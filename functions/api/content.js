@@ -1340,9 +1340,9 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
-              "title": "Head of PR Department",
-              "org": "15th Korea Jamboree · Planning & Coordination HQ",
-              "period": "2026",
+              "title": "Head of PR Team",
+              "org": "16th Korea National Jamboree",
+              "period": "5–9 Aug 2026",
               "accent": "neutral"
             },
             {
@@ -1804,8 +1804,8 @@ const DEFAULT = {
             },
             {
               "year": "2026",
-              "title": "15th Korea Jamboree — Head of PR Department",
-              "context": "Head of PR Department (홍보부 부장), Planning & Coordination HQ.",
+              "title": "16th Korea National Jamboree, Head of PR Team",
+              "context": "Head of PR Team for the 16th Korea National Jamboree, held 5–9 August 2026.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -4280,10 +4280,11 @@ function updateOwnerPhone(doc) {
   if (digits === "01054186124" || digits === "821054186124") doc.global.contact.phone = DEFAULT.global.contact.phone;
 }
 
-// Official Scouting titles supplied by the owner (2026-11-27). Earlier seed and stored variants are
+// Official Scouting titles supplied by the owner (2026-11-27, incl. 16th Korea National Jamboree Head of PR Team). Earlier seed and stored variants are
 // replaced only when they match exactly; any other customized text is left alone.
 const APR_CP = 'APR Communication & Partnership Sub-committee';
 const WSJ_MEDIA = '25th World Scout Jamboree, Deputy Head of Media Dept.';
+const KJ16 = '16th Korea National Jamboree';
 const OFFICIAL_TITLES = {
   snapshot: [
     [['Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028', 'Communications & Partnerships · 2nd Vice Chair, 2025–2028'], APR_CP + ' · 2nd Vice-Chair, 2025–2028'],
@@ -4296,12 +4297,14 @@ const OFFICIAL_TITLES = {
   roles: [
     [['APR Communication & Partnerships|2nd Vice Chair', '2nd Vice Chair|Asia-Pacific Region Communications & Partnerships Sub-Committee'], { title: '2nd Vice-Chair', org: APR_CP, period: '2025–2028' }],
     [['Deputy Head of Media · Korean Contingent|25th World Scout Jamboree', 'Deputy Head of Media Dept.|25th World Scout Jamboree'], { title: 'Deputy Head of Media Dept.', org: '25th World Scout Jamboree', period: '2022–2023' }],
+    [['Head of PR Department|15th Korea Jamboree · Planning & Coordination HQ', 'Head of PR|16th Korea Jamboree'], { title: 'Head of PR Team', org: KJ16, period: '5–9 Aug 2026' }],
   ],
   body: [[['Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee from 2025 to 2028.'],
     'Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice-Chair of the ' + APR_CP + ' from 2025 to 2028.']],
   timeline: [
     [['25th World Scout Jamboree — Korea Contingent media', '25th World Scout Jamboree — Deputy Head of Media Dept.'], { year: '2022–2023', title: '25th World Scout Jamboree — Deputy Head of Media Dept.', context: 'Deputy Head of Media Dept. appointment for the 25th World Scout Jamboree.' }],
     [['28th Asia-Pacific Scout Conference — voting delegate'], { title: '28th Asia-Pacific Scout Conference — Korea Delegate', context: 'Korea Delegate to the 28th Asia-Pacific Scout Conference.' }],
+    [['15th Korea Jamboree — Head of PR Department', '16th Korea Jamboree — Head of PR'], { title: KJ16 + ', Head of PR Team', context: 'Head of PR Team for the ' + KJ16 + ', held 5–9 August 2026.' }],
     [['APR C&P Sub-Committee, 2nd Vice Chair', 'Asia-Pacific Region C&P Sub-Committee — 2nd Vice Chair'], { year: '2025–2028', title: APR_CP + ' — 2nd Vice-Chair', context: '2nd Vice-Chair of the ' + APR_CP + '.' }],
   ],
   bpMedia: [['I run BP Media, a Scouting-specialized media platform.'], 'Founder of a Scouting-specialized media platform, established in 2026.'],

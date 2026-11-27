@@ -414,12 +414,12 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
-v0.31.2–0.31.3 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
+v0.31.2–0.31.4 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
 - **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
   the earlier "pre-existing failures" note below is resolved.
 - **Official Scouting titles (owner, 2026-11-27, v0.31.3):** `APR Communication & Partnership Sub-committee` ·
   `2nd Vice-Chair` (2025–2028); `25th World Scout Jamboree, Deputy Head of Media Dept.` (2022–2023);
-  `28th Asia-Pacific Scout Conference — Korea Delegate`. Year ranges use en dashes. `applyOfficialTitles` in `content.js`
+  `28th Asia-Pacific Scout Conference — Korea Delegate`; `16th Korea National Jamboree, Head of PR Team` (role period 5–9 Aug 2026, v0.31.4). Year ranges use en dashes. `applyOfficialTitles` in `content.js`
   maps exact earlier seed/stored variants to these on GET and PUT; other customized text is untouched. Keep DEFAULT,
   static `index.html`/`scouting.html` and this table in sync when a title changes.
 - **Collections:** inside a collection row, a missing array field (e.g. `images`) starts empty; it never copies the
