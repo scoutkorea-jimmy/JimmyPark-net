@@ -55,7 +55,8 @@ const onDate = (rows, date) => {
   const initial = await read();
   const seed = photo(initial).projects;
   assert.equal(initial.version, 48);
-  assert.equal(seed.length, 10);
+  assert.equal(seed.length, 9);
+  assert.equal(seed.some(project => project.date === '2026-11-11'), false, 'withdrawn Seongdong-Gwangjin workshop stays out of Press');
   assert.equal(seed.flatMap(project => project.articles).length, 14);
   assert.ok(seed.every(project => !/[가-힣]/u.test([project.name, project.role,
     ...project.articles.flatMap(article => [article.title, article.outlet])].join(' '))));
@@ -96,7 +97,6 @@ const onDate = (rows, date) => {
   assert.ok(aprConference.articles.every(article => article.kind === 'press'));
   assert(seed.every(project => !Object.hasOwn(project, 'album')));
   assert.equal(photo(initial).portfolio.href, 'https://drive.google.com/drive/folders/1XE1JhGKa6l0uvWVANd-9_h2QIQwmrkY0');
-  const historyWorkshop = onDate(seed, '2026-11-11');
   const ksop = onDate(seed, '2026-11-05');
   const jamboree = onDate(seed, '2026-08-04');
   const colombia = onDate(seed, '2026-07-11');
@@ -112,8 +112,6 @@ const onDate = (rows, date) => {
   assert.equal(jamboree.date, '2026-08-04');
   assert.equal(jamboree.endDate, '2026-08-09');
   assert.equal(climate.articles[0].date, '2026-06-30');
-  assert.equal(historyWorkshop.articles.length, 0);
-  assert.equal(historyWorkshop.date, '2026-11-11');
   assert.equal(ksop.date, '2026-11-05');
   assert.match(ksop.role, /photo/i);
   assert.equal(ksop.articles[0].kind, 'press');
@@ -129,12 +127,12 @@ const onDate = (rows, date) => {
   assert.deepEqual(photo(await read()).projects, seed);
   assert.equal((await save(v47)).error, 'schema_changed');
   const manual = { ...nepal, name: 'Nepal field photographs', role: 'Custom credit' };
-  photo(v47).projects = [manual, historyWorkshop];
+  photo(v47).projects = [manual, ksop];
   stored = JSON.stringify(v47);
-  assert.deepEqual(photo(await read()).projects, [manual, historyWorkshop]);
-  photo(v47).projects = [kelty, historyWorkshop];
+  assert.deepEqual(photo(await read()).projects, [manual, ksop]);
+  photo(v47).projects = [kelty, ksop];
   stored = JSON.stringify(v47);
-  assert.deepEqual(photo(await read()).projects, [kelty, historyWorkshop, nepal]);
+  assert.deepEqual(photo(await read()).projects, [kelty, ksop, nepal]);
   photo(v47).projects = Array.from({ length: 60 }, (_, i) => ({ ...kelty, name: 'Owner assignment ' + i }));
   stored = JSON.stringify(v47);
   assert.deepEqual(photo(await read()).projects, photo(v47).projects);

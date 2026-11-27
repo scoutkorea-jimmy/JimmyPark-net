@@ -421,13 +421,6 @@ const DEFAULT = {
           "portfolioNote": "An ongoing collection of my photography, updated with new work.",
           "projects": [
             {
-              "name": "Walking Through History: A Workshop for Elementary Educators in Seongdong and Gwangjin",
-              "date": "2026-11-11",
-              "endDate": "",
-              "role": "Event photography",
-              "articles": []
-            },
-            {
               "name": "2026 KSoP Philanthropy Forum",
               "date": "2026-11-05",
               "endDate": "",
@@ -4243,6 +4236,16 @@ async function storedContent(env) {
   return parsed;
 }
 // Editors opened before photography projects were added omit this field.
+// Press projects the owner withdrew from the public list (2026-11-27). Matched by exact name (current or
+// original Korean) and date; applied on read, so the next Admin save stores the list without them.
+const WITHDRAWN_PRESS_PROJECTS = [
+  ['2026-11-11', ['Walking Through History: A Workshop for Elementary Educators in Seongdong and Gwangjin', '성동광진 초등 역사교육 연수 「역사 속으로 걷다」']],
+];
+function withdrawPressProjects(photo) {
+  if (!Array.isArray(photo?.projects)) return;
+  photo.projects = photo.projects.filter(project => !WITHDRAWN_PRESS_PROJECTS.some(([date, names]) => project?.date === date && names.includes(project.name)));
+}
+
 function preparePhotoProjects(photo, previous) {
   if (!photo || typeof photo !== 'object') return;
   if (photo.projects === undefined) {
@@ -4393,6 +4396,7 @@ export async function onRequestGet({ env }) {
   if ((doc.version || 0) < 46) doc = migrateTo46(doc);
   if (doc.version < 47) migrateTo47(doc);
   if (doc.version < 48) migrateTo48(doc);
+  withdrawPressProjects(doc.pages?.work?.sections?.photography);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   applyOfficialTitles(doc);

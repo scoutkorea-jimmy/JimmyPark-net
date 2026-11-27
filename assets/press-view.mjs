@@ -9,7 +9,6 @@ export function pressProjectId(project) {
 
 // Old public bookmarks include the original Korean project name and date.
 const previousProjectNames = new Map([
-  ['Walking Through History: A Workshop for Elementary Educators in Seongdong and Gwangjin', ['2026-11-11', '성동광진 초등 역사교육 연수 「역사 속으로 걷다」']],
   ['2026 KSoP Philanthropy Forum', ['2026-11-05', '2026 KSoP 필란트로피포럼']],
   ['16th Korea Jamboree', ['2026-08-04', '제16회 한국잼버리']],
   ['Climate Action Center of Korea: June Roundtable', ['2026-06-25', '기후대응센터 6월 라운드테이블']],
