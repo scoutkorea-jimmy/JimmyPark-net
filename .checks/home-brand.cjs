@@ -73,7 +73,7 @@ async function migrate(value) {
   const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
   const runtime = fs.readFileSync(path.join(root, 'assets/site.js'), 'utf8');
   const styles = fs.readFileSync(path.join(root, 'assets/site.css'), 'utf8');
-  assert.match(html, /Why work with Jimmy/);
+  assert.match(html, /Why work with me/);
   assert.match(html, /Clear content for complex subjects/);
   assert.match(html, /from strategy to video, photography and live broadcasts/);
   assert.equal((html.match(/case-media case-media--cycle/g) || []).length, 6);

@@ -14,7 +14,7 @@ export async function onRequestGet(context) {
     '<div id="press-records">' + listing + '</div>' +
     '<section class="press-cta"><h2>Need photographs for an event or press coverage?</h2>' +
     '<p>Share the date, place and how the images will be used. I deliver press-ready selections promptly.</p>' +
-    '<a class="btn btn-primary site-button" href="/contact">Book event photography <span class="msym" aria-hidden="true">arrow_forward</span></a></section></div>';
+    '<a class="btn btn-primary site-button" href="/contact?subject=Photography">Book event photography <span class="msym" aria-hidden="true">arrow_forward</span></a></section></div>';
   const values = { TITLE: 'Press Photography | Jimmy Park', DESC: description, URL: 'https://jimmypark.net/press', TYPE: 'website',
     IMAGE: 'https://jimmypark.net/assets/img/og/media-work.png', IMAGE_ALT: 'Jimmy Park | Press photography',
     ROBOTS: ok ? '' : '<meta name="robots" content="noindex">', CONTENT: content };

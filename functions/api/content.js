@@ -62,13 +62,15 @@ const DEFAULT = {
             "href": "/work"
           },
           "ctaGhost": {
-            "label": "Websites & tools",
-            "href": "/dev"
+            "label": "Start a project",
+            "href": "/contact?subject=Project"
           },
           "image": "/assets/img/jimmy-park-portrait-960.jpg",
           "badge": "Jimmy Park",
           "caption": "Content strategy · Production · Practical AI",
           "captionRight": "Based in Korea",
+          "proof": "Work for and with Samsung Tech Conference · KB Life · Daekyo Newif · Seocho Cultural Foundation · Good Neighbors International · Korea Scout Association.",
+          "proofPress": { "label": "Photographs published in SBS News, ETNews and 6 more outlets", "href": "/press" },
           "scope": [
             { "label": "Films", "href": "/work" },
             { "label": "Photography", "href": "/press" },
@@ -114,17 +116,17 @@ const DEFAULT = {
           ],
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
-          "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, he managed filming and delivery for 385 closed schools. At Knowhow Media, he shaped channel formats around audience feedback and led production and publishing. SoulWorker subscribers grew from 2,500 to 4,400 in the first six months (+76%) during the team’s operation; this is a team channel result, not growth attributable to him alone.",
-          "detail": "He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organizational cultures. He works in Korean and English. Project credits and dated roles are documented across this site."
+          "body": "I’m Jimmy Park (박지민, Park Jimin), a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, I managed filming and delivery for 385 closed schools. At Knowhow Media, I shaped channel formats around audience feedback and led production and publishing; the SoulWorker channel our team ran grew from 2,500 to 4,400 subscribers (+76%) in its first six months.",
+          "detail": "I also build websites, publishing systems and workflow tools with AI-assisted development. My international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organizational cultures. I work in Korean and English, and every project credit and dated role on this site is documented."
         },
         "activities": {
-          "eyebrow": "Why work with Jimmy",
+          "eyebrow": "Why work with me",
           "title": "One person who can connect the brief, the medium, and the finish.",
           "items": [
             {
               "kicker": "01 / Judgment",
               "title": "Purpose before format",
-              "desc": "I do not begin by selling a video, website, or AI tool. I begin with who the work is for, what should change, and which form will serve that goal.",
+              "desc": "I start with who the work is for and what should change, then choose the form that serves that goal.",
               "tags": [
                 "Audience",
                 "Purpose",
@@ -214,6 +216,7 @@ const DEFAULT = {
               "title": "Connect on LinkedIn",
               "desc": "For professional introductions, shared interests and future collaboration.",
               "href": "https://www.linkedin.com/in/jimmy1420",
+              "cta": "View LinkedIn profile",
               "image": ""
             },
             {
@@ -221,6 +224,7 @@ const DEFAULT = {
               "title": "Global & Scouting",
               "desc": "My dated roles, international experience and Scouting media work.",
               "href": "/scouting",
+              "cta": "See Scouting roles",
               "image": ""
             },
             {
@@ -228,6 +232,7 @@ const DEFAULT = {
               "title": "Read my articles",
               "desc": "Notes on AI responsibility, media, and the choices behind practical work.",
               "href": "/insights",
+              "cta": "Read the articles",
               "image": ""
             }
           ]
@@ -237,7 +242,7 @@ const DEFAULT = {
           "body": "Share the purpose, people involved, and timing. I will suggest a practical next step.",
           "button": {
             "label": "Start a conversation",
-            "href": "/contact"
+            "href": "/contact?subject=Project"
           }
         },
         "selected": {
@@ -394,7 +399,7 @@ const DEFAULT = {
           "kicker": "02 / Field production",
           "title": "Photography & Field Media",
           "sub": "Field documentation for immediate use",
-          "desc": "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.",
+          "desc": "I focus on event sketches, field documentation, and press-ready photography, preparing images so teams can use them clearly and promptly.",
           "deliverables": [
             {
               "text": "Event sketch · speaker & participant photos"
@@ -606,7 +611,7 @@ const DEFAULT = {
           "kicker": "01 / Content strategy",
           "title": "Content Strategy & Video Production",
           "sub": "From the brief to the finished film",
-          "desc": "I turn a communication brief into a content plan and finished video: concept, script, direction, filming and editing. The credits below show my role on each project.",
+          "desc": "I support communication work from the brief to the finished film: concept, script, direction, filming, and editing. The credits below state my role on each project.",
           "formats": [
             {
               "name": "Promotion",
@@ -825,18 +830,18 @@ const DEFAULT = {
         },
         "cta": {
           "title": "Have a film, an event or a campaign in mind?",
-          "body": "Share the goal, the audience and what you need to deliver. We can plan the video or photography that fits.",
+          "body": "Share the purpose, audience, and deliverables. We can shape a video or photography approach that fits the work.",
           "button": {
             "label": "Discuss a project",
-            "href": "/contact"
+            "href": "/contact?subject=Project"
           }
         }
       }
     },
     "dev": {
       "meta": {
-        "title": "Dev Work: Websites Built Fast with AI | Jimmy Park",
-        "desc": "Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, BP Media, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community."
+        "title": "Dev Work: Practical Websites & Applied AI | Jimmy Park",
+        "desc": "Practical websites and web tools shaped around user needs, with applied AI supporting planning, development, and ongoing operations."
       },
       "order": [
         "intro",
@@ -849,8 +854,8 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Dev work",
-          "title": "Understand the need fast.\nBuild it with AI.",
-          "lead": "What matters most in development is not flashy technique. It is quickly understanding what you actually need and building exactly that. AI is what makes this possible: I work with it at every step, from shaping the idea to launching and running the site.",
+          "title": "Understand the need clearly.\nBuild a practical path with AI.",
+          "lead": "Useful development begins with the people who will use and maintain the work. I use AI throughout planning, design, development, and operations while keeping the project focused on its purpose.",
           "principles": [
             {
               "num": "01",
@@ -859,13 +864,13 @@ const DEFAULT = {
             },
             {
               "num": "02",
-              "title": "Fast judgment",
-              "desc": "Turn a first conversation into a clear scope and a working first version quickly."
+              "title": "Thoughtful scope",
+              "desc": "Turn an early conversation into a shared scope and a practical first version."
             },
             {
               "num": "03",
               "title": "AI at every step",
-              "desc": "Planning, design, code, content and operations all run with AI, so a small team can launch a complete, working site."
+              "desc": "Use AI across planning, design, code, content, and operations while keeping people accountable for the work."
             }
           ]
         },
@@ -873,7 +878,7 @@ const DEFAULT = {
           "kicker": "01 / Websites",
           "title": "Live Websites",
           "sub": "Built around each organization’s need",
-          "desc": "Each site began with what its users and team needed to do. Most run on an admin console and back end I built. Every one is live and in use.",
+          "desc": "Each site begins with a clear need for its users and team. The examples below include the supporting administration and technical foundations required for ongoing use.",
           "items": [
             {
               "id": "korea-dream-path",
@@ -1065,10 +1070,10 @@ const DEFAULT = {
         },
         "cta": {
           "title": "Have a website, a tool or a workflow in mind?",
-          "body": "Share the goal, the people who will use it and what it needs to do. We can scope the website, prototype or workshop that fits.",
+          "body": "Share the purpose, the people who will use it, and what it needs to do. We can define a practical website, prototype, or workshop together.",
           "button": {
             "label": "Discuss a project",
-            "href": "/contact"
+            "href": "/contact?subject=Project"
           }
         }
       }
@@ -1088,8 +1093,8 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Lecture",
-          "title": "Lectures and workshops\nthat travel.",
-          "lead": "I teach branded film, youth media, applied AI and Scouting communication — in classrooms, centers and conferences, and also in 1:1 and small-group formats. Sessions are shaped for the people in the room.\n\nAll lectures to date have been delivered in Korean. Korean is the default; English-language sessions can be arranged when requested in advance."
+          "title": "Lectures and workshops\nfor shared learning.",
+          "lead": "I facilitate sessions on branded film, youth media, applied AI, and Scouting communication for classrooms, centers, conferences, and small groups. Each session is shaped around the people in the room.\n\nLectures to date have been delivered in Korean. English-language sessions can be arranged with advance notice."
         },
         "talks": {
           "kicker": "01 / History",
@@ -1211,7 +1216,7 @@ const DEFAULT = {
           "kicker": "02 / Topics",
           "title": "Topics I can cover",
           "sub": "Formats from keynotes to hands-on labs",
-          "desc": "Pick a theme below — or tell me what your audience needs. Public talks, workshops, university courses, and private coaching are all possible.",
+          "desc": "Choose a theme below, or share what your audience needs. Talks, workshops, university courses, and small-group sessions can be planned with care.",
           "items": [
             {
               "name": "Branded film & directing",
@@ -1244,11 +1249,11 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "Want to invite a lecture or workshop?",
-          "body": "Feel free to reach out with a rough idea — audience, date, language and format. I'll suggest a clear session shape and we can refine it together. Korean is standard; English is available with advance notice.",
+          "title": "Considering a lecture or workshop?",
+          "body": "You are welcome to share the audience, date, language, and format. I will suggest a clear session shape, and we can refine it together.",
           "button": {
             "label": "Ask about a lecture",
-            "href": "/contact"
+            "href": "/contact?subject=Lecture"
           }
         }
       }
@@ -1261,6 +1266,7 @@ const DEFAULT = {
       "order": [
         "hero",
         "roles",
+        "offer",
         "international",
         "travel",
         "why",
@@ -1304,6 +1310,17 @@ const DEFAULT = {
             }
           ]
         },
+        "offer": {
+          "eyebrow": "For associations and NGOs",
+          "title": "How I can support your association or NGO",
+          "items": [
+            { "title": "Event media and PR", "desc": "Lead the media and PR team for a jamboree or national event, as Head of PR Team for the 16th Korea National Jamboree." },
+            { "title": "Delegation photography", "desc": "Official photography for a delegation abroad, as for the Korean delegation at the 28th Asia-Pacific Scout Conference." },
+            { "title": "Communication training", "desc": "Scout journalism school sessions and content planning for youth reporters and Scout communicators." },
+            { "title": "Korean–English coordination", "desc": "Work between Korean and international teams across regional roles, contingents and partner events." }
+          ],
+          "button": { "label": "Plan your event media", "href": "/contact?subject=Scouting" }
+        },
         "roles": {
           "title": "Roles behind the relationships",
           "items": [
@@ -1320,7 +1337,7 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
-              "title": "National Commissioner on PR II",
+              "title": "National Commissioner for Public Relations II",
               "org": "Korea Scout Association",
               "period": "2022–2024",
               "accent": "neutral"
@@ -1723,8 +1740,8 @@ const DEFAULT = {
             },
             {
               "year": "2022–2024",
-              "title": "National Commissioner, Korea Scout Association",
-              "context": "Served as National Commissioner on PR II, working on domestic Scouting activity and communication.",
+              "title": "National Commissioner for Public Relations II",
+              "context": "Korea Scout Association central commissioner appointment, 2022–2024.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -1853,11 +1870,11 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "If the project is related to Scouting, youth, or international collaboration, let's talk.",
-          "body": "Reach out and tell me the purpose — I'll suggest where to take it.",
+          "title": "Working on a Scouting, youth, or international project?",
+          "body": "Share the purpose and context. I will be glad to suggest a practical next step.",
           "button": {
-            "label": "Contact",
-            "href": "/contact"
+            "label": "Plan your event media",
+            "href": "/contact?subject=Scouting"
           }
         },
         "travel": {
@@ -1959,7 +1976,7 @@ const DEFAULT = {
       "sections": {
         "intro": {
           "eyebrow": "Contact",
-          "title": "Tell me what you need\nto achieve.",
+          "title": "Share what you hope to achieve.",
           "lead": "Share your audience, goal and timeline. I welcome communications, content strategy and production inquiries from businesses, public institutions and nonprofits, including international teams. Email or LinkedIn is a good place to start."
         }
       }
@@ -4355,6 +4372,46 @@ const OFFICIAL_TITLES = {
   ],
   bpMedia: [['I run BP Media, a Scouting-specialized media platform.'], 'Founder of a Scouting-specialized media platform, established in 2026.'],
 };
+// Owner copy from the live CMS (2026-11-27) is now the default; an earlier seed value is replaced only when it is unchanged.
+// '*' walks every row of a collection.
+const SEED_COPY_UPDATES = [
+  [["pages", "work", "sections", "photography", "desc"], "I focus on event sketches, field documentation, and press-ready photography. The goal is not only to take good photos, but to prepare images that can be used quickly and clearly.", "I focus on event sketches, field documentation, and press-ready photography, preparing images so teams can use them clearly and promptly."],
+  [["pages", "work", "sections", "video", "desc"], "I turn a communication brief into a content plan and finished video: concept, script, direction, filming and editing. The credits below show my role on each project.", "I support communication work from the brief to the finished film: concept, script, direction, filming, and editing. The credits below state my role on each project."],
+  [["pages", "work", "sections", "cta", "body"], "Share the goal, the audience and what you need to deliver. We can plan the video or photography that fits.", "Share the purpose, audience, and deliverables. We can shape a video or photography approach that fits the work."],
+  [["pages", "dev", "meta", "title"], "Dev Work: Websites Built Fast with AI | Jimmy Park", "Dev Work: Practical Websites & Applied AI | Jimmy Park"],
+  [["pages", "dev", "meta", "desc"], "Websites and web tools built around what clients actually need and delivered fast with AI, including Korea Dream Path, BP Media, a fermented-foods cooperative, the nfee reporting service and the BANGINOJA travel community.", "Practical websites and web tools shaped around user needs, with applied AI supporting planning, development, and ongoing operations."],
+  [["pages", "dev", "sections", "intro", "title"], "Understand the need fast.\nBuild it with AI.", "Understand the need clearly.\nBuild a practical path with AI."],
+  [["pages", "dev", "sections", "intro", "lead"], "What matters most in development is not flashy technique. It is quickly understanding what you actually need and building exactly that. AI is what makes this possible: I work with it at every step, from shaping the idea to launching and running the site.", "Useful development begins with the people who will use and maintain the work. I use AI throughout planning, design, development, and operations while keeping the project focused on its purpose."],
+  [["pages", "dev", "sections", "intro", "principles", "*", "title"], "Fast judgment", "Thoughtful scope"],
+  [["pages", "dev", "sections", "intro", "principles", "*", "desc"], "Turn a first conversation into a clear scope and a working first version quickly.", "Turn an early conversation into a shared scope and a practical first version."],
+  [["pages", "dev", "sections", "intro", "principles", "*", "desc"], "Planning, design, code, content and operations all run with AI, so a small team can launch a complete, working site.", "Use AI across planning, design, code, content, and operations while keeping people accountable for the work."],
+  [["pages", "dev", "sections", "sites", "desc"], "Each site began with what its users and team needed to do. Most run on an admin console and back end I built. Every one is live and in use.", "Each site begins with a clear need for its users and team. The examples below include the supporting administration and technical foundations required for ongoing use."],
+  [["pages", "dev", "sections", "cta", "body"], "Share the goal, the people who will use it and what it needs to do. We can scope the website, prototype or workshop that fits.", "Share the purpose, the people who will use it, and what it needs to do. We can define a practical website, prototype, or workshop together."],
+  [["pages", "lecture", "sections", "intro", "title"], "Lectures and workshops\nthat travel.", "Lectures and workshops\nfor shared learning."],
+  [["pages", "lecture", "sections", "intro", "lead"], "I teach branded film, youth media, applied AI and Scouting communication — in classrooms, centers and conferences, and also in 1:1 and small-group formats. Sessions are shaped for the people in the room.\n\nAll lectures to date have been delivered in Korean. Korean is the default; English-language sessions can be arranged when requested in advance.", "I facilitate sessions on branded film, youth media, applied AI, and Scouting communication for classrooms, centers, conferences, and small groups. Each session is shaped around the people in the room.\n\nLectures to date have been delivered in Korean. English-language sessions can be arranged with advance notice."],
+  [["pages", "lecture", "sections", "topics", "desc"], "Pick a theme below — or tell me what your audience needs. Public talks, workshops, university courses, and private coaching are all possible.", "Choose a theme below, or share what your audience needs. Talks, workshops, university courses, and small-group sessions can be planned with care."],
+  [["pages", "lecture", "sections", "cta", "title"], "Want to invite a lecture or workshop?", "Considering a lecture or workshop?"],
+  [["pages", "lecture", "sections", "cta", "body"], "Feel free to reach out with a rough idea — audience, date, language and format. I'll suggest a clear session shape and we can refine it together. Korean is standard; English is available with advance notice.", "You are welcome to share the audience, date, language, and format. I will suggest a clear session shape, and we can refine it together."],
+  [["pages", "scouting", "sections", "roles", "items", "*", "title"], "National Commissioner on PR II", "National Commissioner for Public Relations II"],
+  [["pages", "scouting", "sections", "timeline", "items", "*", "title"], "National Commissioner, Korea Scout Association", "National Commissioner for Public Relations II"],
+  [["pages", "scouting", "sections", "timeline", "items", "*", "context"], "Served as National Commissioner on PR II, working on domestic Scouting activity and communication.", "Korea Scout Association central commissioner appointment, 2022–2024."],
+  [["pages", "scouting", "sections", "cta", "title"], "If the project is related to Scouting, youth, or international collaboration, let's talk.", "Working on a Scouting, youth, or international project?"],
+  [["pages", "scouting", "sections", "cta", "body"], "Reach out and tell me the purpose — I'll suggest where to take it.", "Share the purpose and context. I will be glad to suggest a practical next step."],
+  [["pages", "contact", "sections", "intro", "title"], "Tell me what you need\nto achieve.", "Share what you hope to achieve."],
+];
+function applySeedCopyUpdates(doc) {
+  for (const [path, from, to] of SEED_COPY_UPDATES) {
+    const walk = (node, i) => {
+      if (!node || typeof node !== 'object') return;
+      const key = path[i];
+      if (key === '*') { if (Array.isArray(node)) node.forEach(child => walk(child, i + 1)); return; }
+      if (i === path.length - 1) { if (node[key] === from) node[key] = to; return; }
+      walk(node[key], i + 1);
+    };
+    walk(doc, 0);
+  }
+}
+
 function applyOfficialTitles(doc) {
   const find = (table, key) => (table.find(([olds]) => olds.includes(key)) || [])[1];
   const snapshot = doc.pages?.home?.sections?.snapshot?.rows;
@@ -4363,6 +4420,22 @@ function applyOfficialTitles(doc) {
     if (row?.id !== 'korea-dream-path') continue;
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
+  }
+  applySeedCopyUpdates(doc);
+  // Polish (owner-approved 2026-11-27): exact earlier wording → current copy; owner edits otherwise kept.
+  const home = doc.pages?.home?.sections;
+  if (home?.hero?.ctaGhost?.label === 'Websites & tools' && home.hero.ctaGhost.href === '/dev') home.hero.ctaGhost = { label: 'Start a project', href: '/contact?subject=Project' };
+  if (home?.snapshot?.body === 'Jimmy Park (박지민, Park Jimin) is a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, he managed filming and delivery for 385 closed schools. At Knowhow Media, he shaped channel formats around audience feedback and led production and publishing. SoulWorker subscribers grew from 2,500 to 4,400 in the first six months (+76%) during the team’s operation; this is a team channel result, not growth attributable to him alone.') home.snapshot.body = 'I’m Jimmy Park (박지민, Park Jimin), a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, I managed filming and delivery for 385 closed schools. At Knowhow Media, I shaped channel formats around audience feedback and led production and publishing; the SoulWorker channel our team ran grew from 2,500 to 4,400 subscribers (+76%) in its first six months.';
+  if (home?.snapshot && ['He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organizational cultures. He works in Korean and English. Project credits and dated roles are documented across this site.', 'He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organisational cultures. He works in Korean and English. Project credits and dated roles are documented across this site.'].includes(home.snapshot.detail)) home.snapshot.detail = 'I also build websites, publishing systems and workflow tools with AI-assisted development. My international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organizational cultures. I work in Korean and English, and every project credit and dated role on this site is documented.';
+  if (home?.activities?.eyebrow === 'Why work with Jimmy') home.activities.eyebrow = 'Why work with me';
+  for (const item of home?.activities?.items || []) if (item?.desc === 'I do not begin by selling a video, website, or AI tool. I begin with who the work is for, what should change, and which form will serve that goal.') item.desc = 'I start with who the work is for and what should change, then choose the form that serves that goal.';
+  const PROJECT_CTAS = { 'https://www.linkedin.com/in/jimmy1420': 'View LinkedIn profile', '/scouting': 'See Scouting roles', '/insights': 'Read the articles' };
+  for (const item of home?.projects?.items || []) if (item && typeof item.cta !== 'string') item.cta = PROJECT_CTAS[item.href] || '';
+  const CTA_SUBJECTS = { home: 'Project', work: 'Project', dev: 'Project', lecture: 'Lecture', scouting: 'Scouting' };
+  for (const [page, subject] of Object.entries(CTA_SUBJECTS)) {
+    const button = doc.pages?.[page]?.sections?.cta?.button;
+    if (button?.href === '/contact') button.href = '/contact?subject=' + subject;
+    if (page === 'scouting' && button?.label === 'Contact') button.label = 'Plan your event media';
   }
   // Release C (owner, 2026-11-27): American spelling in owner copy, consistent role labels, Work lead, Press emoji.
   const usSpelling = text => typeof text === 'string' ? text.replace(/\borganisation(al)?\b/g, 'organization$1').replace(/\bwork-programme\b/g, 'work-program')

@@ -414,7 +414,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
-v0.31.2–0.32.3 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
+v0.31.2–0.33.0 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
 - **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
   the earlier "pre-existing failures" note below is resolved.
 - **Official Scouting titles (owner, 2026-11-27, v0.31.3):** `APR Communication & Partnership Sub-committee` ·
@@ -430,6 +430,13 @@ v0.31.2–0.32.3 (2026-11-27), check-suite repair and official Scouting titles. 
   button. Tablets (600–839px) show selected-work and project cards in two columns. Hover-only frames in `.case-media--cycle`
   carry `data-src` and load on the first pointer/focus over a card on hover devices with motion allowed; touch devices never
   fetch them (was 18 frames, 1.77 MB on Home). Asset URLs use `?v=0.31.6`.
+- **Enquiry polish (v0.33.0, owner-approved 2026-11-27):** Home hero secondary button "Start a project" → /contact?subject=Project;
+  `hero.proof` + `hero.proofPress` proof line under the scope links; first-person biography (JSON-LD `description` stays the static
+  third-person text — site.js no longer copies the biography into it); "Why work with me"; Films before Websites in Selected work;
+  Ideas cards carry `cta` labels. Page CTAs pass `?subject=Project|Lecture|Photography|Scouting` (also "Article response"); Contact
+  maps a whitelisted subject to the mail subject and shows "Topic: …" (`[data-contact-topic]`). Scouting has an `offer` section
+  (after roles; template `offerItems`) with "Plan your event media". Articles add "Invite me to speak on this". Lecture history is
+  rendered into the static HTML. DEFAULT now equals the live CMS copy (`SEED_COPY_UPDATES` maps the old seeds).
 - **Small fixes (v0.32.3):** Home card titles under the Websites/Films group headings are h4 (`data-heading="h4"` on the
   container; `siteCases`/`videoCases` take a level argument; styles identical to h3). Small text links on Home use `.hit-area`
   (an invisible ::after extends the target 8px up and down).
@@ -458,7 +465,7 @@ v0.31.2–0.32.3 (2026-11-27), check-suite repair and official Scouting titles. 
 - **Home CTA (v0.31.7):** default and static copy follow the owner's live CMS text (`Have a project, platform, or workflow to
   consider?`); `applyOfficialTitles` maps the earlier seed. Static Home now matches the live document.
 - **Entrance motion (v0.31.5):** `applyDoc` moves `[data-section]` nodes only when the stored order differs. Re-inserting a
-  node restarts its CSS entrance animation, which made the Home hero play twice once `/api/content` arrived. `site.js?v=0.32.3`.
+  node restarts its CSS entrance animation, which made the Home hero play twice once `/api/content` arrived. `site.js?v=0.33.0`.
 v0.29.0 (2026-11-12), owner-approved operations, security and article release. Schema stays v46.
 - **Checkout location:** work in `~/Developer/jimmypark-net`. The old `~/Desktop/VS_Code/JimmyPark-net` folder is iCloud-synced
   (files and Git objects were evicted there) and is kept only as an archive. Its uncommitted work (saju rework, `wiki/`,

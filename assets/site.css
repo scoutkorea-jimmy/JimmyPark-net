@@ -1219,3 +1219,14 @@ body.portfolio[data-page="home"] .body-copy {
 
 /* Card titles demoted to h4 under a group heading keep the shared heading rhythm. */
 .portfolio .selected-work-grid h4 { overflow-wrap: anywhere; }
+
+/* Home proof line under the scope links. */
+.portfolio .hero-proof { margin: var(--space-16) 0 0; max-width: 52ch; font-size: .875rem; line-height: 1.55; color: var(--md-on-surface-variant); }
+.portfolio .hero-proof a { color: var(--md-primary); font-weight: 600; }
+/* Scouting offer for associations and NGOs. */
+.portfolio .offer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-16); margin-top: var(--space-24); }
+.portfolio .offer-card p { margin: var(--space-8) 0 0; color: var(--md-on-surface-variant); }
+.portfolio .offer-actions { margin-top: var(--space-24); }
+@media (max-width: 599px) { .portfolio .offer-grid { grid-template-columns: minmax(0, 1fr); } }
+/* Contact topic carried from another page. */
+.portfolio .contact-topic { margin: 0 0 var(--space-12); font-weight: 600; color: var(--md-primary); }

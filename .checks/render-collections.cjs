@@ -12,7 +12,7 @@ const helperStart = source.indexOf('  function timelineStartYear');
 const { templates, renderTimelineByYear } = vm.runInNewContext(source.slice(helperStart, end) + '; ({ templates: TT, renderTimelineByYear });', { esc });
 const api = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8');
 const defaults = JSON.parse(api.match(/const DEFAULT = ([\s\S]*?);\n\n\/\/ ── generic validator/)[1]);
-const pages = { home: 'index.html', work: 'work.html', dev: 'dev.html', scouting: 'scouting.html', contact: 'contact.html' };
+const pages = { home: 'index.html', work: 'work.html', dev: 'dev.html', lecture: 'lecture.html', scouting: 'scouting.html', contact: 'contact.html' };
 const result = {};
 for (const [page, file] of Object.entries(pages)) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
@@ -26,7 +26,8 @@ for (const [page, file] of Object.entries(pages)) {
       const pins = ['samsung-keynote','ai2re','kb-life','seocho-culture-2020'];
       const ordered = pins.map(id => items.find(row => row.id === id)).filter(Boolean).concat(items.filter(row => !pins.includes(row.id)));
       collections[match[1]] = ordered.map(item => render(item).replace('<article ', pins.includes(item.id) ? '<article ' : '<article hidden ')).join('\n');
-    } else if (match[2] === 'timeline') collections[match[1]] = renderTimelineByYear(items); // mirrors site.js year grouping
+    } else if (match[2] === 'lectureTalks') collections[match[1]] = items.slice().sort((a, b) => String(b.year || '').localeCompare(String(a.year || ''))).map((item, i, all) => render(item, i, all)).join('\n'); // mirrors site.js newest-first
+    else if (match[2] === 'timeline') collections[match[1]] = renderTimelineByYear(items); // mirrors site.js year grouping
     else collections[match[1]] = items.map((item, i) => render(item, i, items, (match[0].match(/data-heading="(h[34])"/) || [])[1])).join('\n');
   }
   result[file] = { order: defaults.pages[page].order, collections };

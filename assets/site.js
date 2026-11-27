@@ -485,6 +485,9 @@
         '<div class="tag-list">' + tags + '</div><span class="card-link">See the evidence' +
         '<span class="act-arrow msym" aria-hidden="true">arrow_forward</span></span></a>';
     },
+    offerItems: function (o) {
+      return '<div class="card card--compact offer-card"><h3>' + esc(o.title) + '</h3><p>' + esc(o.desc) + '</p></div>';
+    },
     approachSteps: function (s) {
       return '<div class="process-step"><div class="step-number">' + esc(s.num) + '</div><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></div>';
     },
@@ -492,7 +495,7 @@
       var media = p.image ? '<div class="project-image" role="img" aria-label="' + esc(p.title) + '" style="background-image:url(&quot;' + esc(p.image) + '&quot;)"></div>' : '';
       return '<a href="' + esc(p.href || "/work") + '" class="card project-card soft">' + media + '<div class="card-body">' +
         '<span class="eyebrow">' + esc(p.tag) + '</span><h3>' + esc(p.title) + '</h3><p>' + esc(p.desc) + '</p>' +
-        '<span class="card-link">Learn more <span class="msym" aria-hidden="true">arrow_forward</span></span></div></a>';
+        '<span class="card-link">' + esc(p.cta || 'Learn more') + ' <span class="msym" aria-hidden="true">arrow_forward</span></span></div></a>';
     },
     photoDeliverables: function (d) {
       return '<li class="deliverable"><span class="msym" aria-hidden="true">check_small</span>' + esc(d.text) + '</li>';
@@ -655,7 +658,6 @@
         var person = JSON.parse(personNode.textContent);
         if (person['@type'] === 'Person') {
           person.name = (g.brand || {}).name || person.name;
-          person.description = (sd.snapshot || {}).body || person.description;
           if ((sd.hero || {}).image) person.image = new URL(sd.hero.image, 'https://jimmypark.net').href;
           person.sameAs = [(g.contact || {}).linkedin, (g.contact || {}).instagram, (g.contact || {}).orcid].filter(Boolean);
           if ((g.contact || {}).email) person.email = g.contact.email;
@@ -807,6 +809,17 @@
   });
 
   registerReveals();
+
+  // Contact: buttons elsewhere pass ?subject=… so the email subject and a short note match the visitor's topic.
+  (function applyContactTopic() {
+    var topics = { Project: "Project inquiry", Lecture: "Lecture inquiry", Photography: "Photography booking", Scouting: "Scouting / NGO inquiry", "Article response": "Article response" };
+    var topic = topics[new URLSearchParams(location.search).get("subject") || ""];
+    var brief = document.querySelector('a[data-mail][data-mail-subject="Project inquiry"]');
+    if (!topic || !brief) return;
+    brief.setAttribute("data-mail-subject", topic);
+    var note = document.querySelector("[data-contact-topic]");
+    if (note) { note.textContent = "Topic: " + topic; note.hidden = false; }
+  })();
 
   // ── Load live content, then accept preview messages ───────────────────────
   var previewReceived = false;
