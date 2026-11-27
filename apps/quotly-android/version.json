@@ -1,7 +1,7 @@
 {
-  "versionCode": 8,
-  "versionName": "0.5.2",
-  "apkUrl": "https://jimmypark.net/apps/quotly-android/quotly-0.5.2.apk",
-  "sha256": "d75603731a8b43d00379cb8955c20cb39c8a95b789fd4461ed5025bed25053ab",
-  "notes": "홈 위젯과 대시보드에서 Codex 주간, Claude 전체 주간, Claude Fable 잔여율을 독립된 원형 차트 세 개로 볼 수 있습니다. 각 차트에 해당 한도의 실제 초기화 날짜와 시각을 표시합니다. 상태바에서는 서비스 약자(Co·Cl)와 잔여 비율 또는 남은 시간을 함께 볼 수 있습니다."
+  "versionCode": 9,
+  "versionName": "0.5.3",
+  "apkUrl": "https://jimmypark.net/apps/quotly-android/quotly-0.5.3.apk",
+  "sha256": "473affc4c07c8e40481991569f69fcd1950e1c1ffaec5538fabc9066b48b8440",
+  "notes": "삼성 갤럭시에서 알림이 자동으로 묶여도 상태바 아이콘 하나에 서비스 약자(Co 또는 Cl)와 선택한 값을 두 줄로 표시합니다. 홈 위젯과 대시보드의 Codex 주간, Claude 전체 주간, Claude Fable 잔여율과 초기화 시각은 각각의 원형 차트에서 확인할 수 있습니다."
 }
