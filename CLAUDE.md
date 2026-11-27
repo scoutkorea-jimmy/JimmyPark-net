@@ -414,7 +414,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
-v0.31.2–0.32.1 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
+v0.31.2–0.32.2 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
 - **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
   the earlier "pre-existing failures" note below is resolved.
 - **Official Scouting titles (owner, 2026-11-27, v0.31.3):** `APR Communication & Partnership Sub-committee` ·
@@ -430,6 +430,13 @@ v0.31.2–0.32.1 (2026-11-27), check-suite repair and official Scouting titles. 
   button. Tablets (600–839px) show selected-work and project cards in two columns. Hover-only frames in `.case-media--cycle`
   carry `data-src` and load on the first pointer/focus over a card on hover devices with motion allowed; touch devices never
   fetch them (was 18 frames, 1.77 MB on Home). Asset URLs use `?v=0.31.6`.
+- **PR plan release C (v0.32.2):** American spelling in visible copy (inquiry, organizational, program, centers, judgment;
+  code names such as `/api/enquiry` and `[data-enquiry]` are unchanged). Role labels read "Filming & Editing Lead",
+  "Planning & Development". Nav label `Lectures`. Work intro lead is "From the initial brief through filming, editing, and
+  practical delivery." Scouting travel list hidden on read (`hideScoutingTravel`); the 19 stat stays. Press shows a computed
+  outlet summary (press-kind links, alphabetical) and a "Book event photography" CTA (`press.css?v=0.32.2`). Contact
+  "I can help with" adds Photography and Lectures & workshops. Person JSON-LD adds Photography, Live broadcasting and
+  `hasOccupation` (Founder, BP Media; Technical Lead, AI & Learning Platforms, Korea Dream Path).
 - **PR plan release B (v0.32.1):** Home hero has an editable `hero.scope` link list (Admin → Home → Hero → Scope links; template
   `heroScope`, class `.hero-scope`) under the lead: Films /work, Photography /press, Websites & AI tools /dev, Lectures /lecture,
   Global Scouting /scouting. Snapshot: Korea Dream Path `…, 2026.05–` and a `Teaching` row (Halla University co-instructor,

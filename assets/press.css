@@ -17,3 +17,8 @@
   .press-row { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-block: 18px; }
   .press-group { margin-top: 32px; }
 }
+
+.press-summary { margin: 24px 0 0; max-width: 72ch; font-size: 1rem; line-height: 1.6; color: var(--md-on-surface); }
+.press-cta { margin-top: 64px; padding: 32px; border-radius: var(--md-shape-lg); background: var(--md-surface-container); }
+.press-cta h2 { margin: 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.25; font-weight: 500; }
+.press-cta p { margin: 12px 0 24px; max-width: 60ch; color: var(--md-on-surface-variant); }

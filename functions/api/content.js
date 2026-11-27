@@ -115,7 +115,7 @@ const DEFAULT = {
           "eyebrow": "About Jimmy Park",
           "title": "Who is Jimmy Park?",
           "body": "Jimmy Park (박지민, Park Jimin) is a Korea-based communications and marketing professional working across content strategy, video, photography and live broadcasts. At THE MIM, he managed filming and delivery for 385 closed schools. At Knowhow Media, he shaped channel formats around audience feedback and led production and publishing. SoulWorker subscribers grew from 2,500 to 4,400 in the first six months (+76%) during the team’s operation; this is a team channel result, not growth attributable to him alone.",
-          "detail": "He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organisational cultures. He works in Korean and English. Project credits and dated roles are documented across this site."
+          "detail": "He also builds websites, publishing systems and workflow tools with AI as a Vibe Coder. His international Scouting roles add regional communications, volunteer leadership and collaboration across languages and organizational cultures. He works in Korean and English. Project credits and dated roles are documented across this site."
         },
         "activities": {
           "eyebrow": "Why work with Jimmy",
@@ -274,7 +274,7 @@ const DEFAULT = {
               "title": "BP Media",
               "format": "Own platform · Scouting media",
               "year": "2026",
-              "role": "Founder · Planning & development",
+              "role": "Founder · Planning & Development",
               "summary": "Scouting media platform I founded — Korean-language storytelling covering Korea, the Asia-Pacific Region and world Scouting.",
               "need": "An independent home for Scouting news in Korean, with reference material that stays useful beyond the news cycle.",
               "built": "News boards with article pages and sharing, search, a Scout calendar, a glossary with a keyword chatbot, a memorabilia encyclopedia, card news, RSS and sitemaps.",
@@ -298,7 +298,7 @@ const DEFAULT = {
               "title": "Authentic Korean Traditional Fermented Foods Cooperative",
               "format": "Food cooperative · Official website",
               "year": "2026",
-              "role": "Planning & development",
+              "role": "Planning & Development",
               "summary": "Official site for a traditional fermented-foods cooperative, including product pages built with AI-assisted creation.",
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
               "built": "Education and course-application pages, a product shop whose detail pages and product images were created with AI, guest order lookup, member accounts, a news board and an admin console.",
@@ -388,7 +388,7 @@ const DEFAULT = {
         "intro": {
           "eyebrow": "Media work",
           "title": "Video production\nand field photography.",
-          "lead": "Explore video production credits and field photography, from the brief and script to filming, editing and press-ready images."
+          "lead": "From the initial brief through filming, editing, and practical delivery."
         },
         "photography": {
           "kicker": "02 / Field production",
@@ -519,7 +519,7 @@ const DEFAULT = {
               "role": "Photographed the event at the request of the Korean Culture Diplomatic Mission. Organized by ProColombia.",
               "articles": [
                 {
-                  "title": "Korean Culture Diplomatic Mission: 2026 Colombian cultural exchange event 🇨🇴",
+                  "title": "Korean Culture Diplomatic Mission: 2026 Colombian cultural exchange event",
                   "outlet": "whitelight_-",
                   "kind": "blog",
                   "date": "2026-07-31",
@@ -724,7 +724,7 @@ const DEFAULT = {
               "id": "kb-life",
               "title": "KB Life · Hashtag Interviews",
               "year": "",
-              "role": "Lead Filming & Editing",
+              "role": "Filming & Editing Lead",
               "desc": "A branded interview series sharing people’s stories and perspectives on life.",
               "href": "https://www.youtube.com/playlist?list=PL7K0gdyN-9BQjyWAFqmtk9vfBv8qwmyuE",
               "image": "/assets/img/video/kb-life.jpg",
@@ -760,7 +760,7 @@ const DEFAULT = {
               "id": "inha-mun",
               "title": "Inha Model United Nations",
               "year": "2019",
-              "role": "Lead Filming & Editing",
+              "role": "Filming & Editing Lead",
               "desc": "Event sketch and closing film for the first Inha University Model UN.",
               "href": "https://youtu.be/HCb285yis9M",
               "image": "https://i.ytimg.com/vi/HCb285yis9M/hqdefault.jpg",
@@ -859,7 +859,7 @@ const DEFAULT = {
             },
             {
               "num": "02",
-              "title": "Fast judgement",
+              "title": "Fast judgment",
               "desc": "Turn a first conversation into a clear scope and a working first version quickly."
             },
             {
@@ -904,7 +904,7 @@ const DEFAULT = {
               "title": "BP Media",
               "format": "Own platform · Scouting media",
               "year": "2026",
-              "role": "Founder · Planning & development",
+              "role": "Founder · Planning & Development",
               "summary": "The Korean-language Scouting news platform I founded, covering Korea, the Asia-Pacific Region and world Scouting.",
               "need": "An independent home for Scouting news in Korean, with reference material that stays useful beyond the news cycle.",
               "built": "News boards with article pages and sharing, search, a Scout calendar, a glossary with a keyword chatbot, a memorabilia encyclopedia, card news, RSS and sitemaps.",
@@ -928,7 +928,7 @@ const DEFAULT = {
               "title": "Authentic Korean Traditional Fermented Foods Cooperative",
               "format": "Food cooperative · Official website",
               "year": "2026",
-              "role": "Planning & development",
+              "role": "Planning & Development",
               "summary": "The official website of a traditional fermented-foods cooperative, with product detail pages made with AI.",
               "need": "One site where visitors can learn about fermentation education, apply for the instructor course and order the cooperative’s products.",
               "built": "Education and course-application pages, a product shop whose detail pages and product images were created with AI, guest order lookup, member accounts, a news board and an admin console.",
@@ -952,7 +952,7 @@ const DEFAULT = {
               "title": "nfee",
               "format": "Education administration · Web service",
               "year": "2026",
-              "role": "Planning & development",
+              "role": "Planning & Development",
               "summary": "A reporting service for after-school program instructors.",
               "need": "Instructors who are not used to computers had to file program reports and fee claims in fixed A4 formats, and administrators had to review them.",
               "built": "A step-by-step writing flow, print-ready A4 forms, school confirmation links with signatures and an administrator review console.",
@@ -972,7 +972,7 @@ const DEFAULT = {
               "title": "BANGINOJA",
               "format": "Travel community · Korean history & culture",
               "year": "2026",
-              "role": "Planning & development",
+              "role": "Planning & Development",
               "summary": "A travel community for exploring Korea’s history, culture and nature.",
               "need": "A home for a travel community’s tours, lectures and history writing, where members can join in and talk.",
               "built": "Tour and lecture pages, history columns, a members’ community board and an admin console.",
@@ -992,10 +992,10 @@ const DEFAULT = {
               "title": "Soulter Sheltered Workshop",
               "format": "Social contribution · Disability services",
               "year": "2023",
-              "role": "Website development · Social contribution project",
+              "role": "Website Development · Social Contribution Project",
               "summary": "The website of a sheltered workshop in Geumcheon-gu, Seoul, where adults with disabilities work and train together.",
               "need": "One place for the workshop to explain its work, share news and photos with families, take volunteer and student-placement applications and sell the products its members make.",
-              "built": "Introduction and operations pages, work-programme pages, news, gallery and press boards, volunteer and social-work placement applications, and an online shop for its toilet paper and rice snacks.",
+              "built": "Introduction and operations pages, work-program pages, news, gallery and press boards, volunteer and social-work placement applications, and an online shop for its toilet paper and rice snacks.",
               "stack": "imweb",
               "backend": "",
               "stats": "",
@@ -1270,7 +1270,7 @@ const DEFAULT = {
         "gallery",
         "cta"
       ],
-      "hidden": [],
+      "hidden": ["travel"],
       "sections": {
         "hero": {
           "eyebrow": "Scouting record · International work",
@@ -1960,7 +1960,7 @@ const DEFAULT = {
         "intro": {
           "eyebrow": "Contact",
           "title": "Tell me what you need\nto achieve.",
-          "lead": "Share your audience, goal and timeline. I welcome communications, content strategy and production enquiries from businesses, public institutions and nonprofits, including international teams. Email or LinkedIn is a good place to start."
+          "lead": "Share your audience, goal and timeline. I welcome communications, content strategy and production inquiries from businesses, public institutions and nonprofits, including international teams. Email or LinkedIn is a good place to start."
         }
       }
     }
@@ -4260,6 +4260,12 @@ function addTeachingSnapshotRow(doc) {
   const at = rows.findIndex(row => row?.label === 'Education');
   rows.splice(at < 0 ? rows.length : at + 1, 0, { label: 'Teaching', value: 'Halla University co-instructor, 2020–2021 · Author, 2021' });
 }
+// Release C (owner, 2026-11-27): the Scouting travel list is off; the 19 countries & regions stat stays in Scope of
+// experience. Added to the hidden list on read; to show the list again, remove this helper.
+function hideScoutingTravel(doc) {
+  const hidden = doc.pages?.scouting?.hidden;
+  if (Array.isArray(hidden) && !hidden.includes('travel')) hidden.push('travel');
+}
 function retireOfflinePrototypes(doc) {
   const dev = doc.pages?.dev;
   const items = dev?.sections?.vibecoding?.items;
@@ -4358,6 +4364,25 @@ function applyOfficialTitles(doc) {
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
   }
+  // Release C (owner, 2026-11-27): American spelling in owner copy, consistent role labels, Work lead, Press emoji.
+  const usSpelling = text => typeof text === 'string' ? text.replace(/\borganisation(al)?\b/g, 'organization$1').replace(/\bwork-programme\b/g, 'work-program')
+    .replace(/\bcentres\b/g, 'centers').replace(/\benquiries\b/g, 'inquiries').replace(/\benquiry\b/g, 'inquiry').replace(/\bjudgement\b/g, 'judgment') : text;
+  const homeSnapshot = doc.pages?.home?.sections?.snapshot;
+  if (homeSnapshot) homeSnapshot.detail = usSpelling(homeSnapshot.detail);
+  for (const item of doc.pages?.dev?.sections?.sites?.items || []) if (item) item.built = usSpelling(item.built);
+  for (const item of doc.pages?.dev?.sections?.intro?.principles || []) if (item) item.title = usSpelling(item.title);
+  for (const page of ['lecture', 'contact']) { const intro = doc.pages?.[page]?.sections?.intro; if (intro) intro.lead = usSpelling(intro.lead); }
+  const ROLE_LABELS = { 'Lead Filming & Editing': 'Filming & Editing Lead', 'Planning & development': 'Planning & Development',
+    'Founder · Planning & development': 'Founder · Planning & Development', 'Website development · Social contribution project': 'Website Development · Social Contribution Project' };
+  for (const row of [...(doc.pages?.work?.sections?.video?.cases || []), ...(doc.pages?.home?.sections?.selected?.cases || []),
+    ...(doc.pages?.home?.sections?.selected?.sites || []), ...(doc.pages?.dev?.sections?.sites?.items || [])]) {
+    if (row && ROLE_LABELS[row.role]) row.role = ROLE_LABELS[row.role];
+  }
+  const workIntro = doc.pages?.work?.sections?.intro;
+  if (workIntro && ['Video production and field photography, from the initial brief through filming, editing, and practical delivery.', 'Explore video production credits and field photography, from the brief and script to filming, editing and press-ready images.'].includes(workIntro.lead)) workIntro.lead = 'From the initial brief through filming, editing, and practical delivery.';
+  for (const project of doc.pages?.work?.sections?.photography?.projects || []) for (const article of project?.articles || []) {
+    if (typeof article?.title === 'string' && article.title.endsWith(' 🇨🇴')) article.title = article.title.slice(0, -' 🇨🇴'.length);
+  }
   // Release B: Korea Dream Path start date in the Home snapshot.
   for (const row of doc.pages?.home?.sections?.snapshot?.rows || []) {
     if (row?.value === 'Korea Dream Path · ' + KDP_ROLE) row.value = 'Korea Dream Path · ' + KDP_ROLE + ', 2026.05–';
@@ -4449,6 +4474,7 @@ export async function onRequestGet({ env }) {
   withdrawPressProjects(doc.pages?.work?.sections?.photography);
   retireOfflinePrototypes(doc);
   addTeachingSnapshotRow(doc);
+  hideScoutingTravel(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   applyOfficialTitles(doc);

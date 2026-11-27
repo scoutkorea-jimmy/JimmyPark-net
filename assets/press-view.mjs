@@ -68,7 +68,12 @@ export function renderPressProjects(projects) {
     renderedIds.add(id);
     freeAliases.forEach(alias => renderedIds.add(alias));
   }
-  return groups.filter(group => group.rows.length).map(group =>
+  // One factual line naming every news outlet that carried the photographs (from the press-kind links below).
+  const outlets = [...new Set(rows.flatMap(project => publishedLinks(project).filter(link => link.kind === 'press').map(link => link.outlet.trim())))]
+    .sort((a, b) => a.localeCompare(b, 'en'));
+  const summary = outlets.length ? '<p class="press-summary">Photographs published in ' + outlets.length + ' news ' + (outlets.length === 1 ? 'outlet' : 'outlets') + ': ' +
+    escape(outlets.length > 1 ? outlets.slice(0, -1).join(', ') + ' and ' + outlets.at(-1) : outlets[0]) + '.</p>' : '';
+  return summary + groups.filter(group => group.rows.length).map(group =>
     '<section class="press-group"><h2>' + escape(group.heading) + '</h2>' + group.rows.join('') + '</section>'
   ).join('') || '<p class="body-copy">No photography assignments are listed yet.</p>';
 }

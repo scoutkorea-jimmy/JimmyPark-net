@@ -15,7 +15,7 @@ export async function onRequestGet({ env }) {
     ['Dev Work', '/dev', 'Websites, practical tools, and AI-supported workflows.'],
     ['Lectures & Workshops', '/lecture', 'Teaching and workshop formats for media, AI, and Scouting communication.'],
     ['Global & Scouting', '/scouting', 'International Scouting roles, communication work, and collaboration.'],
-    ['Contact', '/contact', 'A direct way to share a project brief or role enquiry.'],
+    ['Contact', '/contact', 'A direct way to share a project brief or role inquiry.'],
     ['Articles', '/insights', 'Practical articles on media, web development, applied AI, and Scouting communication.'],
   ].map(([label, href, description]) => '<li><a class="lnk" href="' + href + '">' + label + '</a><p>' + description + '</p></li>').join('');
   const articleItems = posts.map(post => '<li><a class="lnk" href="/insights/' + encodeURIComponent(post.slug) + '">' + escapeHTML(post.title) + '</a><p>' + escapeHTML(post.summary) + '</p></li>').join('');

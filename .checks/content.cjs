@@ -132,7 +132,7 @@ async function get(value) {
     assert.deepEqual(result.pages.home.sections.hero, home.hero);
     // v34 intentionally replaces pre-v34 Scouting roles with the owner-supplied set.
     assert.deepEqual(result.pages.scouting.sections.roles, defaults.pages.scouting.sections.roles);
-    assert.deepEqual(result.pages.scouting.hidden, ['gallery']);
+    assert.deepEqual(result.pages.scouting.hidden, ['gallery', 'travel']); // travel list hidden on read since 2026-11-27
     assert.equal(result.pages.scouting.order[0], 'cta');
     assert.deepEqual(await get(result), result, 'v9 normalization must be idempotent');
   }
@@ -474,7 +474,8 @@ async function get(value) {
   for (const row of customized6.pages.work.sections.video.cases) {
     const stills = currentStills.get(row.id) || {};
     const v40Local = { ai2re: 1, manas: 1, daekyo: 1 }; // migrateTo40 swaps only these seed thumbnails
-    const expected = { ...row, image: v40Local[row.id] ? stills.image : (row.image || v15Stills[row.id] || '') };
+    const roleLabels = { 'Lead Filming & Editing': 'Filming & Editing Lead' }; // label order unified 2026-11-27
+    const expected = { ...row, role: roleLabels[row.role] || row.role, image: v40Local[row.id] ? stills.image : (row.image || v15Stills[row.id] || '') };
     if (stills.images) expected.images = stills.images;
     assert.deepEqual(preservedById.get(row.id), expected, `Custom credits stay; only stills follow the current defaults (${row.id})`);
   }
