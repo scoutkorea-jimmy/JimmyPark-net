@@ -476,7 +476,7 @@ const DEFAULT = {
               "name": "16th Korea Jamboree",
               "date": "2026-08-04",
               "endDate": "2026-08-09",
-              "role": "Head of Public Relations for the Jamboree, Korea Scout Association. Photographed the event and wrote press releases.",
+              "role": "Head of PR Team for the 16th Korea National Jamboree, Korea Scout Association. Photographed the event and wrote press releases.",
               "articles": [
                 {
                   "title": "16th Korea Jamboree opens as Scouts from 16 countries gather in Goseong to build friendships",
@@ -4327,6 +4327,10 @@ function applyOfficialTitles(doc) {
     if (row?.id !== 'korea-dream-path') continue;
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
+  }
+  // Press: the Jamboree assignment uses the official role title (owner, 2026-11-27).
+  for (const project of doc.pages?.work?.sections?.photography?.projects || []) {
+    if (project?.role === 'Head of Public Relations for the Jamboree, Korea Scout Association. Photographed the event and wrote press releases.') project.role = 'Head of PR Team for the 16th Korea National Jamboree, Korea Scout Association. Photographed the event and wrote press releases.';
   }
   // Home CTA: the owner's current copy (2026-11-27) replaces the earlier seed when unchanged.
   const homeCta = doc.pages?.home?.sections?.cta;
