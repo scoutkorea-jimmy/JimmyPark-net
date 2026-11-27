@@ -746,7 +746,8 @@
         if (ia < 0) ia = 999; if (ib < 0) ib = 999;
         return ia - ib;
       });
-      ranked.forEach(function (n) { parent.insertBefore(n, ref); });
+      // Re-inserting a node restarts its CSS entrance animation, so move sections only when the order changes.
+      if (ranked.some(function (n, i) { return n !== group[i]; })) ranked.forEach(function (n) { parent.insertBefore(n, ref); });
     });
     nodes.forEach(function (n) {
       n.style.display = hidden.indexOf(n.getAttribute("data-section")) >= 0 ? "none" : "";
