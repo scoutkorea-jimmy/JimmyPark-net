@@ -222,8 +222,8 @@ const DEFAULT = {
           ]
         },
         "cta": {
-          "title": "Have a film, platform, or AI idea?",
-          "body": "Tell me what you want people to see, learn or ship — and when you need it. I’ll suggest a clear next step.",
+          "title": "Have a project, platform, or workflow to consider?",
+          "body": "Share the purpose, people involved, and timing. I will suggest a practical next step.",
           "button": {
             "label": "Start a conversation",
             "href": "/contact"
@@ -4325,6 +4325,10 @@ function applyOfficialTitles(doc) {
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
   }
+  // Home CTA: the owner's current copy (2026-11-27) replaces the earlier seed when unchanged.
+  const homeCta = doc.pages?.home?.sections?.cta;
+  if (homeCta?.title === 'Have a film, platform, or AI idea?') homeCta.title = 'Have a project, platform, or workflow to consider?';
+  if (homeCta?.body === 'Tell me what you want people to see, learn or ship — and when you need it. I’ll suggest a clear next step.') homeCta.body = 'Share the purpose, people involved, and timing. I will suggest a practical next step.';
   const sc = doc.pages?.scouting?.sections;
   if (!sc) return;
   for (const item of sc.stats?.items || []) { const next = item && find(OFFICIAL_TITLES.stats, item.label); if (next) Object.assign(item, next); }

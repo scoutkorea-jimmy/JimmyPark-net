@@ -414,7 +414,7 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
-v0.31.2–0.31.6 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
+v0.31.2–0.31.7 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
 - **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
   the earlier "pre-existing failures" note below is resolved.
 - **Official Scouting titles (owner, 2026-11-27, v0.31.3):** `APR Communication & Partnership Sub-committee` ·
@@ -430,6 +430,8 @@ v0.31.2–0.31.6 (2026-11-27), check-suite repair and official Scouting titles. 
   button. Tablets (600–839px) show selected-work and project cards in two columns. Hover-only frames in `.case-media--cycle`
   carry `data-src` and load on the first pointer/focus over a card on hover devices with motion allowed; touch devices never
   fetch them (was 18 frames, 1.77 MB on Home). Asset URLs use `?v=0.31.6`.
+- **Home CTA (v0.31.7):** default and static copy follow the owner's live CMS text (`Have a project, platform, or workflow to
+  consider?`); `applyOfficialTitles` maps the earlier seed. Static Home now matches the live document.
 - **Entrance motion (v0.31.5):** `applyDoc` moves `[data-section]` nodes only when the stored order differs. Re-inserting a
   node restarts its CSS entrance animation, which made the Home hero play twice once `/api/content` arrived. `site.js?v=0.31.6`.
 v0.29.0 (2026-11-12), owner-approved operations, security and article release. Schema stays v46.
