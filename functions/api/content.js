@@ -78,7 +78,7 @@ const DEFAULT = {
             },
             {
               "label": "Education",
-              "value": "Korea Dream Path · CEO"
+              "value": "Korea Dream Path · Technical Lead, AI & Learning Platforms"
             },
             {
               "label": "Asia-Pacific",
@@ -239,8 +239,8 @@ const DEFAULT = {
               "title": "Korea Dream Path",
               "format": "Own platform · Global education",
               "year": "2026",
-              "role": "CEO · Planning & development",
-              "summary": "Global education platform I lead as CEO — connecting young people worldwide with Korean higher education through learning pathways they can actually use.",
+              "role": "Technical Lead, AI & Learning Platforms",
+              "summary": "I designed and built a platform where students can explore Korean higher education programs and scholarships and apply online.",
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
@@ -876,8 +876,8 @@ const DEFAULT = {
               "title": "Korea Dream Path",
               "format": "Own platform · Global education",
               "year": "2026",
-              "role": "CEO · Planning & development",
-              "summary": "The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.",
+              "role": "Technical Lead, AI & Learning Platforms",
+              "summary": "I designed and built the education website, including its program search, application flow and admin tools.",
               "need": "One place where young people around the world can discover programs and scholarships and apply online.",
               "built": "Program and scholarship pages, an online application flow, member sign-up, news and stories, and an admin console for the team.",
               "stack": "Cloudflare Workers · KV · D1 · R2",
@@ -4285,8 +4285,15 @@ function updateOwnerPhone(doc) {
 const APR_CP = 'APR Communication & Partnership Sub-committee';
 const WSJ_MEDIA = '25th World Scout Jamboree, Deputy Head of Media Dept.';
 const KJ16 = '16th Korea National Jamboree';
+const KDP_ROLE = 'Technical Lead, AI & Learning Platforms';
+// Korea Dream Path rows (Home selected sites, Dev Work sites): earlier CEO seeds → the owner's title and copy.
+const KDP_SUMMARIES = {
+  'Global education platform I lead as CEO — connecting young people worldwide with Korean higher education through learning pathways they can actually use.': 'I designed and built a platform where students can explore Korean higher education programs and scholarships and apply online.',
+  'The global learning platform I lead as CEO, connecting young people worldwide with Korean higher education.': 'I designed and built the education website, including its program search, application flow and admin tools.',
+};
 const OFFICIAL_TITLES = {
   snapshot: [
+    [['Korea Dream Path · CEO'], 'Korea Dream Path · ' + KDP_ROLE],
     [['Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028', 'Communications & Partnerships · 2nd Vice Chair, 2025–2028'], APR_CP + ' · 2nd Vice-Chair, 2025–2028'],
     [['25th World Scout Jamboree · Korean Contingent Media, 2023'], '25th World Scout Jamboree · Deputy Head of Media Dept., 2022–2023'],
   ],
@@ -4313,6 +4320,11 @@ function applyOfficialTitles(doc) {
   const find = (table, key) => (table.find(([olds]) => olds.includes(key)) || [])[1];
   const snapshot = doc.pages?.home?.sections?.snapshot?.rows;
   for (const row of Array.isArray(snapshot) ? snapshot : []) { const next = row && find(OFFICIAL_TITLES.snapshot, row.value); if (next) row.value = next; }
+  for (const row of [...(doc.pages?.home?.sections?.selected?.sites || []), ...(doc.pages?.dev?.sections?.sites?.items || [])]) {
+    if (row?.id !== 'korea-dream-path') continue;
+    if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
+    if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
+  }
   const sc = doc.pages?.scouting?.sections;
   if (!sc) return;
   for (const item of sc.stats?.items || []) { const next = item && find(OFFICIAL_TITLES.stats, item.label); if (next) Object.assign(item, next); }

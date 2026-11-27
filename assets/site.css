@@ -488,7 +488,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 839px) {
   .portfolio .travel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .portfolio :is(.project-grid, .selected-work-grid, .principle-grid, .contact-layout) { grid-template-columns: 1fr; }
+  .portfolio :is(.principle-grid, .contact-layout) { grid-template-columns: 1fr; }
+  /* Tablets keep two cards per row; phones (<600px) switch to the swipe row below. */
+  .portfolio :is(.project-grid, .selected-work-grid) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portfolio .enquiry-form { grid-template-columns: 1fr; }
   .portfolio .site-showcase, .portfolio .site-showcase:nth-child(even) { grid-template-columns: 1fr; }
   .portfolio .backend-grid.has-shot, .portfolio .site-showcase:nth-child(even) .backend-grid.has-shot, .portfolio .backend-list { grid-template-columns: minmax(0, 1fr); }

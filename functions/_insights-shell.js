@@ -7,7 +7,7 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
 <link rel="alternate" type="application/rss+xml" title="Jimmy Park — Articles" href="https://jimmypark.net/insights/feed.xml">
 <link rel="icon" href="/assets/img/favicon.svg?v=0.9.0" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=0.31.2"></head>
+<link rel="stylesheet" href="/assets/site.css?v=0.31.6"></head>
 <body data-page="insights" class="portfolio"><a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
   <div class="site-container header-inner">
@@ -68,4 +68,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
   </div>
 </footer>
 <div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
-<script src="/assets/site.js?v=0.31.5" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.31.6" defer></script></body></html>`;

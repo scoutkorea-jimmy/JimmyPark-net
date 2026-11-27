@@ -67,7 +67,15 @@
     }
     menu.addEventListener("click", function (e) { if (e.target === menu || e.target.closest("a")) closeMenu(); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && menu.classList.contains("open")) { closeMenu(); toggle.focus(); }
+      if (!menu.classList.contains("open")) return;
+      if (e.key === "Escape") { closeMenu(); toggle.focus(); return; }
+      // Keep Tab inside the open drawer and its close button; the page behind is covered by the scrim.
+      if (e.key !== "Tab") return;
+      var stops = [toggle].concat(Array.prototype.slice.call(menu.querySelectorAll("a[href], button:not([disabled])")));
+      var at = stops.indexOf(document.activeElement);
+      var next = at < 0 ? 0 : (at + (e.shiftKey ? stops.length - 1 : 1)) % stops.length;
+      e.preventDefault();
+      stops[next].focus();
     });
   }
 
@@ -176,6 +184,16 @@
     host.appendChild(dot);
     dot.addEventListener("animationend", function () { dot.remove(); });
   });
+
+  // Hover frame cycling runs only where CSS plays it (hover pointer, motion allowed); touch devices never fetch the frames.
+  if (window.matchMedia && window.matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) {
+    var loadFrames = function (e) {
+      var card = e.target.closest && e.target.closest(".project-card, .site-showcase");
+      if (card) card.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.getAttribute("data-src"); img.removeAttribute("data-src"); });
+    };
+    document.addEventListener("pointerover", loadFrames);
+    document.addEventListener("focusin", loadFrames);
+  }
 
   // Scroll reveals: each kind of element gets its own entrance; grid items are staggered.
   var REVEALS = [
@@ -394,7 +412,8 @@
   }
   function frameImages(frames, alt, width, height) {
     return frames.map(function (src, index) {
-      return '<img src="' + esc(src) + '" alt="' + (index ? '' : esc(alt)) + '"' + (index ? ' aria-hidden="true"' : '') +
+      // Extra frames only play on hover, so they carry data-src and load when a card is approached (see loadFrames).
+      return '<img ' + (index ? 'data-src' : 'src') + '="' + esc(src) + '" alt="' + (index ? '' : esc(alt)) + '"' + (index ? ' aria-hidden="true"' : '') +
         ' loading="lazy" decoding="async" width="' + width + '" height="' + height + '">';
     }).join('');
   }
