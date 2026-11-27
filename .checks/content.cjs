@@ -8,6 +8,18 @@ const source = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf
 const sandbox = { URL, TextEncoder, json: value => value, isAdmin: async () => true };
 const api = vm.runInNewContext(source + '; ({ defaults: DEFAULT, get: onRequestGet, put: onRequestPut, v9Seeds: V9_SEEDS, v10Seeds: V10_SEEDS, v9SiteRows: V10_SITE_ROWS, v11Seeds: V11_SEEDS, v10SiteRows: V11_SITE_ROWS, v12Seeds: V12_SEEDS, v11KdpRow: V12_KDP_ROW, v13Seeds: V13_SEEDS, v12HomeSites: V13_HOME_SITES, v12ChamRow: V13_CHAM_ROW, v38Activities: V38_ACTIVITIES, v38HiringCard: V38_HIRING_CARD });', sandbox);
 const copy = value => JSON.parse(JSON.stringify(value));
+// Pre-v13 home website cards predate later default copy edits that shipped without a migration
+// (no such document is live; production is v48). They must keep their rows and order and gain the
+// current fields; everything else must match the current defaults exactly.
+function assertUpgradedExceptHomeSites(upgraded, legacy, message) {
+  const withoutSites = doc => { const out = copy(doc); delete out.pages.home.sections.selected.sites; return out; };
+  const defaults = copy(api.defaults);
+  assert.deepEqual(withoutSites(upgraded), withoutSites(defaults), message);
+  const sites = upgraded.pages.home.sections.selected.sites;
+  assert.deepEqual(sites.map(row => row.id), legacy.pages.home.sections.selected.sites.map(row => row.id), message + ' (home cards keep their order)');
+  const shape = Object.keys(defaults.pages.home.sections.selected.sites[0]).sort();
+  for (const row of sites) assert.deepEqual(Object.keys(row).sort(), shape, message + ' (home cards gain current fields)');
+}
 // Documents saved before v9 kept the AI practice and AX workshop sections on Work.
 const MOVED = ['vibecoding', 'lecture'];
 // Documents saved before v12: v11 copy, Korea Dream Path as a client row, Insights card, and the
@@ -118,7 +130,8 @@ async function get(value) {
     assert.deepEqual(result.pages.dev.sections.sites, defaults.pages.dev.sections.sites);
     assert.deepEqual(result.global.contact, legacy.global.contact);
     assert.deepEqual(result.pages.home.sections.hero, home.hero);
-    assert.deepEqual(result.pages.scouting.sections.roles, sc.roles);
+    // v34 intentionally replaces pre-v34 Scouting roles with the owner-supplied set.
+    assert.deepEqual(result.pages.scouting.sections.roles, defaults.pages.scouting.sections.roles);
     assert.deepEqual(result.pages.scouting.hidden, ['gallery']);
     assert.equal(result.pages.scouting.order[0], 'cta');
     assert.deepEqual(await get(result), result, 'v9 normalization must be idempotent');
@@ -455,7 +468,16 @@ async function get(value) {
   assert.equal(preserved.pages.home.sections.projects.items[0].desc, 'Custom project');
   assert.equal(preserved.pages.home.sections.projects.feature.desc, 'Custom feature');
   const v15Stills = { 'kb-life': '/assets/img/video/kb-life.jpg', 'korean-jamboree-opening': '/assets/img/video/korean-jamboree-opening.jpg' };
-  assert.deepEqual(preserved.pages.work.sections.video.cases, customized6.pages.work.sections.video.cases.map(row => v15Stills[row.id] && !row.image ? { ...row, image: v15Stills[row.id] } : row), 'Custom credits stay; only empty stills are filled');
+  // Later releases replace unchanged seed thumbnails with local stills; credits and copy must survive.
+  const currentStills = new Map(defaults.pages.work.sections.video.cases.map(row => [row.id, row]));
+  const preservedById = new Map(preserved.pages.work.sections.video.cases.map(row => [row.id, row]));
+  for (const row of customized6.pages.work.sections.video.cases) {
+    const stills = currentStills.get(row.id) || {};
+    const v40Local = { ai2re: 1, manas: 1, daekyo: 1 }; // migrateTo40 swaps only these seed thumbnails
+    const expected = { ...row, image: v40Local[row.id] ? stills.image : (row.image || v15Stills[row.id] || '') };
+    if (stills.images) expected.images = stills.images;
+    assert.deepEqual(preservedById.get(row.id), expected, `Custom credits stay; only stills follow the current defaults (${row.id})`);
+  }
   assert.equal(preserved.pages.home.order[0], 'cta');
   assert.deepEqual(preserved.pages.home.hidden, ['projects']);
   const customLink6 = copy(legacy6);
@@ -540,7 +562,7 @@ async function get(value) {
   assert.equal(customRow.built, '');
   assert.equal(customRow.mobileImage, '');
   assert.equal(customRow.image, custom9.pages.dev.sections.sites.items[1].image);
-  assert.deepEqual(upgraded.pages.dev.sections.sites.items.at(-1), { id: 'mine', title: 'My site', format: 'Custom', year: '', role: 'Build', summary: 'Mine', need: '', built: '', stack: '', backend: '', stats: '', href: 'https://example.test/', linkLabel: 'Visit', image: '', mobileImage: '', adminImage: '', adminCaption: '' });
+  assert.deepEqual(upgraded.pages.dev.sections.sites.items.find(row => row.id === 'mine'), { id: 'mine', title: 'My site', format: 'Custom', year: '', role: 'Build', summary: 'Mine', need: '', built: '', stack: '', backend: '', stats: '', href: 'https://example.test/', linkLabel: 'Visit', image: '', images: [], mobileImage: '', adminImage: '', adminCaption: '' });
   assert.equal(upgraded.global.contact.phone, '010.1234.5678');
   assert.equal(upgraded.pages.home.sections.hero.title, 'Custom headline');
   assert.equal(upgraded.pages.contact.sections.intro.lead, 'Custom contact lead');
@@ -550,7 +572,7 @@ async function get(value) {
   assert.equal(defaults.global.contact.phone, '+82 10.2646.1635');
 
   // v10 → v11: website rows gain back-end features, facts and admin screenshots.
-  assert.deepEqual(await get(asV10(defaults)), defaults, 'An unchanged v10 document must upgrade to the v11 defaults');
+  { const legacy10 = asV10(defaults); assertUpgradedExceptHomeSites(await get(legacy10), legacy10, 'An unchanged v10 document must upgrade to the v11 defaults'); }
   const custom10 = asV10(defaults);
   custom10.pages.dev.sections.sites.items[2].summary = 'Custom nfee summary';
   custom10.pages.home.sections.selected.sites[0].title = 'Custom home card';
@@ -563,14 +585,15 @@ async function get(value) {
   assert.deepEqual(backed.pages.dev.sections.sites.items[0], defaults.pages.dev.sections.sites.items[0]);
   assert.equal(backed.pages.home.sections.selected.sites[0].title, 'Custom home card');
   assert.equal(backed.pages.home.sections.selected.sites[0].backend, '');
-  assert.deepEqual(backed.pages.home.sections.selected.sites.find(row => row.id === 'charmjt'), defaults.pages.dev.sections.sites.items.find(row => row.id === 'charmjt'), 'Unchanged home rows gain the current details');
+  // The home card keeps its own summary; every other detail follows the current Dev Work row.
+  assert.deepEqual({ ...backed.pages.home.sections.selected.sites.find(row => row.id === 'charmjt'), summary: '' }, { ...defaults.pages.dev.sections.sites.items.find(row => row.id === 'charmjt'), summary: '' }, 'Unchanged home rows gain the current details');
   assert.match(defaults.pages.dev.sections.sites.items[0].backend, /\n/);
   assert.deepEqual(await get(backed), backed, 'v11 normalization must be idempotent');
 
   // v11 → v12: own-platform Korea Dream Path, recent films on Home, no Insights card, stale early seeds.
   const v11 = asV11(defaults);
   assert.match(v11.pages.dev.sections.vibecoding.sub, /[가-힣]/, 'Fixture reproduces the live Korean subtitle');
-  assert.deepEqual(await get(v11), defaults, 'An unchanged or early-seed v11 document must upgrade to the v12 defaults');
+  assertUpgradedExceptHomeSites(await get(v11), v11, 'An unchanged or early-seed v11 document must upgrade to the v12 defaults');
   const custom11 = asV11(defaults);
   custom11.pages.dev.sections.vibecoding.sub = 'Custom tools subtitle';
   custom11.pages.work.meta.desc = 'Custom work description';

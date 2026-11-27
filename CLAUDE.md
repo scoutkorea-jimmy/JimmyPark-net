@@ -414,6 +414,15 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
+v0.31.2 (2026-11-27), check-suite repair and Scouting copy release. Schema stays v48.
+- **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
+  the earlier "pre-existing failures" note below is resolved.
+- **Scouting copy (owner decision 2026-11-27):** the evidence-grounded copy of 2026-09-20 is canonical. `groundScoutingCopy`
+  in `content.js` replaces only the exact pre-revision seed values on GET and PUT (stats `APR C&P 2nd Vice Chair`,
+  `25th WSJ Korean Contingent Media · 2023`; BP Media timeline line); customized text is untouched.
+- **Collections:** inside a collection row, a missing array field (e.g. `images`) starts empty; it never copies the
+  template row's gallery. Static Scouting timeline markup equals `renderTimelineByYear` output (checked by `design.py`).
+- Articles use `--md-shape-lg` and the new `--md-headline-medium` (28px) token; stylesheet URLs use `?v=0.31.2`.
 v0.29.0 (2026-11-12), owner-approved operations, security and article release. Schema stays v46.
 - **Checkout location:** work in `~/Developer/jimmypark-net`. The old `~/Desktop/VS_Code/JimmyPark-net` folder is iCloud-synced
   (files and Git objects were evicted there) and is kept only as an archive. Its uncommitted work (saju rework, `wiki/`,

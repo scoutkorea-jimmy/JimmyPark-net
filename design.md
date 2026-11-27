@@ -200,6 +200,7 @@ Each element carries **three** tones so white/yellow/black stay legible on the l
 | Home H1 | `--title-hero` → `--md-display-large` | 36–57px | 1.12 / 400 |
 | Page H1 | `--title-page` → `--md-display-medium` | 32–45px | 1.16 / 400 |
 | Section H2 | `--title-section` → `--md-headline-large` | 28–32px | 1.25 / 400 |
+| Article collection title | `--md-headline-medium` | 28px | 1.25 / 400 |
 | Showcase H3 | `--md-headline-small` | 24px | 1.33 / 400 |
 | Card H3 | `--title-card` → `--md-title-large` | 22px | 1.27 / 400 |
 | Compact headings (process, format, snapshot) | `--md-title-medium` | 16px | 24px / 500 |

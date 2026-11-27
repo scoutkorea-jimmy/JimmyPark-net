@@ -8,8 +8,8 @@ const start = source.indexOf('  var TT = {');
 const end = source.indexOf('  function applyText', start);
 if (start < 0 || end < 0) throw new Error('Collection template boundary changed');
 const esc = value => String(value ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-const helperStart = source.indexOf('  var TIMELINE_KIND_LABELS');
-const templates = vm.runInNewContext(source.slice(helperStart, end) + '; TT;', { esc });
+const helperStart = source.indexOf('  function timelineStartYear');
+const { templates, renderTimelineByYear } = vm.runInNewContext(source.slice(helperStart, end) + '; ({ templates: TT, renderTimelineByYear });', { esc });
 const api = fs.readFileSync(path.join(root, 'functions/api/content.js'), 'utf8');
 const defaults = JSON.parse(api.match(/const DEFAULT = ([\s\S]*?);\n\n\/\/ ── generic validator/)[1]);
 const pages = { home: 'index.html', work: 'work.html', dev: 'dev.html', scouting: 'scouting.html', contact: 'contact.html' };
@@ -26,7 +26,8 @@ for (const [page, file] of Object.entries(pages)) {
       const pins = ['samsung-keynote','ai2re','kb-life','seocho-culture-2020'];
       const ordered = pins.map(id => items.find(row => row.id === id)).filter(Boolean).concat(items.filter(row => !pins.includes(row.id)));
       collections[match[1]] = ordered.map(item => render(item).replace('<article ', pins.includes(item.id) ? '<article ' : '<article hidden ')).join('\n');
-    } else collections[match[1]] = items.map((item, i) => render(item, i, items)).join('\n');
+    } else if (match[2] === 'timeline') collections[match[1]] = renderTimelineByYear(items); // mirrors site.js year grouping
+    else collections[match[1]] = items.map((item, i) => render(item, i, items)).join('\n');
   }
   result[file] = { order: defaults.pages[page].order, collections };
 }

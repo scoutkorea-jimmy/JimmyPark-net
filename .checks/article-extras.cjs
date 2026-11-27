@@ -58,15 +58,16 @@ const page = async slug => { const res = await view.renderInsights({ env, reques
   assert.ok(xml.indexOf('Mistaking') < xml.indexOf('More Answers'), 'newest first');
   assert.equal((await feed.onRequestGet({ env: { JP_KV: { get: async () => { throw new Error('kv'); } } } })).status, 503);
 
+  const siteUpdated = read('functions/sitemap.xml.js').match(/const SITE_UPDATED = '(\d{4}-\d{2}-\d{2})'/)[1];
   const map = await (await sitemap.onRequestGet({ env })).text();
   assert.ok(!map.includes('2026-09-20'), 'retired fixed date');
-  assert.match(map, /<loc>https:\/\/jimmypark.net\/<\/loc><lastmod>2026-11-12<\/lastmod>/);
+  assert.ok(map.includes(`<loc>https://jimmypark.net/</loc><lastmod>${siteUpdated}</lastmod>`));
   assert.equal((map.match(/\/insights\//g) || []).length, 4);
   const later = { JP_KV: { get: async () => ({ revision: 'r', posts: [post('new-one', 'New', '2026-12-01')] }) } };
   const realNow = Date.now; Date.now = () => new Date('2026-12-02T00:00:00Z').getTime();
   const sitemapLater = vm.runInNewContext(['functions/api/_lib.js', 'functions/api/_posts.js', 'functions/sitemap.xml.js'].map(read).join('\n') + '; ({ onRequestGet });', { ...sandbox(), Date });
   const mapLater = await (await sitemapLater.onRequestGet({ env: later })).text(); Date.now = realNow;
   assert.match(mapLater, /<loc>https:\/\/jimmypark.net\/insights<\/loc><lastmod>2026-12-01<\/lastmod>/);
-  assert.match(mapLater, /<loc>https:\/\/jimmypark.net\/work<\/loc><lastmod>2026-11-12<\/lastmod>/);
+  assert.ok(mapLater.includes(`<loc>https://jimmypark.net/work</loc><lastmod>${siteUpdated}</lastmod>`));
   console.log('PASS: series list, per-series invitation, copy link, RSS privacy/order and sitemap dates.');
 })().catch(error => { console.error(error); process.exit(1); });

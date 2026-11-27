@@ -122,7 +122,8 @@ def check():
             if url.scheme or url.netloc:
                 continue
             target = file if not url.path else 'index.html' if url.path == '/' else url.path.strip('/') + ('' if url.path.endswith('.html') else '.html')
-            assert target in trees or target in ('insights.html', 'press.html', 'sitemap.html'), f'{file}: unknown route {url.path}'
+            served = (ROOT / target).is_file() or (ROOT / 'functions' / target.replace('.html', '.js')).is_file()  # static page or Pages Function route
+            assert target in trees or served, f'{file}: unknown route {url.path}'
             if url.fragment:
                 assert any(n.attrs.get('id') == url.fragment for n in trees[target].walk()), f'{file}: missing anchor {node.attrs["href"]}'
     used = set(re.findall(r'var\((--[a-z0-9-]+)', css))

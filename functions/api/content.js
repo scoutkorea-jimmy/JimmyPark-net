@@ -1980,14 +1980,16 @@ const PHOTO_PROJECT_SHAPE = {
 function collectionTemplate(def) {
   return def === DEFAULT.pages.work.sections.photography.projects ? PHOTO_PROJECT_SHAPE : def[0];
 }
-function sanitize(def, val) {
+// inRow: inside a collection row, a missing array field starts empty instead of
+// copying the template row's (another item's) gallery.
+function sanitize(def, val, inRow = false) {
   if (typeof def === "string") return val == null ? def : String(val).slice(0, MAXSTR);
   if (typeof def === "number") { const n = Number(val); return Number.isFinite(n) ? n : def; }
   if (Array.isArray(def)) {
-    if (!Array.isArray(val)) return JSON.parse(JSON.stringify(def));
+    if (!Array.isArray(val)) return inRow ? [] : JSON.parse(JSON.stringify(def));
     const tmpl = collectionTemplate(def);
     if (tmpl && typeof tmpl === "object" && tmpl !== null && !Array.isArray(tmpl)) {
-      return val.slice(0, MAXARR).map((item) => sanitize(tmpl, item));
+      return val.slice(0, MAXARR).map((item) => sanitize(tmpl, item, true));
     }
     if (typeof tmpl === "string") {
       return val.slice(0, MAXARR).map((item) => String(item == null ? "" : item).slice(0, MAXSTR));
@@ -2013,7 +2015,7 @@ function sanitize(def, val) {
   }
   if (def && typeof def === "object") {
     const out = {};
-    for (const k of Object.keys(def)) out[k] = sanitize(def[k], val ? val[k] : undefined);
+    for (const k of Object.keys(def)) out[k] = sanitize(def[k], val ? val[k] : undefined, inRow);
     return out;
   }
   return def;
@@ -4278,6 +4280,27 @@ function updateOwnerPhone(doc) {
   if (digits === "01054186124" || digits === "821054186124") doc.global.contact.phone = DEFAULT.global.contact.phone;
 }
 
+// 2026-09-20 evidence-grounded Scouting copy is canonical (owner decision 2026-11-27).
+// Replace only the exact pre-revision seed values; customized text is left alone.
+const SCOUTING_COPY_FIXES = {
+  stats: [
+    [{ label: 'Asia-Pacific Region C&P 2nd Vice Chair', value: '2025–2028' }, { label: 'APR C&P 2nd Vice Chair', value: '2025–2028' }],
+    [{ label: '25th WSJ Deputy Head of Media Dept.', value: '2022–2023' }, { label: '25th WSJ Korean Contingent Media', value: '2023' }],
+  ],
+  timeline: [['I run BP Media, a Scouting-specialized media platform.', 'Founder of a Scouting-specialized media platform, established in 2026.']],
+};
+function groundScoutingCopy(doc) {
+  const sc = doc.pages?.scouting?.sections;
+  for (const item of sc?.stats?.items || []) {
+    const fix = SCOUTING_COPY_FIXES.stats.find(([old]) => item?.label === old.label && item.value === old.value);
+    if (fix) Object.assign(item, fix[1]);
+  }
+  for (const item of sc?.timeline?.items || []) {
+    const fix = SCOUTING_COPY_FIXES.timeline.find(([old]) => item?.context === old);
+    if (fix) item.context = fix[1];
+  }
+}
+
 export async function onRequestGet({ env }) {
   let doc;
   try { doc = await storedContent(env); } catch (_) { return json({ ok: false, error: 'storage_unavailable' }, 503); }
@@ -4331,6 +4354,7 @@ export async function onRequestGet({ env }) {
   if (doc.version < 48) migrateTo48(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
+  groundScoutingCopy(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -4414,6 +4438,7 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 45) migrateTo45(incoming);
   if (incoming.version < 46) migrateTo46(incoming);
   updateOwnerPhone(incoming);
+  groundScoutingCopy(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
