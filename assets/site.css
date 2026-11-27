@@ -204,6 +204,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .eyebrow { font-size: .875rem; font-weight: 600; letter-spacing: .06em; line-height: 1.5; color: var(--eyebrow-color); }
 .portfolio .body-copy, .portfolio p { font-size: 1rem; line-height: 1.75; }
 .portfolio .hero-lead { font-size: clamp(18px, 2vw, 22px); line-height: 1.65; }
+/* Scope links under the Home lead: every area of work, one tap from the first screen. */
+.portfolio .hero-scope { display: flex; flex-wrap: wrap; gap: var(--space-8); margin: var(--space-16) 0 0; padding: 0; list-style: none; }
+.portfolio .hero-scope-link { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--space-12); border: 1px solid var(--md-outline-variant); border-radius: var(--md-shape-full); color: var(--md-on-surface); font-size: .875rem; line-height: 1.2; text-decoration: none; }
+.portfolio a.hero-scope-link:hover { background: var(--md-surface-container); border-color: var(--md-outline); }
 .portfolio .section-subtitle { margin-top: var(--space-12); font-size: 1rem; line-height: 1.6; }
 .portfolio .collection-grid { gap: var(--grid-gap); margin-top: var(--space-32); }
 .portfolio .site-container > .collection-grid:first-child { margin-top: 0; }

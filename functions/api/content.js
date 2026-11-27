@@ -68,7 +68,14 @@ const DEFAULT = {
           "image": "/assets/img/jimmy-park-portrait-960.jpg",
           "badge": "Jimmy Park",
           "caption": "Content strategy · Production · Practical AI",
-          "captionRight": "Based in Korea"
+          "captionRight": "Based in Korea",
+          "scope": [
+            { "label": "Films", "href": "/work" },
+            { "label": "Photography", "href": "/press" },
+            { "label": "Websites & AI tools", "href": "/dev" },
+            { "label": "Lectures", "href": "/lecture" },
+            { "label": "Global Scouting", "href": "/scouting" }
+          ]
         },
         "snapshot": {
           "rows": [
@@ -78,7 +85,11 @@ const DEFAULT = {
             },
             {
               "label": "Education",
-              "value": "Korea Dream Path · Technical Lead, AI & Learning Platforms"
+              "value": "Korea Dream Path · Technical Lead, AI & Learning Platforms, 2026.05–"
+            },
+            {
+              "label": "Teaching",
+              "value": "Halla University co-instructor, 2020–2021 · Author, 2021"
             },
             {
               "label": "Asia-Pacific",
@@ -4241,6 +4252,14 @@ const WITHDRAWN_PRESS_PROJECTS = [
 // Dev keeps the rows but hides the AI-practice section while every row is retired, and the next section is renumbered;
 // Scouting drops the matching card. Read-time only, so an owner who re-enables the section in Admin keeps that choice.
 const RETIRED_PROTOTYPE_HREFS = ['https://scoutingapp.net/tour/', 'https://scoutingapp.net/ktrainrader24/'];
+// Release B (owner, 2026-11-27): Teaching row in the Home snapshot, added on read after the Education row when no
+// Teaching row exists. The next Admin save stores it; removing it later also needs this helper removed.
+function addTeachingSnapshotRow(doc) {
+  const rows = doc.pages?.home?.sections?.snapshot?.rows;
+  if (!Array.isArray(rows) || rows.some(row => row?.label === 'Teaching')) return;
+  const at = rows.findIndex(row => row?.label === 'Education');
+  rows.splice(at < 0 ? rows.length : at + 1, 0, { label: 'Teaching', value: 'Halla University co-instructor, 2020–2021 · Author, 2021' });
+}
 function retireOfflinePrototypes(doc) {
   const dev = doc.pages?.dev;
   const items = dev?.sections?.vibecoding?.items;
@@ -4339,6 +4358,10 @@ function applyOfficialTitles(doc) {
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
   }
+  // Release B: Korea Dream Path start date in the Home snapshot.
+  for (const row of doc.pages?.home?.sections?.snapshot?.rows || []) {
+    if (row?.value === 'Korea Dream Path · ' + KDP_ROLE) row.value = 'Korea Dream Path · ' + KDP_ROLE + ', 2026.05–';
+  }
   // Release A (owner, 2026-11-27): exact renames of earlier seed or stored wording.
   const PRESS_NAMES = { '16th Korea Jamboree': '16th Korea National Jamboree', '28th Asia-Pacific Regional Scout Conference': '28th Asia-Pacific Scout Conference' };
   for (const project of doc.pages?.work?.sections?.photography?.projects || []) if (project && PRESS_NAMES[project.name]) project.name = PRESS_NAMES[project.name];
@@ -4425,6 +4448,7 @@ export async function onRequestGet({ env }) {
   if (doc.version < 48) migrateTo48(doc);
   withdrawPressProjects(doc.pages?.work?.sections?.photography);
   retireOfflinePrototypes(doc);
+  addTeachingSnapshotRow(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   applyOfficialTitles(doc);

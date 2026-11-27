@@ -496,6 +496,11 @@
       return '<li class="deliverable"><span class="msym" aria-hidden="true">check_small</span>' + esc(d.text) + '</li>';
     },
     pills: function (t) { return '<span class="tag">' + esc(t.text) + '</span>'; },
+    heroScope: function (item) {
+      var href = item.href || "";
+      if (!/^https:\/\//.test(href) && !(href.charAt(0) === "/" && href.charAt(1) !== "/")) href = "";
+      return '<li>' + (href ? '<a class="hero-scope-link" href="' + esc(href) + '">' + esc(item.label) + '</a>' : '<span class="hero-scope-link">' + esc(item.label) + '</span>') + '</li>';
+    },
     videoFormats: function (f) {
       return '<div class="format-row"><div class="format-name">' + esc(f.name) + '</div><div class="body-copy">' + esc(f.desc) + '</div></div>';
     },
