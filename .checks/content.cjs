@@ -538,7 +538,7 @@ async function get(value) {
   assert.deepEqual(split.pages.dev.order, ['intro', 'sites', 'lecture', 'vibecoding', 'cta']);
   assert.equal(split.pages.home.sections.activities.items[1].title, 'Custom capability');
   assert.equal(split.pages.home.sections.activities.items[1].href, '/dev#vibecoding');
-  assert.equal(split.pages.home.sections.activities.items[2].href, '/dev#lecture');
+  assert.equal(split.pages.home.sections.activities.items[2].href, '/lecture'); // Range evidence points to the Lectures page (2026-11-27)
   assert.deepEqual(split.pages.dev.sections.sites, defaults.pages.dev.sections.sites);
   assert.equal(split.pages.dev.sections.sites.items[0].title, 'Korea Dream Path', 'Korea Dream Path leads the website portfolio');
   assert.deepEqual(await get(split), split, 'v9 normalization must be idempotent');

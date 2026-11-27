@@ -85,7 +85,7 @@ const onDate = (rows, date) => {
   assert.match(renderedAssignment, /<time datetime="2026-09-05"/);
   assert.doesNotMatch(renderedAssignment, /<img|<a\s/i);
   const aprConference = onDate(seed, '2025-10-12');
-  assert.equal(aprConference.name, '28th Asia-Pacific Regional Scout Conference');
+  assert.equal(aprConference.name, '28th Asia-Pacific Scout Conference');
   assert.equal(aprConference.endDate, '2025-10-17');
   assert.match(aprConference.role, /official photographer for the Korean delegation/i);
   assert.deepEqual(aprConference.articles.map(article => article.href), [

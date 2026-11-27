@@ -40,7 +40,7 @@ const DEFAULT = {
     "home": {
       "meta": {
         "title": "Jimmy Park | Communications, Content Strategy and Production",
-        "desc": "Jimmy Park is a Korea-based communications and marketing professional connecting content strategy with video, photography and live broadcasts. He also builds websites and workflow tools with AI and works across international teams."
+        "desc": "Jimmy Park is a Korea-based communications professional: films, photography, live broadcasts, AI-built websites, lectures and international Scouting."
       },
       "order": [
         "hero",
@@ -143,7 +143,7 @@ const DEFAULT = {
                 "Platforms",
                 "AI workflows"
               ],
-              "href": "/dev#lecture",
+              "href": "/lecture",
               "accent": "burgundy"
             },
             {
@@ -473,7 +473,7 @@ const DEFAULT = {
               "articles": []
             },
             {
-              "name": "16th Korea Jamboree",
+              "name": "16th Korea National Jamboree",
               "date": "2026-08-04",
               "endDate": "2026-08-09",
               "role": "Head of PR Team for the 16th Korea National Jamboree, Korea Scout Association. Photographed the event and wrote press releases.",
@@ -546,7 +546,7 @@ const DEFAULT = {
               ]
             },
             {
-              "name": "28th Asia-Pacific Regional Scout Conference",
+              "name": "28th Asia-Pacific Scout Conference",
               "date": "2025-10-12",
               "endDate": "2025-10-17",
               "role": "Official photographer for the Korean delegation at the conference, held 12–17 October in Kaohsiung, Taiwan.",
@@ -834,7 +834,7 @@ const DEFAULT = {
         "lecture",
         "cta"
       ],
-      "hidden": [],
+      "hidden": ["vibecoding"],
       "sections": {
         "intro": {
           "eyebrow": "Dev work",
@@ -1029,7 +1029,7 @@ const DEFAULT = {
           ]
         },
         "lecture": {
-          "kicker": "03 / AI transformation",
+          "kicker": "02 / AI transformation",
           "title": "AI Workflow Consulting & Workshops",
           "sub": "Focused pilots and hands-on practice",
           "desc": "AX means AI transformation: applying AI to everyday work. I offer workflow reviews, focused pilot planning and hands-on workshops built around content production and web prototyping.",
@@ -1298,7 +1298,7 @@ const DEFAULT = {
           "items": [
             {
               "title": "Unit Leader · Baek-ryong Unit",
-              "org": "Gyeonggi Southern Federation, KSA",
+              "org": "Gyeonggi Southern Federation, Korea Scout Association",
               "period": "2024.01–",
               "accent": "green"
             },
@@ -1376,10 +1376,6 @@ const DEFAULT = {
             "image": "/assets/img/bp-media-card.jpg"
           },
           "items": [
-            {
-              "title": "Scout Tour Assistant",
-              "desc": "A map-based prototype for meaningful Scouting places, heritage sites, offices, and campsites."
-            },
             {
               "title": "Jamboree Media Work",
               "desc": "Field media, documentation, and communication for large-scale Scouting events."
@@ -1599,8 +1595,8 @@ const DEFAULT = {
             },
             {
               "year": "2017",
-              "title": "Asia-Pacific Scout Foundation — Associate Member",
-              "context": "Joined the Asia-Pacific Region Scout Support Foundation as an Associate Member.",
+              "title": "APR Scout Foundation — Associate Member",
+              "context": "Joined the Asia-Pacific Regional Scout Foundation (APR Scout Foundation) as an Associate Member.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -4241,6 +4237,21 @@ async function storedContent(env) {
 const WITHDRAWN_PRESS_PROJECTS = [
   ['2026-11-11', ['Walking Through History: A Workshop for Elementary Educators in Seongdong and Gwangjin', '성동광진 초등 역사교육 연수 「역사 속으로 걷다」']],
 ];
+// Prototypes taken offline (HTTP 410 since 2026-09-30); the owner removed them from the site on 2026-11-27.
+// Dev keeps the rows but hides the AI-practice section while every row is retired, and the next section is renumbered;
+// Scouting drops the matching card. Read-time only, so an owner who re-enables the section in Admin keeps that choice.
+const RETIRED_PROTOTYPE_HREFS = ['https://scoutingapp.net/tour/', 'https://scoutingapp.net/ktrainrader24/'];
+function retireOfflinePrototypes(doc) {
+  const dev = doc.pages?.dev;
+  const items = dev?.sections?.vibecoding?.items;
+  if (Array.isArray(items) && items.length && items.every(item => RETIRED_PROTOTYPE_HREFS.includes(item?.href)) && Array.isArray(dev.hidden)) {
+    if (!dev.hidden.includes('vibecoding')) dev.hidden.push('vibecoding');
+    if (dev.sections.lecture?.kicker === '03 / AI transformation') dev.sections.lecture.kicker = '02 / AI transformation';
+  }
+  const cards = doc.pages?.scouting?.sections?.mediaprojects;
+  if (Array.isArray(cards?.items)) cards.items = cards.items.filter(card => card?.title !== 'Scout Tour Assistant');
+}
+
 function withdrawPressProjects(photo) {
   if (!Array.isArray(photo?.projects)) return;
   photo.projects = photo.projects.filter(project => !WITHDRAWN_PRESS_PROJECTS.some(([date, names]) => project?.date === date && names.includes(project.name)));
@@ -4328,6 +4339,18 @@ function applyOfficialTitles(doc) {
     if (row.role === 'CEO · Planning & development') row.role = KDP_ROLE;
     if (KDP_SUMMARIES[row.summary]) row.summary = KDP_SUMMARIES[row.summary];
   }
+  // Release A (owner, 2026-11-27): exact renames of earlier seed or stored wording.
+  const PRESS_NAMES = { '16th Korea Jamboree': '16th Korea National Jamboree', '28th Asia-Pacific Regional Scout Conference': '28th Asia-Pacific Scout Conference' };
+  for (const project of doc.pages?.work?.sections?.photography?.projects || []) if (project && PRESS_NAMES[project.name]) project.name = PRESS_NAMES[project.name];
+  const homeMeta = doc.pages?.home?.meta;
+  if (homeMeta?.desc === 'Jimmy Park is a Korea-based communications and marketing professional connecting content strategy with video, photography and live broadcasts. He also builds websites and workflow tools with AI and works across international teams.') homeMeta.desc = 'Jimmy Park is a Korea-based communications professional: films, photography, live broadcasts, AI-built websites, lectures and international Scouting.';
+  for (const item of doc.pages?.home?.sections?.activities?.items || []) if (item?.href === '/dev#lecture') item.href = '/lecture';
+  const scoutingSections = doc.pages?.scouting?.sections;
+  for (const role of scoutingSections?.roles?.items || []) if (role?.org === 'Gyeonggi Southern Federation, KSA') role.org = 'Gyeonggi Southern Federation, Korea Scout Association';
+  for (const item of scoutingSections?.timeline?.items || []) {
+    if (item?.title === 'Asia-Pacific Scout Foundation — Associate Member') item.title = 'APR Scout Foundation — Associate Member';
+    if (item?.context === 'Joined the Asia-Pacific Region Scout Support Foundation as an Associate Member.') item.context = 'Joined the Asia-Pacific Regional Scout Foundation (APR Scout Foundation) as an Associate Member.';
+  }
   // Press: the Jamboree assignment uses the official role title (owner, 2026-11-27).
   for (const project of doc.pages?.work?.sections?.photography?.projects || []) {
     if (project?.role === 'Head of Public Relations for the Jamboree, Korea Scout Association. Photographed the event and wrote press releases.') project.role = 'Head of PR Team for the 16th Korea National Jamboree, Korea Scout Association. Photographed the event and wrote press releases.';
@@ -4401,6 +4424,7 @@ export async function onRequestGet({ env }) {
   if (doc.version < 47) migrateTo47(doc);
   if (doc.version < 48) migrateTo48(doc);
   withdrawPressProjects(doc.pages?.work?.sections?.photography);
+  retireOfflinePrototypes(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
   applyOfficialTitles(doc);

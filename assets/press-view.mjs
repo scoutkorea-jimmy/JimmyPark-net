@@ -7,10 +7,11 @@ export function pressProjectId(project) {
   return 'project-' + project.name.trim().normalize('NFC').replace(/\s+/g, '-') + (project.date ? '-' + project.date : '');
 }
 
-// Old public bookmarks include the original Korean project name and date.
+// Old public bookmarks include earlier project names (original Korean or earlier English) and the date.
 const previousProjectNames = new Map([
   ['2026 KSoP Philanthropy Forum', ['2026-11-05', '2026 KSoP 필란트로피포럼']],
-  ['16th Korea Jamboree', ['2026-08-04', '제16회 한국잼버리']],
+  ['16th Korea National Jamboree', ['2026-08-04', '제16회 한국잼버리', '16th Korea Jamboree']],
+  ['28th Asia-Pacific Scout Conference', ['2025-10-12', '28th Asia-Pacific Regional Scout Conference']],
   ['Climate Action Center of Korea: June Roundtable', ['2026-06-25', '기후대응센터 6월 라운드테이블']],
   ['2015 Seoul International Fireworks Festival with Hanwha', ['2015-10-03', '한화와 함께하는 2015 서울세계불꽃축제']],
 ]);
@@ -35,13 +36,14 @@ function publication(item) {
     escape(item.outlet) + '</span>' + dateTag(item.date) + '</div></li>';
 }
 
-function projectRow(project, links, id, alias) {
+function projectRow(project, links, id, aliases = []) {
+  const [alias, secondAlias] = aliases;
   const start = dateTag(project.date);
   const end = project.endDate !== project.date && dateTag(project.endDate);
   return '<article class="press-row"' + (id ? ' id="' + escape(id) + '"' : '') + '><div' +
     (alias ? ' id="' + escape(alias) + '"' : '') + '>' +
     ((start || end) ? '<p class="press-dates">' + start + (start && end ? ' – ' : '') + (end || '') + '</p>' : '') +
-    '<h3 dir="auto">' + escape(project.name) + '</h3>' +
+    '<h3 dir="auto"' + (secondAlias ? ' id="' + escape(secondAlias) + '"' : '') + '>' + escape(project.name) + '</h3>' +
     (project.role ? '<p class="press-role" dir="auto">' + escape(project.role) + '</p>' : '') + '</div>' +
     (links.length ? '<ul class="press-stories">' + links.map(publication).join('') + '</ul>' : '') + '</article>';
 }
@@ -58,13 +60,13 @@ export function renderPressProjects(projects) {
   for (const project of rows) {
     const id = pressProjectId(project);
     const previous = previousProjectNames.get(project.name);
-    const alias = previous && previous[0] === project.date ? pressProjectId({ name: previous[1], date: project.date }) : '';
+    const aliases = previous && previous[0] === project.date ? previous.slice(1).map(name => pressProjectId({ name, date: project.date })) : [];
     const links = publishedLinks(project);
     const group = links.some(link => link.kind === 'press') ? 0 : links.length ? 1 : 2;
-    groups[group].rows.push(projectRow(project, links, renderedIds.has(id) ? '' : id,
-      currentIds.has(alias) || renderedIds.has(alias) ? '' : alias));
+    const freeAliases = aliases.filter(alias => !currentIds.has(alias) && !renderedIds.has(alias));
+    groups[group].rows.push(projectRow(project, links, renderedIds.has(id) ? '' : id, freeAliases));
     renderedIds.add(id);
-    if (alias && !currentIds.has(alias)) renderedIds.add(alias);
+    freeAliases.forEach(alias => renderedIds.add(alias));
   }
   return groups.filter(group => group.rows.length).map(group =>
     '<section class="press-group"><h2>' + escape(group.heading) + '</h2>' + group.rows.join('') + '</section>'

@@ -693,6 +693,8 @@
       if (!Array.isArray(arr) || !t) return;
       if (page === 'work' && el.getAttribute('data-collection') === 'video.cases') renderSelectedVideos(el, arr);
       else if (tmplName === "timeline") el.innerHTML = renderTimelineByYear(arr);
+      // Lecture history reads newest first; rows sharing a date keep their stored order.
+      else if (tmplName === "lectureTalks") el.innerHTML = arr.slice().sort(function (a, b) { return String(b.year || "").localeCompare(String(a.year || "")); }).map(function (it, i, all) { return t(it, i, all); }).join("");
       else el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
     });
 
@@ -769,7 +771,9 @@
       if (ranked.some(function (n, i) { return n !== group[i]; })) ranked.forEach(function (n) { parent.insertBefore(n, ref); });
     });
     nodes.forEach(function (n) {
-      n.style.display = hidden.indexOf(n.getAttribute("data-section")) >= 0 ? "none" : "";
+      var isHidden = hidden.indexOf(n.getAttribute("data-section")) >= 0;
+      n.style.display = isHidden ? "none" : "";
+      if (n.getAttribute("data-section") !== "gallery") n.hidden = isHidden; // static seeds may start hidden
       if (n.getAttribute('data-section') === 'gallery') n.hidden = !(get(sd, 'gallery.figs') || []).some(function (fig) { return !!fig.image; });
     });
     compactDetails();
