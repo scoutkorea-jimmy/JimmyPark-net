@@ -414,12 +414,14 @@ Hosted on **Cloudflare Pages** with Pages Functions for a tiny CMS API + TOTP-ga
   repeat the full series selector inside published or scheduled articles.
 
 ## Golden rules
-v0.31.2 (2026-11-27), check-suite repair and Scouting copy release. Schema stays v48.
+v0.31.2–0.31.3 (2026-11-27), check-suite repair and official Scouting titles. Schema stays v48.
 - **Release gate:** every `.checks/*.cjs` and `.checks/design.py` passes (0 failures). Run all of them before deploying;
   the earlier "pre-existing failures" note below is resolved.
-- **Scouting copy (owner decision 2026-11-27):** the evidence-grounded copy of 2026-09-20 is canonical. `groundScoutingCopy`
-  in `content.js` replaces only the exact pre-revision seed values on GET and PUT (stats `APR C&P 2nd Vice Chair`,
-  `25th WSJ Korean Contingent Media · 2023`; BP Media timeline line); customized text is untouched.
+- **Official Scouting titles (owner, 2026-11-27, v0.31.3):** `APR Communication & Partnership Sub-committee` ·
+  `2nd Vice-Chair` (2025–2028); `25th World Scout Jamboree, Deputy Head of Media Dept.` (2022–2023);
+  `28th Asia-Pacific Scout Conference — Korea Delegate`. Year ranges use en dashes. `applyOfficialTitles` in `content.js`
+  maps exact earlier seed/stored variants to these on GET and PUT; other customized text is untouched. Keep DEFAULT,
+  static `index.html`/`scouting.html` and this table in sync when a title changes.
 - **Collections:** inside a collection row, a missing array field (e.g. `images`) starts empty; it never copies the
   template row's gallery. Static Scouting timeline markup equals `renderTimelineByYear` output (checked by `design.py`).
 - Articles use `--md-shape-lg` and the new `--md-headline-medium` (28px) token; stylesheet URLs use `?v=0.31.2`.

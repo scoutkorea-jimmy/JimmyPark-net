@@ -82,7 +82,7 @@ const DEFAULT = {
             },
             {
               "label": "Asia-Pacific",
-              "value": "Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028"
+              "value": "APR Communication & Partnership Sub-committee · 2nd Vice-Chair, 2025–2028"
             },
             {
               "label": "International fieldwork",
@@ -1292,11 +1292,11 @@ const DEFAULT = {
             },
             {
               "value": "2025–2028",
-              "label": "APR C&P 2nd Vice Chair"
+              "label": "APR Communication & Partnership Sub-committee 2nd Vice-Chair"
             },
             {
-              "value": "2023",
-              "label": "25th WSJ Korean Contingent Media"
+              "value": "2022–2023",
+              "label": "25th World Scout Jamboree, Deputy Head of Media Dept."
             }
           ]
         },
@@ -1310,8 +1310,8 @@ const DEFAULT = {
               "accent": "green"
             },
             {
-              "title": "APR Communication & Partnerships",
-              "org": "2nd Vice Chair",
+              "title": "2nd Vice-Chair",
+              "org": "APR Communication & Partnership Sub-committee",
               "period": "2025–2028",
               "accent": "neutral"
             },
@@ -1334,9 +1334,9 @@ const DEFAULT = {
               "accent": "neutral"
             },
             {
-              "title": "Deputy Head of Media · Korean Contingent",
+              "title": "Deputy Head of Media Dept.",
               "org": "25th World Scout Jamboree",
-              "period": "2023",
+              "period": "2022–2023",
               "accent": "neutral"
             },
             {
@@ -1355,7 +1355,7 @@ const DEFAULT = {
         },
         "international": {
           "title": "International record",
-          "body": "Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee from 2025 to 2028.",
+          "body": "Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice-Chair of the APR Communication & Partnership Sub-committee from 2025 to 2028.",
           "tags": [
             {
               "text": "World Scout Jamboree"
@@ -1740,9 +1740,9 @@ const DEFAULT = {
               "kind": "training"
             },
             {
-              "year": "2023",
-              "title": "25th World Scout Jamboree — Korea Contingent media",
-              "context": "Deputy Head of Media for the Korean Contingent at the 25th World Scout Jamboree.",
+              "year": "2022–2023",
+              "title": "25th World Scout Jamboree — Deputy Head of Media Dept.",
+              "context": "Deputy Head of Media Dept. appointment for the 25th World Scout Jamboree.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -1777,8 +1777,8 @@ const DEFAULT = {
             },
             {
               "year": "2025",
-              "title": "28th Asia-Pacific Scout Conference — voting delegate",
-              "context": "Full (voting) delegate of the Korean Contingent to the 28th Asia-Pacific Scout Conference.",
+              "title": "28th Asia-Pacific Scout Conference — Korea Delegate",
+              "context": "Korea Delegate to the 28th Asia-Pacific Scout Conference.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -1786,8 +1786,8 @@ const DEFAULT = {
             },
             {
               "year": "2025–2028",
-              "title": "APR C&P Sub-Committee, 2nd Vice Chair",
-              "context": "2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee.",
+              "title": "APR Communication & Partnership Sub-committee — 2nd Vice-Chair",
+              "context": "2nd Vice-Chair of the APR Communication & Partnership Sub-committee.",
               "track": "Leader",
               "accent": "green",
               "href": "",
@@ -4280,24 +4280,46 @@ function updateOwnerPhone(doc) {
   if (digits === "01054186124" || digits === "821054186124") doc.global.contact.phone = DEFAULT.global.contact.phone;
 }
 
-// 2026-09-20 evidence-grounded Scouting copy is canonical (owner decision 2026-11-27).
-// Replace only the exact pre-revision seed values; customized text is left alone.
-const SCOUTING_COPY_FIXES = {
-  stats: [
-    [{ label: 'Asia-Pacific Region C&P 2nd Vice Chair', value: '2025–2028' }, { label: 'APR C&P 2nd Vice Chair', value: '2025–2028' }],
-    [{ label: '25th WSJ Deputy Head of Media Dept.', value: '2022–2023' }, { label: '25th WSJ Korean Contingent Media', value: '2023' }],
+// Official Scouting titles supplied by the owner (2026-11-27). Earlier seed and stored variants are
+// replaced only when they match exactly; any other customized text is left alone.
+const APR_CP = 'APR Communication & Partnership Sub-committee';
+const WSJ_MEDIA = '25th World Scout Jamboree, Deputy Head of Media Dept.';
+const OFFICIAL_TITLES = {
+  snapshot: [
+    [['Asia-Pacific Region C&P Sub-Committee · 2nd Vice Chair, 2025–2028', 'Communications & Partnerships · 2nd Vice Chair, 2025–2028'], APR_CP + ' · 2nd Vice-Chair, 2025–2028'],
+    [['25th World Scout Jamboree · Korean Contingent Media, 2023'], '25th World Scout Jamboree · Deputy Head of Media Dept., 2022–2023'],
   ],
-  timeline: [['I run BP Media, a Scouting-specialized media platform.', 'Founder of a Scouting-specialized media platform, established in 2026.']],
+  stats: [
+    [['APR C&P 2nd Vice Chair', 'Asia-Pacific Region C&P 2nd Vice Chair'], { label: APR_CP + ' 2nd Vice-Chair', value: '2025–2028' }],
+    [['25th WSJ Korean Contingent Media', '25th WSJ Deputy Head of Media Dept.'], { label: WSJ_MEDIA, value: '2022–2023' }],
+  ],
+  roles: [
+    [['APR Communication & Partnerships|2nd Vice Chair', '2nd Vice Chair|Asia-Pacific Region Communications & Partnerships Sub-Committee'], { title: '2nd Vice-Chair', org: APR_CP, period: '2025–2028' }],
+    [['Deputy Head of Media · Korean Contingent|25th World Scout Jamboree', 'Deputy Head of Media Dept.|25th World Scout Jamboree'], { title: 'Deputy Head of Media Dept.', org: '25th World Scout Jamboree', period: '2022–2023' }],
+  ],
+  body: [[['Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice Chair of the Asia-Pacific Region Communications & Partnerships Sub-Committee from 2025 to 2028.'],
+    'Recorded roles include Deputy Head of Media Dept. at the 25th World Scout Jamboree from 2022 to 2023, Head of Contingent at the 2024 WE@FUTURE Jamboree in Hong Kong, and 2nd Vice-Chair of the ' + APR_CP + ' from 2025 to 2028.']],
+  timeline: [
+    [['25th World Scout Jamboree — Korea Contingent media', '25th World Scout Jamboree — Deputy Head of Media Dept.'], { year: '2022–2023', title: '25th World Scout Jamboree — Deputy Head of Media Dept.', context: 'Deputy Head of Media Dept. appointment for the 25th World Scout Jamboree.' }],
+    [['28th Asia-Pacific Scout Conference — voting delegate'], { title: '28th Asia-Pacific Scout Conference — Korea Delegate', context: 'Korea Delegate to the 28th Asia-Pacific Scout Conference.' }],
+    [['APR C&P Sub-Committee, 2nd Vice Chair', 'Asia-Pacific Region C&P Sub-Committee — 2nd Vice Chair'], { year: '2025–2028', title: APR_CP + ' — 2nd Vice-Chair', context: '2nd Vice-Chair of the ' + APR_CP + '.' }],
+  ],
+  bpMedia: [['I run BP Media, a Scouting-specialized media platform.'], 'Founder of a Scouting-specialized media platform, established in 2026.'],
 };
-function groundScoutingCopy(doc) {
+function applyOfficialTitles(doc) {
+  const find = (table, key) => (table.find(([olds]) => olds.includes(key)) || [])[1];
+  const snapshot = doc.pages?.home?.sections?.snapshot?.rows;
+  for (const row of Array.isArray(snapshot) ? snapshot : []) { const next = row && find(OFFICIAL_TITLES.snapshot, row.value); if (next) row.value = next; }
   const sc = doc.pages?.scouting?.sections;
-  for (const item of sc?.stats?.items || []) {
-    const fix = SCOUTING_COPY_FIXES.stats.find(([old]) => item?.label === old.label && item.value === old.value);
-    if (fix) Object.assign(item, fix[1]);
-  }
-  for (const item of sc?.timeline?.items || []) {
-    const fix = SCOUTING_COPY_FIXES.timeline.find(([old]) => item?.context === old);
-    if (fix) item.context = fix[1];
+  if (!sc) return;
+  for (const item of sc.stats?.items || []) { const next = item && find(OFFICIAL_TITLES.stats, item.label); if (next) Object.assign(item, next); }
+  for (const item of sc.roles?.items || []) { const next = item && find(OFFICIAL_TITLES.roles, item.title + '|' + item.org); if (next) Object.assign(item, next); }
+  if (sc.international) { const next = find(OFFICIAL_TITLES.body, sc.international.body); if (next) sc.international.body = next; }
+  for (const item of sc.timeline?.items || []) {
+    if (!item) continue;
+    const next = find(OFFICIAL_TITLES.timeline, item.title);
+    if (next) Object.assign(item, next);
+    if (OFFICIAL_TITLES.bpMedia[0].includes(item.context)) item.context = OFFICIAL_TITLES.bpMedia[1];
   }
 }
 
@@ -4354,7 +4376,7 @@ export async function onRequestGet({ env }) {
   if (doc.version < 48) migrateTo48(doc);
   preparePhotoProjects(doc.pages?.work?.sections?.photography);
   updateOwnerPhone(doc);
-  groundScoutingCopy(doc);
+  applyOfficialTitles(doc);
   const clean = cleanUrls(normalizeOrders(sanitize(DEFAULT, doc)));
   clean.updatedAt = doc.updatedAt || 0;
   return json({ ok: true, content: clean });
@@ -4438,7 +4460,7 @@ export async function onRequestPut({ request, env }) {
   if (incoming.version < 45) migrateTo45(incoming);
   if (incoming.version < 46) migrateTo46(incoming);
   updateOwnerPhone(incoming);
-  groundScoutingCopy(incoming);
+  applyOfficialTitles(incoming);
   const doc = normalizeOrders(sanitize(DEFAULT, incoming));
   const invalidUrls = [];
   cleanUrls(doc, invalidUrls);
