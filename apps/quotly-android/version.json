@@ -1,7 +1,7 @@
 {
-  "versionCode": 7,
-  "versionName": "0.5.1",
-  "apkUrl": "https://jimmypark.net/apps/quotly-android/quotly-0.5.1.apk",
-  "sha256": "717099b2c57acb662782d27a27ea0e4b75a4c7b48d838e912b5373f2ee2af2bc",
-  "notes": "상태바에 표시할 값, 서비스, 한도 기간을 고를 수 있습니다. ‘큰 숫자만’으로 숫자를 키울 수 있습니다. 알림을 포함한 6개 탭과 기록·백업 화면의 글꼴, 버튼, 여백을 정리했습니다."
+  "versionCode": 8,
+  "versionName": "0.5.2",
+  "apkUrl": "https://jimmypark.net/apps/quotly-android/quotly-0.5.2.apk",
+  "sha256": "d75603731a8b43d00379cb8955c20cb39c8a95b789fd4461ed5025bed25053ab",
+  "notes": "홈 위젯과 대시보드에서 Codex 주간, Claude 전체 주간, Claude Fable 잔여율을 독립된 원형 차트 세 개로 볼 수 있습니다. 각 차트에 해당 한도의 실제 초기화 날짜와 시각을 표시합니다. 상태바에서는 서비스 약자(Co·Cl)와 잔여 비율 또는 남은 시간을 함께 볼 수 있습니다."
 }
