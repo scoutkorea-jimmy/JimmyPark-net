@@ -428,20 +428,22 @@
     travelPlaces: function (place) {
       return '<div class="travel-place"><h3>' + esc(place.name) + '</h3>' + (place.cities ? '<p>' + esc(place.cities) + '</p>' : '') + '</div>';
     },
-    videoCases: function (v) {
+    videoCases: function (v, i, all, level) {
+      var hx = level === 'h4' ? 'h4' : 'h3';
       var href = /^https:\/\//.test(v.href || "") ? v.href : "";
       var media = v.image ? caseMedia(v.image, v.images, 'Video still: ' + v.title, 640, 360) : '<div class="case-media"><span class="case-placeholder">' + esc(v.title) + '</span></div>';
       return '<article id="case-' + esc(v.id) + '" class="card project-card video-case">' + media + '<div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(v.format) + '</span>' + (v.year ? '<span class="tag">' + esc(v.year) + '</span>' : '') + '</div>' +
-        '<h3>' + esc(v.title) + '</h3><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
+        '<' + hx + '>' + esc(v.title) + '</' + hx + '><p class="case-role">' + esc(v.role) + '</p><p>' + esc(v.desc) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((v.linkLabel || 'Watch film') + ': ' + v.title) + '">' + esc(v.linkLabel || 'Watch film') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
-    siteCases: function (s) {
+    siteCases: function (s, i, all, level) {
+      var hx = level === 'h4' ? 'h4' : 'h3';
       var href = /^https:\/\//.test(s.href || "") ? s.href : "";
       var media = s.image ? caseMedia(s.image, s.images, 'Homepage of ' + s.title, 1280, 720) : '<div class="case-media"><span class="case-placeholder">' + esc(s.title) + '</span></div>';
       return '<article class="card project-card site-case">' + media + '<div class="card-body">' +
         '<div class="case-meta"><span class="eyebrow">' + esc(s.format) + '</span>' + (s.year ? '<span class="tag">' + esc(s.year) + '</span>' : '') + '</div>' +
-        '<h3>' + esc(s.title) + '</h3><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.summary) + '</p>' +
+        '<' + hx + '>' + esc(s.title) + '</' + hx + '><p class="case-role">' + esc(s.role) + '</p><p>' + esc(s.summary) + '</p>' +
         (href ? '<a class="card-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc((s.linkLabel || 'Visit site') + ': ' + s.title) + '">' + esc(s.linkLabel || 'Visit site') + '<span class="msym" aria-hidden="true">north_east</span></a>' : '') + '</div></article>';
     },
     siteShowcase: function (s) {
@@ -700,7 +702,8 @@
       else if (tmplName === "timeline") el.innerHTML = renderTimelineByYear(arr);
       // Lecture history reads newest first; rows sharing a date keep their stored order.
       else if (tmplName === "lectureTalks") el.innerHTML = arr.slice().sort(function (a, b) { return String(b.year || "").localeCompare(String(a.year || "")); }).map(function (it, i, all) { return t(it, i, all); }).join("");
-      else el.innerHTML = arr.map(function (it, i) { return t(it, i, arr); }).join("");
+      // data-heading lets a nested list (e.g. Home cards under the Websites/Films group headings) use h4.
+      else el.innerHTML = arr.map(function (it, i) { return t(it, i, arr, el.getAttribute("data-heading")); }).join("");
     });
 
     // Travel totals use the same entries shown in the destination list.

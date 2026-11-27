@@ -223,8 +223,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .card--compact { padding: var(--space-24); }
 .portfolio .card--scouting { background: var(--scout-tint); border-color: var(--scout-border); }
 .portfolio .card--scouting :is(.eyebrow, .card-link) { color: var(--scout-accent); }
-.portfolio .card h3 { margin: 0; }
-.portfolio .card :is(.eyebrow, .tag) + h3 { margin-top: var(--space-16); }
+.portfolio .card :is(h3, h4) { margin: 0; }
+.portfolio .card :is(.eyebrow, .tag) + :is(h3, h4) { margin-top: var(--space-16); }
 .portfolio .card p { margin: var(--space-12) 0 0; color: var(--md-on-surface-variant); }
 .portfolio .capability { display: flex; flex-direction: column; align-items: flex-start; }
 .portfolio .capability .tag-list { margin-top: auto; padding-top: var(--space-24); }
@@ -478,12 +478,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .portfolio .selected-section { background: var(--md-surface-container); border-block: 1px solid #ece8e1; }
 .portfolio .section-heading-row { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: var(--space-24); }
 .portfolio .selected-work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.portfolio .selected-work-grid h3 { font-size: 1.375rem; line-height: 1.3; }
+.portfolio .selected-work-grid :is(h3, h4) { font-size: 1.375rem; line-height: 1.3; }
 .portfolio .selected-work-grid .card-body { padding: var(--space-24); }
 .portfolio .profile-intro { max-width: 72ch; margin-bottom: var(--space-32); }
 .portfolio .profile-intro p { margin: var(--space-16) 0 0; color: var(--md-on-surface-variant); }
 .portfolio .profile-link { display: inline-flex; align-items: center; gap: var(--space-8); margin-top: var(--space-24); font-size: .9375rem; font-weight: 600; }
 .portfolio .profile-link [lang] { color: var(--md-on-surface-variant); font-weight: 400; }
+/* Small text links keep their look but get a 40px-high hit area (WCAG 2.5.8 target size). */
+.portfolio .hit-area { position: relative; }
+.portfolio .hit-area::after { content: ""; position: absolute; inset: -8px -4px; }
 .portfolio .travel-link { display: flex; width: fit-content; margin-top: var(--space-16); }
 .portfolio .video-portfolio { margin-top: var(--space-24); }
 .portfolio .video-portfolio p { margin: var(--space-12) 0 0; color: var(--md-on-surface-variant); font-size: .9375rem; }
@@ -688,7 +691,7 @@ body { background: var(--md-surface); color: var(--md-on-surface); }
 .portfolio .card p, .portfolio .process-step p, .portfolio .timeline-content p, .portfolio .format-row .body-copy { color: var(--md-on-surface-variant); }
 .portfolio .process-step h3, .portfolio .format-name, .portfolio .snapshot-row dt { font-size: var(--md-title-medium); line-height: 24px; font-weight: 500; letter-spacing: .009em; }
 .portfolio .process-step .step-number { font-size: var(--md-headline-large); color: var(--md-primary); }
-.portfolio :is(.role-body, .timeline-content) h3, .portfolio .selected-work-grid h3, .portfolio .backend-title { font-size: var(--md-title-large); line-height: 1.27; font-weight: 400; }
+.portfolio :is(.role-body, .timeline-content) h3, .portfolio .selected-work-grid :is(h3, h4), .portfolio .backend-title { font-size: var(--md-title-large); line-height: 1.27; font-weight: 400; }
 .portfolio .showcase-body h3 { font-size: var(--md-headline-small); line-height: 1.33; font-weight: 400; }
 .portfolio .timeline-era, .portfolio .contact-label { font-size: var(--md-label-large); letter-spacing: .007em; text-transform: none; font-weight: 500; }
 .portfolio .contact-label { color: var(--md-on-surface-variant); }
@@ -1213,3 +1216,6 @@ body.portfolio[data-page="home"] .body-copy {
 @media (min-width: 1100px) and (max-width: 1149px) {
   .portfolio .desktop-nav .nav-link:not(.nav-search) { padding-inline: var(--space-12); white-space: nowrap; }
 }
+
+/* Card titles demoted to h4 under a group heading keep the shared heading rhythm. */
+.portfolio .selected-work-grid h4 { overflow-wrap: anywhere; }
