@@ -68,4 +68,4 @@ export const INSIGHTS_SHELL = `<!DOCTYPE html>
   </div>
 </footer>
 <div class="copy-toast"><span class="msym" aria-hidden="true" style="font-size:17px;">check_circle</span>Copied</div>
-<script src="/assets/site.js?v=0.33.0" defer></script></body></html>`;
+<script src="/assets/site.js?v=0.33.1" defer></script></body></html>`;

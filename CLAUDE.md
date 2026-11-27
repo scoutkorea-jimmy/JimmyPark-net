@@ -430,6 +430,10 @@ v0.31.2–0.33.0 (2026-11-27), check-suite repair and official Scouting titles. 
   button. Tablets (600–839px) show selected-work and project cards in two columns. Hover-only frames in `.case-media--cycle`
   carry `data-src` and load on the first pointer/focus over a card on hover devices with motion allowed; touch devices never
   fetch them (was 18 frames, 1.77 MB on Home). Asset URLs use `?v=0.31.6`.
+- **Contact buttons open mail (v0.33.1, owner request 2026-11-27):** with JS, any click on a `/contact?subject=<topic>` link
+  opens the visitor's mail app (`mailto:` with the topic subject and a short brief; `MAIL_TOPICS` in site.js; on /insights/*
+  the body starts with the article URL). The href stays `/contact?subject=…` as the no-JS fallback; plain `/contact` links
+  still open the page. Admin preview is untouched (its capture-phase handler prevents default first). `site.js?v=0.33.1`.
 - **Enquiry polish (v0.33.0, owner-approved 2026-11-27):** Home hero secondary button "Start a project" → /contact?subject=Project;
   `hero.proof` + `hero.proofPress` proof line under the scope links; first-person biography (JSON-LD `description` stays the static
   third-person text — site.js no longer copies the biography into it); "Why work with me"; Films before Websites in Selected work;

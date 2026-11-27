@@ -260,6 +260,16 @@
     }) : null;
   }
 
+  // Topic → [mail subject, brief lines]; keys are the ?subject= values contact buttons use.
+  var mailAddress = "hello@jimmypark.net";
+  var MAIL_TOPICS = {
+    Project: ["Project inquiry", "Goal:\nWho it is for:\nTiming:\nBudget range (if known):\nReferences or links:"],
+    Lecture: ["Lecture inquiry", "Organization:\nAudience:\nDate and place:\nTopic and length:"],
+    Photography: ["Photography booking", "Event:\nDate and place:\nWhat to cover:\nHow the images will be used:"],
+    Scouting: ["Scouting / NGO inquiry", "Organization:\nEvent or project:\nDates:\nSupport needed:"],
+    "Article response": ["Article response", "My thoughts:"]
+  };
+
   // ── Copy to clipboard + toast (delegated) ─────────────────────────────────
   var toast = document.querySelector(".copy-toast");
   var toastTimer;
@@ -717,6 +727,7 @@
     // contact behaviors (from global.contact)
     var c = g.contact || {};
     if (c.email) {
+      mailAddress = c.email;
       document.querySelectorAll("a[data-mail]").forEach(function (a) { var params = [];
         if (a.hasAttribute('data-mail-subject')) params.push('subject=' + encodeURIComponent(a.getAttribute('data-mail-subject')));
         if (a.hasAttribute('data-mail-body')) params.push('body=' + encodeURIComponent(a.getAttribute('data-mail-body')));
@@ -810,15 +821,31 @@
 
   registerReveals();
 
-  // Contact: buttons elsewhere pass ?subject=… so the email subject and a short note match the visitor's topic.
+  // Contact buttons carry /contact?subject=… (the no-JS fallback); with JS they open the visitor's mail app
+  // with a topic subject and a short brief. On /contact itself the same topic fills the brief link and a note.
+  function topicBody(t) {
+    var article = /^\/insights\/./.test(location.pathname) ? "Article: " + location.origin + location.pathname + "\n" : "";
+    return "Hi Jimmy,\n\n" + article + t[1] + "\n\n";
+  }
+  function topicMailto(t) { return "mailto:" + mailAddress + "?subject=" + encodeURIComponent(t[0]) + "&body=" + encodeURIComponent(topicBody(t)); }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var url = new URL(a.href, location.href);
+    var t = url.origin === location.origin && url.pathname === "/contact" && MAIL_TOPICS[url.searchParams.get("subject") || ""];
+    if (!t) return;
+    e.preventDefault();
+    location.href = topicMailto(t);
+  });
   (function applyContactTopic() {
-    var topics = { Project: "Project inquiry", Lecture: "Lecture inquiry", Photography: "Photography booking", Scouting: "Scouting / NGO inquiry", "Article response": "Article response" };
-    var topic = topics[new URLSearchParams(location.search).get("subject") || ""];
+    var t = MAIL_TOPICS[new URLSearchParams(location.search).get("subject") || ""];
     var brief = document.querySelector('a[data-mail][data-mail-subject="Project inquiry"]');
-    if (!topic || !brief) return;
-    brief.setAttribute("data-mail-subject", topic);
+    if (!t || !brief) return;
+    brief.setAttribute("data-mail-subject", t[0]);
+    brief.setAttribute("data-mail-body", topicBody(t));
+    brief.href = topicMailto(t);
     var note = document.querySelector("[data-contact-topic]");
-    if (note) { note.textContent = "Topic: " + topic; note.hidden = false; }
+    if (note) { note.textContent = "Topic: " + t[0]; note.hidden = false; }
   })();
 
   // ── Load live content, then accept preview messages ───────────────────────
